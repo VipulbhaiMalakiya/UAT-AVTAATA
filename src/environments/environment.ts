@@ -22,46 +22,40 @@ export const environment = {
     _subdomain9: 'Design',
 };
 
-// Retrieve loginUrl from localStorage and normalize it to lowercase for comparison
 const loginUrl = (localStorage.getItem('loginUrl') || '').toLowerCase();
 
+console.log('Retrieved loginUrl:', loginUrl);
+
 if (loginUrl) {
-    // Switch based on lowercase comparison
-    switch (loginUrl) {
-        case environment._subdomain1.toLowerCase():
-            environment.apiUrl = `https://${environment._subdomain1}.${environment._APImainDomain}`;
-            break;
-        case environment._subdomain2.toLowerCase():
-            environment.apiUrl = `https://${environment._subdomain2}.${environment._APImainDomain}`;
-            break;
-        case environment._subdomain3.toLowerCase():
-            environment.apiUrl = `https://${environment._subdomain3}.${environment._APImainDomain}`;
-            break;
-        case environment._subdomain4.toLowerCase():
-            environment.apiUrl = `https://${environment._subdomain4}.${environment._APImainDomain}`;
-            break;
-        case environment._subdomain5.toLowerCase():
-            environment.apiUrl = `https://${environment._subdomain5}.${environment._APImainDomain}`;
-            break;
-        case environment._subdomain6.toLowerCase():
-            environment.apiUrl = `https://${environment._subdomain6}.${environment._APImainDomain}`;
-            break;
-        case environment._subdomain7.toLowerCase():
-            environment.apiUrl = `https://${environment._subdomain7}.${environment._APImainDomain}`;
-            break;
-        case environment._subdomain8.toLowerCase():
-            environment.apiUrl = `https://${environment._subdomain8}.${environment._APImainDomain}`;
-            break;
-        case environment._subdomain9.toLowerCase():
-            environment.apiUrl = `https://${environment._subdomain9}.${environment._APImainDomain}`;
-            break;
-        default:
-            console.warn("Login URL did not match any case, falling back to default.");
-            environment.apiUrl = `https://${environment._APImainDomain}`;
-            break;
+    if (loginUrl === environment._subdomain.toLowerCase()) {
+        environment.apiUrl = `https://${environment._subdomain}.${environment._APImainDomain}`;
+    }
+    else if (loginUrl === environment._subdomain1.toLowerCase()) {
+        environment.apiUrl = `https://${environment._subdomain1}.${environment._APImainDomain}`;
+    } else if (loginUrl === environment._subdomain2.toLowerCase()) {
+        environment.apiUrl = `https://${environment._subdomain2}.${environment._APImainDomain}`;
+    } else if (loginUrl === environment._subdomain3.toLowerCase()) {
+        environment.apiUrl = `https://${environment._subdomain3}.${environment._APImainDomain}`;
+    } else if (loginUrl === environment._subdomain4.toLowerCase()) {
+        environment.apiUrl = `https://${environment._subdomain4}.${environment._APImainDomain}`;
+    } else if (loginUrl === environment._subdomain5.toLowerCase()) {
+        environment.apiUrl = `https://${environment._subdomain5}.${environment._APImainDomain}`;
+    } else if (loginUrl === environment._subdomain6.toLowerCase()) {
+        environment.apiUrl = `https://${environment._subdomain6}.${environment._APImainDomain}`;
+    } else if (loginUrl === environment._subdomain7.toLowerCase()) {
+        environment.apiUrl = `https://${environment._subdomain7}.${environment._APImainDomain}`;
+    } else if (loginUrl === environment._subdomain8.toLowerCase()) {
+        environment.apiUrl = `https://${environment._subdomain8}.${environment._APImainDomain}`;
+    } else if (loginUrl === environment._subdomain9.toLowerCase()) {
+        environment.apiUrl = `https://${environment._subdomain9}.${environment._APImainDomain}`;
+    } else {
+        console.warn("Login URL did not match any case, falling back to default.");
+        environment.apiUrl = `https://${environment._APImainDomain}`;
     }
 } else {
-    // Handle missing loginUrl case
-    console.error("Login URL not found in localStorage, redirecting to default URL.");
+    console.error("Login URL not found in localStorage, falling back to default URL.");
     environment.apiUrl = `https://${environment._APImainDomain}`;
 }
+
+console.log('Final API URL:', environment.apiUrl);
+
