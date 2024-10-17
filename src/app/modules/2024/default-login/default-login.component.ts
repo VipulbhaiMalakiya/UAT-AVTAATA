@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { clone } from 'lodash';
 import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService, EncrDecrService } from 'src/app/_services';
 import { environment } from 'src/environments/environment';
@@ -51,60 +52,44 @@ export class DefaultLoginComponent implements OnInit {
         }
     }
     onSubmit() {
-        if (this.loginForm.invalid) { this.loginForm.controls['username'].markAsTouched(); return; }
-        // this.loading = true;
-        let data: any = { loginUrl: this.loginForm.value.username, };
-        const subdomain = this.getSubdomainFromUrl(data.loginUrl);
-        let subdomainUrl: string;
-
-        console.log(data.loginUrl,subdomain)
-        localStorage.setItem('loginUrl', subdomain ?? '');
-        console.log(subdomain)
-        if (!subdomain) {
-            //  subdomainUrl = 'http://localhost:4200/#/login';
-            subdomainUrl = `${environment.ReqUrl}${environment.appUrl}`;
-
-        } else {
-            switch (subdomain) {
-                case environment._subdomain:
-                    subdomainUrl = `${environment.ReqUrl}${subdomain}.${environment.appUrl}`;
-                    break;
-                case environment._subdomain1:
-                    subdomainUrl = `${environment.ReqUrl}${subdomain}.${environment.appUrl}`;
-                    break;
-                case environment._subdomain2:
-                    subdomainUrl = `${environment.ReqUrl}${subdomain}.${environment.appUrl}`;
-                    break;
-                case environment._subdomain3:
-                    subdomainUrl = `${environment.ReqUrl}${subdomain}.${environment.appUrl}`;
-                    break;
-                case environment._subdomain4:
-                    subdomainUrl = `${environment.ReqUrl}${subdomain}.${environment.appUrl}`;
-                    break;
-                case environment._subdomain5:
-                    subdomainUrl = `${environment.ReqUrl}${subdomain}.${environment.appUrl}`;
-                    break;
-                case environment._subdomain6:
-                    subdomainUrl = `${environment.ReqUrl}${subdomain}.${environment.appUrl}`;
-                    break;
-                case environment._subdomain7:
-                    subdomainUrl = `${environment.ReqUrl}${subdomain}.${environment.appUrl}`;
-                    break;
-                case environment._subdomain8:
-                    subdomainUrl = `${environment.ReqUrl}${subdomain}.${environment.appUrl}`;
-                    break;
-                case environment._subdomain9:
-                    subdomainUrl = `${environment.ReqUrl}${subdomain}.${environment.appUrl}`;
-                    break;
-                default:
-                    subdomainUrl = `${environment.appUrl}`;
-                    break;
-            }
-            // subdomainUrl = `https://${subdomain}.${environment.appUrl}`;
+        if (this.loginForm.invalid) {
+            this.loginForm.controls['username'].markAsTouched();
+            return;
         }
-        window.location.href = subdomainUrl;
-    }
-
+    
+        let data: any = { loginUrl: this.loginForm.value.username };
+        const subdomain = this.getSubdomainFromUrl(data.loginUrl).toLowerCase() ?? '';
+        localStorage.setItem('loginUrl', subdomain ?? '');
+        if (!subdomain) {
+            window.location.href = `${environment.ReqUrl}${environment.appUrl}`;
+        } else {
+            if (subdomain === environment._subdomain.toLowerCase()) {
+                window.location.href = `${environment.ReqUrl}${subdomain}.${environment.appUrl}`;
+            } else if (subdomain === environment._subdomain1.toLowerCase()) {
+                window.location.href = `${environment.ReqUrl.toLowerCase()}${subdomain}.${environment.appUrl}`;
+            } else if (subdomain === environment._subdomain2.toLowerCase()) {
+                window.location.href = `${environment.ReqUrl.toLowerCase()}${subdomain}.${environment.appUrl}`;
+            } else if (subdomain === environment._subdomain3.toLowerCase()) {
+                window.location.href = `${environment.ReqUrl}${subdomain}.${environment.appUrl}`;
+            } else if (subdomain === environment._subdomain4.toLowerCase()) {
+                window.location.href = `${environment.ReqUrl.toLowerCase()}${subdomain}.${environment.appUrl}`;
+            } else if (subdomain === environment._subdomain5.toLowerCase()) {
+                window.location.href = `${environment.ReqUrl}${subdomain}.${environment.appUrl}`;
+            } else if (subdomain === environment._subdomain6.toLowerCase()) {
+                window.location.href = `${environment.ReqUrl}${subdomain}.${environment.appUrl}`;
+            } else if (subdomain === environment._subdomain7.toLowerCase()) {
+                window.location.href = `${environment.ReqUrl}${subdomain}.${environment.appUrl}`;
+            } else if (subdomain === environment._subdomain8.toLowerCase()) {
+                window.location.href = `${environment.ReqUrl}${subdomain}.${environment.appUrl}`;
+            } else if (subdomain === environment._subdomain9.toLowerCase()) {
+                window.location.href = `${environment.ReqUrl}${subdomain}.${environment.appUrl}`;
+            } else {
+                window.location.href = `${environment.ReqUrl}${environment.appUrl}`;
+            }
+        }
+    
+   }
+    
     getSubdomainFromUrl(loginUrl: string): string {
         try {
             // Remove protocol (http:// or https://) if present

@@ -49,13 +49,13 @@ if (loginUrl) {
     } else if (loginUrl === environment._subdomain9.toLowerCase()) {
         environment.apiUrl = `https://${environment._subdomain9}.${environment._APImainDomain}`;
     } else {
-        console.warn("Login URL did not match any case, falling back to default.");
+        // console.warn("Login URL did not match any case, falling back to default.");
         environment.apiUrl = `https://${environment._APImainDomain}`;
     }
 } else {
-    console.error("Login URL not found in localStorage, falling back to default URL.");
+    // console.error("Login URL not found in localStorage, falling back to default URL.");
     environment.apiUrl = `https://${environment._APImainDomain}`;
 }
 
-console.log('Final API URL:', environment.apiUrl);
+// console.log('Final API URL:', environment.apiUrl);
 
