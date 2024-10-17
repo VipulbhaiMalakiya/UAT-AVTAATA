@@ -9,59 +9,143 @@ export const environment = {
     SOCKET_ENDPOINT: 'wss://tcplconnecto.com/v2.0/chat',
     googleMapsApiKey: 'YOUR_API_KEY',
 
-    // Subdomains
-    _subdomain: 'prime',
-    _subdomain1: 'cdc',
-    _subdomain2: 'TCPL',
-    _subdomain3: 'TDE',
-    _subdomain4: 'Application',
-    _subdomain5: 'Administration',
-    _subdomain6: 'Marketing',
-    _subdomain7: 'Production',
-    _subdomain8: 'Accounting',
-    _subdomain9: 'Design',
+    _subdomains: [
+        'prime',
+        'cdc',
+        'TCPL',
+        'TDE',
+        'Application',
+        'Administration',
+        'Marketing',
+        'Production',
+        'Accounting',
+        'Design',
+        'Sales',
+        'Support',
+        'HR',
+        'Finance',
+        'Logistics',
+        'Engineering',
+        'Quality',
+        'Research',
+        'Development',
+        'CustomerService',
+        'Procurement',
+        'Training',
+        'Compliance',
+        'RiskManagement',
+        'Legal',
+        'IT',
+        'DataAnalytics',
+        'PublicRelations',
+        'InvestorRelations',
+        'CorporateCommunications',
+        'ProductManagement',
+        'EventManagement',
+        'BusinessDevelopment',
+        'Strategy',
+        'Sustainability',
+        'Innovation',
+        'Facilities',
+        'Security',
+        'ECommerce',
+        'TechnicalSupport',
+        'CommunityRelations',
+        'ContentCreation',
+        'SocialMedia',
+        'UserExperience',
+        'BrandManagement',
+        'GraphicDesign',
+        'WebDevelopment',
+        'MobileDevelopment',
+        'AppDevelopment',
+        'SystemAdministration',
+        'NetworkAdministration',
+        'CloudServices',
+        'DigitalMarketing',
+        'AffiliateMarketing',
+        'EmailMarketing',
+        'SEO',
+        'SEM',
+        'PPC',
+        'ContentMarketing',
+        'CustomerSuccess',
+        'Analytics',
+        'PerformanceManagement',
+        'WorkforceManagement',
+        'SalesEnablement',
+        'LeadGeneration',
+        'ConversionOptimization',
+        'MarketResearch',
+        'CompetitiveAnalysis',
+        'BusinessIntelligence',
+        'Dashboarding',
+        'DataVisualization',
+        'UserResearch',
+        'ProductDesign',
+        'Prototyping',
+        'UserTesting',
+        'CustomerJourney',
+        'Onboarding',
+        'SupportCenter',
+        'FAQ',
+        'KnowledgeBase',
+        'HelpDesk',
+        'IncidentManagement',
+        'ServiceDesk',
+        'OrderManagement',
+        'InventoryManagement',
+        'SupplierManagement',
+        'VendorManagement',
+        'ContractManagement',
+        'ExpenseManagement',
+        'Budgeting',
+        'FinancialPlanning',
+        'Payroll',
+        'TimeTracking',
+        'WorkplaceSafety',
+        'EmployeeEngagement',
+        'DiversityInclusion',
+        'HealthWellness',
+        'TalentAcquisition',
+        'PerformanceReview',
+        'LearningDevelopment',
+        'EmployeeRelations',
+        'SuccessionPlanning',
+        'CrisisManagement',
+        'BusinessContinuity',
+        'DataPrivacy',
+        'RegulatoryCompliance',
+        'FraudPrevention',
+        'Ethics',
+        'CorporateSocialResponsibility',
+        'StakeholderEngagement',
+        'ProjectManagement',
+        'ChangeManagement',
+        'AgileDevelopment',
+        'Scrum',
+        'Kanban',
+        'DevOps',
+        'ContinuousIntegration',
+        'ContinuousDeployment',
+        'SoftwareTesting',
+        'QualityAssurance',
+        'CodeReview'
+    ]
+
+
+
 };
 
-// Retrieve loginUrl from localStorage and normalize it to lowercase for comparison
 const loginUrl = (localStorage.getItem('loginUrl') || '').toLowerCase();
-
 if (loginUrl) {
-    // Switch based on lowercase comparison
-    switch (loginUrl) {
-        case environment._subdomain1.toLowerCase():
-            environment.apiUrl = `https://${environment._subdomain1}.${environment._APImainDomain}`;
-            break;
-        case environment._subdomain2.toLowerCase():
-            environment.apiUrl = `https://${environment._subdomain2}.${environment._APImainDomain}`;
-            break;
-        case environment._subdomain3.toLowerCase():
-            environment.apiUrl = `https://${environment._subdomain3}.${environment._APImainDomain}`;
-            break;
-        case environment._subdomain4.toLowerCase():
-            environment.apiUrl = `https://${environment._subdomain4}.${environment._APImainDomain}`;
-            break;
-        case environment._subdomain5.toLowerCase():
-            environment.apiUrl = `https://${environment._subdomain5}.${environment._APImainDomain}`;
-            break;
-        case environment._subdomain6.toLowerCase():
-            environment.apiUrl = `https://${environment._subdomain6}.${environment._APImainDomain}`;
-            break;
-        case environment._subdomain7.toLowerCase():
-            environment.apiUrl = `https://${environment._subdomain7}.${environment._APImainDomain}`;
-            break;
-        case environment._subdomain8.toLowerCase():
-            environment.apiUrl = `https://${environment._subdomain8}.${environment._APImainDomain}`;
-            break;
-        case environment._subdomain9.toLowerCase():
-            environment.apiUrl = `https://${environment._subdomain9}.${environment._APImainDomain}`;
-            break;
-        default:
-            console.warn("Login URL did not match any case, falling back to default.");
-            environment.apiUrl = `https://${environment._APImainDomain}`;
-            break;
+    const matchedSubdomain = environment._subdomains.find(subdomain => loginUrl === subdomain.toLowerCase());
+    if (matchedSubdomain) {
+        environment.apiUrl = `https://${matchedSubdomain}.${environment._APImainDomain}`;
+    } else {
+        environment.apiUrl = `https://${environment._APImainDomain}`;
     }
-} else {
-    // Handle missing loginUrl case
-    console.error("Login URL not found in localStorage, redirecting to default URL.");
-    environment.apiUrl = `https://${environment._APImainDomain}`;
 }
+
+
+
