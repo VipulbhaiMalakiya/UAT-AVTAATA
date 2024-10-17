@@ -52,11 +52,14 @@ export class DefaultLoginComponent implements OnInit {
     }
     onSubmit() {
         if (this.loginForm.invalid) { this.loginForm.controls['username'].markAsTouched(); return; }
-        this.loading = true;
+        // this.loading = true;
         let data: any = { loginUrl: this.loginForm.value.username, };
         const subdomain = this.getSubdomainFromUrl(data.loginUrl);
         let subdomainUrl: string;
+
+        console.log(data.loginUrl,subdomain)
         localStorage.setItem('loginUrl', subdomain ?? '');
+        console.log(subdomain)
         if (!subdomain) {
             //  subdomainUrl = 'http://localhost:4200/#/login';
             subdomainUrl = `${environment.ReqUrl}${environment.appUrl}`;
@@ -102,18 +105,29 @@ export class DefaultLoginComponent implements OnInit {
         window.location.href = subdomainUrl;
     }
 
-    getSubdomainFromUrl(loginUrl: string): string | null {
-        const url = new URL(loginUrl);
-        const hostname = url.hostname;
-        const parts = hostname.split('.');
+    getSubdomainFromUrl(loginUrl: string): string {
+        try {
+            // Remove protocol (http:// or https://) if present
+            let urlWithoutProtocol = loginUrl.replace(/(^\w+:|^)\/\//, '');
 
-        // Check if there are more than two parts (subdomain.domain.tld)
-        if (parts.length > 2) {
-            return parts[0];
+            // Split by dots and slashes to handle subdomains like 'subdomain.domain.com'
+            const urlParts = urlWithoutProtocol.split(/[.:\/]+/);
+
+            // Ensure there are enough parts to extract the subdomain
+            if (urlParts.length >= 1) {
+                return urlParts[0].toLowerCase();  // Return the first part as the subdomain, converted to lowercase
+            } else {
+                console.warn('Invalid login URL format.');
+                return '';  // Fallback if the URL format is not valid
+            }
+        } catch (error) {
+            console.error('Error parsing the login URL:', error);
+            return '';  // Fallback if an error occurs
         }
-
-        return null;
     }
+
+
+
 
     shouldShowError(controlName: string, errorName: string) {
         return (
