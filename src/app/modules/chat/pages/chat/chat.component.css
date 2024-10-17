@@ -1,0 +1,98 @@
+.inboxouter100{
+  margin: -15px -30px -30px -30px !important
+}
+
+.invalid{
+  background: #eee;
+  color: #000;
+}
+.cursur {
+   cursor: pointer;
+}
+
+.alert-secondary {
+  color: #383d41;
+  background-color: #e2e3e5;
+  border-color: #d6d8db;
+}
+
+
+.alert-secondary p i {
+  color: #383d41;
+}
+
+.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+.alert-danger p i {
+  color: #721c24;
+}
+
+.alert-primary {
+  color: #004085;
+  background-color: #cce5ff;
+  border-color: #b8daff;
+}
+
+.alert-primary p i {
+  color: #004085;
+}
+
+.selected .dropdown-item {
+  background-color: #00abc5;
+  color: #fff !important;
+}
+
+.one-line {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 180px;
+}
+
+
+:host ::ng-deep .emoji-mart-scroll {
+  height: 150px;
+}
+
+/*
+.last-message {
+  align-self: flex-end;
+} */
+
+.clschat-btn.disabled {
+  pointer-events: none;
+  opacity: 0.5; /* or any other value */
+  /* Add other styles for a disabled appearance */
+}
+
+.checkin-btn{ margin-right: 10px; }
+
+.checkin-btn a {
+    background: #fff;
+    font-size: 13px;
+    font-weight: 500;
+    color: #00abc5;
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: 1px solid #00abc5;
+}
+
+.checkin-btn a i{ font-size:22px; vertical-align: sub; }
+
+.checkout-btn{ margin-right: 10px; }
+
+.checkout-btn a {
+    background:#f3fffc;
+    font-size: 13px;
+    font-weight: 500;
+    color: #00abc5;
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: 1px solid #00abc5;
+}
+
+.checkout-btn a i{ font-size:22px; vertical-align: sub; }

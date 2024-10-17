@@ -1,0 +1,154 @@
+<div class="modal-content green-modal" id="inboxtemplate">
+    <div class="modal-header">
+        <h1 class="modal-title fs-5" id="inboxtemplateLabel">Select Template</h1>
+        <!-- <div class="addmodal-btn"><a class="common-btn"> Create template</a></div> -->
+        <button type="button" (click)="onCancel()" class="btn-close" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+    </div>
+    <div class="modal-body p-0">
+        <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+            <app-loading-spin-popup *ngIf="isProceess"></app-loading-spin-popup>
+            <div class="modaltemplate-body">
+                <div class="row">
+                    <div class="col-md-3 pr-0">
+                        <div class="tempsearch">
+                            <form class="tempsearch-form" name="cform">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="name" id="name" [(ngModel)]="term"
+                                        autocomplete="off" placeholder="Search..." required="">
+                                </div>
+                                <button type="submit" class="search-ico"><i class="la la-search"></i></button>
+                            </form>
+                        </div>
+                        <div class="templateleft-tbs">
+                            <div class="nav flex-column nav-pills" aria-orientation="vertical"
+                                *ngFor="let i of templetsdata  | customFilter: term " (click)="onView(i)">
+                                <div class="temp-link" [ngClass]="{ 'active': i.id === templet.id }">{{i.templateName}}
+                                    <br>
+                                    ({{i.language}})</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--col-md-3-->
+                    <div class="col-md-9">
+                        <div class="templateright-col">
+                            <h3 class="modalpg-title">Message</h3>
+                            <div class="tab-content">
+                                <div class="tab-pane fade show active">
+                                    <div class="template-card">
+                                        <div class="templ-col"
+                                            *ngIf="templet?.header?.header !== null || templet?.header?.headerFileType !== null || templet?.header?.file !== null ">
+                                            <p><strong>Header :</strong></p>
+                                            <p *ngIf="templet?.header?.headerFileType === 'document'">
+                                                {{templet?.header?.file}}
+                                            </p>
+                                        </div>
+                                        <div class="templ-col">
+                                            <p><strong>Body :</strong></p>
+                                            <p>{{templet.templatePreview}}</p>
+                                        </div>
+                                        <div class="templ-col"
+                                            *ngIf="templet?.button1 !== null || templet?.button3 !== null || templet?.button3 !== null">
+                                            <p><strong>Buttons :</strong></p>
+                                            <p><b><i class="las la-comment-alt" *ngIf="templet?.button1 !== null"></i>
+                                                    {{templet.button1}}</b>
+                                            </p>
+                                            <p><b><i class="las la-comment-alt" *ngIf="templet?.button2 !== null"></i>
+                                                    {{templet.button2}}</b>
+                                            </p>
+                                            <p><b><i class="las la-comment-alt" *ngIf="templet?.button3 !== null"></i>
+                                                    {{templet.button3}}</b>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="template-card2" *ngIf="templet?.body?.body !== null">
+
+                                        <div class="sub3">{{templet?.body?.body}}</div>
+
+                                        <div class="inner-templateform-card2">
+                                            <div class="tempgrid1">
+                                                <p>Variable</p>
+                                                <input *ngIf="templet?.body?.bodyattribute[0]" type="text"
+                                                    class="form-control" name="name" id="" value="{{1}}" disabled>
+                                                <input *ngIf="templet?.body?.bodyattribute[1]" type="text"
+                                                    class="form-control" name="name" id="" value="{{2}}" disabled>
+                                                <input *ngIf="templet?.body?.bodyattribute[2]" type="text"
+                                                    class="form-control" name="name" id="" value="{{3}}" disabled>
+                                            </div>
+
+
+
+                                            <div class="tempgrid2"
+                                                *ngIf="templet.templateName != 'checking_in_welcome_details_wifidetails'">
+                                                <p>Value</p>
+                                                <input type="text" *ngIf="templet?.body?.bodyattribute[0]"
+                                                    class="form-control" name="select0" id="select0" ngModel
+                                                    placeholder="Name" disabled>
+                                                <input type="text" *ngIf="templet?.body?.bodyattribute[1]"
+                                                    class="form-control" name="select1" id="select1" ngModel
+                                                    placeholder="User Name" disabled>
+                                                <input type="text" *ngIf="templet?.body?.bodyattribute[2]"
+                                                    class="form-control" name="select2" id="select2" ngMode
+                                                    placeholder="password" disabled>
+                                            </div>
+
+
+                                            <div class="tempgrid2"
+                                                *ngIf="templet.templateName == 'checking_in_welcome_details_wifidetails'">
+                                                <p>Value</p>
+                                                <input type="text" *ngIf="templet?.body?.bodyattribute[0]"
+                                                    class="form-control" name="select0" id="select0" ngModel
+                                                    placeholder="WiFi Network" disabled>
+                                                <input type="text" *ngIf="templet?.body?.bodyattribute[1]"
+                                                    class="form-control" name="select1" id="select1" ngModel
+                                                    placeholder="Password" disabled>
+
+                                            </div>
+                                            <div class="tempgrid3"
+                                                *ngIf="templet.templateName != 'checking_in_welcome_details_wifidetails'">
+                                                <p>Fallback/Constant Value</p>
+                                                <input *ngIf="templet?.body?.bodyattribute[0]" type="text"
+                                                    class="form-control" placeholder="User Name" name="input1"
+                                                    [(ngModel)]="username" #input1="ngModel"
+                                                    [ngClass]="{ 'is-invalid': f.submitted && input1.invalid }" required
+                                                    >
+                                                <input *ngIf="templet?.body?.bodyattribute[1]" type="text"
+                                                    class="form-control" placeholder="User Name" name="input2" ngModel
+                                                    #input2="ngModel"
+                                                    [ngClass]="{ 'is-invalid': f.submitted && input2.invalid }"
+                                                    required>
+                                                <input *ngIf="templet?.body?.bodyattribute[2]" type="password"
+                                                    placeholder="Enter password" name="input3" ngModel #input3="ngModel"
+                                                    class="form-control"
+                                                    [ngClass]="{ 'is-invalid': f.submitted && input3.invalid }"
+                                                    required>
+                                            </div>
+
+                                            <div class="tempgrid3"
+                                                *ngIf="templet.templateName == 'checking_in_welcome_details_wifidetails'">
+                                                <p>Fallback/Constant Value</p>
+                                                <input type="text" class="form-control" placeholder="WiFi Network"
+                                                    name="input1" [(ngModel)]="templet?.body?.bodyattribute[0]"
+                                                    #input1="ngModel"
+                                                    [ngClass]="{ 'is-invalid': f.submitted && input1.invalid }"
+                                                    required>
+                                                <input type="text" class="form-control" placeholder="Password"
+                                                    [(ngModel)]="templet?.body?.bodyattribute[1]" name="input2" ngModel
+                                                    #input2="ngModel"
+                                                    [ngClass]="{ 'is-invalid': f.submitted && input2.invalid }"
+                                                    required>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="common-btn">See Preview and Send</button>
+            </div>
+        </form>
+    </div>

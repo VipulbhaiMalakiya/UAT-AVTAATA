@@ -1,0 +1,37 @@
+
+/*---------contact page---------*/
+
+.inner-banner{ position:relative; margin-bottom:30px; }
+.inner-banner-text{ position:absolute; top:50%; left:50%; z-index:1; transform:translate(-50%, -50%); width: 80%; text-align: right; }
+.inner-banner-text h1{   color:#000; font-weight: 600; text-transform:uppercase; }
+
+.contactuscol{ padding:0px 30px; }
+.contactuscol h1{ font-weight:600; font-size:34px; margin-bottom:25px;  }
+.contactuscol h2{ font-weight:700; font-size:23px; margin-bottom: 15px; }
+.contactuscol p{ font-size:19px; }
+.contactuscol p strong{ font-weight:600; }
+.contactuscol a{ color:#00abc5; }
+
+.contactcopyright{ background: #eee; padding:20px 0px; margin-top: 30px;  }
+.contactcopyright p{ margin-bottom:0px; display: flex; align-items: center; justify-content: space-between; }
+.contactcopyright p a{ color:#111; padding:0px 10px;  }
+.main-logo {
+    padding: 0px 10px;
+    margin-bottom: 20px;
+    margin-top: 5px;
+}
+.page-title {
+    max-width: 85%;
+    flex: 0 0 85%;
+    margin-bottom: 25px;
+}
+.static-page {
+    padding: 15px 30px;
+}
+.static-page .main-logo img {
+    max-height: 40px;
+}
+
+.main-logo img {
+    max-width: 96%;
+}

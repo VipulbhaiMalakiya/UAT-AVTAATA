@@ -1,0 +1,49 @@
+<div class="common-modal green-modal">
+    <div class="modal-header">
+        <h1 class="modal-title fs-5">View Booking detail</h1>
+        <button type="button" class="btn-close" (click)="onCancel()" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+    </div>
+    <div class="modal-body mb-0">
+        <app-loading-spin-popup *ngIf="isProceess"></app-loading-spin-popup>
+        <form class="common-modal-form" [formGroup]="CategoryMasterForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="firstName">First Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="firstName" name="firstName" formControlName="firstName"
+                    placeholder="firstName">
+                <div *ngIf="shouldShowError('firstName','required')" class="form-validate-err">
+                    firstName cannot be blank.
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="lastName">Last Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="lastName" name="lastName" formControlName="lastName"
+                    placeholder="lastName">
+                <div *ngIf="shouldShowError('lastName','required')" class="form-validate-err">
+                    lastName cannot be blank.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="mobileNo">Mobile No <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="mobileNo" name="mobileNo" formControlName="mobileNo"
+                    placeholder="mobileNo">
+                <div *ngIf="shouldShowError('mobileNo','required')" class="form-validate-err">
+                    mobileNo cannot be blank.
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="checkindate">Check In Date <span class="text-danger">*</span></label>
+                <input type="date" class="form-control" id="mobileNo" name="checkindate" formControlName="checkindate"
+                    placeholder="checkindate">
+                <div *ngIf="shouldShowError('checkindate','required')" class="form-validate-err">
+                    Check In Date cannot be blank.
+                </div>
+            </div>
+            <!-- <div class="form-group mb-0 text-end">
+                <button type="submit" class="common-btn">{{this.data ?'Update Now' : 'Add New'}}</button>
+            </div> -->
+        </form>
+    </div>
+</div>

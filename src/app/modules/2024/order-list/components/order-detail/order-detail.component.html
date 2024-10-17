@@ -1,0 +1,167 @@
+<app-header></app-header>
+<app-loading-spin *ngIf="isProceess"></app-loading-spin>
+
+<div class="page-title">
+    <h1 class="content-title">
+        <span class="back-btn" title="Back"><a onclick="window.history.back();"><img
+                    src="../assets/images/left-arrow.svg" alt="" /></a></span>
+        Order Detail
+    </h1>
+</div>
+<div class="inner-middle-content">
+    <div class="orderdt-page">
+        <div class="toporderdt-col">
+            <!-- order-detail.component.html -->
+            <div class="form-header d-flex mb-4">
+                <ng-container *ngFor="let step of steps">
+                    <span [ngClass]="['stepIndicator', getStepClass(step.status)]">
+                        <b><i [class]="step.icon"></i></b> {{ step.name }}
+                    </span>
+                </ng-container>
+            </div>
+        </div>
+
+        <div class="middleorderdt-col">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="orderlist-table">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th>Product</th>
+                                        <th class="text-center">Order</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Currency</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="
+                                            let item of order?.orderProducts
+                                        ">
+                                        <td>{{ item.productId }}</td>
+                                        <td>{{ item.productName }}</td>
+                                        <td class="text-center">
+                                            <div class="cat-pros-pic">
+                                                <img [src]="item.imageLink" alt="{{ item.productName }}" />
+                                            </div>
+                                        </td>
+                                        <td>{{ item.price }}</td>
+                                        <td>{{ item.quantity }}</td>
+                                        <td>{{ item.currency }}</td>
+                                        <td>
+                                            {{
+                                                calculateAmount(
+                                                    item.price,
+                                                    item.quantity
+                                                ) | currency : item.currency
+                                            }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="orderdt-info">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="order-price-col">
+                                    <dl class="commerce-list">
+                                        <dt>Order Date</dt>
+                                        <dd class="text-right">
+                                            {{
+                                                order?.orderDate
+                                                    | date : "dd-MM-yyyy"
+                                            }}
+                                        </dd>
+                                        <dt>Order No.</dt>
+                                        <dd class="text-right">
+                                            {{ order?.orderId }}
+                                        </dd>
+                                        <dt>Subtotal</dt>
+                                        <dd class="text-right">
+                                            {{
+                                                getSubtotal()
+                                                    | currency
+                                                        : "INR"
+                                                        : "symbol"
+                                            }}
+                                        </dd>
+
+                                        <dt>CGST</dt>
+                                        <dd class="text-right">
+                                            {{
+                                                getSubtotal() * 0.0
+                                                    | currency
+                                                        : "INR"
+                                                        : "symbol"
+                                            }}
+                                        </dd>
+                                        <dt>SGST</dt>
+                                        <dd class="text-right">
+                                            {{
+                                                getSubtotal() * 0.0
+                                                    | currency
+                                                        : "INR"
+                                                        : "symbol"
+                                            }}
+                                        </dd>
+                                        <dt>Total Amount</dt>
+                                        <dd class="text-right">
+                                            <b>{{
+                                                getTotalAmount()
+                                                    | currency
+                                                        : "INR"
+                                                        : "symbol"
+                                            }}</b>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 text-end">
+                                <div class="status-drpdwn d-flex">
+                                    <!-- Column for Status Label -->
+                                    <div class="form-group flex-fill">
+                                        <label>Status</label>
+                                    </div>
+
+                                    <!-- Column for Status Value -->
+                                    <div class="flex-fill">
+                                        <span [ngClass]="{
+                                                'order-status': true,
+                                                'bg-success':
+                                                    order?.orderStatus ===
+                                                    'Delivered',
+                                                'bg-warning':
+                                                    order?.orderStatus !==
+                                                    'Delivered'
+                                            }">
+                                            {{ order?.orderStatus }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="ordercustomer-info">
+                        <h3>Customer Info</h3>
+                        <p><b>Customer Name</b> {{ order?.customerName }}</p>
+                        <p><b>Contact No.</b> {{ order?.mobileNumber }}</p>
+                        <p>
+                            <b>Delivery Address</b> {{ order?.deliveryAddress }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--orderdt-page-->
+</div>

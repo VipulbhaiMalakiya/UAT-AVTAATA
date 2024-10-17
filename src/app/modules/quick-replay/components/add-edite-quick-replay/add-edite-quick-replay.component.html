@@ -1,0 +1,37 @@
+<div class="common-modal green-modal">
+  <div class="modal-header">
+    <h1 class="modal-title fs-5">{{ title }}</h1>
+    <button type="button" class="btn-close" (click)="onCancel()" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+  <div class="modal-body mb-0">
+    <app-loading-spin-popup *ngIf="isProceess"></app-loading-spin-popup>
+    <form class="common-modal-form" [formGroup]="issueForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Message<span class="text-danger">*</span></label>
+        <input type="text" class="form-control" id="name" name="name" formControlName="name"
+          placeholder="Label name">
+        <div *ngIf="shouldShowError('name','required')" class="form-validate-err">
+          Please Enter  Name.
+        </div>
+
+        <div *ngIf="shouldShowError('name','leadingSpace')" class="form-validate-err">
+          Input Field cannot start with a space.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="description"> Description <span class="text-danger">*</span></label>
+        <textarea class="form-control" formControlName="description"
+          placeholder="Description" id="description" rows="2"></textarea>
+        <div *ngIf="shouldShowError('description','required')" class="text-danger">
+          Description is required.
+        </div>
+        <div *ngIf="shouldShowError('description','leadingSpace')" class="text-danger">
+          Input Field cannot start with a space.
+        </div>
+      </div>
+      <div class="form-group mb-0 text-end">
+        <button type="submit" class="common-btn">{{this.data ?'Update Now' : 'Add New'}}</button>
+      </div>
+    </form>
+  </div>
+</div>

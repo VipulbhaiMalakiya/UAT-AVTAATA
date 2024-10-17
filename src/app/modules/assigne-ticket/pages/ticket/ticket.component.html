@@ -1,0 +1,124 @@
+<app-header></app-header>
+<app-loading-spin *ngIf="isProceess"></app-loading-spin>
+<div class="page-title">
+  <h1>Assigned To Me Tickets</h1>
+</div>
+<div class="page-btns-col">
+  <div class="dt-buttons">
+    <button class="gray-btns" *ngIf="data.length > 0" (click)="onDownload()" type="button"><i
+        class="las la-file-excel"></i> Excel</button>
+    <div class="table-search" *ngIf="data.length > 0"><input type="text" class="form-control" name="name" id="name"
+        [(ngModel)]="term" autocomplete="off" placeholder="Search..." required=""></div>
+  </div>
+  <div class="topbr-btns">
+    <div class="btn-group">
+      <select class="form-select" #sel3 (change)="selectStatus(sel3.value)">
+        <option value="All" selected>All</option>
+        <option value="New">New</option>
+        <option value="In_Progress">In-Progress</option>
+        <option value="Pending_Client">Pending Client</option>
+        <option value="Resolved">Resolved</option>
+        <option value="Closed">Closed</option>
+      </select>
+    </div>
+  </div>
+</div>
+<div class="inner-middle-content">
+  <div class="dasboard-table dasboard-scroll">
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Sr.No</th>
+            <th>Ticket No</th>
+            <th>Created Date</th>
+
+            <th>Department</th>
+            <th>Assigned To</th>
+            <th *ngIf="this.userData?.role?.roleName !== 'Approver' ">Status </th>
+            <th *ngIf="this.userData?.role?.roleName !== 'Approver' ">Category</th>
+            <th *ngIf="this.userData?.role?.roleName == 'Approver' ">L1 Status</th>
+            <th *ngIf="this.userData?.role?.roleName == 'Approver' ">L2 Status</th>
+            <th class="action-cl">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let i of data | customFilter: term | paginate
+          : {
+              itemsPerPage: tableSize,
+              currentPage: page,
+              totalItems: count
+            };let ind = index ;trackBy: trackByFn">
+            <td>{{calculateIndex(page, ind)}}</td>
+            <!-- <td>{{i.ticketId}}</td> -->
+            <td
+              *ngIf="(userData?.role?.roleName !== 'Approver' && userData?.role?.roleName !== 'Resolver') || (userData?.role?.roleName === 'Approver' || userData?.role?.roleName === 'Resolver') && i.department.departmentName !== 'Zenoti' || i.department.departmentName == 'Admin'"
+              (click)="onEdit(i)" class="tblLink">{{i.ticketNo}}</td>
+
+            <td
+              *ngIf="(userData?.role?.roleName === 'Approver' || userData?.role?.roleName === 'Resolver') && i.department.departmentName === 'Zenoti' || i.department.departmentName === 'Admin' ">
+              {{i.ticketNo}}</td>
+
+
+            <td>{{i.createdDate | date :'medium'}}</td>
+
+            <td>{{i.department?.departmentName}}</td>
+            <td>{{i.assignedTo?.firstName}} {{i.assignedTo?.lastName}}</td>
+            <td *ngIf="this.userData?.role?.roleName == 'Approver' ">{{i.l1ticketApproval || ''}}</td>
+            <td *ngIf="this.userData?.role?.roleName == 'Approver' ">{{i.l2ticketApproval || ''}}</td>
+            <td *ngIf="this.userData?.role?.roleName !== 'Approver' ">{{i.ticketStatus}}</td>
+            <td *ngIf="this.userData?.role?.roleName !== 'Approver' ">{{i.category?.categoryName}}</td>
+            <td>
+              <a class="btnClick" *ngIf="this.userData?.role?.roleName !== 'Approver'" (click)="onViewDetail(i)"><i
+                  class="las la-eye"></i></a>
+
+              <a class="btnClick"  *ngIf="(userData?.role?.roleName !== 'Approver' && userData?.role?.roleName !== 'Resolver') || (userData?.role?.roleName === 'Approver' || userData?.role?.roleName === 'Resolver') && i.department.departmentName !== 'Zenoti' || i.department.departmentName == 'Admin'" (click)="onEdit(i)"><i
+                  class="las la-edit"></i></a>
+
+              <a class="btnClick" *ngIf="(userData?.role?.roleName == 'Approver' && userData?.role?.roleName == 'Resolver') || (userData?.role?.roleName === 'Approver' || userData?.role?.roleName === 'Resolver') && i.department.departmentName == 'Zenoti' || i.department.departmentName == 'Admin'" (click)="onApproverEdit(i)"><i
+                  class="las la-edit"></i></a>
+
+              <a class="btnClick"
+                *ngIf="this.userData?.role?.roleName == 'Approver' && this.userData?.username == i.assignedTo?.username && i.l1ticketApproval == 'APPROVAL_PENDING' "
+                (click)="onAprove(i)"><i class="las la-check"></i>
+              </a>
+
+              <a class="btnClick"
+                *ngIf="this.userData?.role?.roleName == 'Approver' && this.userData?.username == i.assignedTo?.username && i.l1ticketApproval == 'APPROVED' && i.l2ticketApproval == 'APPROVAL_PENDING'"
+                (click)="onAprove(i)"><i class="las la-check"></i>
+              </a>
+
+              <!-- <a class="btnClick disabled"
+                *ngIf="this.userData?.role?.roleName == 'Approver' && this.userData?.username == i.assignedTo?.username && i.l1ticketApproval == 'APPROVED' && i.l2ticketApproval != 'APPROVAL_PENDING' ||  i.l1ticketApproval != 'APPROVAL_PENDING' && i.l2ticketApproval == null "><i
+                  class="las la-check"></i></a> -->
+
+              <a class="btnClick"
+                *ngIf="this.userData?.role?.roleName == 'Approver' && this.userData?.username == i.assignedTo?.username && i.l1ticketApproval == 'APPROVED' && i.l2ticketApproval == 'APPROVAL_PENDING'"
+                (click)="onReject(i)"><i class="las la-times"></i></a>
+
+              <a class="btnClick"
+                *ngIf="this.userData?.role?.roleName == 'Approver' && this.userData?.username == i.assignedTo?.username && i.l1ticketApproval == 'APPROVAL_PENDING' "
+                (click)="onReject(i)"><i class="las la-times"></i></a>
+
+              <!-- <a class="btnClick disabled"
+                *ngIf="this.userData?.role?.roleName == 'Approver' && this.userData?.username == i.assignedTo?.username && i.l1ticketApproval == 'APPROVED' && i.l2ticketApproval != 'APPROVAL_PENDING' ||  i.l1ticketApproval != 'APPROVAL_PENDING' && i.l2ticketApproval == null "><i
+                  class="las la-times"></i></a> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf="data.length === 0" class="text-center">
+        <Strong class="text-danger">No records found</Strong>
+      </div>
+      <div *ngIf="(data | customFilter: term).length === 0 && data.length > 0">
+        No results found.
+      </div>
+    </div>
+    <div class="clearfix" *ngIf="!isProceess && data.length > 0">
+      <ul class="pagination">
+        <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+        </pagination-controls>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+.static-page{ padding:15px 30px; } 
+.static-page .main-logo img{ max-height:40px; }
+
+
+.content h4, .content h5, .content h6 {
+    font-size:18px;
+    font-weight:500;
+    margin-bottom: 10px;
+    margin-top: 30px;
+    color: #092b49;
+    border-left: 5px solid #00abc5;
+    padding-left: 10px;
+}
+
+.content p {
+    line-height: 1.75;
+    color: #555;
+    font-size:14px;
+}
+
+.content ul {
+    list-style: disc;
+    padding-left: 30px;
+    margin: 20px 0px;
+}
+.content ul li {
+    margin: 10px 0px;
+}
