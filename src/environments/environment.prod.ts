@@ -17,14 +17,14 @@ export const environment = {
 
     _subdomain: 'prime',
     _subdomain1: 'cdc',
-    _subdomain2: '',
-    _subdomain3: '',
-    _subdomain4: '',
-    _subdomain5: '',
-    _subdomain6: '',
-    _subdomain7: '',
-    _subdomain8: '',
-    _subdomain9: '',
+    _subdomain2: 'TCPL',
+    _subdomain3: 'TDE',
+    _subdomain4: 'Application',
+    _subdomain5: 'Administration',
+    _subdomain6: 'Marketing',
+    _subdomain7: 'Production',
+    _subdomain8: 'Accounting',
+    _subdomain9: 'Design',
 };
 
 
