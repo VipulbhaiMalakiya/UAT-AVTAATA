@@ -140,6 +140,7 @@ export const environment = {
 const loginUrl = (localStorage.getItem('loginUrl') || '').toLowerCase();
 if (loginUrl) {
     const matchedSubdomain = environment._subdomains.find(subdomain => loginUrl === subdomain.toLowerCase());
+    console.log("Hello",matchedSubdomain,loginUrl)
     if (matchedSubdomain) {
         environment.apiUrl = `https://${matchedSubdomain}.${environment._APImainDomain}`;
     } else {

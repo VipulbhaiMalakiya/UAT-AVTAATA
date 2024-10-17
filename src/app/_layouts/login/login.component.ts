@@ -36,13 +36,17 @@ export class LoginComponent implements OnInit {
     }
     ngOnInit(): void {
 
-        if (!localStorage.getItem('loginUrl')) {
-            let currentUrl = window.location.href;
-            let url = new URL(currentUrl);
-            let hostname = url.hostname;
-            let subdomain = hostname.split('.')[0];
+        let subdomain = window.location.hostname.split('.')[0].toLocaleLowerCase();
+
+        if (!localStorage.getItem('loginUrl') && subdomain) {
             localStorage.setItem('loginUrl', subdomain);
         }
+        
+        if (!localStorage.getItem('hasRefreshed')) {
+            localStorage.setItem('hasRefreshed', 'true');
+            window.location.reload();
+        }
+        
         const d: any = localStorage.getItem('userData');
         this.logUsers = JSON.parse(d);
         if (this.logUsers) {
