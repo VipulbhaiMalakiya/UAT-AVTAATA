@@ -71,36 +71,6 @@ export class DefaultLoginComponent implements OnInit {
         } else {
             window.location.href = `${environment.ReqUrl}${environment.appUrl}`;
         }
-
-
-        // if (!subdomain) {
-        //     window.location.href = `${environment.ReqUrl}${environment.appUrl}`;
-        // } else {
-        //     if (subdomain === environment._subdomain.toLowerCase()) {
-        //         window.location.href = `${environment.ReqUrl}${subdomain}.${environment.appUrl}`;
-        //     } else if (subdomain === environment._subdomain1.toLowerCase()) {
-        //         window.location.href = `${environment.ReqUrl.toLowerCase()}${subdomain}.${environment.appUrl}`;
-        //     } else if (subdomain === environment._subdomain2.toLowerCase()) {
-        //         window.location.href = `${environment.ReqUrl.toLowerCase()}${subdomain}.${environment.appUrl}`;
-        //     } else if (subdomain === environment._subdomain3.toLowerCase()) {
-        //         window.location.href = `${environment.ReqUrl}${subdomain}.${environment.appUrl}`;
-        //     } else if (subdomain === environment._subdomain4.toLowerCase()) {
-        //         window.location.href = `${environment.ReqUrl.toLowerCase()}${subdomain}.${environment.appUrl}`;
-        //     } else if (subdomain === environment._subdomain5.toLowerCase()) {
-        //         window.location.href = `${environment.ReqUrl}${subdomain}.${environment.appUrl}`;
-        //     } else if (subdomain === environment._subdomain6.toLowerCase()) {
-        //         window.location.href = `${environment.ReqUrl}${subdomain}.${environment.appUrl}`;
-        //     } else if (subdomain === environment._subdomain7.toLowerCase()) {
-        //         window.location.href = `${environment.ReqUrl}${subdomain}.${environment.appUrl}`;
-        //     } else if (subdomain === environment._subdomain8.toLowerCase()) {
-        //         window.location.href = `${environment.ReqUrl}${subdomain}.${environment.appUrl}`;
-        //     } else if (subdomain === environment._subdomain9.toLowerCase()) {
-        //         window.location.href = `${environment.ReqUrl}${subdomain}.${environment.appUrl}`;
-        //     } else {
-        //         window.location.href = `${environment.ReqUrl}${environment.appUrl}`;
-        //     }
-        // }
-
     }
 
     getSubdomainFromUrl(loginUrl: string): string {
