@@ -28,7 +28,7 @@ export class DefaultLoginComponent implements OnInit {
         private EncrDecr: EncrDecrService
     ) {
         this.titleService.setTitle('CDC - Login');
-        this.loginForm = this.formBuilder.group({ username: ['https://tcplconnecto.com/#/login', Validators.required] });
+        this.loginForm = this.formBuilder.group({ username: [`${environment.ReqUrl}${environment.appUrl}`, Validators.required] });
     }
     toggleFieldTextType() {
         this.showPassword = !this.showPassword;
@@ -59,39 +59,39 @@ export class DefaultLoginComponent implements OnInit {
         localStorage.setItem('loginUrl', subdomain ?? '');
         if (!subdomain) {
             //  subdomainUrl = 'http://localhost:4200/#/login';
-            subdomainUrl = `https://${environment.appUrl}`;
+            subdomainUrl = `${environment.ReqUrl}${environment.appUrl}`;
 
         } else {
             switch (subdomain) {
                 case environment._subdomain:
-                    subdomainUrl = `https://${subdomain}.${environment.appUrl}`;
+                    subdomainUrl = `${environment.ReqUrl}${subdomain}.${environment.appUrl}`;
                     break;
                 case environment._subdomain1:
-                    subdomainUrl = `https://${subdomain}.${environment.appUrl}`;
+                    subdomainUrl = `${environment.ReqUrl}${subdomain}.${environment.appUrl}`;
                     break;
                 case environment._subdomain2:
-                    subdomainUrl = `https://${subdomain}.${environment.appUrl}`;
+                    subdomainUrl = `${environment.ReqUrl}${subdomain}.${environment.appUrl}`;
                     break;
                 case environment._subdomain3:
-                    subdomainUrl = `https://${subdomain}.${environment.appUrl}`;
+                    subdomainUrl = `${environment.ReqUrl}${subdomain}.${environment.appUrl}`;
                     break;
                 case environment._subdomain4:
-                    subdomainUrl = `https://${subdomain}.${environment.appUrl}`;
+                    subdomainUrl = `${environment.ReqUrl}${subdomain}.${environment.appUrl}`;
                     break;
                 case environment._subdomain5:
-                    subdomainUrl = `https://${subdomain}.${environment.appUrl}`;
+                    subdomainUrl = `${environment.ReqUrl}${subdomain}.${environment.appUrl}`;
                     break;
                 case environment._subdomain6:
-                    subdomainUrl = `https://${subdomain}.${environment.appUrl}`;
+                    subdomainUrl = `${environment.ReqUrl}${subdomain}.${environment.appUrl}`;
                     break;
                 case environment._subdomain7:
-                    subdomainUrl = `https://${subdomain}.${environment.appUrl}`;
+                    subdomainUrl = `${environment.ReqUrl}${subdomain}.${environment.appUrl}`;
                     break;
                 case environment._subdomain8:
-                    subdomainUrl = `https://${subdomain}.${environment.appUrl}`;
+                    subdomainUrl = `${environment.ReqUrl}${subdomain}.${environment.appUrl}`;
                     break;
                 case environment._subdomain9:
-                    subdomainUrl = `https://${subdomain}.${environment.appUrl}`;
+                    subdomainUrl = `${environment.ReqUrl}${subdomain}.${environment.appUrl}`;
                     break;
                 default:
                     subdomainUrl = `${environment.appUrl}`;
