@@ -33,6 +33,8 @@ import { ContactUsComponent } from './_layouts/contact-us/contact-us.component';
 import { SendCatalogueComponent } from './modules/send-catalogue/send-catalogue.component';
 import { DefaultLoginComponent } from './modules/2024/default-login/default-login.component';
 
+import { NgSelectModule } from '@ng-select/ng-select';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,6 +55,7 @@ import { DefaultLoginComponent } from './modules/2024/default-login/default-logi
   imports: [
     BrowserModule,
     AppRoutingModule,
+    NgSelectModule,
     HttpClientModule,
     SharedModule,
     ReactiveFormsModule,

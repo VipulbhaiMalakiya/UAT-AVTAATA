@@ -26,6 +26,7 @@
     "@canvasjs/charts": "^3.8.10",
     "@ctrl/ngx-emoji-mart": "^9.2.0",
     "@ng-bootstrap/ng-bootstrap": "^14.0.1",
+    "@ng-select/ng-select": "^10.0.4",
     "@ngrx/component-store": "^16.0.0",
     "@ngrx/effects": "^16.0.1",
     "@ngrx/entity": "^16.0.0",

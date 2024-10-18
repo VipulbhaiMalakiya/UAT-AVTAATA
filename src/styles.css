@@ -1,5 +1,7 @@
 @import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 @import '../node_modules/bootstrap-icons/font/bootstrap-icons.css';
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
 
 /* Vipul Css Start  */
 input.ng-invalid.ng-touched,

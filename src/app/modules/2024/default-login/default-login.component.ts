@@ -18,6 +18,7 @@ export class DefaultLoginComponent implements OnInit {
     logUser: any;
     loginForm: any;
     logUsers: any;
+    subdomains: string[] = environment._subdomains;
     public showPassword: boolean = false;
     constructor(
         private formBuilder: FormBuilder,
@@ -29,7 +30,7 @@ export class DefaultLoginComponent implements OnInit {
         private EncrDecr: EncrDecrService
     ) {
         this.titleService.setTitle('CDC - Login');
-        this.loginForm = this.formBuilder.group({ username: [`${environment.ReqUrl}${environment.appUrl}`, Validators.required] });
+        this.loginForm = this.formBuilder.group({ username: [null, Validators.required] });
     }
     toggleFieldTextType() {
         this.showPassword = !this.showPassword;

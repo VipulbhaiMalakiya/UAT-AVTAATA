@@ -19,12 +19,12 @@
                     </div>
                     <form class="login-form" name="cform" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                         <div class="form-group">
-                            <label for="username">Login Url</label>
-                            <input type="text" class="form-control" formControlName="username" name="username"
-                                id="username" placeholder="Login Url">
-                            <div class="login-user-ico">
-                                <i class="las la-user"></i>
-                            </div>
+                            <label for="username">Select a domain</label>
+
+                            <ng-select [items]="subdomains" bindLabel="name"  formControlName="username" placeholder="Select a domain">
+                                <ng-option *ngFor="let subdomain of subdomains" [value]="subdomain">{{ subdomain }}</ng-option>
+                            </ng-select>
+
                             <div *ngIf="shouldShowError('username','required')" class="form-validate-err">
                                 This field is required
                             </div>
