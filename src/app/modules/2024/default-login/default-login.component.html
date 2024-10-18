@@ -21,8 +21,18 @@
                         <div class="form-group">
                             <label for="username">Select a domain</label>
 
-                            <ng-select [items]="subdomains" bindLabel="name"  formControlName="username" placeholder="Select a domain">
+                            <!-- <ng-select [items]="subdomains" bindLabel="name"  formControlName="username" placeholder="Select a domain">
                                 <ng-option *ngFor="let subdomain of subdomains" [value]="subdomain">{{ subdomain }}</ng-option>
+                            </ng-select> -->
+
+
+                            <ng-select [items]="subdomains" bindLabel="name" formControlName="username"
+                                placeholder="Select a domain">
+                                <ng-option *ngFor="let subdomain of subdomains" [value]="subdomain">
+                                    <input type="checkbox" [checked]="subdomain === selectedSubdomain"
+                                        (change)="onSubdomainChecked(subdomain)" />
+                                    {{ subdomain }}
+                                </ng-option>
                             </ng-select>
 
                             <div *ngIf="shouldShowError('username','required')" class="form-validate-err">

@@ -19,6 +19,8 @@ export class DefaultLoginComponent implements OnInit {
     loginForm: any;
     logUsers: any;
     subdomains: string[] = environment._subdomains;
+    selectedSubdomain: any;
+
     public showPassword: boolean = false;
     constructor(
         private formBuilder: FormBuilder,
@@ -53,6 +55,12 @@ export class DefaultLoginComponent implements OnInit {
             }
         }
     }
+
+    onSubdomainChecked(subdomain: any) {
+        this.selectedSubdomain = subdomain;
+        this.loginForm.controls['username'].setValue(subdomain);
+      }
+
     onSubmit() {
         if (this.loginForm.invalid) {
             this.loginForm.controls['username'].markAsTouched();
