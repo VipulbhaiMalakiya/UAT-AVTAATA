@@ -32,7 +32,6 @@ export class DefaultLoginComponent implements OnInit {
         this.titleService.setTitle('CDC - Login');
         this.loginForm = this.formBuilder.group({ username: [null, Validators.required] });
         this.subdomains.sort((a, b) => a.localeCompare(b));
-
     }
     toggleFieldTextType() {
         this.showPassword = !this.showPassword;
