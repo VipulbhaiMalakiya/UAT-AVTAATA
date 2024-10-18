@@ -4710,7 +4710,7 @@ label.form-label {
 
 .permis-tab1-right .form-check.form-switch {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
 }
 
 .permis-tab1-right .form-switch .form-check-input {
