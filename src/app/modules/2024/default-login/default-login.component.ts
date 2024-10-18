@@ -78,22 +78,17 @@ export class DefaultLoginComponent implements OnInit {
 
     getSubdomainFromUrl(loginUrl: string): string {
         try {
-            // Remove protocol (http:// or https://) if present
             let urlWithoutProtocol = loginUrl.replace(/(^\w+:|^)\/\//, '');
-
-            // Split by dots and slashes to handle subdomains like 'subdomain.domain.com'
             const urlParts = urlWithoutProtocol.split(/[.:\/]+/);
-
-            // Ensure there are enough parts to extract the subdomain
             if (urlParts.length >= 1) {
-                return urlParts[0].toLowerCase();  // Return the first part as the subdomain, converted to lowercase
+                return urlParts[0].toLowerCase();
             } else {
                 console.warn('Invalid login URL format.');
-                return '';  // Fallback if the URL format is not valid
+                return '';
             }
         } catch (error) {
             console.error('Error parsing the login URL:', error);
-            return '';  // Fallback if an error occurs
+            return '';
         }
     }
 
