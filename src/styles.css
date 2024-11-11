@@ -5312,3 +5312,41 @@ a.canvasjs-chart-credit {
     font-weight: 600;
     margin-bottom: 2px;
 }
+/*-----------new domain------------*/
+
+.domain-mainlogo{ margin-bottom:20px; }
+.domain-mainlogo img{ max-height:30px; }
+.domain-form-col {
+    background: #fff;
+    max-width: 450px;
+    padding:40px 30px;
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    right:100px;
+    transform: translateY(-50%);
+    box-shadow: 0px 0px 30px rgb(0 0 0 / 10%);
+}
+
+.domain-form label{ width: 100%; margin-bottom:10px; }
+
+.domain-mainlogo h1{ color: #151515; font-size:21px; font-weight:600; margin-bottom:20px; margin-top:30px; }
+.domain-form .common-btn{ background-image: linear-gradient(to right, #EC5449 , #73579F); }
+.domain-form .common-btn:hover{ background-image: linear-gradient(to right, #73579F , #EC5449); }
+.domain-form .form-group{ margin-top: 15px; }
+
+.copy-term{ margin-top:30px; font-size: 13px; color: #999; margin-bottom: 0px; }
+
+.domain-pic img{ min-height: 100vh; max-height: 100vh; object-fit: cover; object-position: bottom; }
+
+@media (max-width:1180px){
+.domain-pic img{ object-position: left; }
+
+}
+
+@media (max-width:820px){
+.domain-form-col{ max-width: 90%; top: 20%; left: 50%; transform: translate(-50%, -20%); }
+.domain-form-col{ top:10%; transform: translate(-50%, -10%); }
+
+
+}
