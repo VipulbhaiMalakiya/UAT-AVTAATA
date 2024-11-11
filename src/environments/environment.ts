@@ -139,9 +139,6 @@ const loginUrl = (localStorage.getItem('loginUrl') || '').toLowerCase();
 if (loginUrl) {
     const matchedSubdomain = environment._subdomains.find(subdomain => loginUrl === subdomain.toLowerCase());
     if (matchedSubdomain) {
-
-        console.log(matchedSubdomain);
-
         if (matchedSubdomain == 'Other'){
             environment.apiUrl = `https://${environment._APImainDomain}`;
         }else{
