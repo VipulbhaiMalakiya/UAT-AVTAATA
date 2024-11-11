@@ -7,12 +7,7 @@ import { environment } from 'src/environments/environment';
 })
 export class HeadersService {
 
-  constructor(private http: HttpClient) {
-
-   }
-
-
-
+  constructor(private http: HttpClient) {}
   getJWTHeaders(){
     let headers = new HttpHeaders({
       'Authorization': `Bearer ${localStorage.getItem('Token')}`,
@@ -20,8 +15,6 @@ export class HeadersService {
       'Access-Control-Allow-Origin': '*',
     //   'X-Telnet' : localStorage.getItem('loginUrl')  || ''
     'X-Telnet': (localStorage.getItem('loginUrl') || '').charAt(0)
-
-
     })
     return headers;
   }
