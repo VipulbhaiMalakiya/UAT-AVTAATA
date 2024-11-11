@@ -31,11 +31,16 @@ export class AuthenticationService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
-      'X-Telnet' : localStorage.getItem('loginUrl')  || ''
+      //'X-Telnet' : localStorage.getItem('loginUrl')  || ''
+      'X-Telnet': (localStorage.getItem('loginUrl') || '').charAt(0)
+
       // 'rejectUnauthorized': 'false'
 
       // Add any other required headers
     });
+
+    console.log( localStorage.getItem('loginUrl')  || '')
+    console.log(headers)
 
     const options = { headers: headers, rejectUnauthorized: false };
     return this.http.post<any>(`${environment.apiUrl}/authenticate`, data, options)

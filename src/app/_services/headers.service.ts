@@ -18,7 +18,9 @@ export class HeadersService {
       'Authorization': `Bearer ${localStorage.getItem('Token')}`,
       // 'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
-      'X-Telnet' : localStorage.getItem('loginUrl')  || ''
+    //   'X-Telnet' : localStorage.getItem('loginUrl')  || ''
+    'X-Telnet': (localStorage.getItem('loginUrl') || '').charAt(0)
+
 
     })
     return headers;

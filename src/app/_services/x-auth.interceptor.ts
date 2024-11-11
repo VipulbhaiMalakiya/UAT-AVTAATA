@@ -13,7 +13,9 @@ export class XAuthInterceptor implements HttpInterceptor {
     if (localStorage.getItem('loginUrl')) {
       const clonedRequest = req.clone({
         setHeaders: {
-            'X-Telnet' : localStorage.getItem('loginUrl')  || ''
+            // 'X-Telnet' : localStorage.getItem('loginUrl')  || ''
+            'X-Telnet': (localStorage.getItem('loginUrl') || '').charAt(0)
+
         }
       });
 

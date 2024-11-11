@@ -21,7 +21,8 @@ export class TokenInterceptor implements HttpInterceptor {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('Token')}`,
         'Access-Control-Allow-Origin': '*',
-        'X-Telnet' : localStorage.getItem('loginUrl')  || ''
+        // 'X-Telnet' : localStorage.getItem('loginUrl')  || ''
+        'X-Telnet': (localStorage.getItem('loginUrl') || '').charAt(0)
 
       }
     });
