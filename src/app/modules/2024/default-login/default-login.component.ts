@@ -18,7 +18,6 @@ export class DefaultLoginComponent implements OnInit {
     logUser: any;
     loginForm: any;
     logUsers: any;
-    selectedSubdomain: any;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -51,10 +50,7 @@ export class DefaultLoginComponent implements OnInit {
         }
     }
 
-    onSubdomainChecked(subdomain: any) {
-        this.selectedSubdomain = subdomain;
-        this.loginForm.controls['username'].setValue(subdomain);
-    }
+
 
     onSubmit() {
         if (this.loginForm.invalid) {
@@ -64,9 +60,7 @@ export class DefaultLoginComponent implements OnInit {
 
         let data: any = { loginUrl: this.loginForm.value.username };
         const subdomain = this.getSubdomainFromUrl(data.loginUrl).toLowerCase() ?? '';
-        console.log(subdomain)
         localStorage.setItem('loginUrl', subdomain ?? '');
-
 
         // Redirect logic
         const baseUrl = `${environment.ReqUrl}${environment.appUrl}`;
@@ -90,8 +84,6 @@ export class DefaultLoginComponent implements OnInit {
             return '';
         }
     }
-
-
 
 
     shouldShowError(controlName: string, errorName: string) {
