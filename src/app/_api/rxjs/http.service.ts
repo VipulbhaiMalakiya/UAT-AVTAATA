@@ -65,7 +65,9 @@ export class HttpService {
     return {
       'Authorization': `Bearer ${localStorage.getItem('Token')}`,
       'Access-Control-Allow-Origin': '*',
-      'X-Telnet' : localStorage.getItem('loginUrl')  || ''
+    //   'X-Telnet' : localStorage.getItem('loginUrl')  || ''
+      'X-Telnet': (localStorage.getItem('loginUrl') || '').charAt(0)
+
       // 'Content-Type':'application/json'
     }
   }

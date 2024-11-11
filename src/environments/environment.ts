@@ -13,6 +13,8 @@ export const environment = {
 };
 
 environment.apiUrl = `https://${environment._APImainDomain}`;
-
-
+// const loginUrl = (localStorage.getItem('loginUrl') || '').toLowerCase();
+// if (loginUrl) {
+//     environment.apiUrl = `https://${loginUrl}.${environment._APImainDomain}`;
+// }
 
