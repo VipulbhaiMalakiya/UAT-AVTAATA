@@ -21,7 +21,6 @@ export class DefaultLoginComponent implements OnInit {
     subdomains: string[] = environment._subdomains;
     selectedSubdomain: any;
 
-    public showPassword: boolean = false;
     constructor(
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
@@ -35,9 +34,7 @@ export class DefaultLoginComponent implements OnInit {
         this.loginForm = this.formBuilder.group({ username: [null, Validators.required] });
         this.subdomains.sort((a, b) => a.localeCompare(b));
     }
-    toggleFieldTextType() {
-        this.showPassword = !this.showPassword;
-    }
+
     ngOnInit(): void {
         const d: any = localStorage.getItem('userData');
         this.logUsers = JSON.parse(d);
