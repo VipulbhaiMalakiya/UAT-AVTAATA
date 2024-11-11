@@ -50,8 +50,6 @@ export class DefaultLoginComponent implements OnInit {
         }
     }
 
-
-
     onSubmit() {
         if (this.loginForm.invalid) {
             this.loginForm.controls['username'].markAsTouched();
