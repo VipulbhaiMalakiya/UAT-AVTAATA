@@ -130,7 +130,9 @@ export const environment = {
         'ContinuousDeployment',
         'SoftwareTesting',
         'QualityAssurance',
-        'CodeReview'
+        'CodeReview',
+        'Other'
+
     ]
 
 
@@ -141,11 +143,16 @@ const loginUrl = (localStorage.getItem('loginUrl') || '').toLowerCase();
 if (loginUrl) {
     const matchedSubdomain = environment._subdomains.find(subdomain => loginUrl === subdomain.toLowerCase());
     if (matchedSubdomain) {
-        environment.apiUrl = `https://${matchedSubdomain}.${environment._APImainDomain}`;
-    } else {
+        if (matchedSubdomain == 'other'){
+            environment.apiUrl = `https://${environment._APImainDomain}`;
+        }else{
+            environment.apiUrl = `https://${matchedSubdomain}.${environment._APImainDomain}`;
+        }
+    }
+
+    else {
         environment.apiUrl = `https://${environment._APImainDomain}`;
     }
 }
-
 
 
