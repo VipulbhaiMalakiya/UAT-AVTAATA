@@ -80,6 +80,8 @@ export class LoginComponent implements OnInit {
                 return '../assets/images/logo.png';
         }
     }
+
+
     onSubmit() {
         if (this.loginForm.invalid) {
             this.loginForm.controls['username'].markAsTouched();
