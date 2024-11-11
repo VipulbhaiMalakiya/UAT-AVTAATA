@@ -18,7 +18,6 @@ export class DefaultLoginComponent implements OnInit {
     logUser: any;
     loginForm: any;
     logUsers: any;
-    subdomains: string[] = environment._subdomains;
     selectedSubdomain: any;
 
     constructor(
@@ -32,7 +31,6 @@ export class DefaultLoginComponent implements OnInit {
     ) {
         this.titleService.setTitle('CDC - Login');
         this.loginForm = this.formBuilder.group({ username: [null, Validators.required] });
-        this.subdomains.sort((a, b) => a.localeCompare(b));
     }
 
     ngOnInit(): void {
@@ -66,18 +64,15 @@ export class DefaultLoginComponent implements OnInit {
 
         let data: any = { loginUrl: this.loginForm.value.username };
         const subdomain = this.getSubdomainFromUrl(data.loginUrl).toLowerCase() ?? '';
+        console.log(subdomain)
         localStorage.setItem('loginUrl', subdomain ?? '');
 
-        const validSubdomains = environment._subdomains.map(sub => sub.toLowerCase());
 
         // Redirect logic
-        if (!subdomain) {
-            window.location.href = `${environment.ReqUrl}${environment.appUrl}`;
-        } else if (validSubdomains.includes(subdomain)) {
-            window.location.href = `${environment.ReqUrl}${subdomain}.${environment.appUrl}`;
-        } else {
-            window.location.href = `${environment.ReqUrl}${environment.appUrl}`;
-        }
+        const baseUrl = `${environment.ReqUrl}${environment.appUrl}`;
+        const redirectUrl = subdomain ? `${environment.ReqUrl}${subdomain}.${environment.appUrl}` : baseUrl;
+
+        window.location.href = redirectUrl;
     }
 
     getSubdomainFromUrl(loginUrl: string): string {
