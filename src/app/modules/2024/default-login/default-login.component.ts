@@ -56,7 +56,7 @@ export class DefaultLoginComponent implements OnInit {
     onSubdomainChecked(subdomain: any) {
         this.selectedSubdomain = subdomain;
         this.loginForm.controls['username'].setValue(subdomain);
-      }
+    }
 
     onSubmit() {
         if (this.loginForm.invalid) {
