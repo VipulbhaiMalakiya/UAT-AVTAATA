@@ -14,6 +14,8 @@ export class LoginComponent implements OnInit {
     logUser: any;
     loginForm: any;
     logUsers: any;
+    logoUrl: string = '';
+
     public showPassword: boolean = false;
     constructor(
         private formBuilder: FormBuilder,
@@ -37,16 +39,18 @@ export class LoginComponent implements OnInit {
     ngOnInit(): void {
 
         let subdomain = window.location.hostname.split('.')[0].toLocaleLowerCase();
+        // Set a logo URL based on the subdomain
+        this.logoUrl = this.getLogoUrl(subdomain);
 
         if (!localStorage.getItem('loginUrl') && subdomain) {
             localStorage.setItem('loginUrl', subdomain);
         }
-        
+
         if (!localStorage.getItem('hasRefreshed')) {
             localStorage.setItem('hasRefreshed', 'true');
             window.location.reload();
         }
-        
+
         const d: any = localStorage.getItem('userData');
         this.logUsers = JSON.parse(d);
         if (this.logUsers) {
@@ -61,6 +65,19 @@ export class LoginComponent implements OnInit {
                 this.router.navigate(['/assigned-ticket-list']);
                 this.toastr.success('You are successfully logged in!');
             }
+        }
+    }
+
+    private getLogoUrl(subdomain: string): string {
+        switch (subdomain) {
+            case 'prime':
+                return '../assets/images/prime_logo_icon.svg';
+            case 'ficci':
+                return '../assets/images/FICCI_logo.png';
+            case 'youtube':
+                return '../assets/images/youtube-logo.png';
+            default:
+                return '../assets/images/logo.png';
         }
     }
     onSubmit() {
