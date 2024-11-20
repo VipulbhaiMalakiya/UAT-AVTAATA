@@ -182,6 +182,10 @@ export class ChatComponent
         }
     }
 
+
+
+
+
     replaceAndBoldPlaceholder550(data?: any) {
         try {
 
@@ -1724,4 +1728,11 @@ export class ChatComponent
         var componentInstance = modalRef.componentInstance as CatalogComponent;
         componentInstance.catalog = e;
     }
+
+
+    getFormattedText(text: string): string {
+        const formattedText = text.replace(/ \/n/g, '<br>');
+        return formattedText;
+    }
+
 }
