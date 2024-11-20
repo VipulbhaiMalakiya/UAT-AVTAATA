@@ -177,8 +177,7 @@ export class ChatComponent
             const replacedString = originalString.replace('{{1}}', name).replace('{{2}}', pwd);
             return replacedString;
         } catch (error) {
-            // Handle the error here, e.g., log it or return a default value
-            console.error('Error in replaceAndBoldPlaceholder1:', error);
+
             return 'Error: Unable to replace placeholders';
         }
     }
@@ -191,8 +190,6 @@ export class ChatComponent
             const replacedString = originalString.replace('{{1}}', name);
             return replacedString;
         } catch (error) {
-            // Handle the error here, e.g., log it or return a default value
-            console.error('Error in replaceAndBoldPlaceholder1:', error);
             return 'Error: Unable to replace placeholders';
         }
     }
