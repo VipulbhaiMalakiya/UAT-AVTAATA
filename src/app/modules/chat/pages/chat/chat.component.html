@@ -201,11 +201,8 @@
                                             class="las la-map-marked"></i></span>
                                 </div>
                                 <div class="chat-info py-1">
-                                    <span class="d-block" *ngIf="
-                                            i.fullName !== null && i.count == 0
-                                        ">
+                                    <span class="d-block" *ngIf=" i.fullName !== null && i.count == 0">
                                         {{ i.fullName }}
-                                        <!-- <span class="user-status">•</span> -->
                                     </span>
                                     <span class="d-block" *ngIf="
                                             i.fullName !== null && i.count != 0
