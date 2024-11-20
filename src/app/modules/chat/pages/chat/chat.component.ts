@@ -489,6 +489,13 @@ export class ChatComponent
 
 
 
+
+        // this.masterName = `/customer/seen-ByMobileNo/${this.contact}/seen/false`;
+        // this.subscription = this.apiService.getAll(this.masterName).pipe(take(1)).subscribe(data => {
+        //     console.log(data)
+        // }, error => {
+        // })
+
         this.checkstatus();
 
 
