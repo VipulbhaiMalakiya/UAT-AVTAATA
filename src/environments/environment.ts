@@ -9,7 +9,7 @@ export const environment = {
     subDomain: localStorage.getItem('loginUrl') || '',
     apiUrl: '',
     // SOCKET_ENDPOINT: 'wss://tcplconnecto.com/v2.0/chat',
-    SOCKET_ENDPOINT: 'wss://tcplconnecto.com/chat',
+    SOCKET_ENDPOINT: 'wss://customerdigitalconnect.com/chat',
 
     googleMapsApiKey: 'YOUR_API_KEY',
 
