@@ -3,7 +3,9 @@ export const environment = {
     ReqUrl: 'http://',
     EncryptKey: '1203199320052021',
     appUrl: 'localhost:4200/#/login',
-    _APImainDomain: 'tcplconnecto.com/v2.0',
+    // _APImainDomain: 'tcplconnecto.com/v2.0',
+    _APImainDomain: 'customerdigitalconnect.com',
+
     subDomain: localStorage.getItem('loginUrl') || '',
     apiUrl: '',
     SOCKET_ENDPOINT: 'wss://tcplconnecto.com/v2.0/chat',
