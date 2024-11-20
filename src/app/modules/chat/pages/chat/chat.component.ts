@@ -1735,4 +1735,5 @@ export class ChatComponent
         return formattedText;
     }
 
+
 }
