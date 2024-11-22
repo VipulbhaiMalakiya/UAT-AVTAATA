@@ -10,10 +10,9 @@ import { AppService } from 'src/app/_services/app.service';
 @Component({
     selector: 'app-order-list',
     templateUrl: './order-list.component.html',
-    styleUrls: [ './order-list.component.css' ]
+    styleUrls: ['./order-list.component.css']
 })
-export class OrderListComponent implements OnInit
-{
+export class OrderListComponent implements OnInit {
 
 
     isProceess: boolean = true;
@@ -24,7 +23,7 @@ export class OrderListComponent implements OnInit
     page: number = 1;
     count: number = 0;
     tableSize: number = 7;
-    tableSizes: any = [ 3, 6, 9, 12 ];
+    tableSizes: any = [3, 6, 9, 12];
 
     constructor(private apiService: ApiService,
         private cd: ChangeDetectorRef,
@@ -35,46 +34,38 @@ export class OrderListComponent implements OnInit
     ) { }
 
 
-    ngOnInit(): void
-    {
+    ngOnInit(): void {
         this.fatchData();
     }
 
 
-    fatchData()
-    {
+    fatchData() {
         this.isProceess = true;
         this.masterName = "/orders/details";
-        this.subscription = this.apiService.getAll(this.masterName).pipe(take(1)).subscribe(data =>
-        {
-            if (data)
-            {
+        this.subscription = this.apiService.getAll(this.masterName).pipe(take(1)).subscribe(data => {
+            if (data) {
                 this.data = data.data;
                 this.count = this.data.length;
                 this.isProceess = false;
                 this.cd.detectChanges();
             }
 
-        }, error =>
-        {
+        }, error => {
             this.isProceess = false;
         })
     }
 
-    onDownload()
-    {
+    onDownload() {
         let recordNumber = 1;
 
-        const exportData = this.data.map((x) =>
-        {
-            return x.orderProducts.map(product =>
-            {
+        const exportData = this.data.map((x) => {
+            return x.orderProducts.map(product => {
                 const price = parseFloat(product.price) || 0;
                 const quantity = product.quantity;
 
                 return {
-                    'SR.No': (recordNumber++).toString(),
-                    Id: x.id || '',
+                    // 'SR.No': (recordNumber++).toString(),
+                    // Id: x.id || '',
                     'Order ID': x.orderId || '',
                     'Customer Name': x.customerName || '',
                     'Mobile Number': x.mobileNumber || '',
@@ -94,8 +85,8 @@ export class OrderListComponent implements OnInit
         }).flat();
 
         const headers = [
-            'SR.No',
-            'Id',
+            // 'SR.No',
+            // 'Id',
             'Order ID',
             'Customer Name',
             'Mobile Number',
@@ -116,143 +107,32 @@ export class OrderListComponent implements OnInit
     }
 
 
-    // onDownload()
-    // {
-    //     const exportData: any = [];
-
-    //     // Iterate through each order
-    //     this.data.forEach(order =>
-    //     {
-    //         // Calculate total order amount
-    //         const totalOrderAmount = order.orderProducts.reduce((sum, product) =>
-    //         {
-    //             const price = parseFloat(product.price) || 0;
-    //             const quantity = product.quantity || 0;
-    //             return sum + (price * quantity);
-    //         }, 0);
-
-    //         // Get the order details
-    //         const orderDetails = {
-    //             'R.No': '', // To be filled later
-    //             Id: order.id || '',
-    //             'Order ID': order.orderId || '',
-    //             'Customer Name': order.customerName || '',
-    //             'Mobile Number': order.mobileNumber || '',
-    //             'Delivery Address': order.deliveryAddress || '',
-    //             'Order Status': order.orderStatus || '',
-    //             'Order Date': order.orderDate ? new Date(order.orderDate).toLocaleDateString() : '',
-    //             'Total Order Amount': totalOrderAmount.toString() // Total order amount added
-    //         };
-
-    //         // Iterate through the products of the order
-    //         order.orderProducts.forEach((product, index) =>
-    //         {
-    //             const price = parseFloat(product.price) || 0;
-    //             const quantity = product.quantity || 0;
-    //             const totalAmount = (quantity * price).toString();
-
-    //             // For the first product, add the order details
-    //             if (index === 0)
-    //             {
-    //                 // Assign record number
-    //                 orderDetails[ 'R.No' ] = (exportData.length + 1).toString();
-    //                 // Add the combined order details with the first product
-    //                 exportData.push({
-    //                     ...orderDetails,
-    //                     'Product ID': product.productId || '',
-    //                     'Product Name': product.productName || '',
-    //                     'Product Description': product.productDescription || '',
-    //                     'Price': price.toString(),
-    //                     'Currency': product.currency || '',
-    //                     'Availability': product.availability || '',
-    //                     'Quantity': quantity.toString(),
-    //                     'Total Amount': totalAmount
-    //                 });
-    //             } else
-    //             {
-    //                 // For subsequent products, add a new row without repeating order details
-    //                 exportData.push({
-    //                     'R.No': '',
-    //                     Id: '',
-    //                     'Order ID': '',
-    //                     'Customer Name': '',
-    //                     'Mobile Number': '',
-    //                     'Delivery Address': '',
-    //                     'Order Status': '',
-    //                     'Order Date': '',
-    //                     'Total Order Amount': '', // Ensure the order total amount is not repeated
-    //                     'Product ID': product.productId || '',
-    //                     'Product Name': product.productName || '',
-    //                     'Product Description': product.productDescription || '',
-    //                     'Price': price.toString(),
-    //                     'Currency': product.currency || '',
-    //                     'Availability': product.availability || '',
-    //                     'Quantity': quantity.toString(),
-    //                     'Total Amount': totalAmount
-    //                 });
-    //             }
-    //         });
-    //     });
-
-    //     const headers = [
-    //         'R.No',
-    //         'Id',
-    //         'Order ID',
-    //         'Customer Name',
-    //         'Mobile Number',
-    //         'Delivery Address',
-    //         'Order Status',
-    //         'Order Date',
-    //         'Total Order Amount', // Added to headers
-    //         'Product ID',
-    //         'Product Name',
-    //         'Product Description',
-    //         'Price',
-    //         'Currency',
-    //         'Availability',
-    //         'Quantity',
-    //         'Total Amount'
-    //     ];
-
-    //     this.appService.exportAsExcelFile(exportData, 'Order-Details', headers);
-    // }
-
-
-
-
-    calculateIndex(page: number, index: number): number
-    {
+    calculateIndex(page: number, index: number): number {
         return (page - 1) * this.tableSize + index + 1;
     }
 
-    onTableDataChange(event: any)
-    {
+    onTableDataChange(event: any) {
         this.page = event;
     }
 
-    onEdit(dataItem: any)
-    {
+    onEdit(dataItem: any) {
         this.isProceess = true;
         const modalRef = this.modalService.open(OrderUpdateComponent, { size: "sm" });
-        if (modalRef)
-        {
+        if (modalRef) {
             this.isProceess = false;
         }
-        else
-        {
+        else {
             this.isProceess = false;
         }
         var componentInstance = modalRef.componentInstance as OrderUpdateComponent;
         componentInstance.issuesMaster = dataItem;
-        modalRef.result.then((data: any) =>
-        {
-            if (data)
-            {
+        modalRef.result.then((data: any) => {
+            if (data) {
                 var model: any = {
                     orderId: dataItem.orderId,
                     Status: data.status,
                 }
-                this.masterName = `/orders/updateStatus/${ model.orderId }/Status/${ model.Status }`;
+                this.masterName = `/orders/updateStatus/${model.orderId}/Status/${model.Status}`;
                 let updateData: any = {
                     url: this.masterName,
                     model: model
@@ -261,8 +141,7 @@ export class OrderListComponent implements OnInit
                 this.subscription = this.apiService.update(updateData)
                     .pipe(
                         take(1),
-                        catchError((error) =>
-                        {
+                        catchError((error) => {
                             // Handle error
 
                             this.isProceess = false; // Corrected typo
@@ -276,19 +155,16 @@ export class OrderListComponent implements OnInit
                         })
                     )
                     .subscribe(
-                        (res: any) =>
-                        {
+                        (res: any) => {
                             // Check if the response indicates success
-                            if (res?.status === 'success')
-                            {
+                            if (res?.status === 'success') {
                                 this.toastr.success(res.message || 'Update successful!', 'Success');
                             }
 
                             this.isProceess = false; // Corrected typo
                             this.fatchData(); // Corrected typo
                         },
-                        (error) =>
-                        {
+                        (error) => {
                             console.error('Subscription error:', error);
                             this.isProceess = false; // Corrected typo
                             this.fatchData(); // Corrected typo
