@@ -1,43 +1,44 @@
 <div class="top-noti-user">
-  <div class="top-notify" (click)="toggleField()"><img src="../assets/images/bell-icon.png" alt=""><span
-      *ngIf="unreadCount > 0">{{ unreadCount }} </span></div>
-  <div class="top-user-profile">
-    <a class="dropdown-toggle" (click)="profile()" data-bs-toggle="dropdown"><img src="../assets/images/user.jpg"
-        alt="">
-    </a>
-    <ul class="dropdown-menu" [class.toggled]="isprofile">
-      <li><a><i class="bi bi-person"></i>{{this.userData?.firstName | titlecase}} {{this.userData?.lastName
-          |titlecase}}</a></li>
-      <li class="cts-pointer"><a routerLink="/" (click)="logout()"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
-    </ul>
-  </div>
+    <div class="top-notify"><a href="javascript:void(0)" (click)="toggleField()"><img
+                src="../assets/images/bell-icon.png" alt=""></a></div>
+    <div class="top-user-profile">
+        <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
+                src="../assets/images/user.jpg" alt="">
+        </a>
+
+        <ul class="dropdown-menu">
+            <li *ngIf="isAdmin"><a href="javascript:void(0)" (click)="navigateToProfile()"><i class="bi bi-person"></i>
+                    My Profile</a></li>
+            <li><a href="javascript:void(0)"><i class="bi bi-gear"></i> Settings</a></li>
+            <li><a href="javascript:void(0)" (click)="logout()"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+        </ul>
+    </div>
 </div>
-
 <div class="notification-wrapper">
-  <div id="notification" class="notification-bar" [class.toggled]="classToggled">
-    <div class="noti-head">
-      <h3>Notifications</h3>
-      <!-- <a>Mark All As Read</a> -->
-    </div>
-
-    <div class="inner-noti-sec">
-      <ng-container *ngIf="unreadCount > 0">
-        <div class="noti-col" *ngFor="let message of messages" [class.unread]="!message.read"
-          (click)="markAsRead(message)"><a>
-            <div class="noti-ico">
-              <i class="{{ message.icone }}"></i>
-            </div>
-            <p>{{ message.text }} <small>{{ message.time }}</small></p>
-          </a>
+    <div id="notification" class="notification-bar" [class.toggled]="classToggled">
+        <div class="noti-head">
+            <h3>Notifications</h3>
+            <!-- <a>Mark All As Read</a> -->
         </div>
-      </ng-container>
-      <ng-container *ngIf="unreadCount <= 0">
-        <div class="noti-col"><a>
-            <p>No Notifications Available</p>
-          </a>
-        </div>
-      </ng-container>
 
+        <div class="inner-noti-sec">
+            <ng-container *ngIf="unreadCount > 0">
+                <div class="noti-col" *ngFor="let message of messages" [class.unread]="!message.read"
+                    (click)="markAsRead(message)"><a>
+                        <div class="noti-ico">
+                            <i class="{{ message.icone }}"></i>
+                        </div>
+                        <p>{{ message.text }} <small>{{ message.time }}</small></p>
+                    </a>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="unreadCount <= 0">
+                <div class="noti-col"><a>
+                        <p>No Notifications Available</p>
+                    </a>
+                </div>
+            </ng-container>
+
+        </div>
     </div>
-  </div>
 </div>
