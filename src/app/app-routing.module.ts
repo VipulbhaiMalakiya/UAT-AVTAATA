@@ -18,7 +18,12 @@ import { DefaultLoginComponent } from './modules/2024/default-login/default-logi
 const routes: Routes = [
     { path: 'privacy-policy', component: PrivacyPolicyComponent },
     { path: 'contact-us', component: ContactUsComponent },
-    { path: '', component: DefaultLoginComponent },
+    // { path: '', component: DefaultLoginComponent },
+
+
+    { path: '', redirectTo: '/login', pathMatch: 'full' },
+    { path: 'login', component: LoginComponent },
+
     // { path: '', redirectTo: '/pre-login', pathMatch: 'full' },
     {
         path: '',
@@ -382,7 +387,7 @@ const routes: Routes = [
         ],
     },
 
-    { path: 'login', component: LoginComponent },
+    // { path: 'login', component: LoginComponent },
     // { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: 'forgot-password', component: ForgotPasswordComponent },
     { path: 'sign-up', component: SignUpComponent },
