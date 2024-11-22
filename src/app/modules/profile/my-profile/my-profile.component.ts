@@ -8,6 +8,8 @@ import { ApiService } from 'src/app/_api/rxjs/api.service';
 import { AuthenticationService } from 'src/app/_services';
 import { noLeadingSpaceValidator } from 'src/app/shared/directives/noLeadingSpaceValidator.validatot';
 import { ConfirmationDialogModalComponent } from '../../shared/components/confirmation-dialog-modal/confirmation-dialog-modal.component';
+import jwt_decode from 'jwt-decode';
+
 @Component({
     selector: 'app-my-profile',
     templateUrl: './my-profile.component.html',
@@ -19,6 +21,7 @@ export class MyProfileComponent implements OnInit {
     userData: any;
     userForm: any;
     masterName?: any;
+    tokens: any;
     constructor(
         private cd: ChangeDetectorRef,
         private modalService: NgbModal,
@@ -31,7 +34,7 @@ export class MyProfileComponent implements OnInit {
         this.titleService.setTitle("CDC - My-Profile");
         this.data = localStorage.getItem("userData");
         this.userData = JSON.parse(this.data);
-
+        this.tokens = localStorage.getItem("Token");
 
 
         this.userForm = this.formBuilder.group({
@@ -130,12 +133,23 @@ export class MyProfileComponent implements OnInit {
 
             this.apiService.update(updateData).pipe(take(1)).subscribe(res => {
                 this.toastr.success(res.message);
-                const logoutConfirmation = `Are you sure you want to logout?`;
-                const isConfirmed = confirm(logoutConfirmation);
 
-                if (isConfirmed) {
-                    this.authenticationService.logout();
-                }
+
+                var decoded: any = jwt_decode(this.tokens);
+                this.authenticationService.loginDetail(decoded.sub).then(
+                    (userInfo: any) => {
+                        localStorage.setItem('userData', JSON.stringify(userInfo));
+                    },
+                    (error: any) => { }
+                );
+
+
+                // const logoutConfirmation = `Are you sure you want to logout?`;
+                // const isConfirmed = confirm(logoutConfirmation);
+
+                // if (isConfirmed) {
+                //     this.authenticationService.logout();
+                // }
 
                 this.isProceess = false;
             }, error => {
