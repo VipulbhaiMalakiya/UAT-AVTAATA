@@ -130,13 +130,12 @@ export class MyProfileComponent implements OnInit {
 
             this.apiService.update(updateData).pipe(take(1)).subscribe(res => {
                 this.toastr.success(res.message);
-                console.log(res);
-                // const logoutConfirmation = `Are you sure you want to logout?`;
-                // const isConfirmed = confirm(logoutConfirmation);
+                const logoutConfirmation = `Are you sure you want to logout?`;
+                const isConfirmed = confirm(logoutConfirmation);
 
-                // if (isConfirmed) {
-                //   this.authenticationService.logout();
-                // }
+                if (isConfirmed) {
+                    this.authenticationService.logout();
+                }
 
                 this.isProceess = false;
             }, error => {
