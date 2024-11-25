@@ -418,34 +418,55 @@ export class ChatComponent
                 ) {
                 } else {
                     const currentUrl = this.location.path();
-                    if (currentUrl === '/admin/inbox' || currentUrl === '/admin/inbox/id' || currentUrl === '/admin/inbox/status' || currentUrl === '/inbox' || currentUrl.startsWith('/admin/inbox/')) {
+                    // if (currentUrl === '/admin/inbox' || currentUrl === '/admin/inbox/id' || currentUrl === '/admin/inbox/status' || currentUrl === '/inbox' || currentUrl.startsWith('/admin/inbox/')) {
 
-                        if (data.type === 'Receiver') {
-                            const message: string = `You got a message from ${this.getOnlyName(
-                                data.name
-                            )}`;
-                            const mobileNoExists = this.open.some((item: any) =>
-                                item.phoneNo === data.mobileNo || data.assignedto == this.userData.userId
-                            );
+                    //     if (data.type === 'Receiver') {
+                    //         const message: string = `You got a message from ${this.getOnlyName(
+                    //             data.name
+                    //         )}`;
+                    //         const mobileNoExists = this.open.some((item: any) =>
+                    //             item.phoneNo === data.mobileNo || data.assignedto == this.userData.userId
+                    //         );
 
-                            if (this.userData.role.roleName == 'Admin') {
+                    //         if (this.userData.role.roleName == 'Admin') {
 
-                                console.log('admin', data);
+                    //             this.speakNotification(message);
+                    //         }
+                    //         else if (data.assignedto == this.userData.userId || mobileNoExists) {
+                    //             this.speakNotification(message)
+                    //         }
 
-                                this.speakNotification(message);
-                            }
-                            else if (data.assignedto == this.userData.userId || mobileNoExists) {
-                                console.log('not admin', data);
+                    //     } else {
+                    //         const audio = new Audio();
+                    //         // '../../../../../assets/sound/Whatsapp Message - Sent - Sound.mp3'
+                    //         audio.play();
+                    //     }
+                    // }
 
-                                this.speakNotification(message)
-                            }
 
-                        } else {
-                            const audio = new Audio();
-                            // '../../../../../assets/sound/Whatsapp Message - Sent - Sound.mp3'
-                            audio.play();
+
+                    if (data.type === 'Receiver') {
+                        const message: string = `You got a message from ${this.getOnlyName(
+                            data.name
+                        )}`;
+                        const mobileNoExists = this.open.some((item: any) =>
+                            item.phoneNo === data.mobileNo || data.assignedto == this.userData.userId
+                        );
+
+                        if (this.userData.role.roleName == 'Admin') {
+
+                            this.speakNotification(message);
                         }
+                        else if (data.assignedto == this.userData.userId || mobileNoExists) {
+                            this.speakNotification(message)
+                        }
+
+                    } else {
+                        const audio = new Audio();
+                        // '../../../../../assets/sound/Whatsapp Message - Sent - Sound.mp3'
+                        audio.play();
                     }
+
                 }
             },
             (error: any) => {
