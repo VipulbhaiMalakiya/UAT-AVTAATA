@@ -38,6 +38,7 @@ export class LeftMainmenuComponent implements OnInit {
 
     ngOnInit() {
         this.connectWebSocket();
+        this.processContactList();
     }
 
     ngOnDestroy() {
