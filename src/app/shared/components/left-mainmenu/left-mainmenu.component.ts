@@ -6,6 +6,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { interval, Subscription, take } from 'rxjs';
 import { WhatsAppService } from 'src/app/_api/whats-app.service';
 import { WebSocketSubject } from 'rxjs/webSocket';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-left-mainmenu',
@@ -22,6 +23,8 @@ export class LeftMainmenuComponent implements OnInit {
     subscription!: Subscription;
     pollingSubscription!: Subscription;
     private socket$!: WebSocketSubject<any>;
+    private socket!: WebSocket;
+
 
     constructor(private authenticationService: AuthenticationService,
         public whatsappService: WhatsAppService,
@@ -31,25 +34,52 @@ export class LeftMainmenuComponent implements OnInit {
         this.userData = JSON.parse(this.data);
 
     }
-    ngOnInit() {
-        // Start polling every 10 seconds
-        this.pollingSubscription = interval(10000).subscribe(() => {
-            this.getContactList();
-        });
-    }
 
+
+    ngOnInit() {
+        this.connectWebSocket();
+    }
 
     ngOnDestroy() {
-        // Cleanup subscriptions
-        if (this.pollingSubscription) {
-            this.pollingSubscription.unsubscribe();
-        }
-        if (this.subscription) {
-            this.subscription.unsubscribe();
+        if (this.socket) {
+            this.socket.close();  // Close the WebSocket connection on component destruction
         }
     }
 
-    getContactList() {
+    private connectWebSocket() {
+        const socketUrl = environment.SOCKET_ENDPOINT;
+        this.socket = new WebSocket(socketUrl);
+
+        this.socket.onopen = () => {
+            console.log('WebSocket connected successfully.');
+        };
+
+        this.socket.onmessage = (event) => {
+            console.log('WebSocket message received:', event.data);
+            try {
+                const data = JSON.parse(event.data);
+                this.processContactList();
+            } catch (error) {
+                console.error('Error parsing WebSocket data:', error);
+            }
+        };
+
+        this.socket.onerror = (error) => {
+            console.error('WebSocket error:', error);
+        };
+
+        this.socket.onclose = (event) => {
+            console.warn(`WebSocket closed: ${event.reason}`);
+            setTimeout(() => this.connectWebSocket(), 5000);
+        };
+    }
+
+
+
+
+
+
+    processContactList() {
         if (this.userData?.role?.roleName === 'Admin') {
             this.subscription = this.whatsappService
                 .getContactList()
