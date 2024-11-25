@@ -3,156 +3,22 @@ export const environment = {
     ReqUrl: 'http://',
     EncryptKey: '1203199320052021',
     appUrl: 'localhost:4200/#/login',
-    _APImainDomain: 'tcplconnecto.com/v2.0',
+    // _APImainDomain: 'tcplconnecto.com/v2.0',
+    _APImainDomain: 'customerdigitalconnect.com',
+
     subDomain: localStorage.getItem('loginUrl') || '',
     apiUrl: '',
-    SOCKET_ENDPOINT: 'wss://tcplconnecto.com/v2.0/chat',
+    // SOCKET_ENDPOINT: 'wss://tcplconnecto.com/v2.0/chat',
+    SOCKET_ENDPOINT: 'wss://customerdigitalconnect.com/chat',
+
     googleMapsApiKey: 'YOUR_API_KEY',
-
-    _subdomains: [
-        'prime',
-        'cdc',
-        'TCPL',
-        'TDE',
-        'Application',
-        'Administration',
-        'Marketing',
-        'Production',
-        'Accounting',
-        'Design',
-        'Sales',
-        'Support',
-        'HR',
-        'Finance',
-        'Logistics',
-        'Engineering',
-        'Quality',
-        'Research',
-        'Development',
-        'CustomerService',
-        'Procurement',
-        'Training',
-        'Compliance',
-        'RiskManagement',
-        'Legal',
-        'IT',
-        'DataAnalytics',
-        'PublicRelations',
-        'InvestorRelations',
-        'CorporateCommunications',
-        'ProductManagement',
-        'EventManagement',
-        'BusinessDevelopment',
-        'Strategy',
-        'Sustainability',
-        'Innovation',
-        'Facilities',
-        'Security',
-        'ECommerce',
-        'TechnicalSupport',
-        'CommunityRelations',
-        'ContentCreation',
-        'SocialMedia',
-        'UserExperience',
-        'BrandManagement',
-        'GraphicDesign',
-        'WebDevelopment',
-        'MobileDevelopment',
-        'AppDevelopment',
-        'SystemAdministration',
-        'NetworkAdministration',
-        'CloudServices',
-        'DigitalMarketing',
-        'AffiliateMarketing',
-        'EmailMarketing',
-        'SEO',
-        'SEM',
-        'PPC',
-        'ContentMarketing',
-        'CustomerSuccess',
-        'Analytics',
-        'PerformanceManagement',
-        'WorkforceManagement',
-        'SalesEnablement',
-        'LeadGeneration',
-        'ConversionOptimization',
-        'MarketResearch',
-        'CompetitiveAnalysis',
-        'BusinessIntelligence',
-        'Dashboarding',
-        'DataVisualization',
-        'UserResearch',
-        'ProductDesign',
-        'Prototyping',
-        'UserTesting',
-        'CustomerJourney',
-        'Onboarding',
-        'SupportCenter',
-        'FAQ',
-        'KnowledgeBase',
-        'HelpDesk',
-        'IncidentManagement',
-        'ServiceDesk',
-        'OrderManagement',
-        'InventoryManagement',
-        'SupplierManagement',
-        'VendorManagement',
-        'ContractManagement',
-        'ExpenseManagement',
-        'Budgeting',
-        'FinancialPlanning',
-        'Payroll',
-        'TimeTracking',
-        'WorkplaceSafety',
-        'EmployeeEngagement',
-        'DiversityInclusion',
-        'HealthWellness',
-        'TalentAcquisition',
-        'PerformanceReview',
-        'LearningDevelopment',
-        'EmployeeRelations',
-        'SuccessionPlanning',
-        'CrisisManagement',
-        'BusinessContinuity',
-        'DataPrivacy',
-        'RegulatoryCompliance',
-        'FraudPrevention',
-        'Ethics',
-        'CorporateSocialResponsibility',
-        'StakeholderEngagement',
-        'ProjectManagement',
-        'ChangeManagement',
-        'AgileDevelopment',
-        'Scrum',
-        'Kanban',
-        'DevOps',
-        'ContinuousIntegration',
-        'ContinuousDeployment',
-        'SoftwareTesting',
-        'QualityAssurance',
-        'CodeReview',
-        'Other'
-
-    ]
-
 
 
 };
 
-const loginUrl = (localStorage.getItem('loginUrl') || '').toLowerCase();
-if (loginUrl) {
-    const matchedSubdomain = environment._subdomains.find(subdomain => loginUrl === subdomain.toLowerCase());
-    if (matchedSubdomain) {
-        if (matchedSubdomain == 'other'){
-            environment.apiUrl = `https://${environment._APImainDomain}`;
-        }else{
-            environment.apiUrl = `https://${matchedSubdomain}.${environment._APImainDomain}`;
-        }
-    }
-
-    else {
-        environment.apiUrl = `https://${environment._APImainDomain}`;
-    }
-}
-
+environment.apiUrl = `https://${environment._APImainDomain}`;
+// const loginUrl = (localStorage.getItem('loginUrl') || '').toLowerCase();
+// if (loginUrl) {
+//     environment.apiUrl = `https://${loginUrl}.${environment._APImainDomain}`;
+// }
 
