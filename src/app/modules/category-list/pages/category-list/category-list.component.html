@@ -46,9 +46,9 @@
                         <td>{{calculateIndex(page, ind)}}</td>
                         <!-- <td>{{i.categoryId}}</td> -->
                         <td>{{i.categoryName| titlecase}}</td>
-                        <td>{{i.createdDate | date }}</td>
+                        <td>{{ i.createdDate | date:'medium' }}</td>
                         <td>{{i.createdBy?.firstName | titlecase}} {{i.createdBy?.lastName || ''}} </td>
-                        <td>{{i.updatedDate | date }}</td>
+                        <td>{{i.updatedDate | date :'medium'}}</td>
                         <td>{{i.updatedBy?.firstName || ''}} {{i.updatedBy?.lastName || ''}}</td>
                         <td>{{i.status ? 'Active' : 'Deactivate' | titlecase}}</td>
                         <td>
