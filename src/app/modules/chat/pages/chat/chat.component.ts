@@ -12,7 +12,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription, delay, take } from 'rxjs';
+import { Subscription, delay, distinctUntilChanged, take } from 'rxjs';
 import { WebSocketSubject, webSocket } from 'rxjs/webSocket';
 import { CustomersService } from 'src/app/_api/masters/customers.service';
 import { ApiService } from 'src/app/_api/rxjs/api.service';
@@ -533,7 +533,7 @@ export class ChatComponent
 
         this.subscription = this.whatsappService
             .chatHistory(e.phoneNo)
-            .pipe(take(1))
+            .pipe(take(1), distinctUntilChanged())
             .subscribe(
                 (response) => {
                     this.item = response;
@@ -550,7 +550,7 @@ export class ChatComponent
                     this.masterName = `/chat-activity/${e.phoneNo}`;
                     this.subscription = this.apiService
                         .getAll(this.masterName)
-                        .pipe(take(1))
+                        .pipe(take(1), distinctUntilChanged(),)
                         .subscribe(
                             (data) => {
                                 this.Userinfo = data;
@@ -708,7 +708,7 @@ export class ChatComponent
                     model: model
                 }
                 this.isProceess = true;
-                this.subscription = this.apiService.add(addData).pipe(take(1)).subscribe(res => {
+                this.subscription = this.apiService.add(addData).pipe(take(1), distinctUntilChanged()).subscribe(res => {
                     this.isProceess = false;
                     this.toastr.success(res.message);
                     this.checkstatus();
