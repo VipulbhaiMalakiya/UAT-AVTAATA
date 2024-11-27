@@ -11,8 +11,7 @@
                 <div class="form-group">
                     <mat-form-field appearance="fill" class="small-form-field">
                         <mat-label>Select Date Range</mat-label>
-                        <mat-select [(ngModel)]="selectedValue" (selectionChange)="onValueChange($event)"
-                            class="small-select">
+                        <mat-select [(ngModel)]="selectedValue" (selectionChange)="onValueChange($event)" class="">
                             <mat-option value="Today">Today</mat-option>
                             <mat-option value="Yesterday">Yesterday</mat-option>
                             <mat-option value="7">Last 7 days</mat-option>
@@ -20,10 +19,6 @@
                             <mat-option value="custom data">Custom date</mat-option>
                         </mat-select>
                     </mat-form-field>
-
-
-
-
 
                 </div>
             </div>
