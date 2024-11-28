@@ -1,5 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { MatSelectChange } from '@angular/material/select';
+
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -47,7 +49,7 @@ export class UserDashboardComponent implements OnInit {
     width_t = 850;
     height_t = 250;
     title: any;
-    selectedValue?: any = 7;
+    selectedValue: string = '7';
     startDate?: any;
     endDate?: any;
 
@@ -170,9 +172,9 @@ export class UserDashboardComponent implements OnInit {
 
     }
 
-    onValueChange(event: Event) {
-        const target = event.target as HTMLSelectElement;
-        this.selectedValue = target.value;
+    onValueChange(event: MatSelectChange) {
+        // const target = event.target as HTMLSelectElement;
+        this.selectedValue = event.value
         const oneWeekFromNow = new Date();
         if (this.selectedValue === 'Today') {
             this.startDate = this.datePipe.transform(
