@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AddEditeCategoryComponent } from '../../components/add-edite-category/add-edite-category.component';
 import { Title } from '@angular/platform-browser';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -14,13 +14,14 @@ import { CategoryRepository } from 'src/app/State/repository/category-repository
 import { map } from 'rxjs/operators';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
     selector: 'app-category-list',
     templateUrl: './category-list.component.html',
     styleUrls: ['./category-list.component.css'],
 })
-export class CategoryListComponent implements OnInit, OnDestroy {
+export class CategoryListComponent implements OnInit, OnDestroy, AfterViewInit {
     isProceess: boolean = true;
     data: CategoryMasterModel[] = [];
     loading = false;
@@ -36,7 +37,10 @@ export class CategoryListComponent implements OnInit, OnDestroy {
     tableSize: number = 10;
     tableSizes: any = [3, 6, 9, 12];
     displayedColumns: string[] = ['index', 'category', 'createdDate', 'createdBy', 'updatedDate', 'updatedBy', 'status', 'action'];
-    dataSource!: MatTableDataSource<any>;
+    // dataSource!: MatTableDataSource<any>;
+    dataSource: MatTableDataSource<any> = new MatTableDataSource();
+
+    @ViewChild(MatSort) sort!: MatSort;
     @ViewChild(MatPaginator) paginator!: MatPaginator;
 
     constructor(
@@ -57,6 +61,25 @@ export class CategoryListComponent implements OnInit, OnDestroy {
         this.fatchData();
     }
 
+    ngAfterViewInit(): void {
+        // Ensure sort and paginator are available
+        if (this.sort && this.paginator) {
+            this.dataSource.sort = this.sort;
+            this.dataSource.paginator = this.paginator;
+
+            // Optional custom sorting logic (you can uncomment and use if needed)
+            this.dataSource.sortingDataAccessor = (item, property) => {
+                if (property === 'category') {
+                    return item.categoryName;
+                }
+                return item[property];
+            };
+        } else {
+            console.error('Sort or paginator not found!');
+        }
+    }
+
+
     calculateIndex(page: number, index: number): number {
         return (page - 1) * this.tableSize + index + 1;
     }
@@ -73,6 +96,8 @@ export class CategoryListComponent implements OnInit, OnDestroy {
                         this.data = response;
                         this.dataSource = new MatTableDataSource(this.data);
                         this.dataSource.paginator = this.paginator;
+                        this.dataSource.sort = this.sort;
+
                         this.count = this.data.length;
                         this.isProceess = false;
                         this.cd.detectChanges();
