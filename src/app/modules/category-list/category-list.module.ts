@@ -9,25 +9,39 @@ import { ViewCategoryComponent } from './components/view-category/view-category.
 import { CustomFilterPipe } from 'src/app/_helpers/custom-filter.pipe';
 import { CategoryRepository } from 'src/app/State/repository/category-repository';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';  // Import MatButtonModule
 
 @NgModule({
-  declarations: [
-    CategoryListComponent,
-    AddEditeCategoryComponent,
-    ViewCategoryComponent,
-    CustomFilterPipe
-  ],
-  imports: [
-    CommonModule,
-    CategoryListRoutingModule,
-    SharedModule,
-    ReactiveFormsModule,
-    FormsModule,
-    NgxPaginationModule,
+    declarations: [
+        CategoryListComponent,
+        AddEditeCategoryComponent,
+        ViewCategoryComponent,
+        CustomFilterPipe
+    ],
+    imports: [
+        CommonModule,
+        CategoryListRoutingModule,
+        SharedModule,
+        ReactiveFormsModule,
+        FormsModule,
+        NgxPaginationModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatIconModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule
 
-  ],
-  providers:[
-    CategoryRepository
-  ]
+    ],
+    providers: [
+        CategoryRepository
+    ]
 })
 export class CategoryListModule { }

@@ -5,73 +5,93 @@
 </div>
 <div class="page-btns-col">
     <div class="dt-buttons">
-        <button class="gray-btns" (click)="onDownload()" type="button"><i class="las la-file-excel"></i> Excel</button>
-        <div class="table-search">
-            <input type="text" class="form-control" name="name" id="name" [(ngModel)]="term" autocomplete="off"
-                placeholder="Search..." required="">
-        </div>
+        <button mat-raised-button color="primary" (click)="onDownload()">
+            Export to Excel
+        </button>
+        <mat-form-field appearance="fill">
+            <mat-label>Search</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Enter keyword" />
+        </mat-form-field>
     </div>
     <div class="btn-group">
-        <button type="button" class="add-btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            Add New
+        <button mat-raised-button color="accent" (click)="onAdd()">
+            Create new
         </button>
-        <ul class="dropdown-menu">
-            <li (click)="onAdd()"><a class="dropdown-item"><i class="las la-plus"></i> Create new</a></li>
-        </ul>
     </div>
 </div>
 <div class="inner-middle-content">
     <div class="dasboard-table dasboard-scroll">
-        <div class="table-responsive">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Sr.No</th>
-                        <th>Category</th>
-                        <th>Created Date</th>
-                        <th>Created By</th>
-                        <th>Updated Date</th>
-                        <th>Updated By</th>
-                        <th>Status</th>
-                        <th class="action-cl">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let i of data | customFilter: term | paginate
-          : {
-              itemsPerPage: tableSize,
-              currentPage: page,
-              totalItems: count
-            }; let ind = index; trackBy: trackByFn">
-                        <td>{{calculateIndex(page, ind)}}</td>
-                        <!-- <td>{{i.categoryId}}</td> -->
-                        <td>{{i.categoryName| titlecase}}</td>
-                        <td>{{ i.createdDate | date:'medium' }}</td>
-                        <td>{{i.createdBy?.firstName | titlecase}} {{i.createdBy?.lastName || ''}} </td>
-                        <td>{{i.updatedDate | date :'medium'}}</td>
-                        <td>{{i.updatedBy?.firstName || ''}} {{i.updatedBy?.lastName || ''}}</td>
-                        <td>{{i.status ? 'Active' : 'Deactivate' | titlecase}}</td>
-                        <td>
-                            <a class="btnClick" (click)="onViewDetail(i)"><i class="las la-eye"></i></a>
-                            <a class="btnClick" (click)="onEdit(i)"><i class="las la-edit"></i></a>
-                            <a class="btnClick" *ngIf="i.status" (click)="onDelete(i)"><i
-                                    class="las la-trash-alt"></i></a>
-                        </td>
-                    </tr>
-                </tbody>
+        <div class="responsive-container mat-elevation-z8">
+
+            <table mat-table [dataSource]="dataSource" matSort class="custom-table">
+
+                <!-- Sr.No Column -->
+                <ng-container matColumnDef="index">
+                    <th mat-header-cell *matHeaderCellDef> Sr.No </th>
+                    <td mat-cell *matCellDef="let element; let i = index"> {{ calculateIndex(page, i) }} </td>
+                </ng-container>
+
+                <!-- Category Column -->
+                <ng-container matColumnDef="category">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Category </th>
+                    <td mat-cell *matCellDef="let element"> {{ element.categoryName | titlecase }} </td>
+                </ng-container>
+
+                <!-- Created Date Column -->
+                <ng-container matColumnDef="createdDate">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Created Date </th>
+                    <td mat-cell *matCellDef="let element"> {{ element.createdDate | date:'medium' }} </td>
+                </ng-container>
+
+                <!-- Created By Column -->
+                <ng-container matColumnDef="createdBy">
+                    <th mat-header-cell *matHeaderCellDef> Created By </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.createdBy?.firstName | titlecase }} {{ element.createdBy?.lastName || '' }}
+                    </td>
+                </ng-container>
+
+                <!-- Updated Date Column -->
+                <ng-container matColumnDef="updatedDate">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Updated Date </th>
+                    <td mat-cell *matCellDef="let element"> {{ element.updatedDate | date:'medium' }} </td>
+                </ng-container>
+
+                <!-- Updated By Column -->
+                <ng-container matColumnDef="updatedBy">
+                    <th mat-header-cell *matHeaderCellDef> Updated By </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.updatedBy?.firstName || '' }} {{ element.updatedBy?.lastName || '' }}
+                    </td>
+                </ng-container>
+
+                <!-- Status Column -->
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef> Status </th>
+                    <td mat-cell *matCellDef="let element"> {{ element.status ? 'Active' : 'Deactivate' }} </td>
+                </ng-container>
+
+                <!-- Action Column -->
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef class="action-cl"> Action </th>
+                    <td mat-cell *matCellDef="let element">
+                        <a class="btnClick" (click)="onViewDetail(element)"><i class="las la-eye"></i></a>
+                        <a class="btnClick" (click)="onEdit(element)"><i class="las la-edit"></i></a>
+                        <a class="btnClick" *ngIf="element.status" (click)="onDelete(element)"><i
+                                class="las la-trash-alt"></i></a>
+                    </td>
+                </ng-container>
+
+                <!-- Header and Row Definitions -->
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
-            <div *ngIf="data.length === 0" class="text-center">
-                <Strong class="text-danger">No records found</Strong>
-            </div>
-            <div class="text-center" *ngIf="(data | customFilter: term).length === 0 && data.length > 0">
-                <Strong class="text-danger">No records found</Strong>
-            </div>
+
+            <!-- Paginator -->
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
         </div>
-        <div class="clearfix" *ngIf="!isProceess">
-            <ul class="pagination">
-                <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
-                </pagination-controls>
-            </ul>
-        </div>
+
+
     </div>
+
 </div>

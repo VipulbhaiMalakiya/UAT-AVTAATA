@@ -1,0 +1,28 @@
+/* Responsive container */
+.custom-table {
+  width: 100%;
+  overflow-x: auto; /* Horizontal scroll for small screens */
+}
+
+/* Adjust header and cell padding */
+.custom-table th,
+.custom-table td {
+  padding: 8px 12px; /* Adjust padding for smaller screens */
+  white-space: nowrap; /* Prevent text wrapping */
+}
+
+/* Hide some columns on smaller screens if needed */
+@media (max-width: 768px) {
+  .custom-table .mat-header-cell,
+  .custom-table .mat-cell {
+    font-size: 12px; /* Smaller font size */
+  }
+
+  /* Optional: Hide action column on very small screens */
+  .custom-table .action-cl {
+    display: none;
+  }
+}
+table {
+  width: 100%;
+}
