@@ -106,17 +106,17 @@ export class LoginComponent implements OnInit {
                             this.loading = false;
                             if (role == 'Admin') {
                                 this.router.navigate(['/admin/inbox']);
-                                this.toastr.success('You are successfully logged in!');
+                                // this.toastr.success('You are successfully logged in!');
                             } else if (role == 'User') {
                                 this.router.navigate(['/inbox']);
-                                this.toastr.success('You are successfully logged in!');
+                                // this.toastr.success('You are successfully logged in!');
                             } else if (role == 'Resolver') {
                                 this.router.navigate(['/inbox']);
-                                this.toastr.success('You are successfully logged in!');
+                                // this.toastr.success('You are successfully logged in!');
                             }
                             else if (role == 'Approver') {
                                 this.router.navigate(['/assigned-ticket-list']);
-                                this.toastr.success('You are successfully logged in!');
+                                // this.toastr.success('You are successfully logged in!');
                             }
                             else {
                                 this.router.navigate(['/login']);
