@@ -1,67 +1,49 @@
-import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, Inject } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { CategoryMasterModel } from 'src/app/_models/category';
 @Component({
-  selector: 'app-view-category',
-  templateUrl: './view-category.component.html',
-  styleUrls: ['./view-category.component.css']
+    selector: 'app-view-category',
+    templateUrl: './view-category.component.html',
+    styleUrls: ['./view-category.component.css']
 })
 export class ViewCategoryComponent {
-  private _categoryMaster: CategoryMasterModel | undefined;
-  isProceess: boolean = true;
-  CategoryMasterForm: any;
-  get title(): string {
-    return this._categoryMaster ? "Edit Category Master" : " Add Category Master";
-  }
-  set categoryMaster(value: CategoryMasterModel) {
-    this._categoryMaster = value;
-    let updatedBy:any = ' '
-    if(this._categoryMaster.updatedBy?.firstName  != undefined ){
-      updatedBy = this._categoryMaster.updatedBy?.firstName + ' ' + this._categoryMaster.updatedBy?.lastName
+    categoryMasterForm: FormGroup;
+    isProcess = false;
+
+    // Define form fields dynamically
+    categoryFields = [
+        { id: 'categoryName', label: 'Name', formControlName: 'categoryName', placeholder: 'Enter Category Name' },
+        { id: 'createdDate', label: 'Created Date', formControlName: 'createdDate', placeholder: 'Enter Created Date' },
+        { id: 'createdBy', label: 'Created By', formControlName: 'createdBy', placeholder: 'Enter Creator Name' },
+        { id: 'updatedDate', label: 'Updated Date', formControlName: 'updatedDate', placeholder: 'Enter Updated Date' },
+        { id: 'updatedBy', label: 'Updated By', formControlName: 'updatedBy', placeholder: 'Enter Updater Name' },
+        { id: 'status', label: 'Status', formControlName: 'status', placeholder: 'Enter Status' },
+    ];
+
+    constructor(
+        private fb: FormBuilder,
+        public dialogRef: MatDialogRef<ViewCategoryComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) {
+        // Initialize the form with the data passed
+
+        this.categoryMasterForm = this.fb.group({
+            categoryName: [{ value: data.categoryMaster.categoryName, disabled: true }],
+            createdDate: [{ value: data.categoryMaster.createdDate, disabled: true }],
+            createdBy: [{ value: `${data.categoryMaster.createdBy?.firstName ?? ''} ${data.categoryMaster.createdBy?.lastName ?? ''}`.trim(), disabled: true }],
+            updatedDate: [{ value: data.categoryMaster.updatedDate, disabled: true }],
+            updatedBy: [{ value: `${data.categoryMaster.updatedBy?.firstName ?? ''} ${data.categoryMaster.updatedBy?.lastName ?? ''}`.trim(), disabled: true }],
+            status: [{ value: data.categoryMaster.status, disabled: true }],
+        });
+
+
     }
-    else{
-      updatedBy = ''
+
+    onCancel(): void {
+        this.dialogRef.close(); // Close the dialog
     }
-    if (this._categoryMaster) {
-      this.CategoryMasterForm.patchValue({
-        categoryName:this._categoryMaster.categoryName,
-        status:this._categoryMaster.status ? 'Active' : 'Deactivate',
-        categoryId:this._categoryMaster.categoryId,
-        createdDate:moment(this._categoryMaster.createdDate || '').format("llll"),
-        createdBy:this._categoryMaster.createdBy?.firstName + ' ' + this._categoryMaster.createdBy?.lastName,
-        updatedDate: moment(this._categoryMaster.updatedDate || '').format("llll"),
-        updatedBy:updatedBy,
-      });
-      this.CategoryMasterForm.controls["categoryName"].disable();
-      this.CategoryMasterForm.controls["status"].disable();
-      this.CategoryMasterForm.controls["categoryId"].disable();
-      this.CategoryMasterForm.controls["createdDate"].disable();
-      this.CategoryMasterForm.controls["createdBy"].disable();
-      this.CategoryMasterForm.controls["updatedDate"].disable();
-      this.CategoryMasterForm.controls["updatedBy"].disable();
-      this.isProceess = false;
-    }
-  }
-  constructor(
-    private activeModal: NgbActiveModal,
-    private formBuilder: FormBuilder  ) {
-    this.CategoryMasterForm = this.formBuilder.group({
-      categoryName: ["", [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(30),
-        Validators.pattern('^[a-zA-Z ]*$')]],
-        status: ['', [Validators.required]],
-        categoryId:[''],
-        createdDate:[''],
-        createdBy:[''],
-        updatedDate:[''],
-        updatedBy:['']
-    });
-  }
-  onCancel() {
-    this.activeModal.dismiss();
-  }
+
 }

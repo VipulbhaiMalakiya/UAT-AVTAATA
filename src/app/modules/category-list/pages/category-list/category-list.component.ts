@@ -15,6 +15,7 @@ import { map } from 'rxjs/operators';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-category-list',
@@ -50,7 +51,8 @@ export class CategoryListComponent implements OnInit, OnDestroy, AfterViewInit {
         private titleService: Title,
         private appService: AppService,
         private apiService: ApiService,
-        private NgRxAPI: CategoryRepository
+        private NgRxAPI: CategoryRepository,
+        private dialog: MatDialog
     ) {
         this.titleService.setTitle('CDC -Category');
         const d: any = localStorage.getItem('userData');
@@ -220,20 +222,36 @@ export class CategoryListComponent implements OnInit, OnDestroy, AfterViewInit {
             .catch(() => { });
     }
 
-    onViewDetail(dataItem: CategoryMasterModel) {
+    // onViewDetail(dataItem: CategoryMasterModel) {
+    //     this.isProceess = true;
+    //     const modalRef = this.modalService.open(ViewCategoryComponent, {
+    //         size: 'lg',
+    //         centered: true,
+    //         backdrop: 'static',
+    //     });
+    //     if (modalRef) {
+    //         this.isProceess = false;
+    //     } else {
+    //         this.isProceess = false;
+    //     }
+    //     var componentInstance = modalRef.componentInstance as ViewCategoryComponent;
+    //     componentInstance.categoryMaster = dataItem;
+    // }
+
+    onViewDetail(dataItem: CategoryMasterModel): void {
         this.isProceess = true;
-        const modalRef = this.modalService.open(ViewCategoryComponent, {
-            size: 'lg',
-            centered: true,
-            backdrop: 'static',
+
+        // Open the dialog with the specified component and configuration
+        const dialogRef = this.dialog.open(ViewCategoryComponent, {
+            width: '600px', // Equivalent to 'lg' size in ng-bootstrap
+            disableClose: true, // Equivalent to 'backdrop: static'
+            data: { categoryMaster: dataItem }, // Pass data to the dialog
         });
-        if (modalRef) {
+
+        // Handle dialog close event to reset processing status
+        dialogRef.afterClosed().subscribe(() => {
             this.isProceess = false;
-        } else {
-            this.isProceess = false;
-        }
-        var componentInstance = modalRef.componentInstance as ViewCategoryComponent;
-        componentInstance.categoryMaster = dataItem;
+        });
     }
     onDelete(dataItem: CategoryMasterModel) {
         this.isProceess = true;
