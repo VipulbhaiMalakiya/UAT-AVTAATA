@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -25,6 +26,7 @@ export class ViewCategoryComponent {
 
     constructor(
         private fb: FormBuilder,
+        private datePipe: DatePipe,
         public dialogRef: MatDialogRef<ViewCategoryComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
@@ -32,15 +34,20 @@ export class ViewCategoryComponent {
 
         this.categoryMasterForm = this.fb.group({
             categoryName: [{ value: data.categoryMaster.categoryName, disabled: true }],
-            createdDate: [{ value: data.categoryMaster.createdDate, disabled: true }],
+            createdDate: [{ value: this.formatDate(data.categoryMaster.createdDate), disabled: true }],
             createdBy: [{ value: `${data.categoryMaster.createdBy?.firstName ?? ''} ${data.categoryMaster.createdBy?.lastName ?? ''}`.trim(), disabled: true }],
-            updatedDate: [{ value: data.categoryMaster.updatedDate, disabled: true }],
+            updatedDate: [{ value: this.formatDate(data.categoryMaster.updatedDate), disabled: true }],
             updatedBy: [{ value: `${data.categoryMaster.updatedBy?.firstName ?? ''} ${data.categoryMaster.updatedBy?.lastName ?? ''}`.trim(), disabled: true }],
             status: [{ value: data.categoryMaster.status, disabled: true }],
         });
 
 
     }
+
+    formatDate(date: any): string {
+        return this.datePipe.transform(date, 'yyyy-MM-dd hh:mm a') || '';
+    }
+
 
     onCancel(): void {
         this.dialogRef.close(); // Close the dialog
