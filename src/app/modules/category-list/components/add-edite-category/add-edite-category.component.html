@@ -20,7 +20,7 @@
             <mat-label>Status</mat-label>
             <mat-select formControlName="status">
                 <mat-option [value]="true">Active</mat-option>
-                <mat-option [value]="false">Deactive</mat-option>
+                <mat-option [value]="false">Deactivate</mat-option>
             </mat-select>
             <mat-error *ngIf="shouldShowError('status', 'required')">
                 This field is required.
