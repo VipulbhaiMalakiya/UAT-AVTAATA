@@ -13,6 +13,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatCardModule } from '@angular/material/card';  // Import MatCardModule
 
 
 import { MatSortModule } from '@angular/material/sort';
@@ -40,6 +42,8 @@ import { MatInputModule } from '@angular/material/input';
         MatChipsModule,
         MatFormFieldModule,
         MatInputModule,
+        MatDialogModule,
+        MatCardModule
     ]
 })
 export class LabelMasterModule { }

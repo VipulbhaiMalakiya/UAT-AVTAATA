@@ -17,6 +17,7 @@ import { LabelViewComponent } from '../../components/label-view/label-view.compo
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-labels-list',
@@ -48,7 +49,8 @@ export class LabelsListComponent implements OnInit, OnDestroy {
         private toastr: ToastrService,
         private titleService: Title,
         private appService: AppService,
-        private apiService: ApiService
+        private apiService: ApiService,
+        private dialog: MatDialog
     ) {
         this.titleService.setTitle('CDC - Labels Master');
         const d: any = localStorage.getItem('userData');
@@ -213,19 +215,32 @@ export class LabelsListComponent implements OnInit, OnDestroy {
             .catch(() => { });
     }
 
+    // onViewDetail(dataItem: labelMasterModel) {
+    //     const modalRef = this.modalService.open(LabelViewComponent, {
+    //         size: 'lg',
+    //         centered: true,
+    //         backdrop: 'static',
+    //     });
+    //     if (modalRef) {
+    //         this.isProceess = false;
+    //     } else {
+    //         this.isProceess = false;
+    //     }
+    //     var componentInstance = modalRef.componentInstance as LabelViewComponent;
+    //     componentInstance.issuesMaster = dataItem;
+    // }
+
     onViewDetail(dataItem: labelMasterModel) {
-        const modalRef = this.modalService.open(LabelViewComponent, {
-            size: 'lg',
-            centered: true,
-            backdrop: 'static',
+        const dialogRef = this.dialog.open(LabelViewComponent, {
+            width: '700px',
+            data: dataItem,
+            disableClose: true,
         });
-        if (modalRef) {
-            this.isProceess = false;
-        } else {
-            this.isProceess = false;
-        }
-        var componentInstance = modalRef.componentInstance as LabelViewComponent;
-        componentInstance.issuesMaster = dataItem;
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log('The dialog was closed');
+            // Handle post-dialog actions if necessary
+        });
     }
 
     onDownload() {
