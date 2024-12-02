@@ -34,14 +34,14 @@
 
                 <!-- Category Column -->
                 <ng-container matColumnDef="category">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header> Category </mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef> Category </mat-header-cell>
                     <mat-cell *matCellDef="let element"> {{ element.categoryName | titlecase }} </mat-cell>
                 </ng-container>
 
                 <!-- Created Date Column -->
                 <ng-container matColumnDef="createdDate">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Created Date </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{ element.createdDate | date:'medium' }} </mat-cell>
+                    <mat-cell *matCellDef="let element"> {{ element.createdDate | date:'dd/MM/yyyy'}} </mat-cell>
                 </ng-container>
 
                 <!-- Created By Column -->
@@ -55,7 +55,7 @@
                 <!-- Updated Date Column -->
                 <ng-container matColumnDef="updatedDate">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Updated Date </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{ element.updatedDate | date:'medium' }} </mat-cell>
+                    <mat-cell *matCellDef="let element"> {{ element.updatedDate | date:'dd/MM/yyyy' }} </mat-cell>
                 </ng-container>
 
                 <!-- Updated By Column -->
@@ -85,17 +85,17 @@
                     <mat-cell *matCellDef="let element">
                         <div class="button-group">
                             <!-- View Button -->
-                            <button mat-icon-button color="primary" (click)="onViewDetail(element)">
+                            <button mat-mini-fab color="primary" (click)="onViewDetail(element)">
                                 <mat-icon>visibility</mat-icon> <!-- Material icon for view -->
                             </button>
 
                             <!-- Edit Button -->
-                            <button mat-icon-button color="accent" (click)="onEdit(element)">
+                            <button mat-mini-fab color="accent" (click)="onEdit(element)">
                                 <mat-icon>edit</mat-icon> <!-- Material icon for edit -->
                             </button>
 
                             <!-- Delete Button -->
-                            <button mat-icon-button color="warn" *ngIf="element.status" (click)="onDelete(element)">
+                            <button mat-mini-fab color="warn" *ngIf="element.status" (click)="onDelete(element)">
                                 <mat-icon>delete</mat-icon> <!-- Material icon for delete -->
                             </button>
                         </div>
