@@ -28,10 +28,11 @@
         </mat-form-field>
 
         <div class="text-end">
+            <button mat-raised-button class="me-2" (click)="onCancel()">Cancel</button>
             <button mat-raised-button color="primary" type="submit">
                 {{ this.data ? 'Update Now' : 'Add New' }}
             </button>
-            <button mat-button (click)="onCancel()">Cancel</button>
+
         </div>
     </form>
 </mat-dialog-content>
