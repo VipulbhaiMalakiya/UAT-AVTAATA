@@ -26,7 +26,7 @@ import { ResetPasswordComponent } from './_layouts/reset-password/reset-password
 import { NotFoundComponent } from './_layouts/not-found/not-found.component';
 import { LocationStrategy, HashLocationStrategy, DatePipe } from '@angular/common';
 import { AuthGaurdGuard } from './_helpers/auth-gaurd.guard';
-import {GoogleMapsModule} from '@angular/google-maps';  // added
+import { GoogleMapsModule } from '@angular/google-maps';  // added
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { PrivacyPolicyComponent } from './modules/privacy-policy/privacy-policy.component';
 import { ContactUsComponent } from './_layouts/contact-us/contact-us.component';
@@ -34,59 +34,69 @@ import { SendCatalogueComponent } from './modules/send-catalogue/send-catalogue.
 import { DefaultLoginComponent } from './modules/2024/default-login/default-login.component';
 
 import { NgSelectModule } from '@ng-select/ng-select';
-
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    DefoultComponent,
-    ForgotPasswordComponent,
-    SignUpComponent,
-    InboxLayoutComponent,
-    MainlayoutComponent,
-    ResetPasswordComponent,
-    NotFoundComponent,
-    PrivacyPolicyComponent,
-    ContactUsComponent,
-    SendCatalogueComponent,
-    DefaultLoginComponent,
+    declarations: [
+        AppComponent,
+        LoginComponent,
+        DefoultComponent,
+        ForgotPasswordComponent,
+        SignUpComponent,
+        InboxLayoutComponent,
+        MainlayoutComponent,
+        ResetPasswordComponent,
+        NotFoundComponent,
+        PrivacyPolicyComponent,
+        ContactUsComponent,
+        SendCatalogueComponent,
+        DefaultLoginComponent,
 
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    NgSelectModule,
-    HttpClientModule,
-    SharedModule,
-    ReactiveFormsModule,
-    ToastrModule.forRoot({
-        progressBar: true,
-        positionClass: 'toast-top-right',
-        closeButton: true,
-        timeOut: 3000,
-        progressAnimation: 'increasing',
-        preventDuplicates: true,
-        disableTimeOut:false,
-    }),
-    BrowserAnimationsModule,
-    NgbModule,
-    StoreModule.forRoot(rootReducer),
-    NgMultiSelectDropDownModule.forRoot(),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    GoogleMapsModule
-  ],
-  providers: [
-    ApiService,
-    HttpService,
-    EncrDecrService,
-    HttpClient,
-    DatePipe,
-    NgbActiveModal,
-    AuthGaurdGuard,
-    { provide: LocationStrategy, useClass: HashLocationStrategy }
 
-    // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-  ],
-  bootstrap: [AppComponent]
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        NgSelectModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatIconModule,
+        MatCheckboxModule,
+        HttpClientModule,
+        SharedModule,
+        ReactiveFormsModule,
+        ToastrModule.forRoot({
+            progressBar: true,
+            positionClass: 'toast-top-right',
+            closeButton: true,
+            timeOut: 3000,
+            progressAnimation: 'increasing',
+            preventDuplicates: true,
+            disableTimeOut: false,
+        }),
+        BrowserAnimationsModule,
+        NgbModule,
+        StoreModule.forRoot(rootReducer),
+        NgMultiSelectDropDownModule.forRoot(),
+        StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+        GoogleMapsModule
+    ],
+    providers: [
+        ApiService,
+        HttpService,
+        EncrDecrService,
+        HttpClient,
+        DatePipe,
+        NgbActiveModal,
+        AuthGaurdGuard,
+        { provide: LocationStrategy, useClass: HashLocationStrategy }
+
+        // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
