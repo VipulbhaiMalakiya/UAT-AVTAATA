@@ -33,7 +33,7 @@
 
                 <!-- Category Column -->
                 <ng-container matColumnDef="category">
-                    <mat-header-cell *matHeaderCellDef> Category </mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Category </mat-header-cell>
                     <mat-cell *matCellDef="let element"> {{ element.categoryName | titlecase }} </mat-cell>
                 </ng-container>
 

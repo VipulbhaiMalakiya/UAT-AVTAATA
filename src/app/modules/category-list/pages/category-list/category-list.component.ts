@@ -72,7 +72,7 @@ export class CategoryListComponent implements OnInit, OnDestroy, AfterViewInit {
             // Optional custom sorting logic (you can uncomment and use if needed)
             this.dataSource.sortingDataAccessor = (item, property) => {
                 if (property === 'category') {
-                    return item.categoryName;
+                    return item.categoryName.toLowerCase(); // Ensure sorting is case-insensitive
                 }
                 return item[property];
             };
