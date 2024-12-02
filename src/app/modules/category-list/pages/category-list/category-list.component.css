@@ -1,7 +1,4 @@
 
-table {
-  width: 100%;
-}
 /* Style the button group to display buttons in a single line */
 .button-group {
     display: flex;              /* Use Flexbox for layout */

@@ -28,7 +28,8 @@
                 <!-- Sr.No Column -->
                 <ng-container matColumnDef="index">
                     <mat-header-cell *matHeaderCellDef> Sr.No </mat-header-cell>
-                    <mat-cell *matCellDef="let element; let i = index"> {{ calculateIndex(page, i) }} </mat-cell>
+                    <mat-cell *matCellDef="let element; let i = index" class="small-column"> {{ calculateIndex(page, i)
+                        }} </mat-cell>
                 </ng-container>
 
                 <!-- Category Column -->
@@ -80,7 +81,7 @@
 
                 <!-- Action Column -->
                 <ng-container matColumnDef="action">
-                    <mat-header-cell *matHeaderCellDef class="action-cl"> Action </mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
                     <mat-cell *matCellDef="let element">
                         <div class="button-group">
                             <!-- View Button -->
