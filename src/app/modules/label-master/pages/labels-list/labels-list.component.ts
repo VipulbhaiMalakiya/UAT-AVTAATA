@@ -96,10 +96,10 @@ export class LabelsListComponent implements OnInit, OnDestroy {
 
 
     ngAfterViewInit(): void {
-        if (this.sort) {
-            this.sort.active = 'createdDate'; // Column to sort by
-            this.sort.direction = 'desc'; // Sort direction (asc or desc)
-        }
+        // if (this.sort) {
+        //     this.sort.active = 'createdDate'; // Column to sort by
+        //     this.sort.direction = 'desc'; // Sort direction (asc or desc)
+        // }
         // Ensure sort and paginator are available
         if (this.sort && this.paginator) {
             this.dataSource.sort = this.sort;
@@ -117,103 +117,103 @@ export class LabelsListComponent implements OnInit, OnDestroy {
         this.page = 1;
     }
 
-    onAdd() {
-        this.isProceess = true;
-        const modalRef = this.modalService.open(LabelAddEditeComponent, {
-            size: 'md',
-        });
-        if (modalRef) {
-            this.isProceess = false;
-        } else {
-            this.isProceess = false;
-        }
-        modalRef.result
-            .then((data: labelMasterModel) => {
-                if (data) {
-                    var model: labelMasterModel = {
-                        labelName: data.labelName.trim(),
-                        createdBy: this.userData.userId,
-                        status: data.status,
-                    };
-                    this.masterName = `/label`;
-                    let addData: any = {
-                        url: this.masterName,
-                        model: model,
-                    };
-                    this.isProceess = true;
-                    this.subscription = this.apiService
-                        .add(addData)
-                        .pipe(take(1))
-                        .subscribe(
-                            (res) => {
-                                if (res.status == 'Success') {
-                                    this.isProceess = false;
-                                    this.fatchData();
-                                    this.toastr.success(res.message);
-                                }
-                            },
-                            (error) => {
-                                if (error.error.status === 'failed') {
-                                    this.isProceess = false;
-                                    this.toastr.error(error.error.message);
-                                }
-                            }
-                        );
-                }
-            })
-            .catch(() => { });
-    }
+    // onAdd() {
+    //     this.isProceess = true;
+    //     const modalRef = this.modalService.open(LabelAddEditeComponent, {
+    //         size: 'md',
+    //     });
+    //     if (modalRef) {
+    //         this.isProceess = false;
+    //     } else {
+    //         this.isProceess = false;
+    //     }
+    //     modalRef.result
+    //         .then((data: labelMasterModel) => {
+    //             if (data) {
+    //                 var model: labelMasterModel = {
+    //                     labelName: data.labelName.trim(),
+    //                     createdBy: this.userData.userId,
+    //                     status: data.status,
+    //                 };
+    //                 this.masterName = `/label`;
+    //                 let addData: any = {
+    //                     url: this.masterName,
+    //                     model: model,
+    //                 };
+    //                 this.isProceess = true;
+    //                 this.subscription = this.apiService
+    //                     .add(addData)
+    //                     .pipe(take(1))
+    //                     .subscribe(
+    //                         (res) => {
+    //                             if (res.status == 'Success') {
+    //                                 this.isProceess = false;
+    //                                 this.fatchData();
+    //                                 this.toastr.success(res.message);
+    //                             }
+    //                         },
+    //                         (error) => {
+    //                             if (error.error.status === 'failed') {
+    //                                 this.isProceess = false;
+    //                                 this.toastr.error(error.error.message);
+    //                             }
+    //                         }
+    //                     );
+    //             }
+    //         })
+    //         .catch(() => { });
+    // }
 
-    onEdit(dataItem: labelMasterModel) {
-        this.isProceess = true;
-        const modalRef = this.modalService.open(LabelAddEditeComponent, {
-            size: 'sm',
-        });
-        if (modalRef) {
-            this.isProceess = false;
-        } else {
-            this.isProceess = false;
-        }
-        var componentInstance =
-            modalRef.componentInstance as LabelAddEditeComponent;
-        componentInstance.issuesMaster = dataItem;
-        modalRef.result
-            .then((data: labelMasterModel) => {
-                if (data) {
-                    var model: labelMasterModel = {
-                        labelName: data.labelName.trim(),
-                        updatedBy: this.userData.userId,
-                        status: data.status,
-                        labelId: dataItem.labelId,
-                    };
-                    this.masterName = `/label/${dataItem?.labelId}`;
-                    let updateData: any = {
-                        url: this.masterName,
-                        model: model,
-                    };
-                    this.isProceess = true;
-                    this.subscription = this.apiService
-                        .update(updateData)
-                        .pipe(take(1))
-                        .subscribe(
-                            (res) => {
-                                if (res.status == 'Success') {
-                                    this.isProceess = false;
-                                    this.fatchData();
-                                    this.toastr.success(res.message);
-                                }
-                            },
-                            (error) => {
-                                if (error.error.status === 'failed') {
-                                    this.isProceess = false;
-                                    this.toastr.error(error.error.message);
-                                }
-                            }
-                        );
-                }
-            })
-            .catch(() => { });
-    }
+    // onEdit(dataItem: labelMasterModel) {
+    //     this.isProceess = true;
+    //     const modalRef = this.modalService.open(LabelAddEditeComponent, {
+    //         size: 'sm',
+    //     });
+    //     if (modalRef) {
+    //         this.isProceess = false;
+    //     } else {
+    //         this.isProceess = false;
+    //     }
+    //     var componentInstance =
+    //         modalRef.componentInstance as LabelAddEditeComponent;
+    //     componentInstance.issuesMaster = dataItem;
+    //     modalRef.result
+    //         .then((data: labelMasterModel) => {
+    //             if (data) {
+    //                 var model: labelMasterModel = {
+    //                     labelName: data.labelName.trim(),
+    //                     updatedBy: this.userData.userId,
+    //                     status: data.status,
+    //                     labelId: dataItem.labelId,
+    //                 };
+    //                 this.masterName = `/label/${dataItem?.labelId}`;
+    //                 let updateData: any = {
+    //                     url: this.masterName,
+    //                     model: model,
+    //                 };
+    //                 this.isProceess = true;
+    //                 this.subscription = this.apiService
+    //                     .update(updateData)
+    //                     .pipe(take(1))
+    //                     .subscribe(
+    //                         (res) => {
+    //                             if (res.status == 'Success') {
+    //                                 this.isProceess = false;
+    //                                 this.fatchData();
+    //                                 this.toastr.success(res.message);
+    //                             }
+    //                         },
+    //                         (error) => {
+    //                             if (error.error.status === 'failed') {
+    //                                 this.isProceess = false;
+    //                                 this.toastr.error(error.error.message);
+    //                             }
+    //                         }
+    //                     );
+    //             }
+    //         })
+    //         .catch(() => { });
+    // }
 
     // onViewDetail(dataItem: labelMasterModel) {
     //     const modalRef = this.modalService.open(LabelViewComponent, {
@@ -229,6 +229,129 @@ export class LabelsListComponent implements OnInit, OnDestroy {
     //     var componentInstance = modalRef.componentInstance as LabelViewComponent;
     //     componentInstance.issuesMaster = dataItem;
     // }
+
+    onAdd() {
+        this.isProceess = true;
+
+        const dialogRef = this.dialog.open(LabelAddEditeComponent, {
+            width: '500px', // Adjust size as needed
+            disableClose: true, // Prevent closing without action
+        });
+
+        // Apply inert attribute to block interactions with background elements
+        const backdrop = document.querySelector('.cdk-overlay-backdrop');
+        if (backdrop) {
+            backdrop.setAttribute('inert', 'true');
+        }
+
+        dialogRef.afterClosed().subscribe((data: labelMasterModel) => {
+            if (data) {
+                const model: labelMasterModel = {
+                    labelName: data.labelName.trim(),
+                    createdBy: this.userData.userId,
+                    status: data.status,
+                };
+
+                const addData = {
+                    url: '/label',
+                    model: model,
+                };
+
+                this.apiService.add(addData).pipe(take(1)).subscribe(
+                    (res) => {
+                        this.isProceess = false;
+                        if (res.status === 'Success') {
+                            this.fatchData(); // Refresh data
+                            this.toastr.success(res.message);
+                        }
+                    },
+                    (error) => {
+                        this.isProceess = false;
+                        if (error.error.status === 'failed') {
+                            this.toastr.error(error.error.message);
+                        }
+                    }
+                );
+            } else {
+                this.isProceess = false; // Reset if no data returned
+            }
+
+            // Remove the inert attribute after the dialog is closed
+            if (backdrop) {
+                backdrop.removeAttribute('inert');
+            }
+        });
+    }
+
+
+    onEdit(dataItem: labelMasterModel) {
+        this.isProceess = true;
+
+        const dialogRef = this.dialog.open(LabelAddEditeComponent, {
+            width: '400px', // Adjust size as needed
+            disableClose: true,
+            data: dataItem, // Pass data to the dialog component
+        });
+
+        // Before opening the dialog, apply `inert` to block background interactions
+        const backdrop = document.querySelector('.cdk-overlay-backdrop');
+        if (backdrop) {
+            backdrop.setAttribute('inert', 'true');
+        }
+
+        dialogRef.afterClosed().subscribe((data: labelMasterModel) => {
+            if (data) {
+                // Trim label name and update model
+                const model: labelMasterModel = {
+                    labelName: data.labelName.trim(),
+                    updatedBy: this.userData.userId,
+                    status: data.status,
+                    labelId: dataItem.labelId,
+                };
+
+                // Compare original data with updated data
+                const isDataChanged =
+                    model.labelName !== dataItem.labelName.trim() ||
+                    model.status !== dataItem.status;
+
+                if (isDataChanged) {
+                    const updateData = {
+                        url: `/label/${dataItem.labelId}`,
+                        model: model,
+                    };
+
+                    this.apiService.update(updateData).pipe(take(1)).subscribe(
+                        (res) => {
+                            this.isProceess = false;
+                            if (res.status === 'Success') {
+                                this.fatchData(); // Refresh data
+                                this.toastr.success(res.message);
+                            }
+                        },
+                        (error) => {
+                            this.isProceess = false;
+                            if (error.error.status === 'failed') {
+                                this.toastr.error(error.error.message);
+                            }
+                        }
+                    );
+                } else {
+                    this.isProceess = false;
+                    // Optionally show a message for no changes
+                    // this.toastr.info('No changes detected');
+                }
+            } else {
+                this.isProceess = false;
+            }
+
+            // Remove the `inert` attribute after the dialog is closed
+            if (backdrop) {
+                backdrop.removeAttribute('inert');
+            }
+        });
+    }
+
+
 
     onViewDetail(dataItem: labelMasterModel) {
         const dialogRef = this.dialog.open(LabelViewComponent, {

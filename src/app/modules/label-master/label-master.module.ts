@@ -16,6 +16,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';  // Import MatCardModule
 
+import { MatSelectModule } from '@angular/material/select';
 
 import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -43,7 +44,8 @@ import { MatInputModule } from '@angular/material/input';
         MatFormFieldModule,
         MatInputModule,
         MatDialogModule,
-        MatCardModule
+        MatCardModule,
+        MatSelectModule
     ]
 })
 export class LabelMasterModule { }
