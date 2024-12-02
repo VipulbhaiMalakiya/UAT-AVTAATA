@@ -25,18 +25,16 @@ button.mat-icon-button:hover {
 table {
   width: 100%;
 }
-.active-status {
-  background-color: #4caf50; /* Green for Active */
-  color: white;
-  padding: 5px 10px;
-  border-radius: 12px;
-  font-size: 14px;
+
+
+.active-chip {
+  background-color: #4caf50 !important;  /* Green for Active */
+  color: #fff !important;
+
 }
 
-.deactivated-status {
-  background-color: #f44336; /* Red for Deactivated */
-  color: white;
-  padding: 5px 10px;
-  border-radius: 12px;
-  font-size: 14px;
+.deactivated-chip {
+  background-color: #f44336 !important;  /* Red for Deactivated */
+   color: #fff !important;
+
 }
