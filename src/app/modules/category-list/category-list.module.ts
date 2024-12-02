@@ -17,6 +17,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';  // Import MatButtonModule
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
     declarations: [
@@ -40,7 +41,7 @@ import { MatDialogModule } from '@angular/material/dialog';
         MatInputModule,
         MatButtonModule,
         MatDialogModule,
-
+        MatSelectModule
 
     ],
     providers: [

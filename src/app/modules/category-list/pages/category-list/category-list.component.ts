@@ -132,95 +132,95 @@ export class CategoryListComponent implements OnInit, OnDestroy, AfterViewInit {
         this.page = 1;
     }
 
-    onAdd() {
-        this.isProceess = true;
-        const modalRef = this.modalService.open(AddEditeCategoryComponent, {
-            size: 'sm',
-        });
-        if (modalRef) {
-            this.isProceess = false;
-        } else {
-            this.isProceess = false;
-        }
-        modalRef.result
-            .then((data: CategoryMasterModel) => {
-                if (data) {
-                    var model: CategoryMasterModel = {
-                        categoryName: data.categoryName.trim(),
-                        createdBy: this.userData.userId,
-                        status: data.status,
-                    };
-                    this.masterName = `/category`;
-                    let addData: any = {
-                        url: this.masterName,
-                        model: model,
-                    };
-                    this.isProceess = true;
-                    this.subscription = this.apiService
-                        .add(addData)
-                        .pipe(take(1))
-                        .subscribe(
-                            (response) => {
-                                this.isProceess = false;
-                                this.fatchData();
-                                this.message = response.message;
-                                this.toastr.success(this.message);
-                            },
-                            (error) => {
-                                this.isProceess = false;
-                                this.toastr.error(error.messages);
-                            }
-                        );
-                }
-            })
-            .catch(() => { });
-    }
-    onEdit(dataItem: CategoryMasterModel) {
-        this.isProceess = true;
-        const modalRef = this.modalService.open(AddEditeCategoryComponent, {
-            size: 'sm',
-        });
-        if (modalRef) {
-            this.isProceess = false;
-        } else {
-            this.isProceess = false;
-        }
-        var componentInstance =
-            modalRef.componentInstance as AddEditeCategoryComponent;
-        componentInstance.categoryMaster = dataItem;
-        modalRef.result
-            .then((data: CategoryMasterModel) => {
-                if (data) {
-                    var model: CategoryMasterModel = {
-                        updatedBy: this.userData.userId,
-                        categoryName: data.categoryName.trim(),
-                        status: data.status,
-                        categoryId: dataItem.categoryId,
-                    };
-                    this.masterName = `/category/${dataItem?.categoryId}`;
-                    let updateData: any = {
-                        url: this.masterName,
-                        model: model,
-                    };
-                    this.isProceess = true;
-                    this.subscription = this.apiService
-                        .update(updateData)
-                        .pipe(take(1))
-                        .subscribe(
-                            (res) => {
-                                this.toastr.success(res.message);
-                                this.isProceess = false;
-                                this.fatchData();
-                            },
-                            (error) => {
-                                this.toastr.error(error.messages);
-                                this.isProceess = false;
-                            }
-                        );
-                }
-            })
-            .catch(() => { });
-    }
+    // onAdd() {
+    //     this.isProceess = true;
+    //     const modalRef = this.modalService.open(AddEditeCategoryComponent, {
+    //         size: 'sm',
+    //     });
+    //     if (modalRef) {
+    //         this.isProceess = false;
+    //     } else {
+    //         this.isProceess = false;
+    //     }
+    //     modalRef.result
+    //         .then((data: CategoryMasterModel) => {
+    //             if (data) {
+    //                 var model: CategoryMasterModel = {
+    //                     categoryName: data.categoryName.trim(),
+    //                     createdBy: this.userData.userId,
+    //                     status: data.status,
+    //                 };
+    //                 this.masterName = `/category`;
+    //                 let addData: any = {
+    //                     url: this.masterName,
+    //                     model: model,
+    //                 };
+    //                 this.isProceess = true;
+    //                 this.subscription = this.apiService
+    //                     .add(addData)
+    //                     .pipe(take(1))
+    //                     .subscribe(
+    //                         (response) => {
+    //                             this.isProceess = false;
+    //                             this.fatchData();
+    //                             this.message = response.message;
+    //                             this.toastr.success(this.message);
+    //                         },
+    //                         (error) => {
+    //                             this.isProceess = false;
+    //                             this.toastr.error(error.messages);
+    //                         }
+    //                     );
+    //             }
+    //         })
+    //         .catch(() => { });
+    // }
+    // onEdit(dataItem: CategoryMasterModel) {
+    //     this.isProceess = true;
+    //     const modalRef = this.modalService.open(AddEditeCategoryComponent, {
+    //         size: 'sm',
+    //     });
+    //     if (modalRef) {
+    //         this.isProceess = false;
+    //     } else {
+    //         this.isProceess = false;
+    //     }
+    //     var componentInstance =
+    //         modalRef.componentInstance as AddEditeCategoryComponent;
+    //     componentInstance.categoryMaster = dataItem;
+    //     modalRef.result
+    //         .then((data: CategoryMasterModel) => {
+    //             if (data) {
+    //                 var model: CategoryMasterModel = {
+    //                     updatedBy: this.userData.userId,
+    //                     categoryName: data.categoryName.trim(),
+    //                     status: data.status,
+    //                     categoryId: dataItem.categoryId,
+    //                 };
+    //                 this.masterName = `/category/${dataItem?.categoryId}`;
+    //                 let updateData: any = {
+    //                     url: this.masterName,
+    //                     model: model,
+    //                 };
+    //                 this.isProceess = true;
+    //                 this.subscription = this.apiService
+    //                     .update(updateData)
+    //                     .pipe(take(1))
+    //                     .subscribe(
+    //                         (res) => {
+    //                             this.toastr.success(res.message);
+    //                             this.isProceess = false;
+    //                             this.fatchData();
+    //                         },
+    //                         (error) => {
+    //                             this.toastr.error(error.messages);
+    //                             this.isProceess = false;
+    //                         }
+    //                     );
+    //             }
+    //         })
+    //         .catch(() => { });
+    // }
 
     // onViewDetail(dataItem: CategoryMasterModel) {
     //     this.isProceess = true;
@@ -237,6 +237,79 @@ export class CategoryListComponent implements OnInit, OnDestroy, AfterViewInit {
     //     var componentInstance = modalRef.componentInstance as ViewCategoryComponent;
     //     componentInstance.categoryMaster = dataItem;
     // }
+
+    onAdd() {
+        this.isProceess = true;
+
+        const dialogRef = this.dialog.open(AddEditeCategoryComponent, {
+            width: '400px'   // Adjust the size
+        });
+
+        dialogRef.afterClosed().subscribe((data: CategoryMasterModel) => {
+            if (data) {
+                const model: CategoryMasterModel = {
+                    categoryName: data.categoryName.trim(),
+                    createdBy: this.userData.userId,
+                    status: data.status,
+                };
+
+                this.apiService.add({ url: `/category`, model })
+                    .pipe(take(1))
+                    .subscribe(
+                        (response) => {
+                            this.toastr.success(response.message);
+                            this.fatchData();  // Refresh data
+                            dialogRef.close();  // Close the dialog only after success
+                        },
+                        (error) => {
+                            this.toastr.error(error.message || 'Error occurred');
+                        }
+                    );
+            }
+            this.isProceess = false;
+        });
+    }
+
+    onEdit(dataItem: CategoryMasterModel) {
+        this.isProceess = true;
+
+        const dialogRef = this.dialog.open(AddEditeCategoryComponent, {
+            width: '400px',
+            data: { categoryMaster: dataItem }  // Passing data for editing
+        });
+
+        dialogRef.afterClosed().subscribe((data: CategoryMasterModel) => {
+            // Check if data exists and compare with initial data
+            if (data && (data.categoryName.trim() !== dataItem.categoryName || data.status !== dataItem.status)) {
+                const model: CategoryMasterModel = {
+                    updatedBy: this.userData.userId,
+                    categoryName: data.categoryName.trim(),
+                    status: data.status,
+                    categoryId: dataItem.categoryId,
+                };
+
+                this.apiService.update({ url: `/category/${dataItem.categoryId}`, model })
+                    .pipe(take(1))
+                    .subscribe(
+                        (response) => {
+                            this.toastr.success(response.message);
+                            this.fatchData();  // Refresh data
+                            dialogRef.close();  // Close the dialog only after success
+                        },
+                        (error) => {
+                            this.toastr.error(error.message || 'Error occurred');
+                        }
+                    );
+            } else {
+                // If no data change, just close the dialog without making the API call
+                dialogRef.close();
+                this.isProceess = false;  // Ensure the processing state is cleared
+            }
+        });
+    }
+
+
+
 
     onViewDetail(dataItem: CategoryMasterModel): void {
         this.isProceess = true;
