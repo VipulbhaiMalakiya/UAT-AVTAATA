@@ -28,13 +28,13 @@ table {
 
 
 .active-chip {
-  background-color: #4caf50 !important;  /* Green for Active */
+  background-color: #4caf50 !important;
   color: #fff !important;
 
 }
 
 .deactivated-chip {
-  background-color: #f44336 !important;  /* Red for Deactivated */
+  background-color: #f44336 !important;
    color: #fff !important;
 
 }
