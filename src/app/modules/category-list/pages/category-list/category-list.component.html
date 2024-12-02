@@ -23,65 +23,65 @@
     <div class="dasboard-scroll">
         <div class="responsive-container mat-elevation-z8">
 
-            <table mat-table [dataSource]="dataSource" matSort class="custom-table">
+            <mat-table [dataSource]="dataSource" matSort class="custom-table">
 
                 <!-- Sr.No Column -->
                 <ng-container matColumnDef="index">
-                    <th mat-header-cell *matHeaderCellDef> Sr.No </th>
-                    <td mat-cell *matCellDef="let element; let i = index"> {{ calculateIndex(page, i) }} </td>
+                    <mat-header-cell *matHeaderCellDef> Sr.No </mat-header-cell>
+                    <mat-cell *matCellDef="let element; let i = index"> {{ calculateIndex(page, i) }} </mat-cell>
                 </ng-container>
 
                 <!-- Category Column -->
                 <ng-container matColumnDef="category">
-                    <th mat-header-cell *matHeaderCellDef> Category </th>
-                    <td mat-cell *matCellDef="let element"> {{ element.categoryName | titlecase }} </td>
+                    <mat-header-cell *matHeaderCellDef> Category </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{ element.categoryName | titlecase }} </mat-cell>
                 </ng-container>
 
                 <!-- Created Date Column -->
                 <ng-container matColumnDef="createdDate">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Created Date </th>
-                    <td mat-cell *matCellDef="let element"> {{ element.createdDate | date:'medium' }} </td>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Created Date </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{ element.createdDate | date:'medium' }} </mat-cell>
                 </ng-container>
 
                 <!-- Created By Column -->
                 <ng-container matColumnDef="createdBy">
-                    <th mat-header-cell *matHeaderCellDef> Created By </th>
-                    <td mat-cell *matCellDef="let element">
+                    <mat-header-cell *matHeaderCellDef> Created By </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
                         {{ element.createdBy?.firstName | titlecase }} {{ element.createdBy?.lastName || '' }}
-                    </td>
+                    </mat-cell>
                 </ng-container>
 
                 <!-- Updated Date Column -->
                 <ng-container matColumnDef="updatedDate">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Updated Date </th>
-                    <td mat-cell *matCellDef="let element"> {{ element.updatedDate | date:'medium' }} </td>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Updated Date </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{ element.updatedDate | date:'medium' }} </mat-cell>
                 </ng-container>
 
                 <!-- Updated By Column -->
                 <ng-container matColumnDef="updatedBy">
-                    <th mat-header-cell *matHeaderCellDef> Updated By </th>
-                    <td mat-cell *matCellDef="let element">
+                    <mat-header-cell *matHeaderCellDef> Updated By </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
                         {{ element.updatedBy?.firstName || '' }} {{ element.updatedBy?.lastName || '' }}
-                    </td>
+                    </mat-cell>
                 </ng-container>
 
                 <!-- Status Column -->
                 <ng-container matColumnDef="status">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-                    <td mat-cell *matCellDef="let element">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
                         <mat-chip [ngClass]="element.status ? 'active-chip' : 'deactivated-chip'">
                             {{ element.status ? 'Active' : 'Deactivated' }}
                         </mat-chip>
 
 
 
-                    </td>
+                    </mat-cell>
                 </ng-container>
 
                 <!-- Action Column -->
                 <ng-container matColumnDef="action">
-                    <th mat-header-cell *matHeaderCellDef class="action-cl"> Action </th>
-                    <td mat-cell *matCellDef="let element">
+                    <mat-header-cell *matHeaderCellDef class="action-cl"> Action </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
                         <div class="button-group">
                             <!-- View Button -->
                             <button mat-icon-button color="primary" (click)="onViewDetail(element)">
@@ -98,14 +98,14 @@
                                 <mat-icon>delete</mat-icon> <!-- Material icon for delete -->
                             </button>
                         </div>
-                    </td>
+                    </mat-cell>
 
                 </ng-container>
 
                 <!-- Header and Row Definitions -->
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
 
             <!-- Paginator -->
             <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
