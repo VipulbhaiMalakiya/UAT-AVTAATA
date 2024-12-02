@@ -64,10 +64,10 @@ export class CategoryListComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        if (this.sort) {
-            this.sort.active = 'createdDate'; // Column to sort by
-            this.sort.direction = 'desc'; // Sort direction (asc or desc)
-        }
+        // if (this.sort) {
+        //     this.sort.active = 'createdDate'; // Column to sort by
+        //     this.sort.direction = 'desc'; // Sort direction (asc or desc)
+        // }
         // Ensure sort and paginator are available
         if (this.sort && this.paginator) {
             this.dataSource.sort = this.sort;
