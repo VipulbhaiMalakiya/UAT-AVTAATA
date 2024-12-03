@@ -1,71 +1,23 @@
-<!-- <h2 mat-dialog-title>View Labels</h2>
-<mat-dialog-content>
-    <form [formGroup]="issueForm" class="common-modal-form">
-        <div class="row">
-            <div class="col-md-6">
-                <mat-form-field appearance="fill" class="full-width">
-                    <mat-label>Label Name</mat-label>
-                    <input matInput formControlName="labelName" placeholder="Label Name" />
-                </mat-form-field>
-            </div>
+<div class="common-modal green-modal">
+    <div class="modal-header">
+        <h1 mat-dialog-title>{{ _labelsMaster?.labelName | titlecase }}</h1>
 
-            <div class="col-md-6">
-                <mat-form-field appearance="fill" class="full-width">
-                    <mat-label>Created Date</mat-label>
-                    <input matInput formControlName="createdDate" />
-                </mat-form-field>
-            </div>
-
-            <div class="col-md-6">
-                <mat-form-field appearance="fill" class="full-width">
-                    <mat-label>Created By</mat-label>
-                    <input matInput formControlName="createdBy" />
-                </mat-form-field>
-            </div>
-
-            <div class="col-md-6">
-                <mat-form-field appearance="fill" class="full-width">
-                    <mat-label>Updated Date</mat-label>
-                    <input matInput formControlName="updatedDate" />
-                </mat-form-field>
-            </div>
-
-            <div class="col-md-6">
-                <mat-form-field appearance="fill" class="full-width">
-                    <mat-label>Updated By</mat-label>
-                    <input matInput formControlName="updatedBy" placeholder="Updated By" />
-                </mat-form-field>
-            </div>
-
-            <div class="col-md-6">
-                <mat-form-field appearance="fill" class="full-width">
-                    <mat-label>Status</mat-label>
-                    <input matInput formControlName="status" placeholder="Status" />
-                </mat-form-field>
-            </div>
-        </div>
-    </form>
-</mat-dialog-content>
-
-<mat-dialog-actions align="end">
-    <button mat-raised-button (click)="onCancel()">Close</button>
-</mat-dialog-actions> -->
-
-<!-- Angular Material Dialog Template -->
-<h2 mat-dialog-title>{{_labelsMaster?.labelName | titlecase}}</h2>
-
-<mat-dialog-content>
-    <div class="row">
-        <div class="col-md-4 mb-3" *ngFor="let item of labelItems">
-            <div class="content-item">
-                <strong>{{ item.label }}:</strong>
-                <p>{{ item.value }}</p>
-            </div>
-        </div>
     </div>
+    <div mat-dialog-content>
+        <mat-dialog-content>
+            <div class="row">
+                <div class="col-md-4 mb-3" *ngFor="let item of labelItems">
+                    <div class="content-item">
+                        <strong>{{ item.label }}:</strong>
+                        <p>{{ item.value }}</p>
+                    </div>
+                </div>
+            </div>
 
-    <!-- Dialog action -->
-    <mat-dialog-actions align="end">
-        <button mat-raised-button color="primary" (click)="onCancel()">Close</button>
-    </mat-dialog-actions>
-</mat-dialog-content>
+            <!-- Dialog action -->
+            <mat-dialog-actions align="end">
+                <button mat-raised-button color="primary" (click)="onCancel()">Close</button>
+            </mat-dialog-actions>
+        </mat-dialog-content>
+    </div>
+</div>
