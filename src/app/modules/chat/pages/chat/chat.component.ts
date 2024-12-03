@@ -401,18 +401,24 @@ export class ChatComponent
 
 
                 if (data.mobileNo === this.contact || data.mobileNumber === this.contact) {
+                    // Check if the message already exists based on the messageId
+                    const existingMessageIndex = this.receivedData.findIndex(msg => msg.messageId === data.messageId);
+
+                    if (existingMessageIndex !== -1) {
+                        // If the message already exists, update the status
+                        this.receivedData[existingMessageIndex].messageStatus = data.messageStatus;
+                    } else {
+                        // If it's a new message, push it to the receivedData array
+                        this.receivedData.push(data);
+                    }
 
 
-
-                    this.receivedData.push(data);
-
-                    console.log('----------->', this.receivedData)
-
+                    // Call the function to update the contact list and scroll to the bottom
                     this.getContactList();
                     this.isstatus = 'open';
                     this.scrollToBottom();  // Ensure scrolling after data update
-
-                } else if (data.mobileNo !== this.contact) {
+                }
+                else if (data.mobileNo !== this.contact) {
                     this.getContactList();
                 }
                 if (
