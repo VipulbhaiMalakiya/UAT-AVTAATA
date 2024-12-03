@@ -893,6 +893,8 @@ export class ChatComponent
                     (response) => {
                         this.contactList = response;
                         this.open = this.contactList[0].open;
+
+                        // console.log('---------------->', this.open);
                         //this.missed = this.contactList[0].missed;
 
                         this.missed = this.contactList[0].missed.filter((contact: any) => contact.missedBy === this.userData?.userId) ?? [];
