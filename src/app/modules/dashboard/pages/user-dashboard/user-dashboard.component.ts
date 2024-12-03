@@ -200,6 +200,9 @@ export class UserDashboardComponent implements OnInit {
                 'yyyy-MM-dd'
             );
         }
+        else if (this.selectedValue === 'custom data') {
+            return;
+        }
 
         this.isProceess = true;
         var model: any = {

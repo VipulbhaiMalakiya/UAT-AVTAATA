@@ -184,7 +184,8 @@ export class AdminDashboardComponent implements OnInit {
         // const target = event.target as HTMLSelectElement;
         this.selectedValue = event.value
 
-        console.log(event)
+
+
         const oneWeekFromNow = new Date();
         if (this.selectedValue === 'Today') {
             this.startDate = this.datePipe.transform(
@@ -210,6 +211,9 @@ export class AdminDashboardComponent implements OnInit {
                 'yyyy-MM-dd'
             );
         }
+        else if (this.selectedValue === 'custom data') {
+            return;
+        }
 
         this.isProceess = true;
         var model: any = {
@@ -217,7 +221,6 @@ export class AdminDashboardComponent implements OnInit {
             endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
         };
 
-        console.log(model)
 
         this.ISAdminFirstAgentResponsedata(model);
         this.isAdminconversationsdata(model);
