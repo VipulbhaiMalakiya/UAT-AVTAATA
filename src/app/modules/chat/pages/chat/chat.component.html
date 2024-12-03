@@ -578,7 +578,8 @@
                                                 }}</span>
                                             {{ data.time | dateAgo }}
 
-                                            <ng-container *ngIf="data.messageId">
+
+                                            <ng-container *ngIf="data?.messageId ">
                                                 <span class="last-msg-checkic text-success" *ngIf="
                                                         data.messageStatus ==
                                                         'read'
@@ -640,7 +641,7 @@
                                                 }}</span>
                                             {{ data.time | dateAgo }}
 
-                                            <ng-container *ngIf="data.messageId">
+                                            <ng-container *ngIf="data?.messageId">
                                                 <span class="last-msg-checkic text-success" *ngIf="
                                                         data.messageStatus ==
                                                         'read'

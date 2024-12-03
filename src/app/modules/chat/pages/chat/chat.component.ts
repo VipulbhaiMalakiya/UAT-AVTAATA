@@ -397,12 +397,17 @@ export class ChatComponent
         this.socket$.subscribe(
             (data: any) => {
 
-                this.messagestates = data.messageStatus;
 
 
-                if (data.mobileNo === this.contact) {
+
+                if (data.mobileNo === this.contact || data.mobileNumber === this.contact) {
+
+
 
                     this.receivedData.push(data);
+
+                    console.log('----------->', this.receivedData)
+
                     this.getContactList();
                     this.isstatus = 'open';
                     this.scrollToBottom();  // Ensure scrolling after data update

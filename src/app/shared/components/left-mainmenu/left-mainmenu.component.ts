@@ -56,7 +56,7 @@ export class LeftMainmenuComponent implements OnInit {
         };
 
         this.socket.onmessage = (event) => {
-            console.log('WebSocket message received:', event.data);
+            // console.log('WebSocket message received:', event.data);
             try {
                 const data = JSON.parse(event.data);
                 this.processContactList();
