@@ -35,8 +35,22 @@ export class ViewCategoryComponent {
             { label: 'Created By', value: this.formatName(data.categoryMaster.createdBy) },
             { label: 'Updated Date', value: this.formatDate(data.categoryMaster.updatedDate) },
             { label: 'Updated By', value: this.formatName(data.categoryMaster.updatedBy) },
-            { label: 'Status', value: data.categoryMaster.status },
+            {
+                label: 'Status',
+                value: this.getStatusLabel(data.categoryMaster.status)
+            },
         ];
+    }
+
+
+    private getStatusLabel(status: any): string {
+        // Assuming status is a boolean or string
+        if (typeof status === 'boolean') {
+            return status ? 'Active' : 'Inactive';
+        } else if (typeof status === 'string') {
+            return status.toLowerCase() === 'active' ? 'Active' : 'Inactive';
+        }
+        return 'Unknown';  // Default fallback
     }
 
     private formatDate(date: any): string {
