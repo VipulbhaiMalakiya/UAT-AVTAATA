@@ -399,7 +399,7 @@ export class ChatComponent
 
                 this.messagestates = data.messageStatus;
 
-                console.log(this.messagestates)
+
                 if (data.mobileNo === this.contact) {
 
                     this.receivedData.push(data);
@@ -538,8 +538,6 @@ export class ChatComponent
                 (response) => {
                     this.item = response;
                     this.receivedData = this.item;
-                    this.cd.detectChanges();
-                    console.log('----------->', this.receivedData)
                     this.scrollToBottom();
                     const lstRe = this.receivedData.slice(-1)[0];
                     this.lastItem = lstRe.time;

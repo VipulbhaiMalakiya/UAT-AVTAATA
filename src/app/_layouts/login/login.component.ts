@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
         this.loginForm = this.formBuilder.group({
             username: ['', Validators.required],
             password: ['', Validators.required],
-            // rememberMe: [false, Validators.requiredTrue],
+            // rememberMe: ['', Validators.requiredTrue],
         });
     }
     toggleFieldTextType() {
