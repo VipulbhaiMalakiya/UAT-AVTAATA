@@ -538,6 +538,8 @@ export class ChatComponent
                 (response) => {
                     this.item = response;
                     this.receivedData = this.item;
+                    this.cd.detectChanges();
+                    console.log('----------->', this.receivedData)
                     this.scrollToBottom();
                     const lstRe = this.receivedData.slice(-1)[0];
                     this.lastItem = lstRe.time;
