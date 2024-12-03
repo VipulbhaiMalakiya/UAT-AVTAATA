@@ -19,6 +19,8 @@
                 <option value="Yesterday">Yesterday</option>
                 <option value="7">Last 7 days</option>
                 <option value="30">Last 30 days</option>
+                <option value="custom data">Custom data</option>
+
             </select>
         </div>
 
@@ -26,14 +28,14 @@
             <div class="form-group">
                 <label for="startDate">From</label>
                 <input class="form-control" type="date" id="startDate" name="startDate" [(ngModel)]="startDate"
-                    [max]="endDate">
+                    [max]="endDate" [disabled]="selectedValue !== 'custom data'">
             </div>
         </div>
         <div class="analdrop1">
             <div class="form-group">
                 <label for="endDate">To</label>
                 <input class="form-control" type="date" id="endDate" name="endDate" [(ngModel)]="endDate"
-                    [max]="endDate">
+                    [min]="startDate" [disabled]="selectedValue !== 'custom data'">
                 <div *ngIf="dateRangeError" class="form-validate-err">
                     To Date must be after From Date
                 </div>
@@ -42,9 +44,20 @@
         <div class="analdrop1">
             <div class="form-group">
                 <label>&nbsp;</label>
-                <button class="btn common-btn" (click)="submitDateRange()">Submit</button>
+
+                <!-- Enabled button when selectedValue is 'custom data' -->
+                <button class="btn common-btn" *ngIf="selectedValue === 'custom data'" (click)="submitDateRange()">
+                    Submit
+                </button>
+
+                <!-- Disabled button when selectedValue is not 'custom data' -->
+                <button class="btn common-btn" *ngIf="selectedValue !== 'custom data'" disabled>
+                    Submit
+                </button>
             </div>
+
         </div>
+
     </div>
 </div>
 <div class="inner-middle-content">

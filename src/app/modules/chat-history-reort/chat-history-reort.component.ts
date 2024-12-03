@@ -195,6 +195,9 @@ export class ChatHistoryReortComponent {
                 'yyyy-MM-dd'
             );
         }
+        else if (this.selectedValue === 'custom data') {
+            return;
+        }
 
         this.isProceess = true;
         var model: any = {
