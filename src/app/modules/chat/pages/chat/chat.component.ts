@@ -399,7 +399,7 @@ export class ChatComponent
 
                 this.messagestates = data.messageStatus;
 
-
+                console.log(this.messagestates)
                 if (data.mobileNo === this.contact) {
 
                     this.receivedData.push(data);
