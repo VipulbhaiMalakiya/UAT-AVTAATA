@@ -11,43 +11,44 @@ import { CategoryMasterModel } from 'src/app/_models/category';
     styleUrls: ['./view-category.component.css']
 })
 export class ViewCategoryComponent {
-    categoryMasterForm: FormGroup;
     isProcess = false;
 
-    // Define form fields dynamically
+    // Define fields dynamically
     categoryFields = [
-        { id: 'categoryName', label: 'Name', formControlName: 'categoryName', placeholder: 'Enter Category Name' },
-        { id: 'createdDate', label: 'Created Date', formControlName: 'createdDate', placeholder: 'Enter Created Date' },
-        { id: 'createdBy', label: 'Created By', formControlName: 'createdBy', placeholder: 'Enter Creator Name' },
-        { id: 'updatedDate', label: 'Updated Date', formControlName: 'updatedDate', placeholder: 'Enter Updated Date' },
-        { id: 'updatedBy', label: 'Updated By', formControlName: 'updatedBy', placeholder: 'Enter Updater Name' },
-        { id: 'status', label: 'Status', formControlName: 'status', placeholder: 'Enter Status' },
+        { label: 'Name', value: '' },
+        { label: 'Created Date', value: '' },
+        { label: 'Created By', value: '' },
+        { label: 'Updated Date', value: '' },
+        { label: 'Updated By', value: '' },
+        { label: 'Status', value: '' },
     ];
 
     constructor(
-        private fb: FormBuilder,
         private datePipe: DatePipe,
         public dialogRef: MatDialogRef<ViewCategoryComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
-        // Initialize the form with the data passed
-
-        this.categoryMasterForm = this.fb.group({
-            categoryName: [{ value: data.categoryMaster.categoryName, disabled: true }],
-            createdDate: [{ value: this.formatDate(data.categoryMaster.createdDate), disabled: true }],
-            createdBy: [{ value: `${data.categoryMaster.createdBy?.firstName ?? ''} ${data.categoryMaster.createdBy?.lastName ?? ''}`.trim(), disabled: true }],
-            updatedDate: [{ value: this.formatDate(data.categoryMaster.updatedDate), disabled: true }],
-            updatedBy: [{ value: `${data.categoryMaster.updatedBy?.firstName ?? ''} ${data.categoryMaster.updatedBy?.lastName ?? ''}`.trim(), disabled: true }],
-            status: [{ value: data.categoryMaster.status, disabled: true }],
-        });
-
-
+        // Populate the fields with data
+        this.categoryFields = [
+            { label: 'Name', value: data.categoryMaster.categoryName },
+            { label: 'Created Date', value: this.formatDate(data.categoryMaster.createdDate) },
+            { label: 'Created By', value: this.formatName(data.categoryMaster.createdBy) },
+            { label: 'Updated Date', value: this.formatDate(data.categoryMaster.updatedDate) },
+            { label: 'Updated By', value: this.formatName(data.categoryMaster.updatedBy) },
+            { label: 'Status', value: data.categoryMaster.status },
+        ];
     }
 
-    formatDate(date: any): string {
-        return this.datePipe.transform(date, 'yyyy-MM-dd hh:mm a') || '';
+    private formatDate(date: any): string {
+        return this.datePipe.transform(date, 'yyyy-MM-dd hh:mm a') || 'N/A';
     }
 
+    private formatName(user: any): string {
+        if (!user) return 'N/A';
+        const firstName = user.firstName ?? '';
+        const lastName = user.lastName ?? '';
+        return `${firstName} ${lastName}`.trim() || 'N/A';
+    }
 
     onCancel(): void {
         this.dialogRef.close(); // Close the dialog

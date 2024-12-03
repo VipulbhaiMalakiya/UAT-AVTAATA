@@ -1,18 +1,47 @@
-<h1 mat-dialog-title>View Category</h1>
-<mat-dialog-content>
-    <app-loading-spin-popup *ngIf="isProcess"></app-loading-spin-popup>
-    <form class="common-modal-form" [formGroup]="categoryMasterForm">
-        <div class="row">
-            <div class="col-md-6 col-sm-12" *ngFor="let field of categoryFields">
-                <mat-form-field appearance="outline" class="full-width">
-                    <mat-label>{{ field.label }}</mat-label>
-                    <input matInput type="text" [formControlName]="field.formControlName"
-                        [placeholder]="field.placeholder">
-                </mat-form-field>
+<!-- <div class="common-modal green-modal">
+    <div class="modal-header">
+        <h1 mat-dialog-title>View Category</h1>
+    </div>
+
+    <div mat-dialog-content>
+        <app-loading-spin-popup *ngIf="isProcess"></app-loading-spin-popup>
+        <div class="common-modal-content">
+            <div class="row">
+                <div class="col-md-6 col-sm-12" *ngFor="let field of categoryFields">
+                    <div class="detail-field">
+                        <strong>{{ field.label }}:</strong>
+                        <p>{{ field.value }}</p>
+                    </div>
+                </div>
             </div>
         </div>
-    </form>
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-    <button mat-raised-button (click)="onCancel()">Close</button>
-</mat-dialog-actions>
+    </div>
+
+    <mat-dialog-actions align="end">
+        <button mat-raised-button (click)="onCancel()">Close</button>
+    </mat-dialog-actions>
+</div> -->
+
+<div class="common-modal green-modal">
+    <div class="modal-header">
+        <h1 mat-dialog-title>View Category</h1>
+
+    </div>
+    <div mat-dialog-content>
+        <mat-dialog-content>
+            <div class="row">
+                <div class="col-md-4 mb-3" *ngFor="let item of categoryFields">
+                    <div class="content-item">
+                        <strong>{{ item.label }}:</strong>
+                        <p>{{ item.value }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dialog action -->
+            <mat-dialog-actions align="end">
+                <button mat-raised-button color="primary" (click)="onCancel()">Close</button>
+            </mat-dialog-actions>
+        </mat-dialog-content>
+    </div>
+</div>
