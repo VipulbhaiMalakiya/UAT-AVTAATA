@@ -4,6 +4,7 @@ import {
     ChangeDetectorRef,
     Component,
     ElementRef,
+    HostListener,
     OnDestroy,
     OnInit,
     ViewChild,
@@ -116,6 +117,9 @@ export class ChatComponent
     slecteduser: any = {};
     private notificationSound?: HTMLAudioElement;
 
+    private currentPage: number = 1;
+    private pageSize: number = 100;
+
     toggleEmojiPicker() {
         this.showupload = false;
         this.showupload1 = false;
@@ -223,7 +227,7 @@ export class ChatComponent
             return replacedString;
         } catch (error) {
             // Handle the error here, e.g., log it or return a default value
-            console.error('Error in replaceAndBoldPlaceholder1:', error);
+            // console.error('Error in replaceAndBoldPlaceholder1:', error);
             return 'Error: Unable to replace placeholders';
         }
     }
@@ -543,57 +547,87 @@ export class ChatComponent
         this.label = e.customerLabel;
         this.isProceess = true;
 
+        this.loadChatHistory()
+        this.loadUserActivity(this.contact)
+
+
+    }
+
+
+    loadChatHistory() {
         this.subscription = this.whatsappService
-            .chatHistory(e.phoneNo)
+            .chatHistorynew(this.contact)
             .pipe(take(1), distinctUntilChanged())
             .subscribe(
-                (response) => {
+                (response: any) => {
                     this.item = response;
-                    this.receivedData = this.item;
+                    // this.receivedData = this.item;
+                    this.receivedData = [...this.receivedData, ...this.item];
+                    this.currentPage++;
                     this.scrollToBottom();
                     const lstRe = this.receivedData.slice(-1)[0];
                     this.lastItem = lstRe.time;
                     this.lastMessageTime = this.lastItem;
-                    if (lstRe.mobileNo === e.phoneNo) {
+                    if (lstRe.mobileNo === this.contact) {
                         // this.checkChatStatus();
                     }
 
                     this.isProceess = false;
-                    this.masterName = `/chat-activity/${e.phoneNo}`;
-                    this.subscription = this.apiService
-                        .getAll(this.masterName)
-                        .pipe(take(1), distinctUntilChanged(),)
-                        .subscribe(
-                            (data) => {
-                                this.Userinfo = data;
-                                this.nrSelect = this.Userinfo?.assignedto;
-                                if (this.nrSelect === this.Userinfo?.assignedto) {
-                                    const foundItem = this.aciveUser.find(
-                                        (item) => item.userId === this.Userinfo?.assignedto
-                                    );
-                                    if (foundItem) {
-                                        this.DefoluteSelect =
-                                            foundItem.firstName + ' ' + foundItem.lastName;
-                                    } else {
-                                        this.DefoluteSelect =
-                                            this.Userinfo?.firstName + ' ' + this.Userinfo?.lastName;
-                                    }
-                                }
+                },
+                (error) => {
+                    this.isProceess = false;
+                }
+            );
 
-                                this.isProceess = false;
-                                this.cd.detectChanges();
-                            },
-                            (error) => {
-                                this.isProceess = false;
-                            }
+    }
+
+
+    @HostListener('window:scroll', ['$event'])
+    onScroll(event: Event): void {
+        const target = event.target as Document;
+        const scrollingElement = target.scrollingElement;
+
+        if (scrollingElement) {
+            const scrollTop = scrollingElement.scrollTop;
+            const scrollHeight = scrollingElement.scrollHeight;
+            const clientHeight = scrollingElement.clientHeight;
+
+            if (scrollTop + clientHeight >= scrollHeight - 50) {
+                this.loadChatHistory();
+            }
+        }
+    }
+
+    loadUserActivity(phoneNo: string) {
+        this.masterName = `/chat-activity/${phoneNo}`;
+        this.subscription = this.apiService
+            .getAll(this.masterName)
+            .pipe(take(1), distinctUntilChanged(),)
+            .subscribe(
+                (data) => {
+                    this.Userinfo = data;
+                    this.nrSelect = this.Userinfo?.assignedto;
+                    if (this.nrSelect === this.Userinfo?.assignedto) {
+                        const foundItem = this.aciveUser.find(
+                            (item) => item.userId === this.Userinfo?.assignedto
                         );
+                        if (foundItem) {
+                            this.DefoluteSelect =
+                                foundItem.firstName + ' ' + foundItem.lastName;
+                        } else {
+                            this.DefoluteSelect =
+                                this.Userinfo?.firstName + ' ' + this.Userinfo?.lastName;
+                        }
+                    }
+
+                    this.isProceess = false;
+                    this.cd.detectChanges();
                 },
                 (error) => {
                     this.isProceess = false;
                 }
             );
     }
-
 
 
 
