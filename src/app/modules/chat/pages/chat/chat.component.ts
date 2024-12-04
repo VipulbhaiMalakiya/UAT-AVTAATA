@@ -492,7 +492,18 @@ export class ChatComponent
         this.establishConnection();
     }
 
+    private lastContact: string | null = null; // Store the last contact to compare
+
+
     onViewContact(e: any, c: any) {
+
+        // Check if the contact has changed
+        if (this.lastContact === e.phoneNo) {
+            console.log("Duplicate contact selected, skipping API call.");
+            return; // Skip if the contact is the same as the previous one
+        }
+        this.lastContact = e.phoneNo;
+
         this.pageSize = 5;
         this.currentPage = 1;
         this.receivedData = [];
@@ -541,6 +552,7 @@ export class ChatComponent
     loadInitialData() {
         this.loadChatHistory(true);
     }
+
 
     loadChatHistory(isInitialLoad: boolean = false) {
 
