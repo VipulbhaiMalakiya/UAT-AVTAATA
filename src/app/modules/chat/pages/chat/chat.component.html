@@ -199,6 +199,13 @@
                                             class="las la-play"></i></span>
                                     <span class="user-platfrm" *ngIf="i.messagetype === 'location' "><i
                                             class="las la-map-marked"></i></span>
+                                    <span class="user-platfrm" *ngIf="i.messagetype === 'order' ">
+                                        <i class="las la-cart-arrow-down"></i>
+                                    </span>
+                                    <span class="user-platfrm" *ngIf="i.messagetype === 'unsupported' ">
+                                        <i class="las la-comment-slash"></i>
+                                    </span>
+
                                 </div>
                                 <div class="chat-info py-1">
                                     <span class="d-block" *ngIf=" i.fullName !== null && i.count == 0">
@@ -301,6 +308,13 @@
                                             class="las la-play"></i></span>
                                     <span class="user-platfrm" *ngIf="i.messagetype === 'location' "><i
                                             class="las la-map-marked"></i></span>
+                                    <span class="user-platfrm" *ngIf="i.messagetype === 'order' ">
+                                        <i class="las la-cart-arrow-down"></i>
+                                    </span>
+                                    <span class="user-platfrm" *ngIf="i.messagetype === 'unsupported' ">
+                                        <i class="las la-comment-slash"></i>
+                                    </span>
+
                                 </div>
                                 <div class="chat-info py-1">
                                     <span class="d-block" *ngIf="
@@ -414,6 +428,12 @@
                                             class="las la-play"></i></span>
                                     <span class="user-platfrm" *ngIf="i.messagetype === 'location' "><i
                                             class="las la-map-marked"></i></span>
+                                    <span class="user-platfrm" *ngIf="i.messagetype === 'order' ">
+                                        <i class="las la-cart-arrow-down"></i>
+                                    </span>
+                                    <span class="user-platfrm" *ngIf="i.messagetype === 'unsupported' ">
+                                        <i class="las la-comment-slash"></i>
+                                    </span>
                                 </div>
                                 <div class="chat-info py-1">
                                     <span class="d-block" *ngIf="i.fullName !== null">
