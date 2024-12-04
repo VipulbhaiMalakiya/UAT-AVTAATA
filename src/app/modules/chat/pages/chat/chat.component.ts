@@ -376,30 +376,7 @@ export class ChatComponent
         }
     }
 
-    @ViewChild('chatContainer') private chatContainer!: ElementRef;
 
-    ngAfterViewInit() {
-        this.scrollToBottom();
-    }
-
-    ngAfterViewChecked() {
-        // this.scrollToBottom();
-    }
-    private scrollToBottom(): void {
-        setTimeout(() => { // Use setTimeout to ensure the DOM is fully rendered
-            try {
-                if (this.chatContainer && this.chatContainer.nativeElement) {
-                    const container = this.chatContainer.nativeElement;
-                    const atBottom = container.scrollHeight - container.scrollTop <= container.clientHeight;
-                    if (!atBottom) {
-                        container.scrollTop = container.scrollHeight;
-                    }
-                }
-            } catch (err) {
-                console.error(err);
-            }
-        }, 0);
-    }
     private establishConnection(): void {
         this.socket$ = webSocket(environment.SOCKET_ENDPOINT);
         this.socket$.subscribe(
@@ -553,24 +530,40 @@ export class ChatComponent
         this.label = e.customerLabel;
         this.isProceess = true;
 
-        this.loadChatHistory()
+        // this.loadChatHistory()
+        this.loadInitialData();
         this.loadUserActivity(this.contact)
 
 
     }
 
 
+    loadInitialData() {
+        this.loadChatHistory(true);
+    }
 
-    loadChatHistory() {
+    loadChatHistory(isInitialLoad: boolean = false) {
+
+        this.isProceess = true;
+
         this.subscription = this.whatsappService
             .chatHistorynew(this.contact, this.currentPage, this.pageSize)
             .pipe(take(1), distinctUntilChanged())
             .subscribe(
                 (response: any) => {
-                    this.item = response;
-                    // this.receivedData = this.item;
-                    this.item = response;
-                    this.receivedData = [...this.receivedData, ...this.item];
+                    // this.item = response;
+                    // // this.receivedData = this.item;
+                    // this.item = response;
+                    // this.receivedData = [...this.receivedData, ...this.item];
+
+
+                    if (isInitialLoad) {
+                        this.receivedData = [...response];  // For initial load, just replace data
+                    } else {
+                        this.receivedData = [...this.receivedData, ...response];  // Append new data
+                    }
+
+
                     this.scrollToBottom();
                     const lstRe = this.receivedData.slice(-1)[0];
                     this.lastItem = lstRe.time;
@@ -578,6 +571,9 @@ export class ChatComponent
                     if (lstRe.mobileNo === this.contact) {
                         // this.checkChatStatus();
                     }
+
+                    // Increment page number after loading data
+                    this.currentPage++;  // Prepare for the next data fetch
 
                     this.isProceess = false;
                 },
@@ -587,16 +583,63 @@ export class ChatComponent
             );
 
     }
+    @ViewChild('chatContainer') private chatContainer!: ElementRef;
+    @ViewChild('msgHistory', { static: true }) msgHistory!: ElementRef;
 
-    // Listen to the window scroll event
-    @HostListener('window:scroll', [])
-    onWindowScroll() {
-        const scrollPosition = document.documentElement.scrollTop + window.innerHeight;
-        const threshold = document.documentElement.scrollHeight - 200;  // 200px from the bottom to trigger loading more items
 
-        if (scrollPosition >= threshold && !this.isProceess) {
-            this.loadChatHistory();  // Load more data when user is near the bottom
+
+    @HostListener('window:scroll', ['$event'])
+    onScroll(event: Event): void {
+        const target = event.target as Document;
+        const scrollingElement = target.scrollingElement;
+
+        if (scrollingElement) {
+            const scrollTop = scrollingElement.scrollTop;
+            const scrollHeight = scrollingElement.scrollHeight;
+            const clientHeight = scrollingElement.clientHeight;
+
+            if (scrollTop + clientHeight >= scrollHeight - 50) {
+                this.loadChatHistory();
+            }
         }
+    }
+
+
+
+    // onScroll(event: Event): void {
+    //     const target = event.target as HTMLElement;
+
+    //     // Check if the user has scrolled up 50px from the top and there are no ongoing requests
+    //     if (target.scrollTop <= 50 && !this.isProceess) {
+    //         this.loadChatHistory(); // Load previous messages when scrolled within 50px from the top
+    //     }
+    // }
+
+
+
+
+
+    ngAfterViewInit() {
+        this.scrollToBottom();
+    }
+
+    ngAfterViewChecked() {
+        // this.scrollToBottom();
+    }
+    private scrollToBottom(): void {
+        setTimeout(() => { // Use setTimeout to ensure the DOM is fully rendered
+            try {
+                if (this.chatContainer && this.chatContainer.nativeElement) {
+                    const container = this.chatContainer.nativeElement;
+                    const atBottom = container.scrollHeight - container.scrollTop <= container.clientHeight;
+                    if (!atBottom) {
+                        container.scrollTop = container.scrollHeight;
+                    }
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }, 0);
     }
 
 
