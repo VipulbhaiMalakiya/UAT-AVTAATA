@@ -619,14 +619,15 @@ export class ChatComponent
 
 
 
-    onScroll(event: Event): void {
-        const target = event.target as HTMLElement;
+    // onScroll(event: Event): void {
+    //     const target = event.target as HTMLElement;
 
-        // Check if the user has scrolled up 50px from the top and there are no ongoing requests
-        if (target.scrollTop <= 50 && !this.isProceess) {
-            this.loadChatHistory(); // Load previous messages when scrolled within 50px from the top
-        }
-    }
+    //     // Check if the user has scrolled up 50px from the top and there are no ongoing requests
+    //     if (target.scrollTop <= 50 && !this.isProceess) {
+    //         this.loadChatHistory(); // Load previous messages when scrolled within 50px from the top
+    //     }
+    // }
+
 
 
 
