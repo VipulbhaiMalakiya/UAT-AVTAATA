@@ -555,47 +555,41 @@ export class ChatComponent
 
 
     loadChatHistory(isInitialLoad: boolean = false) {
-
         this.isProceess = true;
 
         this.subscription = this.whatsappService
             .chatHistorynew(this.contact, this.currentPage, this.pageSize)
             .pipe(take(1), distinctUntilChanged())
-            .subscribe(
-                (response: any) => {
-                    // this.item = response;
-                    // // this.receivedData = this.item;
-                    // this.item = response;
-                    // this.receivedData = [...this.receivedData, ...this.item];
-
-
+            .subscribe({
+                next: (response: any) => {
                     if (isInitialLoad) {
                         this.receivedData = [...response];  // For initial load, just replace data
                     } else {
                         this.receivedData = [...this.receivedData, ...response];  // Append new data
                     }
 
-                    this.currentPage++;  // Increment page number for next re
+                    this.currentPage++;  // Increment page number for next request
 
                     this.scrollToBottom();
                     const lstRe = this.receivedData.slice(-1)[0];
                     this.lastItem = lstRe.time;
                     this.lastMessageTime = this.lastItem;
                     if (lstRe.mobileNo === this.contact) {
-                        // this.checkChatStatus();
+                        // Handle specific logic here
                     }
-
-                    // Increment page number after loading data
-                    // this.currentPage++;  // Prepare for the next data fetch
 
                     this.isProceess = false;
                 },
-                (error) => {
+                error: (error) => {
+                    console.error('Error loading chat history:', error);
                     this.isProceess = false;
+                },
+                complete: () => {
+                    console.log('Chat history load complete');
                 }
-            );
-
+            });
     }
+
     @ViewChild('chatContainer') private chatContainer!: ElementRef;
     @ViewChild('msgHistory', { static: true }) msgHistory!: ElementRef;
 
@@ -619,14 +613,14 @@ export class ChatComponent
 
 
 
-    // onScroll(event: Event): void {
-    //     const target = event.target as HTMLElement;
+    onScroll(event: Event): void {
+        const target = event.target as HTMLElement;
 
-    //     // Check if the user has scrolled up 50px from the top and there are no ongoing requests
-    //     if (target.scrollTop <= 50 && !this.isProceess) {
-    //         this.loadChatHistory(); // Load previous messages when scrolled within 50px from the top
-    //     }
-    // }
+        // Check if the user has scrolled up 50px from the top and there are no ongoing requests
+        if (target.scrollTop <= 50 && !this.isProceess) {
+            this.loadChatHistory(); // Load previous messages when scrolled within 50px from the top
+        }
+    }
 
 
 
