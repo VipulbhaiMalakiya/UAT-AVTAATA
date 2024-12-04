@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HeadersService } from '../_services/headers.service';
 import { WebSocketSubject } from 'rxjs/webSocket';
+import { map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
