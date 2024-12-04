@@ -575,14 +575,18 @@ export class ChatComponent
                         this.receivedData = [...this.receivedData, ...response];  // Append new data
                     }
 
-                    this.scrollToBottom();
+
+                    if (this.currentPage == 1) {
+                        this.scrollToBottom();
+
+                    }
+                    else {
+                        this.scrollToMiddle();
+                    }
+                    // this.scrollToBottom();
                     this.currentPage++;  // Increment page number for next re
 
 
-                    // if (this.currentPage == 1) {
-                    //     this.scrollToBottom();
-
-                    // }
                     const lstRe = this.receivedData.slice(-1)[0];
                     this.lastItem = lstRe.time;
                     this.lastMessageTime = this.lastItem;
@@ -601,6 +605,8 @@ export class ChatComponent
             );
 
     }
+
+
     @ViewChild('chatContainer') private chatContainer!: ElementRef;
     @ViewChild('msgHistory', { static: true }) msgHistory!: ElementRef;
 
@@ -660,6 +666,25 @@ export class ChatComponent
             }
         }, 0);
     }
+
+
+
+    scrollToMiddle() {
+        setTimeout(() => { // Use setTimeout to ensure the DOM is fully rendered
+            try {
+                const container = this.chatContainer.nativeElement;
+                const middle = container.scrollHeight / 2;
+                container.scrollTo({
+                    top: middle,
+                    // behavior: 'smooth' // for smooth scrolling
+                });
+            } catch (err) {
+                console.error(err);
+            }
+        }, 0);
+    }
+
+
 
 
     loadUserActivity(phoneNo: string) {
