@@ -563,6 +563,7 @@ export class ChatComponent
                         this.receivedData = [...this.receivedData, ...response];  // Append new data
                     }
 
+                    this.currentPage++;  // Increment page number for next re
 
                     this.scrollToBottom();
                     const lstRe = this.receivedData.slice(-1)[0];
@@ -573,7 +574,7 @@ export class ChatComponent
                     }
 
                     // Increment page number after loading data
-                    this.currentPage++;  // Prepare for the next data fetch
+                    // this.currentPage++;  // Prepare for the next data fetch
 
                     this.isProceess = false;
                 },
@@ -588,32 +589,32 @@ export class ChatComponent
 
 
 
-    @HostListener('window:scroll', ['$event'])
-    onScroll(event: Event): void {
-        const target = event.target as Document;
-        const scrollingElement = target.scrollingElement;
-
-        if (scrollingElement) {
-            const scrollTop = scrollingElement.scrollTop;
-            const scrollHeight = scrollingElement.scrollHeight;
-            const clientHeight = scrollingElement.clientHeight;
-
-            if (scrollTop + clientHeight >= scrollHeight - 50) {
-                this.loadChatHistory();
-            }
-        }
-    }
-
-
-
+    // @HostListener('window:scroll', ['$event'])
     // onScroll(event: Event): void {
-    //     const target = event.target as HTMLElement;
+    //     const target = event.target as Document;
+    //     const scrollingElement = target.scrollingElement;
 
-    //     // Check if the user has scrolled up 50px from the top and there are no ongoing requests
-    //     if (target.scrollTop <= 50 && !this.isProceess) {
-    //         this.loadChatHistory(); // Load previous messages when scrolled within 50px from the top
+    //     if (scrollingElement) {
+    //         const scrollTop = scrollingElement.scrollTop;
+    //         const scrollHeight = scrollingElement.scrollHeight;
+    //         const clientHeight = scrollingElement.clientHeight;
+
+    //         if (scrollTop + clientHeight >= scrollHeight - 50) {
+    //             this.loadChatHistory();
+    //         }
     //     }
     // }
+
+
+
+    onScroll(event: Event): void {
+        const target = event.target as HTMLElement;
+
+        // Check if the user has scrolled up 50px from the top and there are no ongoing requests
+        if (target.scrollTop <= 50 && !this.isProceess) {
+            this.loadChatHistory(); // Load previous messages when scrolled within 50px from the top
+        }
+    }
 
 
 

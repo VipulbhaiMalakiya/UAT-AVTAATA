@@ -571,7 +571,7 @@
             </div>
             <div class="chatarea-sec">
                 <div class="chat-body">
-                    <ul class="msg-history" #chatContainer>
+                    <ul class="msg-history" #chatContainer (scroll)="onScroll($event)">
                         <ng-container *ngFor="let data of receivedData">
                             <!-- Notifaction -->
                             <li class="msg-replayer" *ngIf="
