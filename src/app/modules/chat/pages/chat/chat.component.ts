@@ -508,6 +508,7 @@ export class ChatComponent
     }
 
     onViewContact(e: any, c: any) {
+        this.receivedData = [];
         this.isProceess = true;
         this.contactinfo = e;
         this.bgclass = c;
