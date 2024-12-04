@@ -117,8 +117,12 @@ export class ChatComponent
     slecteduser: any = {};
     private notificationSound?: HTMLAudioElement;
 
+
+    // @ViewChild('chatContainer') chatContainer!: ElementRef;
+
     private currentPage: number = 1;
-    private pageSize: number = 100;
+    private pageSize: number = 5;
+
 
     toggleEmojiPicker() {
         this.showupload = false;
@@ -512,6 +516,8 @@ export class ChatComponent
     }
 
     onViewContact(e: any, c: any) {
+        this.pageSize = 5;
+        this.currentPage = 1;
         this.receivedData = [];
         this.isProceess = true;
         this.contactinfo = e;
@@ -554,16 +560,17 @@ export class ChatComponent
     }
 
 
+
     loadChatHistory() {
         this.subscription = this.whatsappService
-            .chatHistorynew(this.contact)
+            .chatHistorynew(this.contact, this.currentPage, this.pageSize)
             .pipe(take(1), distinctUntilChanged())
             .subscribe(
                 (response: any) => {
                     this.item = response;
                     // this.receivedData = this.item;
+                    this.item = response;
                     this.receivedData = [...this.receivedData, ...this.item];
-                    this.currentPage++;
                     this.scrollToBottom();
                     const lstRe = this.receivedData.slice(-1)[0];
                     this.lastItem = lstRe.time;
@@ -581,22 +588,17 @@ export class ChatComponent
 
     }
 
+    // Listen to the window scroll event
+    @HostListener('window:scroll', [])
+    onWindowScroll() {
+        const scrollPosition = document.documentElement.scrollTop + window.innerHeight;
+        const threshold = document.documentElement.scrollHeight - 200;  // 200px from the bottom to trigger loading more items
 
-    @HostListener('window:scroll', ['$event'])
-    onScroll(event: Event): void {
-        const target = event.target as Document;
-        const scrollingElement = target.scrollingElement;
-
-        if (scrollingElement) {
-            const scrollTop = scrollingElement.scrollTop;
-            const scrollHeight = scrollingElement.scrollHeight;
-            const clientHeight = scrollingElement.clientHeight;
-
-            if (scrollTop + clientHeight >= scrollHeight - 50) {
-                this.loadChatHistory();
-            }
+        if (scrollPosition >= threshold && !this.isProceess) {
+            this.loadChatHistory();  // Load more data when user is near the bottom
         }
     }
+
 
     loadUserActivity(phoneNo: string) {
         this.masterName = `/chat-activity/${phoneNo}`;
