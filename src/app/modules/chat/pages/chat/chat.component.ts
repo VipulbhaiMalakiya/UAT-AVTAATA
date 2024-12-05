@@ -915,7 +915,6 @@ export class ChatComponent
     }
 
 
-
     GetUser() {
         if (this._route.snapshot.paramMap.get('status') != null) {
             this.show = true;
@@ -977,15 +976,9 @@ export class ChatComponent
         return result ? result : null;
     };
 
-
-
     handleClick(status: any) {
         this.isstatus = status;
     }
-
-
-
-
 
     checkstatus() {
         this.masterName = `/customer/checkin-status/${this.contact}`;
