@@ -539,14 +539,14 @@ export class ChatComponent
                     }
 
 
-                    // if (this.currentPage == 1) {
-                    //     this.scrollToBottom();
+                    if (this.currentPage == 1) {
+                        this.scrollToBottom();
 
-                    // }
-                    // else {
-                    //     this.scrollToMiddle();
-                    // }
-                    this.scrollToBottom();
+                    }
+                    else {
+                        this.scrollToMiddle();
+                    }
+                    // this.scrollToBottom();
                     this.currentPage++;  // Increment page number for next re
 
 
@@ -556,9 +556,6 @@ export class ChatComponent
                     if (lstRe.mobileNo === this.contact) {
                         // this.checkChatStatus();
                     }
-
-                    // Increment page number after loading data
-                    // this.currentPage++;  // Prepare for the next data fetch
 
                     this.isProceess = false;
                 },
