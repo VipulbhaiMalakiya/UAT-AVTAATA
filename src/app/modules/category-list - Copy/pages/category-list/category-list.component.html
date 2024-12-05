@@ -1,0 +1,118 @@
+<app-header></app-header>
+<app-loading-spin *ngIf="isProceess"></app-loading-spin>
+<div class="page-title">
+    <h1>Category</h1>
+</div>
+<div class="page-btns-col">
+    <div class="dt-buttons">
+        <button mat-raised-button color="primary" (click)="onDownload()">
+            Export to Excel
+        </button>
+        <mat-form-field appearance="fill" class="small-input equal-height">
+            <mat-label>Search</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Enter keyword" />
+        </mat-form-field>
+    </div>
+    <div class="btn-group">
+        <button mat-raised-button color="accent" (click)="onAdd()">
+            Create new
+        </button>
+    </div>
+</div>
+<div class="inner-middle-content">
+    <div class="dasboard-scroll">
+        <div class="responsive-container mat-elevation-z8">
+
+            <mat-table [dataSource]="dataSource" matSort class="custom-table">
+
+                <!-- Sr.No Column -->
+                <ng-container matColumnDef="index">
+                    <mat-header-cell *matHeaderCellDef> Sr.No </mat-header-cell>
+                    <mat-cell *matCellDef="let element; let i = index" class="small-column"> {{ calculateIndex(page, i)
+                        }} </mat-cell>
+                </ng-container>
+
+                <!-- Category Column -->
+                <ng-container matColumnDef="category">
+                    <mat-header-cell *matHeaderCellDef> Category </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{ element.categoryName | titlecase }} </mat-cell>
+                </ng-container>
+
+                <!-- Created Date Column -->
+                <ng-container matColumnDef="createdDate">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Created Date </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{ element.createdDate | date:'dd/MM/yyyy'}} </mat-cell>
+                </ng-container>
+
+                <!-- Created By Column -->
+                <ng-container matColumnDef="createdBy">
+                    <mat-header-cell *matHeaderCellDef> Created By </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        {{ element.createdBy?.firstName | titlecase }} {{ element.createdBy?.lastName || '' }}
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Updated Date Column -->
+                <ng-container matColumnDef="updatedDate">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Updated Date </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{ element.updatedDate | date:'dd/MM/yyyy' }} </mat-cell>
+                </ng-container>
+
+                <!-- Updated By Column -->
+                <ng-container matColumnDef="updatedBy">
+                    <mat-header-cell *matHeaderCellDef> Updated By </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        {{ element.updatedBy?.firstName || '' }} {{ element.updatedBy?.lastName || '' }}
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Status Column -->
+                <ng-container matColumnDef="status">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <mat-chip [ngClass]="element.status ? 'active-chip' : 'deactivated-chip'">
+                            {{ element.status ? 'Active' : 'Deactivated' }}
+                        </mat-chip>
+
+
+
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Action Column -->
+                <ng-container matColumnDef="action">
+                    <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <div class="button-group">
+                            <!-- View Button -->
+                            <button mat-mini-fab color="primary" (click)="onViewDetail(element)">
+                                <mat-icon>visibility</mat-icon> <!-- Material icon for view -->
+                            </button>
+
+                            <!-- Edit Button -->
+                            <button mat-mini-fab color="accent" (click)="onEdit(element)">
+                                <mat-icon>edit</mat-icon> <!-- Material icon for edit -->
+                            </button>
+
+                            <!-- Delete Button -->
+                            <button mat-mini-fab color="warn" *ngIf="element.status" (click)="onDelete(element)">
+                                <mat-icon>delete</mat-icon> <!-- Material icon for delete -->
+                            </button>
+                        </div>
+                    </mat-cell>
+
+                </ng-container>
+
+                <!-- Header and Row Definitions -->
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+
+            <!-- Paginator -->
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
+
+
+    </div>
+
+</div>

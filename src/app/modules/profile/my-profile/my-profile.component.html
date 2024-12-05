@@ -1,16 +1,16 @@
 <app-loading-spin *ngIf="isProceess"></app-loading-spin>
 
 <div class="page-title">
-    <h1>My Profile</h1>
+  <h1>My Profile</h1>
 </div>
 <div class="inner-middle-content">
-    <div class="profile-page">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="profile-card">
-                    <div class="bluecard-header">Your details</div>
-                    <div class="inner-card-body">
-                        <!-- <form class="profile-form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <div class="profile-page">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="profile-card">
+          <div class="bluecard-header">Your details</div>
+          <div class="inner-card-body">
+            <form class="profile-form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
@@ -159,203 +159,12 @@
                   </div>
                 </div>
               </div>
-            </form> -->
+            </form>
+          </div>
 
-
-                        <form class="profile-form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <mat-form-field appearance="fill" class="full-width">
-                                            <mat-label>First Name</mat-label>
-                                            <input matInput type="text" formControlName="firstName" id="firstName"
-                                                placeholder="First Name">
-                                            <mat-error *ngIf="shouldShowError('firstName','required')">
-                                                Please Enter First Name
-                                            </mat-error>
-                                            <mat-error *ngIf="shouldShowError('firstName','leadingSpace')">
-                                                Input Field cannot start with a space.
-                                            </mat-error>
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <mat-form-field appearance="fill" class="full-width">
-                                            <mat-label>Last Name</mat-label>
-                                            <input matInput type="text" formControlName="lastName" id="lastName"
-                                                placeholder="Last Name">
-                                            <mat-error *ngIf="shouldShowError('lastName','required')">
-                                                Please Enter Last Name.
-                                            </mat-error>
-                                            <mat-error *ngIf="shouldShowError('lastName','leadingSpace')">
-                                                Input Field cannot start with a space.
-                                            </mat-error>
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <mat-form-field appearance="fill" class="full-width">
-                                            <mat-label>User Name</mat-label>
-                                            <input matInput type="text" formControlName="username" id="username"
-                                                placeholder="User Name">
-                                            <mat-error *ngIf="shouldShowError('username','required')">
-                                                Please Enter User Name
-                                            </mat-error>
-                                            <mat-error *ngIf="shouldShowError('username','leadingSpace')">
-                                                Input Field cannot start with a space.
-                                            </mat-error>
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <mat-form-field appearance="fill" class="full-width">
-                                            <mat-label>Email</mat-label>
-                                            <input matInput type="text" formControlName="email" id="email"
-                                                placeholder="Email">
-                                            <mat-error *ngIf="shouldShowError('email','required')">
-                                                Please Enter Email.
-                                            </mat-error>
-                                            <mat-error *ngIf="shouldShowError('email','pattern')">
-                                                Invalid email format.
-                                            </mat-error>
-                                            <mat-error *ngIf="shouldShowError('email','leadingSpace')">
-                                                Input Field cannot start with a space.
-                                            </mat-error>
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <mat-form-field appearance="fill" class="full-width">
-                                            <mat-label>Contact</mat-label>
-                                            <input matInput type="text" (keydown)="onKeyDown($event)"
-                                                formControlName="contact" id="contact" placeholder="Contact">
-                                            <mat-error *ngIf="shouldShowError('contact','required')">
-                                                Please Enter Phone Number.
-                                            </mat-error>
-                                            <mat-error *ngIf="shouldShowError('contact','minlength')">
-                                                Phone Number required at least 12 characters.
-                                            </mat-error>
-                                            <mat-error *ngIf="shouldShowError('contact','maxlength')">
-                                                Phone Number requires only 12 characters.
-                                            </mat-error>
-                                            <mat-error *ngIf="shouldShowError('contact','pattern')">
-                                                Only Numbers are allowed.
-                                            </mat-error>
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <mat-form-field appearance="fill" class="full-width">
-                                            <mat-label>Post Code</mat-label>
-                                            <input matInput type="text" (keydown)="onKeyDown($event)"
-                                                formControlName="postcode" id="postcode" placeholder="Post Code">
-                                            <mat-error *ngIf="shouldShowError('postcode','required')">
-                                                Please Enter PinCode.
-                                            </mat-error>
-                                            <mat-error *ngIf="shouldShowError('postcode','minlength')">
-                                                PinCode allows only 6 digits.
-                                            </mat-error>
-                                            <mat-error *ngIf="shouldShowError('postcode','maxlength')">
-                                                PinCode allows only 6 digits.
-                                            </mat-error>
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <mat-form-field appearance="fill" class="full-width">
-                                            <mat-label>City</mat-label>
-                                            <input matInput type="text" formControlName="city" id="city"
-                                                placeholder="City">
-                                            <mat-error *ngIf="shouldShowError('city','required')">
-                                                Please Enter City Name
-                                            </mat-error>
-                                            <mat-error *ngIf="shouldShowError('city','leadingSpace')">
-                                                Input Field cannot start with a space.
-                                            </mat-error>
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <mat-form-field appearance="fill" class="full-width">
-                                            <mat-label>State</mat-label>
-                                            <input matInput type="text" formControlName="state" id="state"
-                                                placeholder="State">
-                                            <mat-error *ngIf="shouldShowError('state','required')">
-                                                Please Enter State Name
-                                            </mat-error>
-                                            <mat-error *ngIf="shouldShowError('state','leadingSpace')">
-                                                Input Field cannot start with a space.
-                                            </mat-error>
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <mat-form-field appearance="fill" class="full-width">
-                                            <mat-label>Role</mat-label>
-                                            <input matInput type="text" formControlName="roleId" id="roleId"
-                                                placeholder="Role">
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <mat-form-field appearance="fill" class="full-width">
-                                            <mat-label>Dept</mat-label>
-                                            <input matInput type="text" formControlName="deptId" id="deptId"
-                                                placeholder="Dept">
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-8">
-                                    <div class="form-group">
-                                        <mat-form-field appearance="fill" class="full-width">
-                                            <mat-label>Address</mat-label>
-                                            <input matInput type="text" formControlName="address" id="address"
-                                                placeholder="Address">
-                                            <mat-error *ngIf="shouldShowError('address','required')">
-                                                This field is required.
-                                            </mat-error>
-                                            <mat-error *ngIf="shouldShowError('address','leadingSpace')">
-                                                Input Field cannot start with a space.
-                                            </mat-error>
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-12 mt-1">
-                                    <div class="form-group mb-1">
-                                        <button mat-raised-button color="primary" type="submit" class="common-btn"
-                                            id="profile-submit">
-                                            Update
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-
-                    </div>
-
-                </div>
-            </div>
         </div>
+      </div>
     </div>
+  </div>
 
 </div>

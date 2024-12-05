@@ -1,0 +1,47 @@
+<div class="common-modal green-modal">
+    <div class="modal-header">
+        <!-- MatDialog header: Dynamic Title -->
+        <h1 mat-dialog-title>{{ title }}</h1> <!-- Title dynamically set in the component -->
+
+    </div>
+
+    <div mat-dialog-content>
+        <mat-dialog-content>
+            <div *ngIf="isProceess">
+                <app-loading-spin-popup></app-loading-spin-popup>
+            </div>
+
+            <form [formGroup]="CategoryMasterForm" (ngSubmit)="onSubmit()">
+                <mat-form-field appearance="fill" class="full-width">
+                    <mat-label>Category Name</mat-label>
+                    <input matInput formControlName="categoryName" placeholder="Category Name" />
+                    <mat-error *ngIf="shouldShowError('categoryName', 'required')">
+                        Category name cannot be blank.
+                    </mat-error>
+                    <mat-error *ngIf="shouldShowError('categoryName', 'leadingSpace')">
+                        Input field cannot start with a space.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="full-width">
+                    <mat-label>Status</mat-label>
+                    <mat-select formControlName="status">
+                        <mat-option [value]="true">Active</mat-option>
+                        <mat-option [value]="false">Deactivate</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="shouldShowError('status', 'required')">
+                        This field is required.
+                    </mat-error>
+                </mat-form-field>
+
+                <div class="text-end">
+                    <button mat-raised-button class="me-2" (click)="onCancel()">Cancel</button>
+                    <button mat-raised-button color="primary" type="submit">
+                        {{ this.data ? 'Update Now' : 'Add New' }}
+                    </button>
+
+                </div>
+            </form>
+        </mat-dialog-content>
+    </div>
+</div>

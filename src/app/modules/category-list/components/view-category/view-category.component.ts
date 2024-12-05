@@ -1,71 +1,67 @@
-import { DatePipe } from '@angular/common';
-import { Component, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { CategoryMasterModel } from 'src/app/_models/category';
 @Component({
-    selector: 'app-view-category',
-    templateUrl: './view-category.component.html',
-    styleUrls: ['./view-category.component.css']
+  selector: 'app-view-category',
+  templateUrl: './view-category.component.html',
+  styleUrls: ['./view-category.component.css']
 })
 export class ViewCategoryComponent {
-    isProcess = false;
-
-    // Define fields dynamically
-    categoryFields = [
-        { label: 'Name', value: '' },
-        { label: 'Created Date', value: '' },
-        { label: 'Created By', value: '' },
-        { label: 'Updated Date', value: '' },
-        { label: 'Updated By', value: '' },
-        { label: 'Status', value: '' },
-    ];
-
-    constructor(
-        private datePipe: DatePipe,
-        public dialogRef: MatDialogRef<ViewCategoryComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: any
-    ) {
-        // Populate the fields with data
-        this.categoryFields = [
-            { label: 'Name', value: data.categoryMaster.categoryName },
-            { label: 'Created Date', value: this.formatDate(data.categoryMaster.createdDate) },
-            { label: 'Created By', value: this.formatName(data.categoryMaster.createdBy) },
-            { label: 'Updated Date', value: this.formatDate(data.categoryMaster.updatedDate) },
-            { label: 'Updated By', value: this.formatName(data.categoryMaster.updatedBy) },
-            {
-                label: 'Status',
-                value: this.getStatusLabel(data.categoryMaster.status)
-            },
-        ];
+  private _categoryMaster: CategoryMasterModel | undefined;
+  isProceess: boolean = true;
+  CategoryMasterForm: any;
+  get title(): string {
+    return this._categoryMaster ? "Edit Category Master" : " Add Category Master";
+  }
+  set categoryMaster(value: CategoryMasterModel) {
+    this._categoryMaster = value;
+    let updatedBy:any = ' '
+    if(this._categoryMaster.updatedBy?.firstName  != undefined ){
+      updatedBy = this._categoryMaster.updatedBy?.firstName + ' ' + this._categoryMaster.updatedBy?.lastName
     }
-
-
-    private getStatusLabel(status: any): string {
-        // Assuming status is a boolean or string
-        if (typeof status === 'boolean') {
-            return status ? 'Active' : 'Inactive';
-        } else if (typeof status === 'string') {
-            return status.toLowerCase() === 'active' ? 'Active' : 'Inactive';
-        }
-        return 'Unknown';  // Default fallback
+    else{
+      updatedBy = ''
     }
-
-    private formatDate(date: any): string {
-        return this.datePipe.transform(date, 'yyyy-MM-dd hh:mm a') || 'N/A';
+    if (this._categoryMaster) {
+      this.CategoryMasterForm.patchValue({
+        categoryName:this._categoryMaster.categoryName,
+        status:this._categoryMaster.status ? 'Active' : 'Deactivate',
+        categoryId:this._categoryMaster.categoryId,
+        createdDate:moment(this._categoryMaster.createdDate || '').format("llll"),
+        createdBy:this._categoryMaster.createdBy?.firstName + ' ' + this._categoryMaster.createdBy?.lastName,
+        updatedDate: moment(this._categoryMaster.updatedDate || '').format("llll"),
+        updatedBy:updatedBy,
+      });
+      this.CategoryMasterForm.controls["categoryName"].disable();
+      this.CategoryMasterForm.controls["status"].disable();
+      this.CategoryMasterForm.controls["categoryId"].disable();
+      this.CategoryMasterForm.controls["createdDate"].disable();
+      this.CategoryMasterForm.controls["createdBy"].disable();
+      this.CategoryMasterForm.controls["updatedDate"].disable();
+      this.CategoryMasterForm.controls["updatedBy"].disable();
+      this.isProceess = false;
     }
-
-    private formatName(user: any): string {
-        if (!user) return 'N/A';
-        const firstName = user.firstName ?? '';
-        const lastName = user.lastName ?? '';
-        return `${firstName} ${lastName}`.trim() || 'N/A';
-    }
-
-    onCancel(): void {
-        this.dialogRef.close(); // Close the dialog
-    }
-
+  }
+  constructor(
+    private activeModal: NgbActiveModal,
+    private formBuilder: FormBuilder  ) {
+    this.CategoryMasterForm = this.formBuilder.group({
+      categoryName: ["", [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(30),
+        Validators.pattern('^[a-zA-Z ]*$')]],
+        status: ['', [Validators.required]],
+        categoryId:[''],
+        createdDate:[''],
+        createdBy:[''],
+        updatedDate:[''],
+        updatedBy:['']
+    });
+  }
+  onCancel() {
+    this.activeModal.dismiss();
+  }
 }
