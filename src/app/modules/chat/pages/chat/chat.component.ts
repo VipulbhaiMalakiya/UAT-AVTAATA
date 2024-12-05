@@ -539,14 +539,14 @@ export class ChatComponent
                     }
 
 
-                    if (this.currentPage == 1) {
-                        this.scrollToBottom();
+                    // if (this.currentPage == 1) {
+                    //     this.scrollToBottom();
 
-                    }
-                    else {
-                        this.scrollToMiddle();
-                    }
-                    // this.scrollToBottom();
+                    // }
+                    // else {
+                    //     this.scrollToMiddle();
+                    // }
+                    this.scrollToBottom();
                     this.currentPage++;  // Increment page number for next re
 
 
