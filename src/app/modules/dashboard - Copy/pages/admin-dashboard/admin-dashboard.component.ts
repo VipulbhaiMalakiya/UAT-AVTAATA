@@ -13,6 +13,8 @@ import { AddEditeTicketComponent } from 'src/app/modules/assigne-ticket/componen
 import { UpdateTicketComponent } from 'src/app/modules/ticket/update-ticket/update-ticket.component';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import { DatePipe } from '@angular/common';
+import { MatSelectChange } from '@angular/material/select';
+
 
 
 @Component({
@@ -51,7 +53,7 @@ export class AdminDashboardComponent implements OnInit {
     width_t = 850;
     height_t = 250;
     title: any;
-    selectedValue?: any = 7;
+    selectedValue: string = '7';
     startDate?: any;
     endDate?: any;
 
@@ -174,9 +176,16 @@ export class AdminDashboardComponent implements OnInit {
 
     }
 
-    onValueChange(event: Event) {
-        const target = event.target as HTMLSelectElement;
-        this.selectedValue = target.value;
+
+    onValueChange(event: MatSelectChange) {
+        // console.log('Selected value:', this.selectedValue);
+        // console.log('Selected value from event:', event);
+
+        // const target = event.target as HTMLSelectElement;
+        this.selectedValue = event.value
+
+
+
         const oneWeekFromNow = new Date();
         if (this.selectedValue === 'Today') {
             this.startDate = this.datePipe.transform(
@@ -202,15 +211,16 @@ export class AdminDashboardComponent implements OnInit {
                 'yyyy-MM-dd'
             );
         }
-
         else if (this.selectedValue === 'custom data') {
             return;
         }
+
         this.isProceess = true;
         var model: any = {
             startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
             endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
         };
+
 
         this.ISAdminFirstAgentResponsedata(model);
         this.isAdminconversationsdata(model);
@@ -742,3 +752,4 @@ export class AdminDashboardComponent implements OnInit {
             })
     }
 }
+

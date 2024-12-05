@@ -1,25 +1,23 @@
+import { DatePipe } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { MatSelectChange } from '@angular/material/select';
+
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ChartType } from 'angular-google-charts';
-import { ChartConfiguration, ChartOptions } from "chart.js";
 import { ToastrService } from 'ngx-toastr';
-import { Subscription, delay, take } from 'rxjs';
+import { Subscription, take } from 'rxjs';
 import { TickitService } from 'src/app/_api/masters/tickit.service';
 import { ApiService } from 'src/app/_api/rxjs/api.service';
 import { ticketMasterModel } from 'src/app/_models/ticket';
 import { AddEditeTicketComponent } from 'src/app/modules/assigne-ticket/components/add-edite-ticket/add-edite-ticket.component';
 import { UpdateTicketComponent } from 'src/app/modules/ticket/update-ticket/update-ticket.component';
-import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
-import { DatePipe } from '@angular/common';
-
-
 @Component({
-    selector: 'app-admin-dashboard',
-    templateUrl: './admin-dashboard.component.html'
+    selector: 'app-user-dashboard',
+    templateUrl: './user-dashboard.component.html'
 })
-export class AdminDashboardComponent implements OnInit {
+export class UserDashboardComponent implements OnInit {
 
     isProceess: boolean = true;
     userData: any;
@@ -51,7 +49,7 @@ export class AdminDashboardComponent implements OnInit {
     width_t = 850;
     height_t = 250;
     title: any;
-    selectedValue?: any = 7;
+    selectedValue: string = '7';
     startDate?: any;
     endDate?: any;
 
@@ -174,9 +172,9 @@ export class AdminDashboardComponent implements OnInit {
 
     }
 
-    onValueChange(event: Event) {
-        const target = event.target as HTMLSelectElement;
-        this.selectedValue = target.value;
+    onValueChange(event: MatSelectChange) {
+        // const target = event.target as HTMLSelectElement;
+        this.selectedValue = event.value
         const oneWeekFromNow = new Date();
         if (this.selectedValue === 'Today') {
             this.startDate = this.datePipe.transform(
@@ -202,10 +200,10 @@ export class AdminDashboardComponent implements OnInit {
                 'yyyy-MM-dd'
             );
         }
-
         else if (this.selectedValue === 'custom data') {
             return;
         }
+
         this.isProceess = true;
         var model: any = {
             startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
@@ -742,3 +740,6 @@ export class AdminDashboardComponent implements OnInit {
             })
     }
 }
+
+
+

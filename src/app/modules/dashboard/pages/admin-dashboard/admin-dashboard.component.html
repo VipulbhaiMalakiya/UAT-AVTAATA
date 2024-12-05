@@ -9,52 +9,51 @@
         <div class="homefilterdt">
             <div class="ficdrop1">
                 <div class="form-group">
-                    <mat-form-field appearance="fill" class="small-form-field">
-                        <mat-label>Select Date Range</mat-label>
-                        <mat-select [(ngModel)]="selectedValue" (selectionChange)="onValueChange($event)" class="">
-                            <mat-option value="Today">Today</mat-option>
-                            <mat-option value="Yesterday">Yesterday</mat-option>
-                            <mat-option value="7">Last 7 days</mat-option>
-                            <mat-option value="30">Last 30 days</mat-option>
-                            <mat-option value="custom data">Custom date</mat-option>
-                        </mat-select>
-                    </mat-form-field>
+                    <label>Select Date</label>
+
+                    <select id="select-tags4" class="form-select" [(ngModel)]="selectedValue"
+                        (change)="onValueChange($event)">
+                        <option value="Today">Today</option>
+                        <option value="Yesterday">Yesterday</option>
+                        <option value="7">Last 7 days</option>
+                        <option value="30">Last 30 days</option>
+                        <option value="custom data">Custom date</option>
+
+                    </select>
+                </div>
+            </div>
+
+            <div class="ficdrop1">
+                <div class="form-group">
+                    <label>From</label>
+                    <input class="form-control" type="date" id="startDate" name="startDate" [(ngModel)]="startDate"
+                        [max]="endDate" [disabled]="selectedValue !== 'custom data'">
 
                 </div>
             </div>
 
-            <div class="ficdrop1" *ngIf="selectedValue === 'custom data'">
+            <div class="ficdrop1">
                 <div class="form-group">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Start Date</mat-label>
-                        <input matInput [matDatepicker]="startPicker" [(ngModel)]="startDate" [max]="endDate" required>
-                        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
-                        <mat-datepicker #startPicker></mat-datepicker>
-                    </mat-form-field>
-
-                </div>
-            </div>
-
-            <div class="ficdrop1" *ngIf="selectedValue === 'custom data'">
-                <div class="form-group">
-                    <mat-form-field appearance="fill">
-                        <mat-label>To date</mat-label>
-                        <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDate" [min]="startDate" required>
-                        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
-                        <mat-datepicker #endPicker></mat-datepicker>
-                    </mat-form-field>
+                    <label>To</label>
+                    <input class="form-control" type="date" id="endDate" name="endDate" [(ngModel)]="endDate"
+                        [min]="startDate" [disabled]="selectedValue !== 'custom data'">
                     <div *ngIf="dateRangeError" class="form-validate-err">
                         To Date must be after From Date
                     </div>
                 </div>
-
             </div>
 
-            <div class="ficdrop1" *ngIf="selectedValue === 'custom data'">
+            <div class="ficdrop1">
                 <div class="form-group">
                     <label class="d-none d-sm-block">&nbsp;</label>
-                    <button mat-raised-button color="primary" (click)="submitDateRange()">Submit</button>
+                    <button class="btn common-btn" *ngIf="selectedValue === 'custom data'" (click)="submitDateRange()">
+                        Submit
+                    </button>
 
+                    <!-- Disabled button when selectedValue is not 'custom data' -->
+                    <!-- <button class="btn common-btn" *ngIf="selectedValue !== 'custom data'" disabled>
+                        Submit
+                    </button> -->
                     <!-- <button class="btn common-btn" (click)="submitDateRange()">Submit</button> -->
                 </div>
             </div>
@@ -64,7 +63,40 @@
     </div>
 </div>
 
+<!-- <div class="analytics-dropcols">
+    <div class="analdrop1 analdrop2">
+        <label>Select Date</label>
+        <select id="select-tags4" class="form-select" [(ngModel)]="selectedValue" (change)="onValueChange($event)">
+            <option value="Today">Today</option>
+            <option value="Yesterday">Yesterday</option>
+            <option value="7">Last 7 days</option>
+            <option value="30">Last 30 days</option>
+        </select>
+    </div>
 
+    <div class="analdrop1">
+        <div class="form-group">
+            <label for="startDate">From</label>
+            <input class="form-control" type="date" id="startDate" name="startDate" [(ngModel)]="startDate"
+                [max]="endDate">
+        </div>
+    </div>
+    <div class="analdrop1">
+        <div class="form-group">
+            <label for="endDate">To</label>
+            <input class="form-control" type="date" id="endDate" name="endDate" [(ngModel)]="endDate" [max]="endDate">
+            <div *ngIf="dateRangeError" class="form-validate-err">
+                To Date must be after From Date
+            </div>
+        </div>
+    </div>
+    <div class="analdrop1">
+        <div class="form-group">
+            <label>&nbsp;</label>
+            <button class="btn common-btn" (click)="submitDateRange()">Submit</button>
+        </div>
+    </div>
+</div> -->
 
 <div class="data-tabs mb-1">
 

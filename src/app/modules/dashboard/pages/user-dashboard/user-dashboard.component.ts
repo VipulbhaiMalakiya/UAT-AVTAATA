@@ -172,9 +172,9 @@ export class UserDashboardComponent implements OnInit {
 
     }
 
-    onValueChange(event: MatSelectChange) {
-        // const target = event.target as HTMLSelectElement;
-        this.selectedValue = event.value
+    onValueChange(event: Event) {
+        const target = event.target as HTMLSelectElement;
+        this.selectedValue = target.value;
         const oneWeekFromNow = new Date();
         if (this.selectedValue === 'Today') {
             this.startDate = this.datePipe.transform(
@@ -200,10 +200,10 @@ export class UserDashboardComponent implements OnInit {
                 'yyyy-MM-dd'
             );
         }
+
         else if (this.selectedValue === 'custom data') {
             return;
         }
-
         this.isProceess = true;
         var model: any = {
             startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
@@ -216,6 +216,7 @@ export class UserDashboardComponent implements OnInit {
         this.isAdmincustomerdata(model);
 
     }
+
 
 
     submitDateRange() {
