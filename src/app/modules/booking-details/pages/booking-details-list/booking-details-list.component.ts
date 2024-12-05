@@ -92,15 +92,25 @@ export class BookingDetailsListComponent implements OnInit, OnDestroy {
                     model: model
                 }
                 this.isProceess = true;
-                this.subscription = this.apiService.add(addData).pipe(take(1)).subscribe(res => {
-                    this.isProceess = false;
-                    this.fatchData();
-                    this.toastr.success(res.message);
-                }, error => {
-                    this.isProceess = false;
-                    this.toastr.error(error.error.message);
-                    // this.toastr.error(error.message);
-                });
+                this.subscription = this.apiService.add(addData)
+                    .pipe(take(1))
+                    .subscribe({
+                        next: (res) => { // Handle success response
+                            this.isProceess = false;
+                            this.fatchData();
+                            this.toastr.success(res.message);
+                        },
+                        error: (error) => { // Handle error response
+                            console.log(error.error.message)
+                            this.isProceess = false;
+                            this.toastr.error(error.error.message || 'Something went wrong.');
+                        },
+                        complete: () => { // Called when observable completes
+                            console.log('Operation completed');
+                            // Perform any final actions here, like logging or cleanup
+                        }
+                    });
+
             }
         }).catch(() => { });
     }
@@ -173,7 +183,7 @@ export class BookingDetailsListComponent implements OnInit, OnDestroy {
                 "Booking Date": x.bookingDate,
             }
         });
-        const headers = ["Id", "First Name", "Last Name", "Mobile No","Check In Date","Booking Date"];
+        const headers = ["Id", "First Name", "Last Name", "Mobile No", "Check In Date", "Booking Date"];
         this.appService.exportAsExcelFile(exportData, "Booking Master", headers);
     }
 
