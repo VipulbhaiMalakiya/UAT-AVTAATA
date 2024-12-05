@@ -462,7 +462,7 @@ export class ChatComponent
 
         // Check if the contact has changed
         if (this.lastContact === e.phoneNo) {
-            console.log("Duplicate contact selected, skipping API call.");
+            // console.log("Duplicate contact selected, skipping API call.");
             return; // Skip if the contact is the same as the previous one
         }
         this.lastContact = e.phoneNo;
