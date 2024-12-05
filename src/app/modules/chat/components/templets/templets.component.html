@@ -1,9 +1,12 @@
 <div class="modal-content green-modal" id="inboxtemplate">
+
+
+
     <div class="modal-header">
-        <h1 class="modal-title fs-5" id="inboxtemplateLabel">Select Template</h1>
-        <!-- <div class="addmodal-btn"><a class="common-btn"> Create template</a></div> -->
-        <button type="button" (click)="onCancel()" class="btn-close" data-bs-dismiss="modal"
-            aria-label="Close"></button>
+        <h1 class="modal-title fs-5">Select Template</h1>
+    </div>
+    <div class="modal-custom-close" (click)="onCancel()">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body p-0">
         <form #f="ngForm" (ngSubmit)="onSubmit(f)">
@@ -25,7 +28,8 @@
                                 *ngFor="let i of templetsdata  | customFilter: term " (click)="onView(i)">
                                 <div class="temp-link" [ngClass]="{ 'active': i.id === templet.id }">{{i.templateName}}
                                     <br>
-                                    ({{i.language}})</div>
+                                    ({{i.language}})
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -110,8 +114,8 @@
                                                 <input *ngIf="templet?.body?.bodyattribute[0]" type="text"
                                                     class="form-control" placeholder="User Name" name="input1"
                                                     [(ngModel)]="username" #input1="ngModel"
-                                                    [ngClass]="{ 'is-invalid': f.submitted && input1.invalid }" required
-                                                    >
+                                                    [ngClass]="{ 'is-invalid': f.submitted && input1.invalid }"
+                                                    required>
                                                 <input *ngIf="templet?.body?.bodyattribute[1]" type="text"
                                                     class="form-control" placeholder="User Name" name="input2" ngModel
                                                     #input2="ngModel"
