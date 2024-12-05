@@ -326,47 +326,6 @@ export class ChatComponent
 
     }
 
-    // public connect(): void {
-
-
-    //     if (!this.socket$ || this.socket$.closed) {
-    //         this.socket$ = webSocket(environment.SOCKET_ENDPOINT);
-    //         this.socket$.subscribe((data: MessageData) => {
-    //             this.messagestates = data.messageStatus;
-    //             if (data.mobileNo === this.contact) {
-
-    //                 this.receivedData.push(data);
-    //                 this.getContactList();
-    //                 this.isstatus = 'open';
-    //             } else if (data.mobileNo !== this.contact) {
-    //                 this.getContactList();
-    //             }
-    //             if (
-    //                 this.messagestates == 'sent' ||
-    //                 this.messagestates == 'delivered' ||
-    //                 this.messagestates == 'read' ||
-    //                 this.messagestates == ' '
-    //             ) {
-    //             } else {
-    //                 const currentUrl = this.location.path();
-    //                 if (currentUrl === '/admin/inbox' || currentUrl === '/inbox') {
-    //                     if (data.type === 'Receiver') {
-    //                         // const message: string = `You got a message from ${data.name}`;
-    //                         const message: string = `You got a message from ${this.getOnlyName(
-    //                             data.name
-    //                         )}`;
-
-    //                         this.speakNotification(message);
-    //                     } else {
-    //                         const audio = new Audio();
-    //                         // '../../../../../assets/sound/Whatsapp Message - Sent - Sound.mp3'
-    //                         audio.play();
-    //                     }
-    //                 }
-    //             }
-    //         });
-    //     }
-    // }
 
 
 
@@ -551,8 +510,6 @@ export class ChatComponent
 
 
     GetUser() {
-
-
         if (this._route.snapshot.paramMap.get('status') != null) {
             this.show = true;
             this.isProceess = true;
@@ -675,25 +632,6 @@ export class ChatComponent
     @ViewChild('msgHistory', { static: true }) msgHistory!: ElementRef;
 
 
-
-    // @HostListener('window:scroll', ['$event'])
-    // onScroll(event: Event): void {
-    //     const target = event.target as Document;
-    //     const scrollingElement = target.scrollingElement;
-
-    //     if (scrollingElement) {
-    //         const scrollTop = scrollingElement.scrollTop;
-    //         const scrollHeight = scrollingElement.scrollHeight;
-    //         const clientHeight = scrollingElement.clientHeight;
-
-    //         if (scrollTop + clientHeight >= scrollHeight - 50) {
-    //             this.loadChatHistory();
-    //         }
-    //     }
-    // }
-
-
-
     onScroll(event: Event): void {
         const target = event.target as HTMLElement;
 
@@ -702,11 +640,6 @@ export class ChatComponent
             this.loadChatHistory(); // Load previous messages when scrolled within 50px from the top
         }
     }
-
-
-
-
-
 
     ngAfterViewInit() {
         this.scrollToBottom();
@@ -748,9 +681,6 @@ export class ChatComponent
         }, 0);
     }
 
-
-
-
     loadUserActivity(phoneNo: string) {
         this.masterName = `/chat-activity/${phoneNo}`;
         this.subscription = this.apiService
@@ -783,18 +713,6 @@ export class ChatComponent
     }
 
 
-
-    // getUnreadMessageCount(contact: any): number {
-    //   return this.receivedData.filter(
-    //     (data) =>
-    //       data.mobileNo === contact &&
-    //       data.type == 'Sender' &&
-    //       data.messageStatus !== 'sent' &&
-    //       data.messageStatus !== 'delivered' &&
-    //       data.messageStatus !== 'read' &&
-    //       data.messagetype == 'text'
-    //   ).length;
-    // }
 
     getOnlyName(name: any) {
         // Remove emojis and emoji picker emoji
@@ -1000,13 +918,12 @@ export class ChatComponent
         // return fullName?.split(' ').map((n: any[]) => n[0]).join('');
     }
 
-    // Define a flag to track scrolling state
-    private isScrolling = false;
+
 
     // ngAfterViewInit() { }
 
 
-
+    //!getContactList
     getContactList() {
         // this.isProceess = true;
         if (this.userData?.role?.roleName === 'Admin') {
@@ -1017,9 +934,6 @@ export class ChatComponent
                     (response) => {
                         this.contactList = response;
                         this.open = this.contactList[0].open;
-
-                        // console.log('---------------->', this.open);
-                        //this.missed = this.contactList[0].missed;
 
                         this.missed = this.contactList[0].missed.filter((contact: any) => contact.missedBy === this.userData?.userId) ?? [];
                         this.missedCount = this.missed.length ?? 0;
@@ -1060,24 +974,7 @@ export class ChatComponent
         this.isstatus = status;
     }
 
-    chathistroy() {
-        let phone: any = this.data?.contact;
-        this.isProceess = true;
-        this.whatsappService
-            .chatHistory(phone)
-            .pipe(take(1))
-            .subscribe(
-                (response) => {
-                    this.item = response;
-                    this.receivedData = this.item;
-                    this.scrollToBottom();
-                    this.isProceess = false;
-                },
-                (error) => {
-                    this.isProceess = false;
-                }
-            );
-    }
+
 
 
 
@@ -1101,26 +998,6 @@ export class ChatComponent
 
     }
 
-    // checkChatStatus() {
-    //   this.message = '';
-    //   this.chatVisible = true;
-    //   const currentTime = new Date();
-    //   const date: any =
-    //     this.datePipe.transform(this.lastMessageTime, this.targetFormat) || '';
-    //   const next24Hours = new Date(date);
-    //   next24Hours.setHours(next24Hours.getHours() + 24);
-    //   const timeDifference = next24Hours.getTime() - currentTime.getTime();
-    //   if (timeDifference <= 0) {
-    //     this.chatVisible = false;
-    //     this.message =
-    //       'Outgoing message not allowed. Latest message not within the last 24 hours.';
-    //   } else {
-    //     setTimeout(() => {
-    //       this.message = '';
-    //       this.checkChatStatus();
-    //     }, timeDifference);
-    //   }
-    // }
 
     onlabel(e: any) {
         this.masterName = `/customer/label-update/${this.contact}/${e.id}`;
