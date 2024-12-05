@@ -549,6 +549,70 @@ export class ChatComponent
     }
 
 
+
+    GetUser() {
+
+
+        if (this._route.snapshot.paramMap.get('status') != null) {
+            this.show = true;
+            this.isProceess = true;
+
+            if (this.isstatus == 'close') {
+                this.isstatus = 'close';
+            }
+            else if (this.isstatus == 'close') {
+                this.isstatus = 'open';
+            }
+            else {
+                this.isstatus = 'open';
+            }
+
+
+
+            this.subscription = this.CSAPI.customerDetailByID(
+                this._route.snapshot.paramMap.get('status')
+            )
+                .pipe(take(1))
+                .subscribe({
+                    next: (data: any) => {
+                        if (data) {
+                            this.data = data;
+                            // // this.isProceess = false;
+                            // this.firstname = data.firstName;
+                            // this.lastname = data.lastName;
+                            // // this.chathistroy();
+                            // let phone = this.data.contact;
+                            this.contact = this.data.contact;
+                            this.findByPhoneNumber(this.contact)
+
+                            const foundContact = this.findByPhoneNumber(this.contact);
+                            if (foundContact) {
+                                this.onViewContact(foundContact, 1);  // Ensure `c` is defined properly
+                            } else {
+                                console.log("Contact not found");
+                            }
+
+
+
+                        }
+                    },
+                    error: (e) => console.error(e),
+                });
+        } else {
+            this.isProceess = false;
+
+        }
+        this.isProceess = false;
+    }
+
+    findByPhoneNumber = (phoneNumber: string) => {
+        const result = this.contactList[0]?.open.find((chat: any) => chat.phoneNo === phoneNumber) ||
+            this.contactList[0]?.closed.find((chat: any) => chat.phoneNo === phoneNumber) ||
+            this.contactList[0]?.missed.find((chat: any) => chat.phoneNo === phoneNumber);
+
+        return result ? result : null;
+    };
+
     loadInitialData() {
         this.loadChatHistory(true);
     }
@@ -942,70 +1006,6 @@ export class ChatComponent
     // ngAfterViewInit() { }
 
 
-    GetUser() {
-
-
-        if (this._route.snapshot.paramMap.get('status') != null) {
-            this.show = true;
-            this.isProceess = true;
-
-            if (this.isstatus == 'close') {
-                this.isstatus = 'close';
-            }
-            else if (this.isstatus == 'close') {
-                this.isstatus = 'open';
-            }
-            else {
-                this.isstatus = 'open';
-            }
-
-
-            console.log(this._route.snapshot.paramMap.get('status'))
-
-            this.subscription = this.CSAPI.customerDetailByID(
-                this._route.snapshot.paramMap.get('status')
-            )
-                .pipe(take(1))
-                .subscribe({
-                    next: (data: any) => {
-                        if (data) {
-                            this.data = data;
-                            // this.isProceess = false;
-                            this.firstname = data.firstName;
-                            this.lastname = data.lastName;
-                            this.chathistroy();
-                            let phone = this.data.contact;
-                            this.contact = this.data.contact;
-                            this.isProceess = true;
-
-                            this.masterName = `/chat-activity/${phone}`;
-                            this.subscription = this.apiService
-                                .getAll(this.masterName)
-                                .pipe(take(1))
-                                .subscribe(
-                                    (data) => {
-                                        this.Userinfo = data;
-                                        this.contactinfo = data;
-                                        // this.scrollToBottom();
-                                        this.nrSelect = this.Userinfo?.assignedto;
-                                        this.isProceess = false;
-                                        this.cd.detectChanges();
-                                    },
-                                    (error) => {
-                                        this.isProceess = false;
-                                    }
-                                );
-
-                        }
-                    },
-                    error: (e) => console.error(e),
-                });
-        } else {
-            this.isProceess = false;
-
-        }
-        this.isProceess = false;
-    }
 
     getContactList() {
         // this.isProceess = true;
