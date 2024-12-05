@@ -527,41 +527,39 @@ export class ChatComponent
                 distinctUntilChanged()
             )
             .subscribe({
-                next: (response: any) => {  // Handle successful response
+                next: (response: any) => {
                     if (isInitialLoad) {
-                        this.receivedData = [...response];  // For initial load, replace data
+                        this.receivedData = [...response]; // For initial load, replace data
                     } else {
-                        this.receivedData = [...this.receivedData, ...response];  // Append new data
+                        this.receivedData = [...this.receivedData, ...response]; // Append new data
                     }
 
-                    // if (this.currentPage === 1) {
-                    //     this.scrollToBottom();
-                    // } else {
-                    //     this.scrollToMiddle();
-                    // }
-
                     this.scrollToBottom();
-                    // this.currentPage++;  // Increment page number for the next request
                     const lstRe = this.receivedData.slice(-1)[0];
                     this.lastItem = lstRe.time;
                     this.lastMessageTime = this.lastItem;
 
-                    if (lstRe.mobileNo === this.contact) {
-                        // this.checkChatStatus();
+                    this.isProceess = false;
+                },
+                error: (error) => {
+                    // Check for deserialization error
+                    if (error.status === 500 && error.error?.message?.includes('SerializationException')) {
+                        this.toastr.error(
+                            'A server issue occurred while processing chat data. Please contact support.',
+                            'Deserialization Error'
+                        );
+                    } else {
+                        this.toastr.error('Failed to load chat history. Please try again later.', 'Error');
                     }
-
                     this.isProceess = false;
                 },
-                error: (error) => {  // Handle errors
-                    this.toastr.error('Failed to load chat history.', 'Error');
-                    this.isProceess = false;
-                },
-                complete: () => {  // Handle completion
+                complete: () => {
                     console.log('Chat history loaded successfully');
-                    // Optional: Add any cleanup or final operations here
                 }
             });
     }
+
+
 
 
 
