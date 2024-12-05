@@ -1,7 +1,7 @@
 <div class="top-noti-user">
 
-    <div class="top-notify"><img src="../assets/images/bell-icon.png" alt=""><span>0</span></div>
-
+    <div class="top-notify" (click)="toggleField()"><a href="javascript:void(0)"><img
+                src="../assets/images/bell-icon.png" alt=""><span>0</span></a></div>
     <div class="top-user-profile">
         <a href=" javascript:void(0)" class="dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false"><img src="../assets/images/user.jpg" alt="">
@@ -16,8 +16,11 @@
     </div>
 </div>
 
+
+
+
 <div class="notification-wrapper">
-    <div id="notification" class="notification-bar">
+    <div id="notification" class="notification-bar" [class.toggled]="classToggled">
         <div class="noti-head">
             <h3>Notifications</h3> <a href="#">Mark All As Read</a>
         </div>
@@ -53,6 +56,5 @@
             </div>
 
         </div>
-
     </div>
 </div>

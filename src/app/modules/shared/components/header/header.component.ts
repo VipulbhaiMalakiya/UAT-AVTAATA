@@ -17,48 +17,16 @@ export class HeaderComponent implements OnInit {
     title?: any = ' Dashboard';
     data: any;
     userData: any;
+
+
     classToggled = false;
     isprofile = false;
 
-    messages: { text: string; time: any; icone: any; read: boolean }[] = [
-        {
-            text: 'You have 1 campaigns at the moment',
-            time: 'JUST NOW',
-            icone: 'las la-check',
-            read: true,
-        },
-        {
-            text: 'Vipul has assigned new task to you',
-            time: '10 HOURS',
-            icone: 'las la-file-alt',
-            read: true,
-        },
-        {
-            text: 'Your Order will be delivered today',
-            time: 'YESTERDAY',
-            icone: 'las la-thumbs-up',
-            read: true,
-        },
-        {
-            text: 'You have 1 campaigns at the moment',
-            time: '11/07/2023',
-            icone: 'las la-check',
-            read: true,
-        },
-        {
-            text: 'You have 1 campaigns at the moment',
-            time: '5/07/2023',
-            icone: 'las la-check',
-            read: true,
-        },
-        // Add more messages here
-    ];
 
-    unreadCount: number = this.messages.filter(message => !message.read).length;
-
-    markAsRead(message: { text: string, read: boolean }) {
-        message.read = true;
-        this.unreadCount = this.messages.filter(m => !m.read).length;
+    toggleField() {
+        this.isprofile = false;
+        // this.closeDropdownAndNotification();
+        this.classToggled = !this.classToggled;
     }
 
     constructor(
@@ -72,40 +40,10 @@ export class HeaderComponent implements OnInit {
         this.data = localStorage.getItem('userData');
         this.userData = JSON.parse(this.data);
 
-        this.router.events.subscribe((event) => {
-            if (event instanceof NavigationStart) {
-                // Close the fields when navigating to another page
-                this.classToggled = false;
-                this.isprofile = false;
-            }
-        });
+
     }
 
-    @HostListener('document:click', ['$event'])
-    onDocumentClick(event: MouseEvent) {
-        const isClickInsideDropdown = this.elRef.nativeElement
-            .querySelector('.top-user-profile')
-            .contains(event.target);
-        const isClickInsideNotification = this.elRef.nativeElement.contains(
-            event.target
-        );
 
-        if (!isClickInsideDropdown && !isClickInsideNotification) {
-            this.closeDropdownAndNotification();
-        }
-    }
-    closeDropdownAndNotification() {
-        this.renderer.removeClass(
-            this.elRef.nativeElement.querySelector('.top-user-profile'),
-            'toggled'
-        );
-        this.renderer.removeClass(
-            this.elRef.nativeElement.querySelector('.notification-bar'),
-            'toggled'
-        );
-        this.isprofile = false;
-        this.classToggled = false;
-    }
 
     ngOnInit(): void {
         // this.bnIdle.startWatching(1500).subscribe((isTimedOut: boolean) => {
@@ -153,16 +91,5 @@ export class HeaderComponent implements OnInit {
             .catch(() => { });
     }
 
-    toggleField() {
-        this.isprofile = false;
-        // this.closeDropdownAndNotification();
-        this.classToggled = !this.classToggled;
-    }
 
-    profile() {
-        // this.closeDropdownAndNotification();
-
-        this.classToggled = false;
-        this.isprofile = !this.isprofile;
-    }
 }
