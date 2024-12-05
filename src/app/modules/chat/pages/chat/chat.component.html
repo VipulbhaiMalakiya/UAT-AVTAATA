@@ -226,13 +226,15 @@
 
 
 
-                                    <div class="last-msg font-small one-line" *ngIf="i.type == 'Sender'">
-                                        <span class="last-msg-checkic text-success" *ngIf="i.messageStatus == 'read'"><i
+                                    <div class="last-msg font-small one-line">
+                                        <span class="last-msg-checkic text-success"
+                                            *ngIf="i.messageStatus == 'read' && i.type == 'Sender'"><i
                                                 class="las la-check-double"></i></span>
-                                        <span class="last-msg-checkic" *ngIf="i.messageStatus == 'sent'"><i
+                                        <span class="last-msg-checkic"
+                                            *ngIf="i.messageStatus == 'sent' && i.type == 'Sender'"><i
                                                 class="las la-check"></i></span>
                                         <span class="last-msg-checkic" *ngIf="
-                                                i.messageStatus == 'delivered'
+                                                i.messageStatus == 'delivered' && i.type == 'Sender'
                                             "><i class="las la-check-double"></i></span>
 
                                         <span *ngIf="i.count == 0">{{
@@ -447,13 +449,15 @@
                                         <!-- <span class="user-status">•</span> -->
                                     </span>
 
-                                    <div class="last-msg font-small one-line" *ngIf="i.type == 'Sender'">
-                                        <span class="last-msg-checkic text-success" *ngIf="i.messageStatus == 'read'"><i
+                                    <div class="last-msg font-small one-line">
+                                        <span class="last-msg-checkic text-success"
+                                            *ngIf="i.messageStatus == 'read' && i.type == 'Sender'"><i
                                                 class="las la-check-double"></i></span>
-                                        <span class="last-msg-checkic" *ngIf="i.messageStatus == 'sent'"><i
+                                        <span class="last-msg-checkic"
+                                            *ngIf="i.messageStatus == 'sent' && i.type == 'Sender'"><i
                                                 class="las la-check"></i></span>
                                         <span class="last-msg-checkic" *ngIf="
-                                                i.messageStatus == 'delivered'
+                                                i.messageStatus == 'delivered' && i.type == 'Sender'
                                             "><i class="las la-check-double"></i></span>
                                         <span *ngIf="i.count == 0">{{
                                             i.lastMsg
