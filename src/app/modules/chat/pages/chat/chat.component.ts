@@ -260,15 +260,19 @@ export class ChatComponent
         this.logInUserName = this.userData.firstName + ' ' + this.userData.lastName;
         this.nrSelect = this.userData?.userId;
         this.titleService.setTitle('CDC -Inbox');
+        this.getContactList();
+
     }
     ngOnInit(): void {
         setTimeout(() => {
             this.connect();
-            this.GetUser();
             this.ActiveUser();
             this.getContactList();
             this.ActiveLabels();
+            this.GetUser();
+
         }, 2000);
+
 
 
         this.route.params.subscribe(params => {
@@ -861,9 +865,12 @@ export class ChatComponent
     // ngAfterViewInit() { }
 
 
+
+
     //!getContactList
     getContactList() {
         // this.isProceess = true;
+
         if (this.userData?.role?.roleName === 'Admin') {
             this.subscription = this.whatsappService
                 .getContactList()
@@ -871,14 +878,16 @@ export class ChatComponent
                 .subscribe(
                     (response) => {
                         this.contactList = response;
-                        this.open = this.contactList[0].open;
 
+                        console.log('----------------->', this.contactList)
+                        this.open = this.contactList[0].open;
                         this.missed = this.contactList[0].missed.filter((contact: any) => contact.missedBy === this.userData?.userId) ?? [];
                         this.missedCount = this.missed.length ?? 0;
                         this.openCount = this.contactList[0].openCount;
                         this.closedCount = this.contactList[0].closedCount;
                         this.closed = this.contactList[0].closed;
                         this.isProceess = false;
+                        this.cd.detectChanges();
                     },
                     (error) => {
                         this.isProceess = false;
@@ -900,6 +909,8 @@ export class ChatComponent
                         this.closedCount = this.contactList[0].closedCount;
                         this.closed = this.contactList[0].closed;
                         this.label = this.isProceess = false;
+                        this.cd.detectChanges();
+
                     },
                     (error) => {
                         this.isProceess = false;
@@ -907,6 +918,8 @@ export class ChatComponent
                 );
         }
     }
+
+
 
     GetUser() {
         if (this._route.snapshot.paramMap.get('status') != null) {
@@ -934,12 +947,13 @@ export class ChatComponent
                         if (data) {
                             this.data = data;
                             this.contact = this.data.contact;
-                            this.cd.detectChanges();
-                            const foundContact = this.findByPhoneNumber(this.contact);
-                            if (foundContact) {
-                                this.onViewContact(foundContact, 1);  // Ensure `c` is defined properly
-                            } else {
-                                console.log("Contact not found");
+                            if (this.contact) {
+                                const foundContact = this.findByPhoneNumber(this.contact);
+                                if (foundContact) {
+                                    this.onViewContact(foundContact, 1);
+                                } else {
+                                    console.log("Contact not found");
+                                }
                             }
                         }
                     },
@@ -952,14 +966,22 @@ export class ChatComponent
         this.isProceess = false;
     }
 
+
     findByPhoneNumber = (phoneNumber: string) => {
-        const result = this.contactList[0]?.open.find((chat: any) => chat.phoneNo === phoneNumber) ||
-            this.contactList[0]?.closed.find((chat: any) => chat.phoneNo === phoneNumber) ||
-            this.contactList[0]?.missed.find((chat: any) => chat.phoneNo === phoneNumber);
+        console.log('<--------------------', this.contactList);
+        const contactList = this.contactList?.length > 0 ? this.contactList[0] : null;
+
+        if (!contactList) {
+            console.error("Contact list is empty or undefined");
+            return null; // Return null if contactList is empty or undefined
+        }
+
+        const result = contactList.open.find((chat: any) => chat.phoneNo === phoneNumber) ||
+            contactList.closed.find((chat: any) => chat.phoneNo === phoneNumber) ||
+            contactList.missed.find((chat: any) => chat.phoneNo === phoneNumber);
 
         return result ? result : null;
     };
-
 
 
 
