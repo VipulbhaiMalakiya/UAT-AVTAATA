@@ -875,8 +875,6 @@ export class ChatComponent
                 .subscribe(
                     (response) => {
                         this.contactList = response;
-
-                        console.log('----------------->', this.contactList)
                         this.open = this.contactList[0].open;
                         this.missed = this.contactList[0].missed.filter((contact: any) => contact.missedBy === this.userData?.userId) ?? [];
                         this.missedCount = this.missed.length ?? 0;
@@ -965,7 +963,6 @@ export class ChatComponent
 
 
     findByPhoneNumber = (phoneNumber: string) => {
-        console.log('<--------------------', this.contactList);
         const contactList = this.contactList?.length > 0 ? this.contactList[0] : null;
 
         if (!contactList) {
