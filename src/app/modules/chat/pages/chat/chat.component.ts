@@ -518,53 +518,50 @@ export class ChatComponent
 
 
     loadChatHistory(isInitialLoad: boolean = false) {
-
         this.isProceess = true;
 
         this.subscription = this.whatsappService
             .chatHistorynew(this.contact, this.currentPage, this.pageSize)
-            .pipe(take(1), distinctUntilChanged())
-            .subscribe(
-                (response: any) => {
-                    // this.item = response;
-                    // // this.receivedData = this.item;
-                    // this.item = response;
-                    // this.receivedData = [...this.receivedData, ...this.item];
-
-
+            .pipe(
+                take(1),
+                distinctUntilChanged()
+            )
+            .subscribe({
+                next: (response: any) => {  // Handle successful response
                     if (isInitialLoad) {
-                        this.receivedData = [...response];  // For initial load, just replace data
+                        this.receivedData = [...response];  // For initial load, replace data
                     } else {
                         this.receivedData = [...this.receivedData, ...response];  // Append new data
                     }
 
-
-                    if (this.currentPage == 1) {
+                    if (this.currentPage === 1) {
                         this.scrollToBottom();
-
-                    }
-                    else {
+                    } else {
                         this.scrollToMiddle();
                     }
-                    // this.scrollToBottom();
-                    this.currentPage++;  // Increment page number for next re
 
-
+                    this.currentPage++;  // Increment page number for the next request
                     const lstRe = this.receivedData.slice(-1)[0];
                     this.lastItem = lstRe.time;
                     this.lastMessageTime = this.lastItem;
+
                     if (lstRe.mobileNo === this.contact) {
                         // this.checkChatStatus();
                     }
 
                     this.isProceess = false;
                 },
-                (error) => {
+                error: (error) => {  // Handle errors
+                    this.toastr.error('Failed to load chat history.', 'Error');
                     this.isProceess = false;
+                },
+                complete: () => {  // Handle completion
+                    console.log('Chat history loaded successfully');
+                    // Optional: Add any cleanup or final operations here
                 }
-            );
-
+            });
     }
+
 
 
     @ViewChild('chatContainer') private chatContainer!: ElementRef;
@@ -642,7 +639,7 @@ export class ChatComponent
                         }
                     }
 
-                    this.isProceess = false;
+                    // this.isProceess = false;
                     this.cd.detectChanges();
                 },
                 (error) => {
