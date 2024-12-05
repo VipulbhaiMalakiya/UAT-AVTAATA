@@ -540,7 +540,7 @@ export class ChatComponent
                     //     this.scrollToMiddle();
                     // }
 
-                    this.scrollToMiddle();
+                    this.scrollToBottom();
                     // this.currentPage++;  // Increment page number for the next request
                     const lstRe = this.receivedData.slice(-1)[0];
                     this.lastItem = lstRe.time;
