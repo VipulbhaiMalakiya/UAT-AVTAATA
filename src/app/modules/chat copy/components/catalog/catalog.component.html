@@ -1,0 +1,33 @@
+
+<div class="modal-content" id="catalog-modal">
+    <div class="modal-header">
+        <h1 class="modal-title fs-5">{{data.message}}</h1>
+    </div>
+    <div class="modal-custom-close" (click)="onCancel()">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+
+    <div class="modal-body p-0">
+
+        <div class="catalogmodal-inner">
+
+            <div class="catalog-chattop" *ngFor="let item of data.catalogOrderItems">
+
+                    <div class="catalog-pic" *ngIf="item.productUrl && item.productName">
+                        <img [src]="item.productUrl" [alt]="item.productName" (error)="onError($event)">
+                    </div>
+                    <div class="catalog-txt">
+                        <h4 *ngIf="item.productName">{{item.productName}}</h4>
+                        <p *ngIf="item.description">{{item.description}}</p>
+                        <p *ngIf="item.currency && item.item_price">{{item.currency}} {{item.item_price}}</p>
+                    </div>
+
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+</div>
