@@ -25,6 +25,9 @@ import { WhitespaceValidatorDirective } from 'src/app/_helpers/whitespace-valida
 import { CheckInComponent } from './components/check-in/check-in.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { CatalogComponent } from './components/catalog/catalog.component';
+import { contactReducer } from './Redux/contact.reducer';
+import { chatReducer } from './Redux/chat.reducer';
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
     declarations: [
@@ -55,7 +58,9 @@ import { CatalogComponent } from './components/catalog/catalog.component';
         FormsModule,
         PickerComponent,
         GoogleMapsModule,
-        NgxExtendedPdfViewerModule
+        NgxExtendedPdfViewerModule,
+        StoreModule.forRoot({ contact: contactReducer, chat: chatReducer })
+
 
     ]
 })
