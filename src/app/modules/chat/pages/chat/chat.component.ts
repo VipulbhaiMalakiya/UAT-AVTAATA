@@ -547,6 +547,15 @@ export class ChatComponent
                         this.receivedData = [...this.receivedData, ...response]; // Append new data
                     }
 
+
+                    // if (this.currentPage === 1) {
+                    //     this.scrollToBottom();
+                    // } else {
+                    //     this.scrollToMiddle();
+                    // }
+
+                    // this.currentPage++;
+
                     this.scrollToBottom();
                     const lstRe = this.receivedData.slice(-1)[0];
                     this.lastItem = lstRe.time;
