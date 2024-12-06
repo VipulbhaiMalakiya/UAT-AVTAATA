@@ -190,10 +190,6 @@ export class ChatComponent
         }
     }
 
-
-
-
-
     replaceAndBoldPlaceholder550(data?: any) {
         try {
 
@@ -330,16 +326,11 @@ export class ChatComponent
 
     }
 
-
-
-
     public connect(): void {
         if (!this.socket$ || this.socket$.closed) {
             this.establishConnection();
         }
     }
-
-
     private establishConnection(): void {
         this.socket$ = webSocket(environment.SOCKET_ENDPOINT);
         this.socket$.subscribe(
@@ -443,9 +434,6 @@ export class ChatComponent
             }
         );
     }
-
-
-
     private reconnect(): void {
         // Close existing socket connection if it exists
         if (this.socket$) {
@@ -454,9 +442,6 @@ export class ChatComponent
         // Re-establish connection
         this.establishConnection();
     }
-
-
-
     onViewContact(e: any, c: any) {
 
         // // Retrieve the last stored phone number from sessionStorage
