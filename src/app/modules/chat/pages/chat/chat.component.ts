@@ -42,6 +42,7 @@ import { interval } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { CatalogComponent } from '../../components/catalog/catalog.component';
 
+
 @Component({
     selector: 'app-chat',
     templateUrl: './chat.component.html',
@@ -116,6 +117,9 @@ export class ChatComponent
     unreadmessage?: any = [];
     slecteduser: any = {};
     private notificationSound?: HTMLAudioElement;
+
+
+
 
 
     // @ViewChild('chatContainer') chatContainer!: ElementRef;
@@ -249,7 +253,7 @@ export class ChatComponent
         private datePipe: DatePipe,
         private route: ActivatedRoute,
         private sanitizer: DomSanitizer,
-        private http: HttpClient
+        private http: HttpClient,
     ) {
         const d: any = localStorage.getItem('userData');
         this.userData = JSON.parse(d);
@@ -257,6 +261,8 @@ export class ChatComponent
         this.nrSelect = this.userData?.userId;
         this.titleService.setTitle('CDC -Inbox');
         this.getContactList();
+
+
 
     }
     ngOnInit(): void {
