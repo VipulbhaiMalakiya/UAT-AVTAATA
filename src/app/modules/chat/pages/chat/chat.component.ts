@@ -455,17 +455,30 @@ export class ChatComponent
         this.establishConnection();
     }
 
-    private lastContact: string | null = null; // Store the last contact to compare
 
 
     onViewContact(e: any, c: any) {
 
-        // Check if the contact has changed
-        if (this.lastContact === e.phoneNo) {
-            // console.log("Duplicate contact selected, skipping API call.");
-            return; // Skip if the contact is the same as the previous one
+        // Retrieve the last stored phone number from sessionStorage
+        const lastContact = sessionStorage.getItem('currentContact');
+
+        // Check if the session is active for the same contact
+        if (lastContact === e.phoneNo) {
+            console.log('Session is active for this contact. Marking as seen.');
+            this.handleMessageStatus(e.phoneNo, true); // Mark as seen
+        } else {
+            console.log('Closing previous session and starting a new session.');
+
+            // Close session for the previous contact (if any)
+            if (lastContact) {
+                this.handleMessageStatus(lastContact, false); // Mark as unseen
+            }
+
+            // Start a new session for the selected contact
+            sessionStorage.setItem('currentContact', e.phoneNo);
+            this.handleMessageStatus(e.phoneNo, true); // Mark as seen
         }
-        this.lastContact = e.phoneNo;
+
 
         this.pageSize = 5;
         this.currentPage = 1;
@@ -480,19 +493,10 @@ export class ChatComponent
         this.contact = e.phoneNo;
         this.slecteduser = e;
         this.show = true;
-
-
-
-
-        // this.masterName = `/customer/seen-ByMobileNo/${this.contact}/seen/false`;
-        // this.subscription = this.apiService.getAll(this.masterName).pipe(take(1)).subscribe(data => {
-        //     console.log(data)
-        // }, error => {
-        // })
+        this.handleMessageStatus(this.contact, true);  // Mark as seen
+        this.handleMessageStatus(this.contact, false); // Mark as unseen
 
         this.checkstatus();
-
-
         if (e.fullName) {
             this.chatname = e.fullName;
 
@@ -504,11 +508,20 @@ export class ChatComponent
         this.label = e.customerLabel;
         this.isProceess = true;
 
-        // this.loadChatHistory()
         this.loadInitialData();
         this.loadUserActivity(this.contact)
 
 
+    }
+
+    handleMessageStatus(contact: string, isSeen: boolean): void {
+        this.masterName = `/customer/seen-ByMobileNo/${contact}/seen/${isSeen}`;
+        this.subscription?.add(
+            this.apiService.getAll(this.masterName).pipe(take(1)).subscribe({
+                next: (data) => console.log('Response:', data),
+                error: (err) => console.error('Error:', err)
+            })
+        );
     }
 
 
