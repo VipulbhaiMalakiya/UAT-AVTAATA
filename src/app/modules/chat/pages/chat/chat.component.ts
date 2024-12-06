@@ -465,7 +465,7 @@ export class ChatComponent
         }
 
 
-        this.pageSize = 5;
+        this.pageSize = 10;
         this.currentPage = 1;
         this.receivedData = [];
         this.isProceess = true;
@@ -530,24 +530,26 @@ export class ChatComponent
             .subscribe({
                 next: (response: any) => {
 
-                    if (response.length > 0) { // Check if response has data
+                    if (response.length > 0) {
+                        // Store data based on initial load or pagination
                         if (isInitialLoad) {
-                            this.receivedData = [...response]; // For initial load, replace data
-                        } else {
-                            this.receivedData = [...this.receivedData, ...response]; // Append new data
+                            this.receivedData = response;
                         }
 
+                        this.receivedData = [...response, ...this.receivedData];
                         if (this.currentPage === 1) {
                             this.scrollToBottom();
                         } else {
                             this.scrollToMiddle();
                         }
 
-                        this.currentPage++;
+
+
 
                         const lstRe = this.receivedData.slice(-1)[0];
                         this.lastItem = lstRe.time;
                         this.lastMessageTime = this.lastItem;
+                        this.currentPage++;
                     } else {
                         console.log("No data received.");
                     }
