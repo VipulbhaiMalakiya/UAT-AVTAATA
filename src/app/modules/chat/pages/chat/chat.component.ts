@@ -529,28 +529,32 @@ export class ChatComponent
             )
             .subscribe({
                 next: (response: any) => {
-                    if (isInitialLoad) {
-                        this.receivedData = [...response]; // For initial load, replace data
+
+                    if (response.length > 0) { // Check if response has data
+                        if (isInitialLoad) {
+                            this.receivedData = [...response]; // For initial load, replace data
+                        } else {
+                            this.receivedData = [...this.receivedData, ...response]; // Append new data
+                        }
+
+                        if (this.currentPage === 1) {
+                            this.scrollToBottom();
+                        } else {
+                            this.scrollToMiddle();
+                        }
+
+                        this.currentPage++;
+
+                        const lstRe = this.receivedData.slice(-1)[0];
+                        this.lastItem = lstRe.time;
+                        this.lastMessageTime = this.lastItem;
                     } else {
-                        this.receivedData = [...this.receivedData, ...response]; // Append new data
+                        console.log("No data received.");
                     }
-
-
-                    // if (this.currentPage === 1) {
-                    //     this.scrollToBottom();
-                    // } else {
-                    //     this.scrollToMiddle();
-                    // }
-
-                    // this.currentPage++;
-
-                    this.scrollToBottom();
-                    const lstRe = this.receivedData.slice(-1)[0];
-                    this.lastItem = lstRe.time;
-                    this.lastMessageTime = this.lastItem;
 
                     this.isProceess = false;
                 },
+
                 error: (error) => {
                     // Check for deserialization error
                     if (error.status === 500 && error.error?.message?.includes('SerializationException')) {
@@ -578,12 +582,12 @@ export class ChatComponent
 
 
     onScroll(event: Event): void {
-        // const target = event.target as HTMLElement;
+        const target = event.target as HTMLElement;
 
-        // // Check if the user has scrolled up 50px from the top and there are no ongoing requests
-        // if (target.scrollTop <= 50 && !this.isProceess) {
-        //     this.loadChatHistory(); // Load previous messages when scrolled within 50px from the top
-        // }
+        // Check if the user has scrolled up 50px from the top and there are no ongoing requests
+        if (target.scrollTop <= 50 && !this.isProceess) {
+            this.loadChatHistory(); // Load previous messages when scrolled within 50px from the top
+        }
     }
 
     ngAfterViewInit() {
