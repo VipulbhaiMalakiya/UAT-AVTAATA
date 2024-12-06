@@ -27,7 +27,13 @@ export class HeaderComponent implements OnInit {
         this.isprofile = false;
         // this.closeDropdownAndNotification();
         this.classToggled = !this.classToggled;
+
     }
+
+
+
+
+
 
     constructor(
         private authenticationService: AuthenticationService,
