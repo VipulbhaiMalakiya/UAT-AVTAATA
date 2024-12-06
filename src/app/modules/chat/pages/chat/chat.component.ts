@@ -493,9 +493,6 @@ export class ChatComponent
         this.contact = e.phoneNo;
         this.slecteduser = e;
         this.show = true;
-        this.handleMessageStatus(this.contact, true);  // Mark as seen
-        this.handleMessageStatus(this.contact, false); // Mark as unseen
-
         this.checkstatus();
         if (e.fullName) {
             this.chatname = e.fullName;
