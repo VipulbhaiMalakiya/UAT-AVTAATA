@@ -269,7 +269,7 @@ export class ChatComponent
 
         }, 2000);
 
-
+        this.handleMessageStatus(sessionStorage.getItem('currentContact') ?? '', false);
 
         this.route.params.subscribe(params => {
 
@@ -502,6 +502,7 @@ export class ChatComponent
             next: response => {
                 // console.log('Update successful:', response);
                 // alert('Status updated successfully!');
+                this.getContactList();
             },
             error: error => {
                 // console.error('Error updating status:', error);
@@ -571,6 +572,71 @@ export class ChatComponent
                     console.log('Chat history loaded successfully');
                 }
             });
+    }
+
+
+
+    onClose(contactinfo: any) {
+        this.isProceess = true;
+        const modalRef = this.modalService.open(ConfirmationDialogModalComponent, {
+            size: 'sm',
+            centered: true,
+            backdrop: 'static',
+        });
+        if (modalRef) {
+            this.isProceess = false;
+        } else {
+            this.isProceess = false;
+        }
+        var componentInstance =
+            modalRef.componentInstance as ConfirmationDialogModalComponent;
+        componentInstance.message = 'Are you sure you want to close this chat?';
+
+        modalRef.result
+            .then((canDelete: boolean) => {
+                if (canDelete) {
+                    let data: any = {
+                        mobileNo: contactinfo.phoneNo,
+                        messagetype: 'closed',
+                        fromId: this.userData.userId,
+                        logInUserName: this.logInUserName,
+                    };
+                    this.masterName = `/chat-activity/closed`;
+                    let addData: any = {
+                        url: this.masterName,
+                        model: data,
+                    };
+                    this.isProceess = true;
+                    this.subscription = this.apiService
+                        .add(addData)
+                        .pipe(take(1))
+                        .subscribe(
+                            (res) => {
+                                if (res.status == 'Success') {
+                                    this.toastr.success(res.message);
+                                    this.isProceess = false;
+                                    this.whatsappService
+                                    const foundContact = this.findByPhoneNumber(data.mobileNo);
+                                    if (foundContact) {
+                                        this.onViewContact(foundContact, 1);
+                                    } else {
+                                        console.log("Contact not found");
+                                    }
+
+                                }
+                                if (res.status == 'failed') {
+                                    this.toastr.error(res.message);
+                                    this.isProceess = false;
+                                }
+                            },
+                            (error) => {
+                                this.isProceess = false;
+                                this.toastr.error(error.error.message);
+                            }
+                        );
+                }
+            })
+            .catch(() => { });
     }
 
     @ViewChild('chatContainer') private chatContainer!: ElementRef;
@@ -1236,89 +1302,6 @@ export class ChatComponent
         this.subscription?.unsubscribe();
     }
 
-    onClose(contactinfo: any) {
-        this.isProceess = true;
-        const modalRef = this.modalService.open(ConfirmationDialogModalComponent, {
-            size: 'sm',
-            centered: true,
-            backdrop: 'static',
-        });
-        if (modalRef) {
-            this.isProceess = false;
-        } else {
-            this.isProceess = false;
-        }
-        var componentInstance =
-            modalRef.componentInstance as ConfirmationDialogModalComponent;
-        componentInstance.message = 'Are you sure you want to close this chat?';
-
-        modalRef.result
-            .then((canDelete: boolean) => {
-                if (canDelete) {
-                    let data: any = {
-                        mobileNo: contactinfo.phoneNo,
-                        messagetype: 'closed',
-                        fromId: this.userData.userId,
-                        logInUserName: this.logInUserName,
-                    };
-                    this.masterName = `/chat-activity/closed`;
-                    let addData: any = {
-                        url: this.masterName,
-                        model: data,
-                    };
-                    this.isProceess = true;
-                    this.subscription = this.apiService
-                        .add(addData)
-                        .pipe(take(1))
-                        .subscribe(
-                            (res) => {
-                                if (res.status == 'Success') {
-                                    this.toastr.success(res.message);
-                                    this.isProceess = false;
-                                    this.subscription = this.whatsappService
-                                        .chatHistory(data.mobileNo)
-                                        .pipe(take(1))
-                                        .subscribe(
-                                            (response) => {
-                                                this.item = response;
-                                                this.receivedData = this.item;
-                                                this.isProceess = false;
-                                                this.masterName = `/outgoing-activity/${data.mobileNo}`;
-                                                this.subscription = this.apiService
-                                                    .getAll(this.masterName)
-                                                    .pipe(take(1))
-                                                    .subscribe(
-                                                        (data) => {
-                                                            this.Userinfo = data;
-                                                            this.nrSelect = this.Userinfo.assignedto;
-                                                            this.isProceess = false;
-                                                            this.cd.detectChanges();
-                                                        },
-                                                        (error) => {
-                                                            this.isProceess = false;
-                                                        }
-                                                    );
-                                                this.getContactList();
-                                            },
-                                            (error) => {
-                                                this.isProceess = false;
-                                            }
-                                        );
-                                }
-                                if (res.status == 'failed') {
-                                    this.toastr.error(res.message);
-                                    this.isProceess = false;
-                                }
-                            },
-                            (error) => {
-                                this.isProceess = false;
-                                this.toastr.error(error.error.message);
-                            }
-                        );
-                }
-            })
-            .catch(() => { });
-    }
 
     selectDepartment(e: any) {
         let phone;
