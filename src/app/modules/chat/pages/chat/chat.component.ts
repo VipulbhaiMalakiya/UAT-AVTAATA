@@ -533,10 +533,12 @@ export class ChatComponent
                     if (response.length > 0) {
                         // Store data based on initial load or pagination
                         if (isInitialLoad) {
-                            this.receivedData = response;
+                            this.receivedData = response; // Replace data on initial load
+                        } else {
+                            // Append data for subsequent pages
+                            this.receivedData = [...response, ...this.receivedData];
                         }
 
-                        this.receivedData = [...response, ...this.receivedData];
                         if (this.currentPage === 1) {
                             this.scrollToBottom();
                         } else {
