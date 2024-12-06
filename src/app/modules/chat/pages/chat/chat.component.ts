@@ -544,10 +544,6 @@ export class ChatComponent
                         } else {
                             this.scrollToMiddle();
                         }
-
-
-
-
                         const lstRe = this.receivedData.slice(-1)[0];
                         this.lastItem = lstRe.time;
                         this.lastMessageTime = this.lastItem;
