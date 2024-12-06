@@ -460,24 +460,24 @@ export class ChatComponent
     onViewContact(e: any, c: any) {
 
         // // Retrieve the last stored phone number from sessionStorage
-        // const lastContact = sessionStorage.getItem('currentContact');
+        const lastContact = sessionStorage.getItem('currentContact');
 
-        // // Check if the session is active for the same contact
-        // if (lastContact === e.phoneNo) {
-        //     console.log('Session is active for this contact. Marking as seen.');
-        //     this.handleMessageStatus(e.phoneNo, true); // Mark as seen
-        // } else {
-        //     console.log('Closing previous session and starting a new session.');
+        // Check if the session is active for the same contact
+        if (lastContact === e.phoneNo) {
+            console.log('Session is active for this contact. Marking as seen.');
+            this.handleMessageStatus(e.phoneNo, true); // Mark as seen
+        } else {
+            console.log('Closing previous session and starting a new session.');
 
-        //     // Close session for the previous contact (if any)
-        //     if (lastContact) {
-        //         this.handleMessageStatus(lastContact, false); // Mark as unseen
-        //     }
+            // Close session for the previous contact (if any)
+            if (lastContact) {
+                this.handleMessageStatus(lastContact, false); // Mark as unseen
+            }
 
-        //     // Start a new session for the selected contact
-        //     sessionStorage.setItem('currentContact', e.phoneNo);
-        //     this.handleMessageStatus(e.phoneNo, true); // Mark as seen
-        // }
+            // Start a new session for the selected contact
+            sessionStorage.setItem('currentContact', e.phoneNo);
+            this.handleMessageStatus(e.phoneNo, true); // Mark as seen
+        }
 
 
         this.pageSize = 5;
@@ -512,13 +512,19 @@ export class ChatComponent
     }
 
     handleMessageStatus(contact: string, isSeen: boolean): void {
-        this.masterName = `/customer/seen-ByMobileNo/${contact}/seen/${isSeen}`;
-        this.subscription?.add(
-            this.apiService.getAll(this.masterName).pipe(take(1)).subscribe({
-                next: (data) => console.log('Response:', data),
-                error: (err) => console.error('Error:', err)
-            })
-        );
+
+        this.whatsappService.updateSeenByMobileNo(contact, isSeen).subscribe({
+            next: response => {
+                // console.log('Update successful:', response);
+                // alert('Status updated successfully!');
+            },
+            error: error => {
+                // console.error('Error updating status:', error);
+                // alert('Failed to update status. Please try again.');
+            }
+        });
+
+
     }
 
 
