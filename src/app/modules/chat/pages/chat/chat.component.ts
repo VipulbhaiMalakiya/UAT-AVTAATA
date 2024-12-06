@@ -121,7 +121,7 @@ export class ChatComponent
     // @ViewChild('chatContainer') chatContainer!: ElementRef;
 
     private currentPage: number = 1;
-    private pageSize: number = 5;
+    private pageSize: number = 10;
 
 
     toggleEmojiPicker() {
