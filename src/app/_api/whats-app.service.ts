@@ -28,16 +28,17 @@ export class WhatsAppService {
     //     return this.http.get(this.baseUrl + `/chatlist/history/number/${request}`, httpOptions);
     // }
 
+    // chatHistorynew(contact: string, currentPage: number, pageSize: number) {
+    //     let headers = this.header.getJWTHeaders();
+    //     const httpOptions = { headers: headers };
+    //     const url = `${this.baseUrl}/chatlist/history/number/${contact}?page=${currentPage}&size=${pageSize}`;
+    //     return this.http.get(url, httpOptions);
+    // }
+
     chatHistorynew(contact: string, currentPage: number, pageSize: number) {
-        // Get JWT headers (assuming header service is properly configured)
         let headers = this.header.getJWTHeaders();
         const httpOptions = { headers: headers };
-
-        // Construct the URL with pagination parameters (current page and page size)
-        const url = `${this.baseUrl}/chatlist/history/number/${contact}?page=${currentPage}&size=${pageSize}`;
-
-        // Make the HTTP GET request with pagination parameters
-        return this.http.get(url, httpOptions);
+        return this.http.get(this.baseUrl + `/chatlist/history/number/${contact}`, httpOptions);
     }
 
 
