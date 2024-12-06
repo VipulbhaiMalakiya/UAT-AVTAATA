@@ -577,10 +577,6 @@ export class ChatComponent
             });
     }
 
-
-
-
-
     @ViewChild('chatContainer') private chatContainer!: ElementRef;
     @ViewChild('msgHistory', { static: true }) msgHistory!: ElementRef;
 
