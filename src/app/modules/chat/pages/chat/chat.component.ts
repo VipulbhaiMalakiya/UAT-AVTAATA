@@ -98,7 +98,7 @@ export class ChatComponent
     subscription?: Subscription;
     showHead: boolean = false;
     private socket?: WebSocket;
-    contactList: any;
+    contactList: any[] = [];
     meesagestatus?: any = [];
     isempty: boolean = true;
     reloadFlag = true;
@@ -980,14 +980,25 @@ export class ChatComponent
         // Subscribe to contact list updates from the shared service
         this.subscription = this.whatsappService.contactList$.subscribe(response => {
             this.contactList = response;
-            this.open = this.contactList[0]?.open;
-            this.missed = this.contactList[0]?.missed.filter((contact: any) => contact.missedBy === this.userData?.userId) ?? [];
+
+            // Ensure 'this.contactList[0]?.open' is defined or fallback to empty array
+            this.open = this.contactList[0]?.open ?? [];
+
+            // Ensure 'this.contactList[0]?.missed' is defined or fallback to empty array
+            this.missed = Array.isArray(this.contactList[0]?.missed)
+                ? this.contactList[0].missed.filter((contact: any) => contact.missedBy === this.userData?.userId)
+                : [];
+
             this.missedCount = this.missed.length ?? 0;
-            this.openCount = this.contactList[0]?.openCount;
-            this.closedCount = this.contactList[0]?.closedCount;
-            this.closed = this.contactList[0]?.closed;
+
+            // Ensure other properties are handled safely (fallback to zero if undefined)
+            this.openCount = this.contactList[0]?.openCount ?? 0;
+            this.closedCount = this.contactList[0]?.closedCount ?? 0;
+            this.closed = this.contactList[0]?.closed ?? [];
+
             this.isProceess = false;
         });
+
 
         // Fetch the contact list
         if (this.userData?.role?.roleName === 'Admin') {

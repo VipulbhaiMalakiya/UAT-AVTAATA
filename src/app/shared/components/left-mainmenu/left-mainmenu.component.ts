@@ -15,7 +15,7 @@ import { environment } from 'src/environments/environment';
 export class LeftMainmenuComponent implements OnInit {
     data: any;
     userData: any;
-    contactList: any;
+    contactList: any[] = [];
     closed: any = [];
     open: any = [];
     unreadMessages: any
@@ -81,12 +81,19 @@ export class LeftMainmenuComponent implements OnInit {
     processContactList() {
         this.subscription = this.whatsappService.contactList$.subscribe(response => {
             this.contactList = response;
-            this.open = this.contactList[0].open;
-            const filteredOpen = this.open.filter((contact: any) => contact.count !== 0);
-            this.unreadMessages = filteredOpen.length;
-            this.cdr.detectChanges();
 
+            // Ensure 'this.contactList[0]?.open' is defined and is an array
+            this.open = this.contactList[0]?.open ?? [];  // If undefined or null, set to an empty array
+
+            // Filter the open contacts only if it's a valid array
+            const filteredOpen = Array.isArray(this.open) ? this.open.filter((contact: any) => contact?.count !== 0) : [];
+
+            // Now 'filteredOpen' should be a safe array to check its length
+            this.unreadMessages = filteredOpen.length;
+
+            this.cdr.detectChanges();
         });
+
     }
     get isAuditor() {
         return this.userData?.department?.departmentName == 'Zenoti' || this.userData?.department?.departmentName == 'Admin';
@@ -131,7 +138,7 @@ export class LeftMainmenuComponent implements OnInit {
                 if (canDelete) {
                     this.authenticationService.logout();
                     const currentContact = sessionStorage.getItem('currentContact');
-
+                    console.log(currentContact)
                     if (currentContact) {
                         this.handleMessageStatus(currentContact, false);
                     } else {
