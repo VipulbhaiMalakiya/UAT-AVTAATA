@@ -600,8 +600,6 @@ export class ChatComponent
         const timeDifferenceInMs = currentTime.getTime() - lastTime.getTime();
         const timeDifferenceInHours = timeDifferenceInMs / (1000 * 3600);
 
-        console.log(`Time difference in hours: ${timeDifferenceInHours}`);
-
         // If 24 hours or more have passed, hide the Reply and Notes
         if (timeDifferenceInHours >= 24) {
             this.hideReplyAndNotes = true;
