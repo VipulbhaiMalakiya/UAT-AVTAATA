@@ -621,6 +621,12 @@
                                                         data.messageStatus ==
                                                         'delivered'
                                                     "><i class="las la-check-double"></i></span>
+
+                                                <span class="last-msg-checkic" *ngIf="data.messageStatus == 'failed'">
+                                                    <i class="las la-times-circle"></i> <!-- Failed icon -->
+                                                </span>
+
+
                                             </ng-container>
 
                                             <!-- <ng-container *ngIf="data.messageId">
@@ -683,6 +689,10 @@
                                                         data.messageStatus ==
                                                         'delivered'
                                                     "><i class="las la-check-double"></i></span>
+                                                <span class="last-msg-checkic" *ngIf="data.messageStatus == 'failed'">
+                                                    <i class="las la-times-circle"></i> <!-- Failed icon -->
+                                                </span>
+
                                             </ng-container>
 
                                             <!-- <ng-container *ngIf="data.messageId">
@@ -756,6 +766,10 @@
                                                     data.messageStatus ==
                                                     'delivered'
                                                 "><i class="las la-check-double"></i></span>
+                                            <span class="last-msg-checkic" *ngIf="data.messageStatus == 'failed'">
+                                                <i class="las la-times-circle"></i> <!-- Failed icon -->
+                                            </span>
+
                                         </ng-container>
 
                                         <!-- <ng-container *ngIf="data.messageId">
@@ -855,6 +869,10 @@
                                                     data.messageStatus ==
                                                     'delivered'
                                                 "><i class="las la-check-double"></i></span>
+                                            <span class="last-msg-checkic" *ngIf="data.messageStatus == 'failed'">
+                                                <i class="las la-times-circle"></i> <!-- Failed icon -->
+                                            </span>
+
                                         </ng-container>
 
                                         <!-- <ng-container *ngIf="data.messageId">
@@ -933,6 +951,10 @@
                                                     data.messageStatus ==
                                                     'delivered'
                                                 "><i class="las la-check-double"></i></span>
+                                            <span class="last-msg-checkic" *ngIf="data.messageStatus == 'failed'">
+                                                <i class="las la-times-circle"></i> <!-- Failed icon -->
+                                            </span>
+
                                         </ng-container>
                                         <!--
                                         <ng-container *ngIf="data.messageId">
@@ -1011,6 +1033,10 @@
                                                     data.messageStatus ==
                                                     'delivered'
                                                 "><i class="las la-check-double"></i></span>
+                                            <span class="last-msg-checkic" *ngIf="data.messageStatus == 'failed'">
+                                                <i class="las la-times-circle"></i> <!-- Failed icon -->
+                                            </span>
+
                                         </ng-container>
 
                                         <!-- <ng-container *ngIf="data.messageId">
@@ -1106,6 +1132,10 @@
                                                 data.messageStatus ==
                                                 'delivered'
                                             "><i class="las la-check-double"></i></span>
+                                        <span class="last-msg-checkic" *ngIf="data.messageStatus == 'failed'">
+                                            <i class="las la-times-circle"></i> <!-- Failed icon -->
+                                        </span>
+
                                     </ng-container>
 
                                     <!-- <ng-container *ngIf="data.messageId">
@@ -1272,6 +1302,10 @@
                                                     data.messageStatus ==
                                                     'delivered'
                                                 "><i class="las la-check-double"></i></span>
+                                            <span class="last-msg-checkic" *ngIf="data.messageStatus == 'failed'">
+                                                <i class="las la-times-circle"></i> <!-- Failed icon -->
+                                            </span>
+
                                         </ng-container>
                                         <!--
                                         <ng-container *ngIf="data.messageId">
@@ -1330,6 +1364,10 @@
                                                     data.messageStatus ==
                                                     'delivered'
                                                 "><i class="las la-check-double"></i></span>
+                                            <span class="last-msg-checkic" *ngIf="data.messageStatus == 'failed'">
+                                                <i class="las la-times-circle"></i> <!-- Failed icon -->
+                                            </span>
+
                                         </ng-container>
 
                                         <!-- <ng-container *ngIf="data.messageId">
@@ -1396,6 +1434,10 @@
                                                     data.messageStatus ==
                                                     'delivered'
                                                 "><i class="las la-check-double"></i></span>
+                                            <span class="last-msg-checkic" *ngIf="data.messageStatus == 'failed'">
+                                                <i class="las la-times-circle"></i> <!-- Failed icon -->
+                                            </span>
+
                                         </ng-container>
 
                                         <!-- <ng-container *ngIf="data.messageId">
@@ -1461,6 +1503,10 @@
                                                     data.messageStatus ==
                                                     'delivered'
                                                 "><i class="las la-check-double"></i></span>
+                                            <span class="last-msg-checkic" *ngIf="data.messageStatus == 'failed'">
+                                                <i class="las la-times-circle"></i> <!-- Failed icon -->
+                                            </span>
+
                                         </ng-container>
 
                                         <!-- <ng-container *ngIf="data.messageId">
@@ -1546,6 +1592,10 @@
                                                     data.messageStatus ==
                                                     'delivered'
                                                 "><i class="las la-check-double"></i></span>
+                                            <span class="last-msg-checkic" *ngIf="data.messageStatus == 'failed'">
+                                                <i class="las la-times-circle"></i> <!-- Failed icon -->
+                                            </span>
+
                                         </ng-container>
 
                                         <!-- <ng-container *ngIf="data.messageId">
@@ -1610,6 +1660,7 @@
                                                 <a class="temppay-btn text-left mb-2" *ngIf="data.templateButton3">{{
                                                     data.templateButton3 }}
                                                     <i class="las la-sign-in-alt"></i></a>
+
                                             </p>
                                         </div>
                                     </div>
@@ -1629,6 +1680,9 @@
                                                     data.messageStatus ==
                                                     'delivered'
                                                 "><i class="las la-check-double"></i></span>
+                                            <span class="last-msg-checkic" *ngIf="data.messageStatus == 'failed'">
+                                                <i class="las la-times-circle"></i> <!-- Failed icon -->
+                                            </span>
                                         </ng-container>
                                         <!--
                                         <ng-container *ngIf="data.messageId">
@@ -1701,6 +1755,9 @@
                                                     data.messageStatus ==
                                                     'delivered'
                                                 "><i class="las la-check-double"></i></span>
+                                            <span class="last-msg-checkic" *ngIf="data.messageStatus == 'failed'">
+                                                <i class="las la-times-circle"></i> <!-- Failed icon -->
+                                            </span>
                                         </ng-container>
                                         <!--
                                         <ng-container *ngIf="data.messageId">
@@ -1765,6 +1822,9 @@
                                                     data.messageStatus ==
                                                     'delivered'
                                                 "><i class="las la-check-double"></i></span>
+                                            <span class="last-msg-checkic" *ngIf="data.messageStatus == 'failed'">
+                                                <i class="las la-times-circle"></i> <!-- Failed icon -->
+                                            </span>
                                         </ng-container>
 
                                         <!-- <ng-container *ngIf="data.messageId">
@@ -2096,6 +2156,9 @@
                                                     data.messageStatus ==
                                                     'delivered'
                                                 "><i class="las la-check-double"></i></span>
+                                            <span class="last-msg-checkic" *ngIf="data.messageStatus == 'failed'">
+                                                <i class="las la-times-circle"></i> <!-- Failed icon -->
+                                            </span>
                                         </ng-container>
                                         <!--
                                         <ng-container *ngIf="data.messageId">
