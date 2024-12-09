@@ -18,11 +18,11 @@ export class OrderUpdateComponent {
 
 
     statuses = [
+        { value: 'Order_Created', label: 'Order Created' },
         { value: 'Order_Receipt', label: 'Order Receipt' },
         { value: 'Confirmation', label: 'Confirmation' },
         { value: 'In_transit', label: 'In Transit' },
         { value: 'Delivered', label: 'Delivered' },
-        { value: 'Order_Created', label: 'Order Created' }
     ];
     availableStatuses: { value: string, label: string }[] = [];
 
@@ -79,7 +79,7 @@ export class OrderUpdateComponent {
     }
 
     isAvailable(statusValue: string): boolean {
-        return statusValue !== 'Order_Created';
+        // return statusValue !== 'Order_Created';
 
         return this.availableStatuses.some(status => status.value === statusValue);
     }
