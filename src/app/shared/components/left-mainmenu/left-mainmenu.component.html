@@ -35,7 +35,7 @@
                 class="menu-list-title">
                 <img src="../assets/images/menu-icon-2.png" alt="" />
                 Inbox
-                <span class="badge bg-danger ms-2">{{ unreadMessages }}</span>
+                <span class="badge bg-danger ms-2" *ngIf="unreadMessages > 0">{{ unreadMessages }}</span>
             </a>
         </li>
 

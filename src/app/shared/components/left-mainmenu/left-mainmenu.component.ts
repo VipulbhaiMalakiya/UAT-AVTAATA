@@ -77,10 +77,6 @@ export class LeftMainmenuComponent implements OnInit {
     }
 
 
-
-
-
-
     processContactList() {
         if (this.userData?.role?.roleName === 'Admin') {
             this.subscription = this.whatsappService
@@ -90,7 +86,15 @@ export class LeftMainmenuComponent implements OnInit {
                     (response) => {
                         this.contactList = response;
                         this.open = this.contactList[0].open;
-                        this.unreadMessages = this.open.reduce((sum: number, contact: any) => sum + contact.count, 0);
+
+                        // Filter to get only items where count !== 0
+                        const filteredOpen = this.open.filter((contact: any) => contact.count !== 0);
+
+                        // Calculate total unread messages from filtered data
+                        // this.unreadMessages = filteredOpen.reduce((sum: number, contact: any) => sum + contact.count, 0);
+
+                        this.unreadMessages = filteredOpen.length;
+
                     },
                     (error) => {
                         console.error('Error fetching contact list for admin', error);
@@ -104,7 +108,14 @@ export class LeftMainmenuComponent implements OnInit {
                     (response) => {
                         this.contactList = response;
                         this.open = this.contactList[0].open;
-                        this.unreadMessages = this.open.reduce((sum: number, contact: any) => sum + contact.count, 0);
+
+                        // Filter to get only items where count !== 0
+                        const filteredOpen = this.open.filter((contact: any) => contact.count !== 0);
+
+                        // Calculate total unread messages from filtered data
+                        // this.unreadMessages = filteredOpen.reduce((sum: number, contact: any) => sum + contact.count, 0);
+
+                        this.unreadMessages = filteredOpen.length;
                     },
                     (error) => {
                         console.error('Error fetching contact list for user', error);
