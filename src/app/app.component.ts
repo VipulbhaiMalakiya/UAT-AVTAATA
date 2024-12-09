@@ -1,7 +1,8 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { AuthenticationService } from './_services/authentication.service';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { WhatsAppService } from './_api/whats-app.service';
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html'
@@ -9,7 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 export class AppComponent implements OnInit {
     title = 'avataara';
     constructor(private authenticationService: AuthenticationService,
-        private router: Router, private toastr: ToastrService,) {
+        private router: Router, private toastr: ToastrService, public whatsappService: WhatsAppService,) {
 
     }
 
@@ -34,7 +35,40 @@ export class AppComponent implements OnInit {
             this.toastr.error('You have lost your internet connection. Some features may be restricted.',
                 'Connection Lost');
         });
+
+        this.router.events.subscribe((event) => {
+            if (event instanceof NavigationEnd) {
+                this.checkCurrentContact();
+            }
+        });
     }
 
+
+    checkCurrentContact(): void {
+        const currentContact = sessionStorage.getItem('currentContact');
+
+        if (currentContact) {
+            this.handleMessageStatus(currentContact, false);
+        } else {
+            // Optional: Log or handle the absence of currentContact.
+            // console.warn('No current contact found in session storage.');
+        }
+    }
+
+    handleMessageStatus(contact: string, isSeen: boolean): void {
+
+        this.whatsappService.updateSeenByMobileNo(contact, isSeen).subscribe({
+            next: response => {
+                // console.log('Update successful:', response);
+                // alert('Status updated successfully!');
+            },
+            error: error => {
+                // console.error('Error updating status:', error);
+                // alert('Failed to update status. Please try again.');
+            }
+        });
+
+
+    }
 
 }

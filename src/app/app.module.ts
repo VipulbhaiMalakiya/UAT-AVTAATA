@@ -80,7 +80,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
         }),
         BrowserAnimationsModule,
         NgbModule,
-        // StoreModule.forRoot(rootReducer),
+        StoreModule.forRoot(rootReducer),
         NgMultiSelectDropDownModule.forRoot(),
         StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
         GoogleMapsModule
