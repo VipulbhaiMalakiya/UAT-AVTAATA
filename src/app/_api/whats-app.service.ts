@@ -27,18 +27,18 @@ export class WhatsAppService {
         return this.http.get(this.baseUrl + `/chatlist/history/number/${request}`, httpOptions);
     }
 
-    // chatHistorynew(request: any) {
-    //     let headers = this.header.getJWTHeaders();
-    //     const httpOptions = { headers: headers };
-    //     return this.http.get(this.baseUrl + `/chatlist/history/number/${request}`, httpOptions);
-    // }
-
     chatHistorynew(contact: string, currentPage: number, pageSize: number) {
         let headers = this.header.getJWTHeaders();
         const httpOptions = { headers: headers };
-        const url = `${this.baseUrl}/chatlist/historypagination/number/${contact}?page=${currentPage}&pageSize=${pageSize}`;
-        return this.http.get(url, httpOptions);
+        return this.http.get(this.baseUrl + `/chatlist/history/number/${contact}`, httpOptions);
     }
+
+    // chatHistorynew(contact: string, currentPage: number, pageSize: number) {
+    //     let headers = this.header.getJWTHeaders();
+    //     const httpOptions = { headers: headers };
+    //     const url = `${this.baseUrl}/chatlist/historypagination/number/${contact}?page=${currentPage}&pageSize=${pageSize}`;
+    //     return this.http.get(url, httpOptions);
+    // }
 
     // chatHistorynew(contact: string, page: number, pageSize: number): Observable<any> {
     //     const cacheKey = `${contact}_${page}`;
