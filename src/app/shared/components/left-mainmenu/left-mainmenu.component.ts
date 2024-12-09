@@ -79,53 +79,14 @@ export class LeftMainmenuComponent implements OnInit {
 
 
     processContactList() {
-        if (this.userData?.role?.roleName === 'Admin') {
-            this.subscription = this.whatsappService
-                .getContactList()
-                .pipe(take(1))
-                .subscribe(
-                    (response) => {
-                        this.contactList = response;
-                        this.open = this.contactList[0].open;
+        this.subscription = this.whatsappService.contactList$.subscribe(response => {
+            this.contactList = response;
+            this.open = this.contactList[0].open;
+            const filteredOpen = this.open.filter((contact: any) => contact.count !== 0);
+            this.unreadMessages = filteredOpen.length;
+            this.cdr.detectChanges();
 
-                        // Filter to get only items where count !== 0
-                        const filteredOpen = this.open.filter((contact: any) => contact.count !== 0);
-
-                        // Calculate total unread messages from filtered data
-                        // this.unreadMessages = filteredOpen.reduce((sum: number, contact: any) => sum + contact.count, 0);
-
-                        this.unreadMessages = filteredOpen.length;
-                        this.cdr.detectChanges();
-
-
-                    },
-                    (error) => {
-                        console.error('Error fetching contact list for admin', error);
-                    }
-                );
-        } else {
-            this.subscription = this.whatsappService
-                .getContactListForUser(this.userData?.userId)
-                .pipe(take(1))
-                .subscribe(
-                    (response) => {
-                        this.contactList = response;
-                        this.open = this.contactList[0].open;
-
-                        // Filter to get only items where count !== 0
-                        const filteredOpen = this.open.filter((contact: any) => contact.count !== 0);
-
-                        // Calculate total unread messages from filtered data
-                        // this.unreadMessages = filteredOpen.reduce((sum: number, contact: any) => sum + contact.count, 0);
-
-                        this.unreadMessages = filteredOpen.length;
-                        this.cdr.detectChanges();
-                    },
-                    (error) => {
-                        console.error('Error fetching contact list for user', error);
-                    }
-                );
-        }
+        });
     }
     get isAuditor() {
         return this.userData?.department?.departmentName == 'Zenoti' || this.userData?.department?.departmentName == 'Admin';

@@ -975,52 +975,27 @@ export class ChatComponent
 
     //!getContactList
     getContactList() {
-        // this.isProceess = true;
 
+
+        // Subscribe to contact list updates from the shared service
+        this.subscription = this.whatsappService.contactList$.subscribe(response => {
+            this.contactList = response;
+            this.open = this.contactList[0]?.open;
+            this.missed = this.contactList[0]?.missed.filter((contact: any) => contact.missedBy === this.userData?.userId) ?? [];
+            this.missedCount = this.missed.length ?? 0;
+            this.openCount = this.contactList[0]?.openCount;
+            this.closedCount = this.contactList[0]?.closedCount;
+            this.closed = this.contactList[0]?.closed;
+            this.isProceess = false;
+        });
+
+        // Fetch the contact list
         if (this.userData?.role?.roleName === 'Admin') {
-            this.subscription = this.whatsappService
-                .getContactList()
-                .pipe(take(1))
-                .subscribe(
-                    (response) => {
-                        this.contactList = response;
-                        this.open = this.contactList[0].open;
-                        this.missed = this.contactList[0].missed.filter((contact: any) => contact.missedBy === this.userData?.userId) ?? [];
-                        this.missedCount = this.missed.length ?? 0;
-                        this.openCount = this.contactList[0].openCount;
-                        this.closedCount = this.contactList[0].closedCount;
-                        this.closed = this.contactList[0].closed;
-                        this.isProceess = false;
-                        this.cd.detectChanges();
-                    },
-                    (error) => {
-                        this.isProceess = false;
-                    }
-                );
+            this.whatsappService.getContactList().subscribe();
         } else {
-            this.subscription = this.whatsappService
-                .getContactListForUser(this.userData?.userId)
-                .pipe(take(1))
-                .subscribe(
-                    (response) => {
-                        this.contactList = response;
-                        this.open = this.contactList[0].open;
-                        // this.missed = this.contactList[0].missed ?? [];
-
-                        this.missed = this.contactList[0].missed.filter((contact: any) => contact.missedBy === this.userData?.userId) ?? [];
-                        this.missedCount = this.missed.length ?? 0;
-                        this.openCount = this.contactList[0].openCount;
-                        this.closedCount = this.contactList[0].closedCount;
-                        this.closed = this.contactList[0].closed;
-                        this.label = this.isProceess = false;
-                        this.cd.detectChanges();
-
-                    },
-                    (error) => {
-                        this.isProceess = false;
-                    }
-                );
+            this.whatsappService.getContactListForUser(this.userData?.userId).subscribe();
         }
+
     }
 
 

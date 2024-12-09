@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 import { HeadersService } from '../_services/headers.service';
 import { WebSocketSubject } from 'rxjs/webSocket';
 import { catchError, map, shareReplay, tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -16,6 +16,9 @@ export class WhatsAppService {
 
     private chatCache = new Map<string, Observable<any>>();
     private ongoingRequests = new Map<string, boolean>();
+
+    private contactListSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+    contactList$: Observable<any[]> = this.contactListSubject.asObservable();
 
     constructor(private http: HttpClient,
         private header: HeadersService) {
@@ -99,13 +102,36 @@ export class WhatsAppService {
     }
 
 
+    // Method to update contact list in the service
+    updateContactList(contactList: any[]) {
+        this.contactListSubject.next(contactList);
+    }
+
+    // Get contact list for Admin
     getContactList() {
         let headers = this.header.getJWTHeaders();
         const httpOptions = { headers: headers };
-        return this.http.get(this.baseUrl + `/chatlist/latest-messages`, httpOptions);
 
-        // return this.http.get(this.baseUrl + `/message-history/latest-messages`, httpOptions);
+        return this.http.get<any[]>(`${this.baseUrl}/chatlist/latest-messages`, httpOptions).pipe(
+            map(response => {
+                // Process the response if necessary before returning it
+                this.updateContactList(response); // Update the shared contact list
+                return response;
+            })
+        );
     }
+
+    // getContactList() {
+    //     let headers = this.header.getJWTHeaders();
+    //     const httpOptions = { headers: headers };
+    //     return this.http.get(this.baseUrl + `/chatlist/latest-messages`, httpOptions).pipe(
+    //         tap((contactList: any) => {
+    //             this.contactListSubject.next(contactList); // Update the shared state
+    //         })
+    //     );;
+
+    //     // return this.http.get(this.baseUrl + `/message-history/latest-messages`, httpOptions);
+    // }
 
     getContactListForUser(data: any) {
         let headers = this.header.getJWTHeaders();
