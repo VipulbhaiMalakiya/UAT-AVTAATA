@@ -33,51 +33,51 @@ export class WhatsAppService {
     //     return this.http.get(this.baseUrl + `/chatlist/history/number/${request}`, httpOptions);
     // }
 
-    // chatHistorynew(contact: string, currentPage: number, pageSize: number) {
-    //     let headers = this.header.getJWTHeaders();
-    //     const httpOptions = { headers: headers };
-    //     const url = `${this.baseUrl}/chatlist/historypagination/number/${contact}?page=${currentPage}&pageSize=${pageSize}`;
-    //     return this.http.get(url, httpOptions);
-    // }
-
-    chatHistorynew(contact: string, page: number, pageSize: number): Observable<any> {
-        const cacheKey = `${contact}_${page}`;
-
-
+    chatHistorynew(contact: string, currentPage: number, pageSize: number) {
         let headers = this.header.getJWTHeaders();
         const httpOptions = { headers: headers };
-        const url = `${this.baseUrl}/chatlist/historypagination/number/${contact}?page=${page}&pageSize=${pageSize}`;
-
-        // Check if the request is already ongoing
-        if (this.chatCache.has(cacheKey)) {
-            return this.chatCache.get(cacheKey)!; // Return the cached observable
-        }
-
-        // Fetch data and cache it
-        const request = this.http
-            .get<any>(url, httpOptions)
-            .pipe(
-                tap(() => {
-                    // Mark request as complete
-                    this.ongoingRequests.delete(cacheKey);
-                }),
-                shareReplay(1), // Share the request among multiple subscribers
-                catchError((error) => {
-                    this.chatCache.delete(cacheKey); // Remove failed request from cache
-                    this.ongoingRequests.delete(cacheKey);
-                    throw error;
-                })
-            );
-
-        this.chatCache.set(cacheKey, request);
-        return request;
+        const url = `${this.baseUrl}/chatlist/historypagination/number/${contact}?page=${currentPage}&pageSize=${pageSize}`;
+        return this.http.get(url, httpOptions);
     }
 
-    clearCache(contact: string): void {
-        Array.from(this.chatCache.keys())
-            .filter((key) => key.startsWith(contact))
-            .forEach((key) => this.chatCache.delete(key));
-    }
+    // chatHistorynew(contact: string, page: number, pageSize: number): Observable<any> {
+    //     const cacheKey = `${contact}_${page}`;
+
+
+    //     let headers = this.header.getJWTHeaders();
+    //     const httpOptions = { headers: headers };
+    //     const url = `${this.baseUrl}/chatlist/historypagination/number/${contact}?page=${page}&pageSize=${pageSize}`;
+
+    //     // Check if the request is already ongoing
+    //     if (this.chatCache.has(cacheKey)) {
+    //         return this.chatCache.get(cacheKey)!; // Return the cached observable
+    //     }
+
+    //     // Fetch data and cache it
+    //     const request = this.http
+    //         .get<any>(url, httpOptions)
+    //         .pipe(
+    //             tap(() => {
+    //                 // Mark request as complete
+    //                 this.ongoingRequests.delete(cacheKey);
+    //             }),
+    //             shareReplay(1), // Share the request among multiple subscribers
+    //             catchError((error) => {
+    //                 this.chatCache.delete(cacheKey); // Remove failed request from cache
+    //                 this.ongoingRequests.delete(cacheKey);
+    //                 throw error;
+    //             })
+    //         );
+
+    //     this.chatCache.set(cacheKey, request);
+    //     return request;
+    // }
+
+    // clearCache(contact: string): void {
+    //     Array.from(this.chatCache.keys())
+    //         .filter((key) => key.startsWith(contact))
+    //         .forEach((key) => this.chatCache.delete(key));
+    // }
 
 
     // chatHistorynew(contact: string, currentPage: number, pageSize: number) {
