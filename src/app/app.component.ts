@@ -47,6 +47,8 @@ export class AppComponent implements OnInit {
     checkCurrentContact(): void {
         const currentContact = sessionStorage.getItem('currentContact');
 
+        console.log(currentContact)
+
         if (currentContact) {
             this.handleMessageStatus(currentContact, false);
         } else {
