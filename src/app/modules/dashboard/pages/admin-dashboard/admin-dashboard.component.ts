@@ -154,7 +154,7 @@ export class AdminDashboardComponent implements OnInit {
             startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
             endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
         };
-        this.ISAdminFirstAgentResponsedata(model);
+        // this.ISAdminFirstAgentResponsedata(model);
         this.Statuswiseticketscount();
         this.Ticketassigntousers();
         this.TicketOvertheSLAtousers();
@@ -212,7 +212,7 @@ export class AdminDashboardComponent implements OnInit {
             endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
         };
 
-        this.ISAdminFirstAgentResponsedata(model);
+        // this.ISAdminFirstAgentResponsedata(model);
         this.isAdminconversationsdata(model);
         this.isAdminescalationdata(model);
         this.isAdmincustomerdata(model);
@@ -232,7 +232,7 @@ export class AdminDashboardComponent implements OnInit {
                 endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
             };
 
-            this.ISAdminFirstAgentResponsedata(model);
+            // this.ISAdminFirstAgentResponsedata(model);
             this.isAdminconversationsdata(model);
             this.isAdminescalationdata(model);
             this.isAdmincustomerdata(model);
@@ -242,159 +242,159 @@ export class AdminDashboardComponent implements OnInit {
 
 
 
-    ISAdminFirstAgentResponsedata(model: any) {
-        this.masterName = `/dashboard/firstAgentResponse-data?startDate=${model.startDate}&endDate=${model.endDate}`;
+    // ISAdminFirstAgentResponsedata(model: any) {
+    //     this.masterName = `/dashboard/firstAgentResponse-data?startDate=${model.startDate}&endDate=${model.endDate}`;
 
-        this.isProceess = true;
-        this.subscription = this.apiService.getAll(this.masterName).pipe(take(1))
-            .subscribe(data => {
-                this.firstAgentResponseData = data.data;
-                // Access properties of firstAgentResponseData correctly
-                this.dataQW = [
-                    ['< 5', this.firstAgentResponseData.lessThan5mins],
-                    ['5 - 10', this.firstAgentResponseData.between5to10mins],
-                    ['10 - 15', this.firstAgentResponseData.between10to15mins],
-                    ['15 - 20', this.firstAgentResponseData.between15to20mins],
-                    ['> 20', this.firstAgentResponseData.moreThan20mins]
-                ];
+    //     this.isProceess = true;
+    //     this.subscription = this.apiService.getAll(this.masterName).pipe(take(1))
+    //         .subscribe(data => {
+    //             this.firstAgentResponseData = data.data;
+    //             // Access properties of firstAgentResponseData correctly
+    //             this.dataQW = [
+    //                 ['< 5', this.firstAgentResponseData.lessThan5mins],
+    //                 ['5 - 10', this.firstAgentResponseData.between5to10mins],
+    //                 ['10 - 15', this.firstAgentResponseData.between10to15mins],
+    //                 ['15 - 20', this.firstAgentResponseData.between15to20mins],
+    //                 ['> 20', this.firstAgentResponseData.moreThan20mins]
+    //             ];
 
-                this.chartOptionsNew = {
+    //             this.chartOptionsNew = {
 
-                    theme: 'light2',
-                    animationEnabled: true,
-                    exportEnabled: false,
-                    axisY: {
-                        includeZero: true,
-                        gridThickness: 0,
-                    },
-                    data: [{
-                        type: "column",
+    //                 theme: 'light2',
+    //                 animationEnabled: true,
+    //                 exportEnabled: false,
+    //                 axisY: {
+    //                     includeZero: true,
+    //                     gridThickness: 0,
+    //                 },
+    //                 data: [{
+    //                     type: "column",
 
-                        indexLabelFontColor: "#5A5757",
-                        dataPoints: this.dataQW.map(([label, value], index) => ({
-                            x: index,
-                            y: value,
-                            // indexLabel: label,
-                            color: this.getColorForColumn(index)
+    //                     indexLabelFontColor: "#5A5757",
+    //                     dataPoints: this.dataQW.map(([label, value], index) => ({
+    //                         x: index,
+    //                         y: value,
+    //                         // indexLabel: label,
+    //                         color: this.getColorForColumn(index)
 
-                        }))
-                    }],
-                    axisX: {
-                        labelFormatter: function (e: any) {
-                            const intervals = ['< 5', '5 - 10', '10 - 15', '15 - 20', '> 20'];
-                            return intervals[e.value];
-                        }
-                    }
+    //                     }))
+    //                 }],
+    //                 axisX: {
+    //                     labelFormatter: function (e: any) {
+    //                         const intervals = ['< 5', '5 - 10', '10 - 15', '15 - 20', '> 20'];
+    //                         return intervals[e.value];
+    //                     }
+    //                 }
 
-                };
+    //             };
 
-                this.ISAdminAgentResponsedata(model)
-                this.cd.detectChanges();
-            }, error => {
-                this.isProceess = false;
-            })
-    }
+    //             this.ISAdminAgentResponsedata(model)
+    //             this.cd.detectChanges();
+    //         }, error => {
+    //             this.isProceess = false;
+    //         })
+    // }
 
 
-    ISAdminAgentResponsedata(model: any) {
-        this.masterName = `/dashboard/AgentResponse-data?startDate=${model.startDate}&endDate=${model.endDate}`;
+    // ISAdminAgentResponsedata(model: any) {
+    //     this.masterName = `/dashboard/AgentResponse-data?startDate=${model.startDate}&endDate=${model.endDate}`;
 
-        this.isProceess = true;
-        this.subscription = this.apiService.getAll(this.masterName).pipe(take(1))
-            .subscribe(data => {
-                this.AgentResponsedata1 = data.data;
-                this.dataQW1 = [
-                    ['< 5', this.AgentResponsedata1.lessThan5mins],
-                    ['5 - 10', this.AgentResponsedata1.between5to10mins],
-                    ['10 - 15', this.AgentResponsedata1.between10to15mins],
-                    ['15 - 20', this.AgentResponsedata1.between15to20mins],
-                    ['> 20', this.AgentResponsedata1.moreThan20mins]
-                ];
+    //     this.isProceess = true;
+    //     this.subscription = this.apiService.getAll(this.masterName).pipe(take(1))
+    //         .subscribe(data => {
+    //             this.AgentResponsedata1 = data.data;
+    //             this.dataQW1 = [
+    //                 ['< 5', this.AgentResponsedata1.lessThan5mins],
+    //                 ['5 - 10', this.AgentResponsedata1.between5to10mins],
+    //                 ['10 - 15', this.AgentResponsedata1.between10to15mins],
+    //                 ['15 - 20', this.AgentResponsedata1.between15to20mins],
+    //                 ['> 20', this.AgentResponsedata1.moreThan20mins]
+    //             ];
 
-                this.chartOptionsNew1 = {
+    //             this.chartOptionsNew1 = {
 
-                    theme: 'light2',
-                    animationEnabled: true,
-                    exportEnabled: false,
-                    axisY: {
-                        includeZero: true,
-                        gridThickness: 0,
-                    },
-                    data: [{
-                        type: "column",
-                        indexLabelFontColor: "#5A5757",
-                        dataPoints: this.dataQW1.map(([label, value], index) => ({
-                            x: index,
-                            y: value,
-                            // indexLabel: label,
-                            color: this.getColorForColumn(index)
-                        }))
-                    }],
-                    axisX: {
-                        labelFormatter: function (e: any) {
-                            const intervals = ['< 5', '5 - 10', '10 - 15', '15 - 20', '> 20'];
-                            return intervals[e.value];
-                        }
-                    }
-                };
+    //                 theme: 'light2',
+    //                 animationEnabled: true,
+    //                 exportEnabled: false,
+    //                 axisY: {
+    //                     includeZero: true,
+    //                     gridThickness: 0,
+    //                 },
+    //                 data: [{
+    //                     type: "column",
+    //                     indexLabelFontColor: "#5A5757",
+    //                     dataPoints: this.dataQW1.map(([label, value], index) => ({
+    //                         x: index,
+    //                         y: value,
+    //                         // indexLabel: label,
+    //                         color: this.getColorForColumn(index)
+    //                     }))
+    //                 }],
+    //                 axisX: {
+    //                     labelFormatter: function (e: any) {
+    //                         const intervals = ['< 5', '5 - 10', '10 - 15', '15 - 20', '> 20'];
+    //                         return intervals[e.value];
+    //                     }
+    //                 }
+    //             };
 
-                this.ISAdmingraphresolutiondata(model);
-                this.cd.detectChanges();
-            }, error => {
-                this.isProceess = false;
-            })
-    }
+    //             this.ISAdmingraphresolutiondata(model);
+    //             this.cd.detectChanges();
+    //         }, error => {
+    //             this.isProceess = false;
+    //         })
+    // }
 
-    ISAdmingraphresolutiondata(model: any) {
-        this.masterName = `/dashboard/graphresolution-data?startDate=${model.startDate}&endDate=${model.endDate}`;
+    // ISAdmingraphresolutiondata(model: any) {
+    //     this.masterName = `/dashboard/graphresolution-data?startDate=${model.startDate}&endDate=${model.endDate}`;
 
-        this.isProceess = true;
-        this.subscription = this.apiService.getAll(this.masterName).pipe(take(1))
-            .subscribe(data => {
-                this.graphresolutiondata = data.data;
-                this.dataQW2 = [
-                    ['< 5', this.graphresolutiondata.lessThan5mins],
-                    ['5 - 10', this.graphresolutiondata.between5to10mins],
-                    ['10 - 15', this.graphresolutiondata.between10to15mins],
-                    ['15 - 20', this.graphresolutiondata.between15to20mins],
-                    ['> 20', this.graphresolutiondata.moreThan20mins]
-                ];
+    //     this.isProceess = true;
+    //     this.subscription = this.apiService.getAll(this.masterName).pipe(take(1))
+    //         .subscribe(data => {
+    //             this.graphresolutiondata = data.data;
+    //             this.dataQW2 = [
+    //                 ['< 5', this.graphresolutiondata.lessThan5mins],
+    //                 ['5 - 10', this.graphresolutiondata.between5to10mins],
+    //                 ['10 - 15', this.graphresolutiondata.between10to15mins],
+    //                 ['15 - 20', this.graphresolutiondata.between15to20mins],
+    //                 ['> 20', this.graphresolutiondata.moreThan20mins]
+    //             ];
 
-                const xAxisLabels = ['Less than 5', 'Between 5 to 10', 'Between 10 to 15', 'Between 15 to 20', 'More than 20'];
+    //             const xAxisLabels = ['Less than 5', 'Between 5 to 10', 'Between 10 to 15', 'Between 15 to 20', 'More than 20'];
 
-                this.chartOptionsNew2 = {
+    //             this.chartOptionsNew2 = {
 
-                    theme: 'light2',
-                    animationEnabled: true,
-                    // exportEnabled: true,
-                    axisY: {
-                        includeZero: true,
-                        gridThickness: 0,
+    //                 theme: 'light2',
+    //                 animationEnabled: true,
+    //                 // exportEnabled: true,
+    //                 axisY: {
+    //                     includeZero: true,
+    //                     gridThickness: 0,
 
-                    },
-                    data: [{
-                        type: "column",
-                        indexLabelFontColor: "#5A5757",
-                        dataPoints: this.dataQW2.map(([label, value], index) => ({
-                            x: index,
-                            y: value,
-                            //   indexLabel: label,
-                            color: this.getColorForColumn(index)
-                        }))
-                    }],
-                    axisX: {
-                        labelFormatter: function (e: any) {
-                            const intervals = ['< 5', '5 - 10', '10 - 15', '15 - 20', '> 20'];
-                            return intervals[e.value];
-                        }
-                    }
-                };
-                this.isProceess = false;
-                this.cd.detectChanges();
-            }, error => {
-                this.isProceess = false;
-            })
-    }
+    //                 },
+    //                 data: [{
+    //                     type: "column",
+    //                     indexLabelFontColor: "#5A5757",
+    //                     dataPoints: this.dataQW2.map(([label, value], index) => ({
+    //                         x: index,
+    //                         y: value,
+    //                         //   indexLabel: label,
+    //                         color: this.getColorForColumn(index)
+    //                     }))
+    //                 }],
+    //                 axisX: {
+    //                     labelFormatter: function (e: any) {
+    //                         const intervals = ['< 5', '5 - 10', '10 - 15', '15 - 20', '> 20'];
+    //                         return intervals[e.value];
+    //                     }
+    //                 }
+    //             };
+    //             this.isProceess = false;
+    //             this.cd.detectChanges();
+    //         }, error => {
+    //             this.isProceess = false;
+    //         })
+    // }
 
     getColorForColumn(index: any) {
         var colors = ['#00abc5', '#61B979', '#DBCD1C', '#DF7970', '#BF864D'];
@@ -684,7 +684,7 @@ export class AdminDashboardComponent implements OnInit {
                         result[row].total,
                     ]);
                 }
-                // this.isProceess = false;
+                this.isProceess = false;
                 this.cd.detectChanges();
             }, error => {
                 this.isProceess = false;
