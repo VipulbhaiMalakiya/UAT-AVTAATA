@@ -45,7 +45,7 @@ export class LeftMainmenuComponent implements OnInit {
 
     ngOnDestroy() {
         if (this.socket) {
-            this.socket.close();  // Close the WebSocket connection on component destruction
+            this.socket.close();
         }
     }
 
