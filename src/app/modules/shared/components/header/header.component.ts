@@ -5,6 +5,7 @@ import { AuthenticationService } from 'src/app/_services';
 import { ElementRef, HostListener, Renderer2 } from '@angular/core';
 import { ConfirmationDialogModalComponent } from '../confirmation-dialog-modal/confirmation-dialog-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { WhatsAppService } from 'src/app/_api/whats-app.service';
 
 @Component({
     selector: 'app-header',
@@ -41,7 +42,8 @@ export class HeaderComponent implements OnInit {
         private bnIdle: BnNgIdleService,
         private elRef: ElementRef,
         private renderer: Renderer2,
-        private modalService: NgbModal
+        private modalService: NgbModal,
+        public whatsappService: WhatsAppService,
     ) {
         this.data = localStorage.getItem('userData');
         this.userData = JSON.parse(this.data);
@@ -57,6 +59,35 @@ export class HeaderComponent implements OnInit {
         //     this.logout();
         //   }
         // });
+
+
+
+
+    }
+
+    checkCurrentContact(): void {
+        const currentContact = sessionStorage.getItem('currentContact');
+
+        if (currentContact) {
+            this.handleMessageStatus(currentContact, false);
+        } else {
+            // Optional: Log or handle the absence of currentContact.
+            // console.warn('No current contact found in session storage.');
+        }
+    }
+
+    handleMessageStatus(contact: string, isSeen: boolean): void {
+
+        this.whatsappService.updateSeenByMobileNo(contact, isSeen).subscribe({
+            next: response => {
+                // console.log('Update successful:', response);
+                // alert('Status updated successfully!');
+            },
+            error: error => {
+                // console.error('Error updating status:', error);
+                // alert('Failed to update status. Please try again.');
+            }
+        });
 
 
     }
@@ -92,6 +123,13 @@ export class HeaderComponent implements OnInit {
             .then((canDelete: boolean) => {
                 if (canDelete) {
                     this.authenticationService.logout();
+                    const currentContact = sessionStorage.getItem('currentContact');
+
+                    if (currentContact) {
+                        this.handleMessageStatus(currentContact, false);
+                    } else {
+                        // console.warn('No current contact found in session storage.');
+                    }
                 }
             })
             .catch(() => { });

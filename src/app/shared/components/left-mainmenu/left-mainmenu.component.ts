@@ -29,7 +29,8 @@ export class LeftMainmenuComponent implements OnInit {
     constructor(private authenticationService: AuthenticationService,
         public whatsappService: WhatsAppService,
         private router: Router,
-        private modalService: NgbModal,) {
+        private modalService: NgbModal,
+    ) {
         this.data = localStorage.getItem("userData");
         this.userData = JSON.parse(this.data);
 
@@ -153,9 +154,44 @@ export class LeftMainmenuComponent implements OnInit {
             .then((canDelete: boolean) => {
                 if (canDelete) {
                     this.authenticationService.logout();
+                    const currentContact = sessionStorage.getItem('currentContact');
+
+                    if (currentContact) {
+                        this.handleMessageStatus(currentContact, false);
+                    } else {
+                        // console.warn('No current contact found in session storage.');
+                    }
                 }
             })
             .catch(() => { });
+    }
+
+
+    checkCurrentContact(): void {
+        const currentContact = sessionStorage.getItem('currentContact');
+
+        if (currentContact) {
+            this.handleMessageStatus(currentContact, false);
+        } else {
+            // Optional: Log or handle the absence of currentContact.
+            // console.warn('No current contact found in session storage.');
+        }
+    }
+
+    handleMessageStatus(contact: string, isSeen: boolean): void {
+
+        this.whatsappService.updateSeenByMobileNo(contact, isSeen).subscribe({
+            next: response => {
+                // console.log('Update successful:', response);
+                // alert('Status updated successfully!');
+            },
+            error: error => {
+                // console.error('Error updating status:', error);
+                // alert('Failed to update status. Please try again.');
+            }
+        });
+
+
     }
 
 }
