@@ -799,13 +799,11 @@ export class ChatComponent
 
     downloadFile(e: any) {
         // window.open(e.fileUrl, '_blank');
-
-
         this.http.get(e.fileUrl, { responseType: 'blob' }).subscribe(blob => {
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = e.name ?? e.filename; // Set the filename here
+            a.download = e.filename; // Set the filename here
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
