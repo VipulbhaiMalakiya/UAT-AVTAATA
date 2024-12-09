@@ -2212,7 +2212,7 @@
                         </ng-container>
                     </ul>
                 </div>
-                <div class="chat-write-box" *ngIf="!hideReplyAndNotes">
+                <div class="chat-write-box">
                     <div class="chatwrite-top">
                         <div class="inner-chatwrite-top">
                             <ul class="nav nav-pills">
@@ -2223,7 +2223,7 @@
                                     <a class="nav-link" data-bs-toggle="pill" href="#notes">Notes</a>
                                 </li>
                             </ul>
-                            <div class="chatwrite-emojisico">
+                            <div class="chatwrite-emojisico" *ngIf="!hideReplyAndNotes">
                                 <div class="chat-emoji-ico" (click)="toggleEmojiPicker()">
                                     <i class="las la-smile"></i>
                                 </div>
@@ -2377,7 +2377,7 @@
                                         name="chat" placeholder="Type a message...." rows="1" (keydown.enter)="
                                             submitForm(loginForm);
                                             $event.preventDefault()
-                                        " appWhitespaceValidator></textarea>
+                                        " appWhitespaceValidator [disabled]="hideReplyAndNotes"></textarea>
                                     <ng-container>
                                         <button class="chatsubmit-btn invalid" type="submit" *ngIf="loginForm.invalid"
                                             [disabled]="loginForm.invalid">
@@ -2397,7 +2397,7 @@
                                         name="note" placeholder="Type a note...." rows="1" (keydown.enter)="
                                             submitNoteForm(ngNotesForm);
                                             $event.preventDefault()
-                                        " appWhitespaceValidator></textarea>
+                                        " appWhitespaceValidator [disabled]="hideReplyAndNotes"></textarea>
                                     <ng-container>
                                         <button class="chatsubmit-btn invalid" type="submit" *ngIf="ngNotesForm.invalid"
                                             [disabled]="ngNotesForm.invalid">
