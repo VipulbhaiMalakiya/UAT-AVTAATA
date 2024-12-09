@@ -276,6 +276,9 @@ export class ChatComponent
 
         }, 2000);
 
+        // this.handleMessageStatus(sessionStorage.getItem('currentContact') ?? '', false);
+
+
 
 
         this.route.params.subscribe(params => {
