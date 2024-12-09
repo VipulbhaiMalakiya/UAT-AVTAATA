@@ -275,7 +275,16 @@ export class ChatComponent
 
         }, 2000);
 
-        this.handleMessageStatus(sessionStorage.getItem('currentContact') ?? '', false);
+        // this.handleMessageStatus(sessionStorage.getItem('currentContact') ?? '', false);
+
+        const currentContact = sessionStorage.getItem('currentContact');
+
+        if (currentContact) {
+            this.handleMessageStatus(currentContact, false);
+        } else {
+            // console.warn('No current contact found in session storage.');
+        }
+
 
         this.route.params.subscribe(params => {
 
