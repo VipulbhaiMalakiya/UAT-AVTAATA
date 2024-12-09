@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../../_services';
 import { Router } from '@angular/router';
 import { ConfirmationDialogModalComponent } from 'src/app/modules/shared/components/confirmation-dialog-modal/confirmation-dialog-modal.component';
@@ -30,6 +30,7 @@ export class LeftMainmenuComponent implements OnInit {
         public whatsappService: WhatsAppService,
         private router: Router,
         private modalService: NgbModal,
+        private cdr: ChangeDetectorRef
     ) {
         this.data = localStorage.getItem("userData");
         this.userData = JSON.parse(this.data);
@@ -94,6 +95,8 @@ export class LeftMainmenuComponent implements OnInit {
                         // this.unreadMessages = filteredOpen.reduce((sum: number, contact: any) => sum + contact.count, 0);
 
                         this.unreadMessages = filteredOpen.length;
+                        this.cdr.detectChanges();
+
 
                     },
                     (error) => {
@@ -116,6 +119,7 @@ export class LeftMainmenuComponent implements OnInit {
                         // this.unreadMessages = filteredOpen.reduce((sum: number, contact: any) => sum + contact.count, 0);
 
                         this.unreadMessages = filteredOpen.length;
+                        this.cdr.detectChanges();
                     },
                     (error) => {
                         console.error('Error fetching contact list for user', error);
