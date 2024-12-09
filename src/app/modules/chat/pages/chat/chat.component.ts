@@ -537,12 +537,8 @@ export class ChatComponent
     loadChatHistory(isInitialLoad: boolean = false) {
         this.isProceess = true;
 
-        this.subscription = this.whatsappService
-            .chatHistorynew(this.contact, this.currentPage, this.pageSize)
-            .pipe(
-                take(1),
-                distinctUntilChanged()
-            )
+        this.subscription = this.whatsappService.chatHistorynew(this.contact, this.currentPage, this.pageSize)
+            .pipe(take(1), distinctUntilChanged())
             .subscribe({
                 next: (response: any) => {
 
