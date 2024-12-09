@@ -51,9 +51,10 @@ import { CatalogComponent } from '../../components/catalog/catalog.component';
 export class ChatComponent
     implements OnInit, OnDestroy, AfterViewInit, AfterViewChecked {
     show: boolean = false;
+    hideReplyAndNotes: boolean = false;
     data: any = [];
     bgclass: any;
-    lastMessageTime?: number; // Timestamp of the last message
+    lastMessageTime?: any; // Timestamp of the last message
     timeRemaining?: number;
     targetFormat?: string = 'yyyy-MM-ddTHH:mm:ss';
     messageCount: number = 0;
@@ -479,6 +480,7 @@ export class ChatComponent
             this.handleMessageStatus(e.phoneNo, true); // Mark as seen
         }
 
+        this.checkTimeDifference(e.time);
 
         this.pageSize = 10;
         this.currentPage = 1;
@@ -558,7 +560,9 @@ export class ChatComponent
                         }
                         const lstRe = this.receivedData.slice(-1)[0];
                         this.lastItem = lstRe.time;
-                        this.lastMessageTime = this.lastItem;
+                        // this.lastMessageTime = this.lastItem;
+
+
                         this.currentPage++;
                     } else {
                         console.log("No data received.");
@@ -583,6 +587,34 @@ export class ChatComponent
                     console.log('Chat history loaded successfully');
                 }
             });
+    }
+
+
+    checkTimeDifference(lastMessageTime: any) {
+
+        const currentTime = new Date();
+        const lastTime = new Date(lastMessageTime);
+
+
+        // Ensure that both the currentTime and lastTime are valid Date objects
+        if (isNaN(lastTime.getTime())) {
+            console.error('Invalid last message time');
+            return; // Return early if the date is invalid
+        }
+
+        // Calculate the difference in milliseconds
+        const timeDifferenceInMs = currentTime.getTime() - lastTime.getTime();
+        const timeDifferenceInHours = timeDifferenceInMs / (1000 * 3600);
+
+        console.log(`Time difference in hours: ${timeDifferenceInHours}`);
+
+        // If 24 hours or more have passed, hide the Reply and Notes
+        if (timeDifferenceInHours >= 24) {
+            this.hideReplyAndNotes = true;
+            console.log('Hiding Reply and Notes:', this.hideReplyAndNotes);
+        } else {
+            this.hideReplyAndNotes = false; // Ensure it's visible if under 24 hours
+        }
     }
 
 
