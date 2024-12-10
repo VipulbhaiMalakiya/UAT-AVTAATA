@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { BulkMessageSenderRoutingModule } from './bulk-message-sender-routing.module';
 import { BulkMessageSenderComponent } from './pages/bulk-message-sender/bulk-message-sender.component';
 import { SharedModule } from '../../shared/shared.module';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { SharedModule } from '../../shared/shared.module';
     imports: [
         CommonModule,
         BulkMessageSenderRoutingModule,
-        SharedModule
+        SharedModule,
+        FormsModule
     ]
 })
 export class BulkMessageSenderModule { }
