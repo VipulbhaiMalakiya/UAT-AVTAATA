@@ -1,8 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription, take } from 'rxjs';
 import { WhatsAppService } from 'src/app/_api/whats-app.service';
+import { QuickReplyComponent } from 'src/app/modules/chat/components/quick-reply/quick-reply.component';
 
 @Component({
     selector: 'app-bulk-message-sender',
@@ -25,6 +27,8 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
 
     constructor(public whatsappService: WhatsAppService, private toastr: ToastrService, private router: Router,
+        private modalService: NgbModal,
+
     ) {
         const d: any = localStorage.getItem('userData');
         this.userData = JSON.parse(d);
@@ -152,5 +156,26 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
     }
 
 
+
+    quickReply() {
+        const selectedContacts = this.contactList.filter(contact => contact.selected,);
+
+        const modalRef = this.modalService.open(QuickReplyComponent, {
+            size: 'md',
+            centered: true,
+            backdrop: 'static',
+        });
+        if (modalRef) {
+            this.isProceess = false;
+        } else {
+            this.isProceess = false;
+        }
+        modalRef.result
+            .then((data: any) => {
+                this.message = data;
+            })
+            .catch(() => { });
+
+    }
 
 }

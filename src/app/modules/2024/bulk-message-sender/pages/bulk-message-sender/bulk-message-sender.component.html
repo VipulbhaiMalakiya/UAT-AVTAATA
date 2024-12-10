@@ -28,13 +28,16 @@
 
         <!-- Message textbox and send button -->
         <div class="col-12 mb-4">
+
             <label for="message">Message</label>
             <textarea id="message" [(ngModel)]="message" class="form-control" rows="4"
                 placeholder="Type your message here..."></textarea>
         </div>
 
         <div class="col-12">
-            <button (click)="sendMessage()" class="btn btn-primary" [disabled]="!message.trim()">Send</button>
+            <button (click)="sendMessage()" class="btn btn-primary me-2" [disabled]="!message.trim()">Send</button>
+            <button class="btn btn-primary" (click)="quickReply()">Quick Reply</button>
+
         </div>
     </div>
 
