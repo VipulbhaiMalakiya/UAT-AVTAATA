@@ -52,10 +52,6 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
                 });
 
                 console.log(this.open);
-
-
-
-
                 this.isProceess = false;  // End processing flag
             },
             error: (err) => {
