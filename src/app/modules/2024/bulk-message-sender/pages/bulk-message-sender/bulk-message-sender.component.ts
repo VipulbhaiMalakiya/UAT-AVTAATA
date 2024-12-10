@@ -13,9 +13,11 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
     subscription?: Subscription;
     contactList: any[] = [];
     open: any = [];
+    message: string = '';
 
     userData: any;
     isProceess: boolean = true;
+    isAllSelected = false;
 
 
 
@@ -36,22 +38,23 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
         // Call the function to get the observable and then subscribe to it
         this.subscription = this.whatsappService.activeContactList().subscribe({
             next: (response: any[]) => {
-                this.contactList = response;
+                const contactLists = response;
 
                 // Safely access 'open' property of the first contact or fallback to an empty array
-                this.open = this.contactList[0]?.open ?? [];
+                this.open = contactLists[0]?.open ?? [];
 
                 // Get the current time and calculate the threshold (24 hours ago)
                 const now = new Date();
                 const threshold = now.getTime() - (24 * 60 * 60 * 1000); // 24 hours ago in milliseconds
 
                 // Filter the open array to include only entries before 24 hours
-                this.open = this.open.filter((contact: any) => {
+                this.contactList = this.open.filter((contact: any) => {
                     const contactTime = new Date(contact.time).getTime();
-                    return contactTime <= threshold;
+                    return contactTime >= threshold;
                 });
 
-                console.log(this.open);
+                console.log(this.contactList)
+
                 this.isProceess = false;  // End processing flag
             },
             error: (err) => {
@@ -62,6 +65,20 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
                 console.log('Contact list fetch completed.');
             }
         });
+    }
+
+
+    // Method to toggle "Check All" checkbox
+    toggleSelectAll() {
+        this.contactList.forEach(contact => {
+            contact.selected = this.isAllSelected;
+        });
+    }
+
+    sendMessage() {
+        // Implement your send logic here
+        console.log('Message:', this.message);
+        console.log('Selected contacts:', this.contactList.filter(contact => contact.selected));
     }
 
 

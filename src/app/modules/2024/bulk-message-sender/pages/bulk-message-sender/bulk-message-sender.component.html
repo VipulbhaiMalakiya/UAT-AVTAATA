@@ -2,13 +2,40 @@
 <div class="page-title">
     <h1>Bulk Message</h1>
 </div>
+<div class="inner-middle-content">
+    <div class="container">
+        <div class="row">
+            <!-- "Check All" checkbox -->
+            <div class="col-12 mb-4">
+                <label>
+                    <input type="checkbox" [(ngModel)]="isAllSelected" (change)="toggleSelectAll()" /> Check All
+                </label>
+            </div>
 
-<div class="page-btns-col">
-    <div class="dt-buttons">
-        <!-- <button class="gray-btns" *ngIf="data.length > 0" (click)="onDownload()" type="button"><i
-                class="las la-file-excel"></i> Excel</button> -->
-        <div class="table-search"><input type="text" class="form-control" name="name" id="name" [(ngModel)]="term"
-                autocomplete="off" placeholder="Search..." required=""></div>
+            <!-- Contact cards with checkboxes -->
+            <div *ngFor="let contact of contactList; let i = index" class="col-12 col-md-4 mb-4">
+                <div class="contact-card">
+                    <div class="contact-info">
+                        <label>
+                            <input type="checkbox" [(ngModel)]="contact.selected" /> {{ contact.fullName }}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Message textbox and send button -->
+        <div class="col-12 mb-4">
+            <label for="message">Message</label>
+            <textarea id="message" [(ngModel)]="message" class="form-control" rows="4"
+                placeholder="Type your message here..."></textarea>
+        </div>
+
+        <div class="col-12">
+            <button (click)="sendMessage()" class="btn btn-primary">Send</button>
+        </div>
     </div>
+
+
 
 </div>
