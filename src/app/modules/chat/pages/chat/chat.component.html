@@ -843,10 +843,10 @@
                                                         class="las la-arrow-circle-down"></i></span>
                                             </div>
                                         </div>
-                                        <span class="suserchat-name" *ngIf="data.name !== null">{{
+                                        <!-- <span class="suserchat-name" *ngIf="data.name !== null">{{
                                             contactinfo.fullName || "Reception"
                                             }}</span>
-                                        <span class="suserchat-name" *ngIf="data.name == null">Reception</span>
+                                        <span class="suserchat-name" *ngIf="data.name == null">Reception</span> -->
                                         {{ data.time | dateAgo }}
                                     </div>
                                 </li>
@@ -956,9 +956,9 @@
                                             </video>
                                         </div>
                                         <div class="suserchat-info pt-2">
-                                            <span class="suserchat-name" *ngIf="data.userFullName == null">You</span>
+                                            <!-- <span class="suserchat-name" *ngIf="data.userFullName == null">You</span>
                                             <span class="suserchat-name" *ngIf="data.userFullName !== null">{{
-                                                data.userFullName || "" }}</span>
+                                                data.userFullName || "" }}</span> -->
                                             {{ data.time | dateAgo }}
                                             <ng-container *ngIf="data.messageId">
                                                 <span class="last-msg-checkic text-success" *ngIf="
@@ -1009,10 +1009,10 @@
                                                 video tag.
                                             </video>
                                         </div>
-                                        <span class="suserchat-name" *ngIf="data.name !== null">{{
+                                        <!-- <span class="suserchat-name" *ngIf="data.name !== null">{{
                                             contactinfo.fullName || "Reception"
                                             }}</span>
-                                        <span class="suserchat-name" *ngIf="data.name == null">Reception</span>
+                                        <span class="suserchat-name" *ngIf="data.name == null">Reception</span> -->
                                         {{ data.time | dateAgo }}
                                     </div>
                                 </li>
@@ -1092,10 +1092,10 @@
                                         <div class="last-msg p-2 rounded bg-light">
                                             <img [src]="data.fileUrl" alt="File Not Found" />
                                         </div>
-                                        <span class="suserchat-name" *ngIf="data.name !== null">{{
+                                        <!-- <span class="suserchat-name" *ngIf="data.name !== null">{{
                                             contactinfo.fullName || "Reception"
                                             }}</span>
-                                        <span class="suserchat-name" *ngIf="data.name == null">Reception</span>
+                                        <span class="suserchat-name" *ngIf="data.name == null">Reception</span> -->
                                         {{ data.time | dateAgo }}
                                     </div>
                                 </li>
@@ -1212,10 +1212,10 @@
                                                     | parseFloat)
                                             }" height="230px" width="250px"></google-map>
                                         </div>
-                                        <span class="suserchat-name" *ngIf="data.name !== null">{{
+                                        <!-- <span class="suserchat-name" *ngIf="data.name !== null">{{
                                             contactinfo.fullName || "Reception"
                                             }}</span>
-                                        <span class="suserchat-name" *ngIf="data.name == null">Reception</span>
+                                        <span class="suserchat-name" *ngIf="data.name == null">Reception</span> -->
                                         {{ data.time | dateAgo }}
                                     </div>
                                 </li>
@@ -1961,12 +1961,12 @@
                                             <div class="last-msg p-3 mb-1 rounded bg-light">
                                                 {{ data.message }}
                                             </div>
-                                            <span class="suserchat-name" *ngIf="data.name !== null">{{
+                                            <!-- <span class="suserchat-name" *ngIf="data.name !== null">{{
                                                 contactinfo.fullName ||
                                                 "Reception"
                                                 }}</span>
-                                            <span class="suserchat-name" *ngIf="data.name == null">Reception</span>
-                                            {{ data.time | dateAgo }}
+                                            <span class="suserchat-name" *ngIf="data.name == null">Reception</span> -->
+                                            <span class="text-end">{{ data.time | dateAgo }}</span>
                                         </div>
                                     </div>
                                 </li>
@@ -2409,7 +2409,7 @@
                                         name="note" placeholder="Type a note...." rows="1" (keydown.enter)="
                                             submitNoteForm(ngNotesForm);
                                             $event.preventDefault()
-                                        " appWhitespaceValidator [disabled]="hideReplyAndNotes"></textarea>
+                                        " appWhitespaceValidator></textarea>
                                     <ng-container>
                                         <button class="chatsubmit-btn invalid" type="submit" *ngIf="ngNotesForm.invalid"
                                             [disabled]="ngNotesForm.invalid">
