@@ -34,7 +34,7 @@
         </div>
 
         <div class="col-12">
-            <button (click)="sendMessage()" class="btn btn-primary">Send</button>
+            <button (click)="sendMessage()" class="btn btn-primary" [disabled]="!message.trim()">Send</button>
         </div>
     </div>
 
