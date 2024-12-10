@@ -53,7 +53,10 @@ export class HttpService {
             message = error[key][0];
         }
         if (key === 'isTrusted') {
-            this.toastr.error("Server Not Responding !");
+            this.toastr.error(
+                "The server is currently unavailable. Please try again later.",
+                "Server Error",
+            );
         }
         else {
             message = key + ' : ' + message;
