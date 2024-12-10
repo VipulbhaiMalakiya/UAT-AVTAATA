@@ -1,5 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { Subscription, take } from 'rxjs';
 import { WhatsAppService } from 'src/app/_api/whats-app.service';
 
 @Component({
@@ -18,10 +20,16 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
     userData: any;
     isProceess: boolean = true;
     isAllSelected = false;
+    logInUserName: any;
 
 
 
-    constructor(public whatsappService: WhatsAppService,) { }
+    constructor(public whatsappService: WhatsAppService, private toastr: ToastrService, private router: Router,
+    ) {
+        const d: any = localStorage.getItem('userData');
+        this.userData = JSON.parse(d);
+        this.logInUserName = this.userData.firstName + ' ' + this.userData.lastName;
+    }
 
     ngOnInit(): void {
         this.getContactList();
@@ -76,10 +84,73 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
     }
 
     sendMessage() {
-        // Implement your send logic here
-        console.log('Message:', this.message);
-        console.log('Selected contacts:', this.contactList.filter(contact => contact.selected));
+        // console.log('Message:', this.message);
+        // console.log('Selected contacts:', this.contactList.filter(contact => contact.selected));
+
+        this.isProceess = true; // Set processing flag to true to indicate the process has started.
+
+        const selectedContacts = this.contactList.filter(contact => contact.selected,);
+
+        // Track the number of API calls
+        let successCount = 0;
+        let errorCount = 0;
+
+        selectedContacts.forEach(contact => {
+            // Create a request for each selected contact
+            const request = {
+                messaging_product: 'whatsapp',
+                recipient_type: 'individual',
+                to: contact.phoneNo, // Use the phone number of the selected contact
+                type: 'text',
+                fromId: this.userData?.userId,
+                logInUserName: this.logInUserName,
+                assignedto: this.userData?.userId,
+                names: contact.fullName || null,
+                text: {
+                    preview_url: false,
+                    body: this.message,
+                },
+            };
+
+            let formData = new FormData();
+            formData.append('messageEntry', JSON.stringify(request));
+
+            // Make the API call for each selected contact
+            this.whatsappService.sendWhatsAppMessage(formData)
+                .pipe(take(1))
+                .subscribe(
+                    (response) => {
+                        let data: any = response;
+                        successCount++; // Increment success count
+                        this.toastr.success(data.message); // Optionally show success notification
+                        const audio = new Audio('../../../../../assets/sound/Whatsapp Message - Sent - Sound.mp3');
+                        audio.play();
+                    },
+                    (error) => {
+                        errorCount++; // Increment error count
+                        this.toastr.error(error.error.message); // Handle error and show error notification
+                    }
+                );
+        });
+
+        // After all API calls are done, check if all were successful
+        setTimeout(() => {
+            this.isProceess = false; // Set processing flag to false after the loop is finished.
+            if (successCount === selectedContacts.length) {
+                // If all requests are successful, navigate to the inbox page
+                this.router.navigate(['/admin/inbox']);
+                // Empty the message after success
+                this.message = '';
+                // Unselect all contacts after success
+                this.contactList.forEach(contact => {
+                    if (contact.selected) {
+                        contact.selected = false; // Set selected to false
+                    }
+                });
+            }
+        }, 2000); // Delay to ensure the last API call response has time to be received
     }
+
 
 
 }
