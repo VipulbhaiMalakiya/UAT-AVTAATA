@@ -14,7 +14,6 @@ import { PrivacyPolicyComponent } from './modules/privacy-policy/privacy-policy.
 import { ContactUsComponent } from './_layouts/contact-us/contact-us.component';
 import { SendCatalogueComponent } from './modules/send-catalogue/send-catalogue.component';
 import { DefaultLoginComponent } from './modules/2024/default-login/default-login.component';
-import { BulkMessageSenderComponent } from './modules/2024/bulk-message-sender/pages/bulk-message-sender/bulk-message-sender.component';
 
 const routes: Routes = [
     { path: 'privacy-policy', component: PrivacyPolicyComponent },
@@ -91,11 +90,7 @@ const routes: Routes = [
                 loadChildren: () =>
                     import('./modules/chat/chat.module').then((m) => m.ChatModule),
             },
-            {
-                path: 'bulk-message-sender',
-                component: BulkMessageSenderComponent,
-                title: 'bulk-message-sender'
-            },
+
 
             { path: 'order-list', loadChildren: () => import('./modules/2024/order-list/order-list.module').then(m => m.OrderListModule) },
 
@@ -267,11 +262,9 @@ const routes: Routes = [
                 loadChildren: () =>
                     import('./modules/chat/chat.module').then((m) => m.ChatModule),
             },
-            {
-                path: 'bulk-message-sender',
-                component: BulkMessageSenderComponent,
-                title: 'bulk-message-sender'
-            },
+            { path: 'bulk-message-sender', loadChildren: () => import('./modules/2024/bulk-message-sender/bulk-message-sender.module').then(m => m.BulkMessageSenderModule) },
+
+
             {
                 path: 'inbox/:status',
 
