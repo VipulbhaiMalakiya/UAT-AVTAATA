@@ -2235,18 +2235,22 @@
                                     <a class="nav-link" data-bs-toggle="pill" href="#notes">Notes</a>
                                 </li>
                             </ul>
-                            <div class="chatwrite-emojisico" *ngIf="!hideReplyAndNotes">
-                                <div class="chat-emoji-ico" (click)="toggleEmojiPicker()">
+                            <div class="chatwrite-emojisico">
+                                <div class="chat-emoji-ico" [ngClass]="{'disabled': hideReplyAndNotes}"
+                                    (click)="toggleEmojiPicker()">
                                     <i class="las la-smile"></i>
                                 </div>
-                                <div class="chat-attach-ico" (click)="toggleupload()">
+                                <div class="chat-attach-ico" [ngClass]="{'disabled': hideReplyAndNotes}"
+                                    (click)="toggleupload()">
                                     <i class="las la-paperclip"></i>
                                 </div>
-                                <div class="chat-quickrply-ico" title="Quick Reply" (click)="quickReply()">
+                                <div class="chat-quickrply-ico" [ngClass]="{'disabled': hideReplyAndNotes}"
+                                    title="Quick Reply" (click)="quickReply()">
                                     <img src="../assets/images/quick-reply-icon.png" alt="File Not Found" />
                                 </div>
 
-                                <div class="chat-template-ico" title="Templates" (click)="getTemplates(chatname)">
+                                <div class="chat-template-ico" [ngClass]="{'disabled': hideReplyAndNotes}"
+                                    title="Templates" (click)="getTemplates(chatname)">
                                     <svg fill="#000000" viewBox="0 0 32 32" id="icon"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -2274,7 +2278,8 @@
                                         </g>
                                     </svg>
                                 </div>
-                                <div class="chat-cart-ico" (click)="togglecart()">
+                                <div class="chat-cart-ico" [ngClass]="{'disabled': hideReplyAndNotes}"
+                                    (click)="togglecart()">
                                     <i class="las la-shopping-cart"></i>
                                 </div>
                             </div>
