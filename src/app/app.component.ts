@@ -46,6 +46,7 @@ export class AppComponent implements OnInit {
 
     checkCurrentContact(): void {
         const currentContact = sessionStorage.getItem('currentContact');
+        console.log(currentContact)
         if (currentContact) {
             this.handleMessageStatus(currentContact, false);
         } else {
@@ -58,6 +59,7 @@ export class AppComponent implements OnInit {
 
         this.whatsappService.updateSeenByMobileNo(contact, isSeen).subscribe({
             next: response => {
+                sessionStorage.removeItem('currentContact');
                 // console.log('Update successful:', response);
                 // alert('Status updated successfully!');
             },

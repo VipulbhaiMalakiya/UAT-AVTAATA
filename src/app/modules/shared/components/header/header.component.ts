@@ -80,6 +80,8 @@ export class HeaderComponent implements OnInit {
 
         this.whatsappService.updateSeenByMobileNo(contact, isSeen).subscribe({
             next: response => {
+                sessionStorage.removeItem('currentContact');
+
                 // console.log('Update successful:', response);
                 // alert('Status updated successfully!');
             },

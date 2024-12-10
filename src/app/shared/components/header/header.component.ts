@@ -6,77 +6,79 @@ import { ConfirmationDialogModalComponent } from 'src/app/modules/shared/compone
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html'
+    selector: 'app-header',
+    templateUrl: './header.component.html'
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  // user?: User | null;
+    // user?: User | null;
 
-  title?: any = ' Dashboard'
-  data: any;
-  userData: any;
-
-
-  constructor(private authenticationService: AuthenticationService,
-    private modalService: NgbModal,
-    private bnIdle: BnNgIdleService) {
-    this.data = localStorage.getItem("userData");
-    this.userData = JSON.parse(this.data);
+    title?: any = ' Dashboard'
+    data: any;
+    userData: any;
 
 
-  }
+    constructor(private authenticationService: AuthenticationService,
+        private modalService: NgbModal,
+        private bnIdle: BnNgIdleService) {
+        this.data = localStorage.getItem("userData");
+        this.userData = JSON.parse(this.data);
 
-  ngOnInit(): void {
-    // this.bnIdle.startWatching(1500).subscribe((isTimedOut: boolean) => {
-    //   if (isTimedOut) {
-    //     this.logout();
-    //   }
-    // });
-  }
 
-  get isAdmin() {
+    }
 
-    return this.userData?.role?.roleName == 'Admin';
-  }
+    ngOnInit(): void {
+        // this.bnIdle.startWatching(1500).subscribe((isTimedOut: boolean) => {
+        //   if (isTimedOut) {
+        //     this.logout();
+        //   }
+        // });
+    }
 
-  get isUser() {
-    return this.userData?.role?.roleName == 'User';
-  }
+    get isAdmin() {
 
-  get isResolver() {
-    return this.userData?.role?.roleName == 'Resolver';
-  }
+        return this.userData?.role?.roleName == 'Admin';
+    }
 
-  logout() {
+    get isUser() {
+        return this.userData?.role?.roleName == 'User';
+    }
 
-    const modalRef = this.modalService.open(ConfirmationDialogModalComponent, {
-      size: 'sm',
-      centered: true,
-      backdrop: 'static',
-    });
+    get isResolver() {
+        return this.userData?.role?.roleName == 'Resolver';
+    }
 
-    var componentInstance =
-      modalRef.componentInstance as ConfirmationDialogModalComponent;
-    componentInstance.message = 'Are you sure you want to logout?';
-    modalRef.result
-      .then((canDelete: boolean) => {
-        if (canDelete) {
-          this.authenticationService.logout();
-        }
-      })
-      .catch(() => { });
-  }
+    logout() {
 
-  ngOnDestroy(): void {
-    this.logout();
-  }
+        const modalRef = this.modalService.open(ConfirmationDialogModalComponent, {
+            size: 'sm',
+            centered: true,
+            backdrop: 'static',
+        });
 
-  classToggled = false;
+        var componentInstance =
+            modalRef.componentInstance as ConfirmationDialogModalComponent;
+        componentInstance.message = 'Are you sure you want to logout?';
+        modalRef.result
+            .then((canDelete: boolean) => {
+                if (canDelete) {
+                    this.authenticationService.logout();
+                    sessionStorage.removeItem('currentContact');
 
-  toggleField() {
-    this.classToggled = !this.classToggled;
-    console.log(this.classToggled);
+                }
+            })
+            .catch(() => { });
+    }
 
-  }
+    ngOnDestroy(): void {
+        this.logout();
+    }
+
+    classToggled = false;
+
+    toggleField() {
+        this.classToggled = !this.classToggled;
+        console.log(this.classToggled);
+
+    }
 
 }
