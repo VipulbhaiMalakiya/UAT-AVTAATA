@@ -828,7 +828,9 @@ export class ChatComponent
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = e.filename; // Set the filename here
+            const modifiedFilename = e.filename.slice(24); // Slice the first 24 characters
+
+            a.download = modifiedFilename
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
