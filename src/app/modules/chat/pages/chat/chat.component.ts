@@ -540,18 +540,38 @@ export class ChatComponent
 
                     if (response.length > 0) {
                         // Store data based on initial load or pagination
+                        // if (isInitialLoad) {
+                        //     this.receivedData = response; // Replace data on initial load
+                        // } else {
+                        //     // Append data for subsequent pages
+                        //     this.receivedData = [...response, ...this.receivedData];
+                        // }
+
                         if (isInitialLoad) {
                             this.receivedData = response; // Replace data on initial load
+                            this.scrollToBottom(); // Scroll to bottom on first load
                         } else {
-                            // Append data for subsequent pages
+
+
+                            // Prepend new data to the receivedData array
                             this.receivedData = [...response, ...this.receivedData];
+                            // Get the messageId of the last new message (the last item in the response array)
+                            const lastNewMessageId = response[response.length - 1]?.messageId;
+
+                            // Check if the last new messageId exists and scroll to it
+                            if (lastNewMessageId) {
+                                this.scrollToMiddle(lastNewMessageId); // Use the last new messageId for scrolling
+                            } else {
+                                console.log('No messageId found in the new messages');
+                            } // Maintain scroll position
                         }
 
-                        if (this.currentPage === 1) {
-                            this.scrollToBottom();
-                        } else {
-                            this.scrollToMiddle();
-                        }
+
+                        // if (this.currentPage === 1) {
+                        //     this.scrollToBottom();
+                        // } else {
+                        //     this.scrollToMiddle();
+                        // }
                         const lstRe = this.receivedData.slice(-1)[0];
                         this.lastItem = lstRe.time;
                         // this.lastMessageTime = this.lastItem;
@@ -712,20 +732,27 @@ export class ChatComponent
 
 
 
-    scrollToMiddle() {
-        setTimeout(() => { // Use setTimeout to ensure the DOM is fully rendered
-            try {
-                const container = this.chatContainer.nativeElement;
-                const middle = container.scrollHeight / 2;
-                container.scrollTo({
-                    top: middle,
-                    // behavior: 'smooth' // for smooth scrolling
-                });
-            } catch (err) {
-                console.error(err);
+    scrollToMiddle(messageId: string): void {
+        if (!messageId) return;
+
+        // Sanitize the ID to make it a valid CSS selector
+        const sanitizedId = this.sanitizeSelector(messageId);
+        setTimeout(() => {
+            const container = this.chatContainer.nativeElement;
+            const targetElement = container.querySelector(`#message-${sanitizedId}`);
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+                console.warn(`Message with ID ${messageId} not found.`);
             }
-        }, 0);
+        });
     }
+
+    // Sanitize the messageId to escape invalid characters for a CSS selector
+    sanitizeSelector(messageId: string): string {
+        return messageId.replace(/([^\w-])/g, '\\$1');
+    }
+
 
     loadUserActivity(phoneNo: string) {
         this.masterName = `/chat-activity/${phoneNo}`;
