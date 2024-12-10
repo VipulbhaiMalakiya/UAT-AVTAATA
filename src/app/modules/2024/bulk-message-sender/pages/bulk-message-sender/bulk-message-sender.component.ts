@@ -44,6 +44,10 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
             this.subscription.unsubscribe(); // Clean up the subscription to prevent memory leaks
         }
     }
+
+    selectedContacts() {
+        return this.contactList.filter(contact => contact.selected);
+    }
     getContactList() {
         this.isProceess = true;
 
