@@ -39,6 +39,12 @@
             </a>
         </li>
 
+        <li *ngIf="isAdmin || isResolver" routerLinkActive="active">
+            <a routerLink="/admin/bulk-message-sender" routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }" class="menu-list-title"><img
+                    src="../assets/images/menu-icon-7.png" alt="" /> Bulk Message</a>
+        </li>
+
         <li *ngIf="isAdmin" routerLinkActive="active">
             <a routerLink="/admin/ticket" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
                 class="menu-list-title"><img src="../assets/images/menu-icon-15.png" alt="" /> Ticket</a>
@@ -80,6 +86,8 @@
             </li>
           </ul>
         </div> -->
+
+
 
 
 

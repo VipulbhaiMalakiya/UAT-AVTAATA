@@ -39,6 +39,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { BulkMessageSenderComponent } from './modules/2024/bulk-message-sender/pages/bulk-message-sender/bulk-message-sender.component';
 @NgModule({
     declarations: [
         AppComponent,
@@ -54,6 +55,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
         ContactUsComponent,
         SendCatalogueComponent,
         DefaultLoginComponent,
+        BulkMessageSenderComponent,
 
 
     ],
