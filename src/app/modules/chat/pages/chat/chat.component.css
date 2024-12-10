@@ -119,3 +119,7 @@ textarea:disabled {
 .disabled img {
   filter: grayscale(100%); /* Grays out the image */
 }
+
+.chatwrite-emojisico{
+    flex: 1;
+}

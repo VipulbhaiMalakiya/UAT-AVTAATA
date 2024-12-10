@@ -2235,6 +2235,7 @@
                                     <a class="nav-link" data-bs-toggle="pill" href="#notes">Notes</a>
                                 </li>
                             </ul>
+
                             <div class="chatwrite-emojisico">
                                 <div class="chat-emoji-ico" [ngClass]="{'disabled': hideReplyAndNotes}"
                                     (click)="toggleEmojiPicker()">
@@ -2282,6 +2283,13 @@
                                     (click)="togglecart()">
                                     <i class="las la-shopping-cart"></i>
                                 </div>
+
+                                <div *ngIf="hideReplyAndNotes" class="chat-template-ico ms-auto">
+                                    <span class="text-danger ">
+                                        You cannot message this customer
+                                    </span>
+                                </div>
+
                             </div>
                             <div class="attach-opentray attach-opentray1" *ngIf="showupload1">
                                 <div class="inner-attachicons">
@@ -2363,15 +2371,10 @@
                                                 </a>
                                             </div>
                                         </div>
-
-                                        <!-- <div class="col-sm-4">
-                      <div class="atthico cursur"><a><img src="../assets/images/atticon-4.jpg" alt="File Not Found">
-                          <p>Quick Replay</p>
-                        </a></div>
-                    </div> -->
                                     </div>
                                 </div>
                             </div>
+
                             <emoji-mart class="emoji-mart" *ngIf="showEmojiPicker" (emojiSelect)="addEmoji($event)"
                                 title="Pick your emoji…" [i18n]="{
                                     search: 'Search',
@@ -2387,6 +2390,8 @@
                                 }">
                             </emoji-mart>
                         </div>
+
+
                         <div class="tab-content">
                             <div class="tab-pane active" id="reply">
                                 <form class="writechat-boder" #loginForm="ngForm" (ngSubmit)="submitForm(loginForm)">
