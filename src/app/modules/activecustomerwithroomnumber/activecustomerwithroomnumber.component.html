@@ -8,6 +8,9 @@
         <button class="gray-btns" (click)="onCatlog()" type="button"><i class="las la-external-link-alt"></i>
             Campaign</button>
 
+        <button class="gray-btns" type="button" *ngIf="selectedItems.length > 0" (click)="sendCampaign()"><i
+                class="las la-external-link-alt"></i>
+            Send Campaign</button>
         <button class="gray-btns" (click)="onDownload()" type="button"><i class="las la-file-excel"></i> Excel</button>
         <div class="table-search">
             <input type="text" class="form-control" name="name" id="name" [(ngModel)]="term" autocomplete="off"
@@ -23,6 +26,9 @@
             <table class="table">
                 <thead>
                     <tr>
+                        <th>
+                            <input type="checkbox" (change)="selectAll($event)" [checked]="isAllSelected()" />
+                        </th>
                         <th>Sr.No</th>
                         <th>Guest Name</th>
                         <th>Guest Number </th>
@@ -37,6 +43,9 @@
               currentPage: page,
               totalItems: count
             };let ind = index;trackBy: trackByFn">
+                        <td>
+                            <input type="checkbox" [(ngModel)]="i.selected" (change)="onSelectionChange()" />
+                        </td>
                         <td>{{calculateIndex(page, ind)}}</td>
                         <td>{{i.guestName}}</td>
                         <td>{{i.guestNumber}} <span class="ctm-icone"> <i class="lab la-whatsapp"

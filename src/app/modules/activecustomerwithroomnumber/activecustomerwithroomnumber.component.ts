@@ -29,6 +29,7 @@ export class ActivecustomerwithroomnumberComponent {
     count: number = 0;
     tableSize: number = 10;
     tableSizes: any = [3, 6, 9, 12];
+    selectedItems: any[] = [];
     constructor(
         private cd: ChangeDetectorRef,
         private modalService: NgbModal,
@@ -154,7 +155,32 @@ export class ActivecustomerwithroomnumberComponent {
     }
 
 
+    // Method to select all checkboxes
+    selectAll(event: any): void {
+        const isChecked = event.target.checked;
+        this.data.forEach(item => {
+            item.selected = isChecked;
+        });
+        this.onSelectionChange();
+    }
+
+    // Method to check if all checkboxes are selected
+    isAllSelected(): boolean {
+        return this.data.every(item => item.selected);
+    }
+
+    // Method to handle individual checkbox selection changes
+    onSelectionChange(): void {
+        this.selectedItems = this.data.filter(item => item.selected);
+        // console.log('Selected Items:', this.selectedItems);
+    }
 
 
+    // Method to handle Send Campaign button click
+    sendCampaign(): void {
+        // Here you can use the selectedItems array to perform the campaign logic
+        console.log('Sending campaign to:', this.selectedItems);
+        // You can call an API or handle the data as needed.
+    }
 
 }
