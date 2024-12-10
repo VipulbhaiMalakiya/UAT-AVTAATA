@@ -2387,9 +2387,10 @@
                                 <form class="writechat-boder" #loginForm="ngForm" (ngSubmit)="submitForm(loginForm)">
                                     <textarea class="form-control h-auto" id="chat" [(ngModel)]="message" required
                                         name="chat" placeholder="Type a message...." rows="1" (keydown.enter)="
-                                            submitForm(loginForm);
-                                            $event.preventDefault()
-                                        " appWhitespaceValidator [disabled]="hideReplyAndNotes"></textarea>
+                                                submitForm(loginForm);
+                                                $event.preventDefault()
+                                            " appWhitespaceValidator [disabled]="hideReplyAndNotes"
+                                        [class.disabled]="hideReplyAndNotes"></textarea>
                                     <ng-container>
                                         <button class="chatsubmit-btn invalid" type="submit" *ngIf="loginForm.invalid"
                                             [disabled]="loginForm.invalid">

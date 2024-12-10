@@ -99,3 +99,10 @@
 
 
 
+/* Disable textarea when the 'disabled' attribute is set */
+textarea:disabled {
+  background-color: #f0f0f0; /* Light grey background */
+  border: 1px solid #ddd;    /* Lighter border */
+  color: #999;               /* Lighter text color */
+  cursor: not-allowed;       /* Change cursor to indicate it's disabled */
+}
