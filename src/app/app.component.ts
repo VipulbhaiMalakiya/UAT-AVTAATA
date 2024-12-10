@@ -9,6 +9,8 @@ import { WhatsAppService } from './_api/whats-app.service';
 })
 export class AppComponent implements OnInit {
     title = 'avataara';
+    private offlineToast: any; // Reference to the offline toast
+
     constructor(private authenticationService: AuthenticationService,
         private router: Router, private toastr: ToastrService, public whatsappService: WhatsAppService,) {
 
@@ -16,24 +18,19 @@ export class AppComponent implements OnInit {
 
 
     ngOnInit() {
-        // Initial online/offline check
-        if (navigator.onLine) {
-            // this.toastr.success('You are online!', 'Status');
-        } else {
-            this.toastr.error('You are currently offline. Some features may be unavailable. Please check your connection.',
-                'Connection Status');
+        // Initial check for online status
+        if (!navigator.onLine) {
+            this.handleOffline();
         }
 
         // Listen to the 'online' event
         window.addEventListener('online', () => {
-            this.toastr.success('You are back online. All features are now accessible.',
-                'Connection Restored');
+            this.handleOnline();
         });
 
         // Listen to the 'offline' event
         window.addEventListener('offline', () => {
-            this.toastr.error('You have lost your internet connection. Some features may be restricted.',
-                'Connection Lost');
+            this.handleOffline();
         });
 
         this.router.events.subscribe((event) => {
@@ -42,6 +39,41 @@ export class AppComponent implements OnInit {
             }
         });
     }
+
+    // Show the offline toast
+    private handleOffline(): void {
+        // If offline toast already exists, don't show a new one
+        if (this.offlineToast) {
+            return;
+        }
+
+        // Show the offline toast
+        this.offlineToast = this.toastr.error(
+            'You have lost your internet connection. Some features may be restricted.',
+            'Connection Lost',
+            {
+                // timeOut: 0,          // Ensures the toast does not automatically close
+                closeButton: true,   // Adds a close button for manual dismissal
+                progressBar: false   // Disables the progress bar
+            }
+        );
+    }
+
+    // Handle online event and close offline toast
+    private handleOnline(): void {
+        // Show the "Connection Restored" toast
+        this.toastr.success('You are back online. All features are now accessible.', 'Connection Restored', {
+            closeButton: true,
+            progressBar: false
+        });
+
+        // Close the offline toast if it exists
+        if (this.offlineToast) {
+            this.toastr.clear(this.offlineToast); // Clear the offline toast
+            this.offlineToast = null; // Reset the reference
+        }
+    }
+
 
 
     checkCurrentContact(): void {
