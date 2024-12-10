@@ -262,6 +262,7 @@ export class ChatComponent
         this.nrSelect = this.userData?.userId;
         this.titleService.setTitle('CDC -Inbox');
         this.getContactList();
+        this.ActiveUser();
 
 
 
