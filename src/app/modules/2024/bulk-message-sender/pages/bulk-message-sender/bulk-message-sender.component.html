@@ -46,7 +46,8 @@
 
 
                     <div class="chat-attach-ico" id="attach-tray" data-bs-toggle="tooltip" data-bs-placement="top"
-                        title="Attachment"><i class="las la-paperclip"></i></div>
+                        title="Attachment" (click)="toggleupload()"
+                        [ngClass]="{'disabled': selectedContacts().length === 0}"><i class="las la-paperclip"></i></div>
                     <div class="chat-quickrply-ico" [ngClass]="{'disabled': selectedContacts().length === 0}"
                         title="Quick Reply" (click)="quickReply()">
                         <img src="assets/images/quick-reply-icon.png" alt="File Not Found" />

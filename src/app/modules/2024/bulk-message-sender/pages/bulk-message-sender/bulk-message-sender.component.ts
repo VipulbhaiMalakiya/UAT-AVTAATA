@@ -254,6 +254,12 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
         this.isCartPopupOpen = !this.isCartPopupOpen;
     }
 
+
+    toggleupload() {
+        this.isCartPopupOpen = false;
+        this.showupload = !this.showupload;
+    }
+
     sendingCatalog(e: any) {
         this.sendMessage(e, 'interactive');
     }
