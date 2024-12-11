@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Subject, Subscription, take, takeUntil } from 'rxjs';
 import { WhatsAppService } from 'src/app/_api/whats-app.service';
+import { AudioComponent } from 'src/app/modules/chat/components/audio/audio.component';
 import { QuickReplyComponent } from 'src/app/modules/chat/components/quick-reply/quick-reply.component';
 import { TempletsComponent } from 'src/app/modules/chat/components/templets/templets.component';
 
@@ -121,7 +122,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
 
 
-    sendMessage(form: any, type: 'text' | 'notes' | 'interactive' | 'template') {
+    sendMessage(form: any, type: 'text' | 'notes' | 'interactive' | 'template' | 'audio') {
         this.isProceess = true; // Indicate the process has started.
 
         const selectedContacts = this.contactList.filter(contact => contact.selected);
@@ -198,9 +199,24 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
                 };
             }
 
+            else if (type == 'audio') {
+                request = {
+                    messaging_product: 'whatsapp',
+                    recipient_type: 'individual',
+                    to: contact.phoneNo,  // Sending to the contact's phone number
+                    type: 'audio',
+                    fromId: this.userData?.userId,
+                    assignedto: this.userData?.userId,
+                    names: contact.fullName || null,
+                    logInUserName: form.logInUserName,
+                };
+            }
+
 
             let formData = new FormData();
             formData.append('messageEntry', JSON.stringify(request));
+
+            form.file && formData.append('file', form.file);
 
             // Make the API call for each selected contact
             this.whatsappService.sendWhatsAppMessage(formData)
@@ -264,6 +280,25 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
         this.sendMessage(e, 'interactive');
     }
 
+
+
+    documentAdd() {
+
+    }
+
+    onLocationAdd() {
+
+    }
+
+    onimageAdd() {
+
+    }
+
+    onvideoAdd() {
+
+    }
+
+
     getTemplates(e: any) {
 
         const modalRef = this.modalService.open(TempletsComponent, {
@@ -288,24 +323,25 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
     }
 
-    documentAdd() {
-
-    }
-
-    onLocationAdd() {
-
-    }
-
-    onimageAdd() {
-
-    }
-
-    onvideoAdd() {
-
-    }
-
     onaudioAdd() {
 
+        const modalRef = this.modalService.open(AudioComponent, {
+            size: 'md',
+            centered: true,
+            backdrop: 'static',
+        });
+        if (modalRef) {
+            this.isProceess = false;
+        } else {
+            this.isProceess = false;
+        }
+        modalRef.result
+            .then((data: any) => {
+                if (data) {
+                    this.sendMessage(data, 'audio');
+                }
+            })
+            .catch(() => { });
     }
 
 }
