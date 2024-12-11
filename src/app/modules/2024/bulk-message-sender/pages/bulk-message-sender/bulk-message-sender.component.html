@@ -115,8 +115,8 @@
                             placeholder="Type a message...." rows="1" (keydown.enter)="
                                                             submitForm(loginForm);
                                                             $event.preventDefault()
-                                                        " appWhitespaceValidator [disabled]="hideReplyAndNotes"
-                            [class.disabled]="hideReplyAndNotes"></textarea>
+                                                        " appWhitespaceValidator
+                            [disabled]="selectedContacts().length === 0"></textarea>
                         <ng-container>
                             <button class="chatsubmit-btn invalid" type="submit" *ngIf="loginForm.invalid"
                                 [disabled]="loginForm.invalid">
@@ -135,7 +135,8 @@
                             placeholder="Type a note...." rows="1" (keydown.enter)="
                                                         submitNoteForm(ngNotesForm);
                                                         $event.preventDefault()
-                                                    " appWhitespaceValidator></textarea>
+                                                    " appWhitespaceValidator
+                            [disabled]="selectedContacts().length === 0"></textarea>
                         <ng-container>
                             <button class="chatsubmit-btn invalid" type="submit" *ngIf="ngNotesForm.invalid"
                                 [disabled]="ngNotesForm.invalid">
