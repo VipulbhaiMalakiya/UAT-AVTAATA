@@ -119,7 +119,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
 
 
-    sendMessage(form: any, type: 'text' | 'notes') {
+    sendMessage(form: any, type: 'text' | 'notes' | 'interactive') {
         this.isProceess = true; // Indicate the process has started.
 
         const selectedContacts = this.contactList.filter(contact => contact.selected);
@@ -163,6 +163,20 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
                         preview_url: false,
                         body: form.value.note,
                     },
+                };
+            }
+
+            else if (type == 'interactive') {
+                request = {
+                    messaging_product: 'whatsapp',
+                    recipient_type: 'individual',
+                    to: contact.phoneNo,  // Sending to the contact's phone number
+                    type: 'interactive',
+                    fromId: this.userData?.userId,
+                    logInUserName: this.logInUserName,
+                    assignedto: this.userData?.userId,
+                    fullname: contact.fullName || null,
+                    interactiveName: form,  // Sending catalog name
                 };
             }
 
@@ -223,73 +237,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
     }
 
     sendingCatalog(e: any) {
-        this.isProceess = true; // Indicate the process has started.
-
-
-        // Track the number of API calls
-        let successCount = 0;
-        let errorCount = 0;
-        let processedCount = 0; // Track the total number of processed API calls
-        // Filter out the selected contacts
-        const selectedContacts = this.contactList.filter(contact => contact.selected);
-
-        if (selectedContacts.length === 0) {
-            // If no contacts are selected, stop the process
-            this.isProceess = false;
-            return;
-        }
-
-        // Iterate through each selected contact and send a message
-        selectedContacts.forEach(contact => {
-            const request = {
-                messaging_product: 'whatsapp',
-                recipient_type: 'individual',
-                to: contact.phoneNo,  // Sending to the contact's phone number
-                type: 'interactive',
-                fromId: this.userData?.userId,
-                logInUserName: this.logInUserName,
-                assignedto: this.userData?.userId,
-                fullname: contact.fullName || null,
-                interactiveName: e,  // Sending catalog name
-            };
-
-            let formData = new FormData();
-            formData.append('messageEntry', JSON.stringify(request));
-            // Make the API call for each selected contact
-            this.whatsappService.sendWhatsAppMessage(formData)
-                .pipe(takeUntil(this.destroy$))
-                .subscribe({
-                    next: (response) => {
-                        let data: any = response;
-                        successCount++; // Increment success count
-                        this.toastr.success(data.message); // Show success notification
-                        const audio = new Audio('../../../../../assets/sound/Whatsapp Message - Sent - Sound.mp3');
-                        audio.play();
-                    },
-                    error: (error) => {
-                        errorCount++; // Increment error count
-                        this.toastr.error(error.error.message); // Show error notification
-                    },
-                    complete: () => {
-                        processedCount++; // Increment processed count
-                        if (processedCount === selectedContacts.length) {
-                            // If all API calls are processed
-                            this.isProceess = false; // Mark process as complete
-
-                            if (successCount === selectedContacts.length) {
-                                // If all requests were successful
-                                this.router.navigate(['/admin/inbox']); // Navigate to inbox
-                                this.message = ''; // Clear the message field
-                                this.contactList.forEach(contact => contact.selected = false); // Unselect all contacts
-                            } else {
-                                this.toastr.warning(
-                                    `${successCount}  messages sent successfully. ${errorCount} failed.`
-                                );
-                            }
-                        }
-                    },
-                });
-        });
+        this.sendMessage(e, 'interactive');
     }
 
 }
