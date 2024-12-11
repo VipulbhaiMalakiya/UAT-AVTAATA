@@ -119,7 +119,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
 
     quickReply() {
-
+        this.showupload = false;
         this.isCartPopupOpen = false;
         const modalRef = this.modalService.open(QuickReplyComponent, {
             size: 'md',
@@ -351,6 +351,8 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
     }
 
     sendingCatalog(e: any) {
+        this.showupload = false;
+        this.isCartPopupOpen = false;
         this.sendMessage(e, 'interactive');
     }
 
