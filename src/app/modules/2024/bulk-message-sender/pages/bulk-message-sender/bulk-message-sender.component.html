@@ -25,22 +25,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Message textbox and send button -->
-        <button class="btn btn-primary" (click)="quickReply()" *ngIf="selectedContacts().length > 0">Quick
-            Reply</button>
-        <div class="col-12 mb-4">
-
-            <label for="message">Message</label>
-            <textarea id="message" [(ngModel)]="message" class="form-control" rows="4"
-                placeholder="Type your message here..." [disabled]="selectedContacts().length === 0"></textarea>
-        </div>
-
-        <!-- <div class="col-12">
-            <button (click)="sendMessage()" class="btn btn-primary me-2" [disabled]="!message.trim()">Send</button>
-
-
-        </div> -->
     </div>
 
     <div class="chat-write-box">
@@ -59,14 +43,15 @@
                 </ul>
 
                 <div class="chatwrite-emojisico">
-                    <div class="chat-emoji-ico" id="emoji-tray" data-bs-toggle="tooltip" data-bs-placement="top"
-                        title="Emojis"><i class="las la-smile"></i></div>
+
 
                     <div class="chat-attach-ico" id="attach-tray" data-bs-toggle="tooltip" data-bs-placement="top"
                         title="Attachment"><i class="las la-paperclip"></i></div>
+                    <div class="chat-quickrply-ico" [ngClass]="{'disabled': selectedContacts().length === 0}"
+                        title="Quick Reply" (click)="quickReply()">
+                        <img src="assets/images/quick-reply-icon.png" alt="File Not Found" />
+                    </div>
 
-                    <div class="chat-quickrply-ico" title="Quick Reply" data-bs-toggle="modal"
-                        data-bs-target="#quick-reply"><img src="images/quick-reply-icon.png" alt=""></div>
 
                     <div class="chat-template-ico" title="Templates" data-bs-toggle="modal"
                         data-bs-target="#inboxtemplate">

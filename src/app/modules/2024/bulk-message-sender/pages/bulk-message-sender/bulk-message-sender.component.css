@@ -36,3 +36,20 @@
     background: #eee;
     color: #000;
 }
+
+
+/* Disable interaction with the element */
+.disabled {
+  pointer-events: none;   /* Disables click events */
+  opacity: 0.5;           /* Visually indicates the element is disabled */
+  cursor: not-allowed;    /* Change the cursor to indicate it's disabled */
+}
+
+/* Optional: style the image to show it's disabled */
+.disabled img {
+  filter: grayscale(100%); /* Grays out the image */
+}
+
+.chatwrite-emojisico{
+    flex: 1;
+}
