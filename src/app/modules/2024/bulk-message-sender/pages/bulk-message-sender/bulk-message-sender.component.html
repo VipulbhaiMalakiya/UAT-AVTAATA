@@ -151,30 +151,7 @@
 
 
 
-<!-- Add to CART  POPUP -->
-<!-- <div class="attach-opentray attach-opentray1">
-    <div class="inner-attachicons">
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="atthico cursur" (click)="sendingCatalog('bev_ird')">
-                    <a><img src="../assets/images/atticon-7.png" alt="File Not Found" />
-                        <p>
-                            Beverages And IRD(Food Menu)
-                        </p>
-                    </a>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="atthico cursur" (click)="sendingCatalog('spa')">
-                    <a><img src="../assets/images/atticon-9.png" alt="File Not Found" />
-                        <p>SPA</p>
-                    </a>
-                </div>
-            </div>
 
-        </div>
-    </div>
-</div> -->
 
 <!-- Add to Cart Popup -->
 <div *ngIf="isCartPopupOpen" class="attach-opentray attach-opentray1">
@@ -198,6 +175,52 @@
                 <div class="atthico cursur" (click)="sendingCatalog('spa')">
                     <a><img src="../assets/images/atticon-9.png" alt="File Not Found" />
                         <p>SPA</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="attach-opentray" *ngIf="showupload">
+    <div class="inner-attachicons">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="atthico cursur" (click)="onaudioAdd()">
+                    <a><img src="../assets/images/atticon-1.jpg" alt="File Not Found" />
+                        <p>Audio</p>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="atthico cursur" (click)="onvideoAdd()">
+                    <a><img src="../assets/images/atticon-2.jpg" alt="File Not Found" />
+                        <p>Video</p>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="atthico cursur" (click)="onimageAdd()">
+                    <a><img src="../assets/images/atticon-3.jpg" alt="File Not Found" />
+                        <p>Image</p>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="atthico cursur" (click)="documentAdd()">
+                    <a><img src="../assets/images/atticon-6.jpg" alt="File Not Found" />
+                        <p>Decimation</p>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-sm-4" (click)="onLocationAdd()">
+                <div class="atthico cursur">
+                    <a><img src="../assets/images/atticon-5.jpg" alt="File Not Found" />
+                        <p>Location</p>
                     </a>
                 </div>
             </div>

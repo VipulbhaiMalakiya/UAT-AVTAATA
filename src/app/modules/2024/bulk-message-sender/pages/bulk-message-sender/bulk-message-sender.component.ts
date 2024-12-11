@@ -18,6 +18,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
     contactList: any[] = [];
     open: any = [];
     message: string = '';
+    showupload = false;
 
     userData: any;
     isProceess: boolean = true;
@@ -259,26 +260,46 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
     getTemplates(e: any) {
 
-
-
-        this.isCartPopupOpen = false;
         const modalRef = this.modalService.open(TempletsComponent, {
-            size: 'md',
+            size: 'lg',
             centered: true,
             backdrop: 'static',
         });
+
         if (modalRef) {
             this.isProceess = false;
+            const componentInstance = modalRef.componentInstance as TempletsComponent;
+            componentInstance.issuesMaster = e;
+            modalRef.result
+                .then((data: any) => {
+                    this.message = data;
+                })
+                .catch(() => { });
         } else {
+            console.error('Failed to open modal: modalRef is undefined.');
             this.isProceess = false;
         }
-        const componentInstance = modalRef.componentInstance as TempletsComponent;
-        componentInstance.issuesMaster = e;
-        modalRef.result
-            .then((data: any) => {
-                this.message = data;
-            })
-            .catch(() => { });
+
+    }
+
+    documentAdd() {
+
+    }
+
+    onLocationAdd() {
+
+    }
+
+    onimageAdd() {
+
+    }
+
+    onvideoAdd() {
+
+    }
+
+    onaudioAdd() {
+
     }
 
 }
