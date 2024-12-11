@@ -84,6 +84,11 @@
                     <div class="chat-cart-ico" data-bs-toggle="tooltip" data-bs-placement="top" title="Cart"><i
                             class="las la-shopping-cart"></i></div>
 
+
+                    <div class="chat-cart-ico" [ngClass]="{'disabled': selectedContacts().length === 0}">
+                        <i class="las la-shopping-cart"></i>
+                    </div>
+
                 </div>
 
                 <!--emoji-opentray-->
@@ -142,4 +147,31 @@
     </div>
 
 
+</div>
+
+
+
+<!-- Add to CART  POPUP -->
+<div class="attach-opentray attach-opentray1">
+    <div class="inner-attachicons">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="atthico cursur" (click)="sendingCatalog('bev_ird')">
+                    <a><img src="../assets/images/atticon-7.png" alt="File Not Found" />
+                        <p>
+                            Beverages And IRD(Food Menu)
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="atthico cursur" (click)="sendingCatalog('spa')">
+                    <a><img src="../assets/images/atticon-9.png" alt="File Not Found" />
+                        <p>SPA</p>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
