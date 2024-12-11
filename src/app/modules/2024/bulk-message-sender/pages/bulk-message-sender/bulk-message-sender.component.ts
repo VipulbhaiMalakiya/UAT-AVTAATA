@@ -7,6 +7,7 @@ import { WhatsAppService } from 'src/app/_api/whats-app.service';
 import { AudioComponent } from 'src/app/modules/chat/components/audio/audio.component';
 import { QuickReplyComponent } from 'src/app/modules/chat/components/quick-reply/quick-reply.component';
 import { TempletsComponent } from 'src/app/modules/chat/components/templets/templets.component';
+import { VideoComponent } from 'src/app/modules/chat/components/video/video.component';
 
 @Component({
     selector: 'app-bulk-message-sender',
@@ -122,7 +123,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
 
 
-    sendMessage(form: any, type: 'text' | 'notes' | 'interactive' | 'template' | 'audio') {
+    sendMessage(form: any, type: 'text' | 'notes' | 'interactive' | 'template' | 'audio' | 'video') {
         this.isProceess = true; // Indicate the process has started.
 
         const selectedContacts = this.contactList.filter(contact => contact.selected);
@@ -211,6 +212,19 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
                     logInUserName: form.logInUserName,
                 };
             }
+            else if (type == 'video') {
+                request = {
+                    messaging_product: 'whatsapp',
+                    recipient_type: 'individual',
+                    to: contact.phoneNo,
+                    type: 'video',
+                    caption: form.caption,
+                    fromId: this.userData?.userId,
+                    assignedto: this.userData?.userId,
+                    names: contact.fullName || null,
+                    logInUserName: this.logInUserName,
+                };
+            }
 
 
             let formData = new FormData();
@@ -294,9 +308,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
     }
 
-    onvideoAdd() {
 
-    }
 
 
     getTemplates(e: any) {
@@ -344,4 +356,23 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
             .catch(() => { });
     }
 
+    onvideoAdd() {
+
+        const modalRef = this.modalService.open(VideoComponent, {
+            size: 'md',
+        });
+        if (modalRef) {
+            this.isProceess = false;
+        } else {
+            this.isProceess = false;
+        }
+        modalRef.result
+            .then((data: any) => {
+                if (data) {
+
+                    this.sendMessage(data, 'video');
+                }
+            })
+            .catch(() => { });
+    }
 }
