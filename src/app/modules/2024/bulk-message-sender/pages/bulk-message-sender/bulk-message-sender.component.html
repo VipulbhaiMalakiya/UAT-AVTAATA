@@ -186,6 +186,11 @@
 
 <div class="attach-opentray" *ngIf="showupload">
     <div class="inner-attachicons">
+        <!-- Close Button -->
+        <div class="close-btn" (click)="toggleupload()">
+            <i class="las la-times"></i> <!-- You can use any icon or a custom "X" -->
+        </div>
+
         <div class="row">
             <div class="col-sm-4">
                 <div class="atthico cursur" (click)="onaudioAdd()">
