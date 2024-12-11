@@ -104,10 +104,8 @@
                 <div class="tab-pane active" id="reply">
                     <form class="writechat-boder" #loginForm="ngForm" (ngSubmit)="submitForm(loginForm)">
                         <textarea class="form-control h-auto" id="chat" [(ngModel)]="message" required name="chat"
-                            placeholder="Type a message...." rows="4" (keydown.enter)="
-                                                            submitForm(loginForm);
-                                                            $event.preventDefault()
-                                                        " appWhitespaceValidator
+                            placeholder="Type a message...." rows="4"
+                            (keydown.enter)="submitForm(loginForm);$event.preventDefault()" appWhitespaceValidator
                             [disabled]="selectedContacts().length === 0"></textarea>
                         <ng-container>
                             <button class="chatsubmit-btn invalid" type="submit" *ngIf="loginForm.invalid"
