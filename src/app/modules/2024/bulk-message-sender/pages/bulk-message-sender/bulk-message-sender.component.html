@@ -103,7 +103,7 @@
                 <div class="tab-pane active" id="reply">
                     <form class="writechat-boder" #loginForm="ngForm" (ngSubmit)="submitForm(loginForm)">
                         <textarea class="form-control h-auto" id="chat" [(ngModel)]="message" required name="chat"
-                            placeholder="Type a message...." rows="1" (keydown.enter)="
+                            placeholder="Type a message...." rows="4" (keydown.enter)="
                                                             submitForm(loginForm);
                                                             $event.preventDefault()
                                                         " appWhitespaceValidator
@@ -123,7 +123,7 @@
                 <div class="tab-pane" id="notes">
                     <form class="writechat-boder" #ngNotesForm="ngForm" (ngSubmit)="submitNoteForm(ngNotesForm)">
                         <textarea class="form-control h-auto" id="note" [(ngModel)]="message" required name="note"
-                            placeholder="Type a note...." rows="1" (keydown.enter)="
+                            placeholder="Type a note...." rows="4" (keydown.enter)="
                                                         submitNoteForm(ngNotesForm);
                                                         $event.preventDefault()
                                                     " appWhitespaceValidator
