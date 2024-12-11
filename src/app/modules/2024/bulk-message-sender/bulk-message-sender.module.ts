@@ -6,6 +6,7 @@ import { BulkMessageSenderComponent } from './pages/bulk-message-sender/bulk-mes
 import { SharedModule } from '../../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 
+import { NgbModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
     declarations: [
@@ -15,7 +16,8 @@ import { FormsModule } from '@angular/forms';
         CommonModule,
         BulkMessageSenderRoutingModule,
         SharedModule,
-        FormsModule
+        NgbModalModule,
+        FormsModule,
     ]
 })
 export class BulkMessageSenderModule { }

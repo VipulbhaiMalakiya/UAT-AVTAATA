@@ -53,8 +53,9 @@
                     </div>
 
 
-                    <div class="chat-template-ico" title="Templates" data-bs-toggle="modal"
-                        data-bs-target="#inboxtemplate">
+                    <div class="chat-template-ico" title="Templates"
+                        [ngClass]="{'disabled': selectedContacts().length === 0}" (click)="getTemplates('Sir/Madam')"
+                        data-bs-toggle="modal" data-bs-target="#inboxtemplate">
                         <svg fill="#000000" viewBox="0 0 32 32" id="icon" xmlns="http://www.w3.org/2000/svg">
                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>

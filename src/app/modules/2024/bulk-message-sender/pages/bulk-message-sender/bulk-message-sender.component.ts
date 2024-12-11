@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Subject, Subscription, take, takeUntil } from 'rxjs';
 import { WhatsAppService } from 'src/app/_api/whats-app.service';
 import { QuickReplyComponent } from 'src/app/modules/chat/components/quick-reply/quick-reply.component';
+import { TempletsComponent } from 'src/app/modules/chat/components/templets/templets.component';
 
 @Component({
     selector: 'app-bulk-message-sender',
@@ -119,7 +120,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
 
 
-    sendMessage(form: any, type: 'text' | 'notes' | 'interactive') {
+    sendMessage(form: any, type: 'text' | 'notes' | 'interactive' | 'template') {
         this.isProceess = true; // Indicate the process has started.
 
         const selectedContacts = this.contactList.filter(contact => contact.selected);
@@ -177,6 +178,22 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
                     assignedto: this.userData?.userId,
                     fullname: contact.fullName || null,
                     interactiveName: form,  // Sending catalog name
+                };
+            }
+
+            else if (type == 'template') {
+                request = {
+                    messaging_product: 'whatsapp',
+                    recipient_type: 'individual',
+                    to: contact.phoneNo,  // Sending to the contact's phone number
+                    type: 'template',
+                    fromId: this.userData?.userId,
+                    assignedto: this.userData?.userId,
+                    fullname: contact.fullName || null,
+                    templateName: form.templateName,
+                    templateBody: form.templateBody,
+                    templateHeader: form.templateHeader,
+                    logInUserName: form.logInUserName,
                 };
             }
 
@@ -238,6 +255,23 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
     sendingCatalog(e: any) {
         this.sendMessage(e, 'interactive');
+    }
+
+    getTemplates(e: any) {
+        const modalRef = this.modalService.open(TempletsComponent, {
+            size: 'lg',
+            centered: true,
+            backdrop: 'static',
+        });
+
+        this.isProceess = false; // Always set to false regardless of modalRef existence
+
+        const componentInstance = modalRef.componentInstance as TempletsComponent;
+        componentInstance.issuesMaster = e;
+
+        modalRef.result
+            .then((data: any) => data && this.sendMessage(data, 'template'))
+            .catch(() => { });
     }
 
 }

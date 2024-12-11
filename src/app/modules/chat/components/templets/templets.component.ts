@@ -7,135 +7,129 @@ import { take } from 'rxjs';
 import { ApiService } from 'src/app/_api/rxjs/api.service';
 
 @Component({
-  selector: 'app-templets',
-  templateUrl: './templets.component.html',
-  styleUrls: ['./templets.component.css'],
+    selector: 'app-templets',
+    templateUrl: './templets.component.html',
+    styleUrls: ['./templets.component.css'],
 })
 export class TempletsComponent implements OnInit {
-  isProceess: boolean = true;
-  masterName?: any;
-  templetsdata: any = [];
-  templet: any = {};
-  dataArray: any[] = [];
-  term: any;
-  imageURL: any = '../../../../../assets/images/ceo-template.jpeg';
-  previewUrl: any;
-  uploadFile?: any;
-  username: any;
-  password: any;
+    isProceess: boolean = true;
+    masterName?: any;
+    templetsdata: any = [];
+    templet: any = {};
+    dataArray: any[] = [];
+    term: any;
+    imageURL: any = '../../../../../assets/images/ceo-template.jpeg';
+    previewUrl: any;
+    uploadFile?: any;
+    username: any;
+    password: any;
 
-  set issuesMaster(value: any) {
-    this.username = value;
+    set issuesMaster(value: any) {
+        this.username = value;
+    }
+    constructor(
+        private activeModal: NgbActiveModal,
+        private modalService: NgbModal,
+        private toastr: ToastrService,
+        private cd: ChangeDetectorRef,
+        private router: Router,
+        private apiService: ApiService
+    ) { }
 
-    console.log(value);
+    ngOnInit(): void {
+        this.fatchData();
+    }
+    fatchData() {
+        this.masterName = '/meta-templates';
+        this.apiService
+            .getAll(this.masterName)
+            .pipe(take(1))
+            .subscribe(
+                (data) => {
+                    if (data) {
+                        this.templetsdata = data.data;
+                        this.templet = this.templetsdata[0];
 
-    console.log(this.username);
+                        this.isProceess = false;
+                        this.cd.detectChanges();
+                    }
+                },
+                (error) => {
+                    this.isProceess = false;
+                }
+            );
+    }
+
+    onView(i: any) {
+        this.templet = i;
 
 
-  }
-  constructor(
-    private activeModal: NgbActiveModal,
-    private modalService: NgbModal,
-    private toastr: ToastrService,
-    private cd: ChangeDetectorRef,
-    private router: Router,
-    private apiService: ApiService
-  ) { }
 
-  ngOnInit(): void {
-    this.fatchData();
-  }
-  fatchData() {
-    this.masterName = '/meta-templates';
-    this.apiService
-      .getAll(this.masterName)
-      .pipe(take(1))
-      .subscribe(
-        (data) => {
-          if (data) {
-            this.templetsdata = data.data;
-            this.templet = this.templetsdata[0];
-
-            this.isProceess = false;
-            this.cd.detectChanges();
-          }
-        },
-        (error) => {
-          this.isProceess = false;
+        if (this.templet.templateName == "checking_in_welcome_details_wifidetails") {
+            this.username = this.templet.body.bodyattribute[0]
         }
-      );
-  }
-
-  onView(i: any) {
-    this.templet = i;
 
 
 
-    if (this.templet.templateName == "checking_in_welcome_details_wifidetails") {
-      this.username = this.templet.body.bodyattribute[0]
+    }
+    onFileChange(event: any) {
+        const file = event.target.files[0];
+        // this.customersMasterForm.get('image').setValue(file);
+        // Image preview
+        const reader = new FileReader();
+        reader.onload = () => {
+            this.previewUrl = reader.result;
+        };
+        reader.readAsDataURL(file);
+
+        let data;
+        if (event.target.files && event.target.files[0])
+            data = event.target.files[0];
+        if (event.target.files[0].name && event.target.files.length > 0) {
+            data = event.target.files[0];
+        } else {
+            data = 'null';
+        }
+        this.uploadFile = data;
     }
 
-
-
-  }
-  onFileChange(event: any) {
-    const file = event.target.files[0];
-    // this.customersMasterForm.get('image').setValue(file);
-    // Image preview
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.previewUrl = reader.result;
-    };
-    reader.readAsDataURL(file);
-
-    let data;
-    if (event.target.files && event.target.files[0])
-      data = event.target.files[0];
-    if (event.target.files[0].name && event.target.files.length > 0) {
-      data = event.target.files[0];
-    } else {
-      data = 'null';
+    onCancel() {
+        this.activeModal.dismiss();
     }
-    this.uploadFile = data;
-  }
 
-  onCancel() {
-    this.activeModal.dismiss();
-  }
+    onSubmit(f: NgForm) {
+        if (f.invalid) {
+            return;
+        }
+        {
+            let name = f.value.input1;
+            let email = f.value.input2;
+            let password = f.value.input3;
 
-  onSubmit(f: NgForm) {
-    if (f.invalid) {
-      return;
+            if (name && email && password) {
+                const newData = [name, email, password];
+                this.dataArray.push(newData);
+            } else if (name && email) {
+                const newData = [name, email];
+                this.dataArray.push(newData);
+            } else if (name) {
+                const newData = [name];
+                this.dataArray.push(newData);
+            }
+            this.dataArray = [].concat(...this.dataArray);
+            let data: any = {
+                templateName: this.templet.templateName,
+                templateBody: {
+                    body: this.templet?.body?.body,
+                    bodyattribute: this.dataArray,
+                },
+                templateHeader: {
+                    header: this.templet?.header?.header,
+                    headerFileType: this?.templet?.header?.headerFileType,
+                    link: this.templet?.header?.file,
+                },
+            };
+            this.activeModal.close(data);
+        }
     }
-    {
-      let name = f.value.input1;
-      let email = f.value.input2;
-      let password = f.value.input3;
-
-      if (name && email && password) {
-        const newData = [name, email, password];
-        this.dataArray.push(newData);
-      } else if (name && email) {
-        const newData = [name, email];
-        this.dataArray.push(newData);
-      } else if (name) {
-        const newData = [name];
-        this.dataArray.push(newData);
-      }
-      this.dataArray = [].concat(...this.dataArray);
-      let data: any = {
-        templateName: this.templet.templateName,
-        templateBody: {
-          body: this.templet?.body?.body,
-          bodyattribute: this.dataArray,
-        },
-        templateHeader: {
-          header: this.templet?.header?.header,
-          headerFileType: this?.templet?.header?.headerFileType,
-          link: this.templet?.header?.file,
-        },
-      };
-      this.activeModal.close(data);
-    }
-  }
 }
