@@ -81,11 +81,10 @@
                         </svg>
                     </div>
 
-                    <div class="chat-cart-ico" data-bs-toggle="tooltip" data-bs-placement="top" title="Cart"><i
-                            class="las la-shopping-cart"></i></div>
 
 
-                    <div class="chat-cart-ico" [ngClass]="{'disabled': selectedContacts().length === 0}">
+                    <div class="chat-cart-ico" [ngClass]="{'disabled': selectedContacts().length === 0}"
+                        (click)="toggleCartPopup()">
                         <i class="las la-shopping-cart"></i>
                     </div>
 
@@ -152,7 +151,7 @@
 
 
 <!-- Add to CART  POPUP -->
-<div class="attach-opentray attach-opentray1">
+<!-- <div class="attach-opentray attach-opentray1">
     <div class="inner-attachicons">
         <div class="row">
             <div class="col-sm-6">
@@ -172,6 +171,35 @@
                 </div>
             </div>
 
+        </div>
+    </div>
+</div> -->
+
+<!-- Add to Cart Popup -->
+<div *ngIf="isCartPopupOpen" class="attach-opentray attach-opentray1">
+    <div class="inner-attachicons">
+        <!-- Close Button -->
+        <div class="close-btn" (click)="toggleCartPopup()">
+            <i class="las la-times"></i> <!-- You can use any icon or a custom "X" -->
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="atthico cursur" (click)="sendingCatalog('bev_ird')">
+                    <a><img src="../assets/images/atticon-7.png" alt="File Not Found" />
+                        <p>
+                            Beverages And IRD(Food Menu)
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="atthico cursur" (click)="sendingCatalog('spa')">
+                    <a><img src="../assets/images/atticon-9.png" alt="File Not Found" />
+                        <p>SPA</p>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </div>

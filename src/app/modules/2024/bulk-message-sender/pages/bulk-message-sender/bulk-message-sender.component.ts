@@ -22,6 +22,8 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
     isProceess: boolean = true;
     isAllSelected = false;
     logInUserName: any;
+    isCartPopupOpen: boolean = false;
+
     private destroy$ = new Subject<void>();
 
 
@@ -95,8 +97,8 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
 
     quickReply() {
-        const selectedContacts = this.contactList.filter(contact => contact.selected,);
 
+        this.isCartPopupOpen = false;
         const modalRef = this.modalService.open(QuickReplyComponent, {
             size: 'md',
             centered: true,
@@ -194,6 +196,10 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
 
 
+    // This method will be triggered to open/close the popup
+    toggleCartPopup() {
+        this.isCartPopupOpen = !this.isCartPopupOpen;
+    }
 
     sendingCatalog(e: any) {
 
