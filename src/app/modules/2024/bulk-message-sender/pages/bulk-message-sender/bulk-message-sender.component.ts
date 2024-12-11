@@ -74,10 +74,28 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
                     const threshold = now.getTime() - (24 * 60 * 60 * 1000); // 24 hours ago in milliseconds
 
                     // Filter the open array to include only entries before 24 hours
-                    this.contactList = this.open.filter((contact: any) => {
-                        const contactTime = new Date(contact.time).getTime();
-                        return contactTime >= threshold;
-                    });
+                    // this.contactList = this.open.filter((contact: any) => {
+                    //     const contactTime = new Date(contact.time).getTime();
+                    //     return contactTime >= threshold;
+                    // });
+
+                    this.contactList = this.open
+                        .filter((contact: any) => {
+                            const contactTime = new Date(contact.time).getTime();
+                            return contactTime >= threshold;
+                        })
+                        .sort((a: any, b: any) => {
+                            // Assuming the contact has a 'name' property to sort alphabetically
+                            const nameA = a.fullName.toLowerCase(); // Convert to lower case for case-insensitive comparison
+                            const nameB = b.fullName.toLowerCase();
+                            if (nameA < nameB) {
+                                return -1;
+                            }
+                            if (nameA > nameB) {
+                                return 1;
+                            }
+                            return 0; // If names are equal, return 0
+                        });
 
                     this.isProceess = false;  // End processing flag
                 },
