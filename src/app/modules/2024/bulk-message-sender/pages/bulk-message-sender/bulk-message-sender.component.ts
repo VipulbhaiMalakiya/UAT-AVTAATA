@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Subject, Subscription, take, takeUntil } from 'rxjs';
 import { WhatsAppService } from 'src/app/_api/whats-app.service';
 import { AudioComponent } from 'src/app/modules/chat/components/audio/audio.component';
+import { ImageUplodComponent } from 'src/app/modules/chat/components/image-uplod/image-uplod.component';
 import { QuickReplyComponent } from 'src/app/modules/chat/components/quick-reply/quick-reply.component';
 import { TempletsComponent } from 'src/app/modules/chat/components/templets/templets.component';
 import { VideoComponent } from 'src/app/modules/chat/components/video/video.component';
@@ -97,9 +98,6 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
     }
 
 
-
-
-
     quickReply() {
 
         this.isCartPopupOpen = false;
@@ -123,7 +121,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
 
 
-    sendMessage(form: any, type: 'text' | 'notes' | 'interactive' | 'template' | 'audio' | 'video') {
+    sendMessage(form: any, type: 'text' | 'notes' | 'interactive' | 'template' | 'audio' | 'video' | 'image') {
         this.isProceess = true; // Indicate the process has started.
 
         const selectedContacts = this.contactList.filter(contact => contact.selected);
@@ -226,6 +224,19 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
                 };
             }
 
+            else if (type == 'image') {
+                request = {
+                    messaging_product: 'whatsapp',
+                    recipient_type: 'individual',
+                    to: contact.phoneNo,
+                    type: 'image',
+                    fromId: this.userData?.userId,
+                    assignedto: this.userData?.userId,
+                    names: contact.fullName || null,
+                    logInUserName: this.logInUserName,
+                };
+            }
+
 
             let formData = new FormData();
             formData.append('messageEntry', JSON.stringify(request));
@@ -305,14 +316,31 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
     }
 
     onimageAdd() {
-
+        this.showupload = false;
+        const modalRef = this.modalService.open(ImageUplodComponent, {
+            size: 'lg',
+            centered: true,
+            backdrop: 'static',
+        });
+        if (modalRef) {
+            this.isProceess = false;
+        } else {
+            this.isProceess = false;
+        }
+        modalRef.result
+            .then((data: any) => {
+                if (data) {
+                    this.sendMessage(data, 'image');
+                }
+            })
+            .catch(() => { });
     }
 
 
 
 
     getTemplates(e: any) {
-
+        this.isCartPopupOpen = false;
         const modalRef = this.modalService.open(TempletsComponent, {
             size: 'lg',
             centered: true,
@@ -336,7 +364,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
     }
 
     onaudioAdd() {
-
+        this.showupload = false;
         const modalRef = this.modalService.open(AudioComponent, {
             size: 'md',
             centered: true,
@@ -357,6 +385,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
     }
 
     onvideoAdd() {
+        this.showupload = false;
 
         const modalRef = this.modalService.open(VideoComponent, {
             size: 'md',
@@ -369,7 +398,6 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
         modalRef.result
             .then((data: any) => {
                 if (data) {
-
                     this.sendMessage(data, 'video');
                 }
             })
