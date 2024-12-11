@@ -117,73 +117,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
 
 
-    submitForm(form: any) {
-        this.isProceess = true; // Indicate the process has started.
-
-        const selectedContacts = this.contactList.filter(contact => contact.selected);
-
-        // Track the number of API calls
-        let successCount = 0;
-        let errorCount = 0;
-        let processedCount = 0; // Track the number of processed requests
-
-        selectedContacts.forEach(contact => {
-            const request = {
-                messaging_product: 'whatsapp',
-                recipient_type: 'individual',
-                to: contact.phoneNo,
-                type: 'text',
-                fromId: this.userData?.userId,
-                logInUserName: this.logInUserName,
-                assignedto: this.userData?.userId,
-                names: contact.fullName || null,
-                text: {
-                    preview_url: false,
-                    body: form.value.chat,
-                },
-            };
-
-            let formData = new FormData();
-            formData.append('messageEntry', JSON.stringify(request));
-
-            // Make the API call for each selected contact
-            this.whatsappService.sendWhatsAppMessage(formData)
-                .pipe(takeUntil(this.destroy$))
-                .subscribe({
-                    next: (response) => {
-                        let data: any = response;
-                        successCount++; // Increment success count
-                        this.toastr.success(data.message); // Show success notification
-                        const audio = new Audio('../../../../../assets/sound/Whatsapp Message - Sent - Sound.mp3');
-                        audio.play();
-                    },
-                    error: (error) => {
-                        errorCount++; // Increment error count
-                        this.toastr.error(error.error.message); // Handle error and show error notification
-                    },
-                    complete: () => {
-                        processedCount++; // Increment processed count for each request
-                        if (processedCount === selectedContacts.length) {
-                            // Check if all requests are processed
-                            this.isProceess = false; // Set processing flag to false
-                            if (successCount === selectedContacts.length) {
-                                // If all requests are successful, navigate to the inbox
-                                this.router.navigate(['/admin/inbox']);
-                                this.message = ''; // Clear the message field
-                                this.contactList.forEach(contact => (contact.selected = false)); // Unselect all contacts
-                            } else {
-                                this.toastr.warning(
-                                    `${successCount} messages sent successfully. ${errorCount} failed.`
-                                );
-                            }
-                        }
-                    }
-                });
-        });
-    }
-
-
-    submitNoteForm(form: any) {
+    sendMessage(form: any, type: 'text' | 'notes') {
         this.isProceess = true; // Indicate the process has started.
 
         const selectedContacts = this.contactList.filter(contact => contact.selected);
@@ -199,14 +133,14 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
                 messaging_product: 'whatsapp',
                 recipient_type: 'individual',
                 to: contact.phoneNo,
-                type: 'notes',
+                type: type,
                 fromId: this.userData?.userId,
                 logInUserName: this.logInUserName,
                 assignedto: this.userData?.userId,
                 names: contact.fullName || null,
                 text: {
                     preview_url: false,
-                    body: form.value.note,
+                    body: form.value[type === 'text' ? 'chat' : 'note'],
                 },
             };
 
@@ -215,7 +149,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
             // Make the API call for each selected contact
             this.whatsappService.sendWhatsAppMessage(formData)
-                .pipe(take(1))
+                .pipe(takeUntil(this.destroy$))
                 .subscribe({
                     next: (response) => {
                         let data: any = response;
@@ -241,13 +175,21 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
                                 this.contactList.forEach(contact => contact.selected = false); // Unselect all contacts
                             } else {
                                 this.toastr.warning(
-                                    `${successCount} notes sent successfully. ${errorCount} failed.`
+                                    `${successCount} ${type} messages sent successfully. ${errorCount} failed.`
                                 );
                             }
                         }
                     },
                 });
         });
+    }
+
+    submitForm(form: any) {
+        this.sendMessage(form, 'text');
+    }
+
+    submitNoteForm(form: any) {
+        this.sendMessage(form, 'notes');
     }
 
 
