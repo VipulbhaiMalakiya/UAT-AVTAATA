@@ -258,19 +258,26 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
     }
 
     getTemplates(e: any) {
+
+
+
+        this.isCartPopupOpen = false;
         const modalRef = this.modalService.open(TempletsComponent, {
-            size: 'lg',
+            size: 'md',
             centered: true,
             backdrop: 'static',
         });
-
-        this.isProceess = false; // Always set to false regardless of modalRef existence
-
+        if (modalRef) {
+            this.isProceess = false;
+        } else {
+            this.isProceess = false;
+        }
         const componentInstance = modalRef.componentInstance as TempletsComponent;
         componentInstance.issuesMaster = e;
-
         modalRef.result
-            .then((data: any) => data && this.sendMessage(data, 'template'))
+            .then((data: any) => {
+                this.message = data;
+            })
             .catch(() => { });
     }
 
