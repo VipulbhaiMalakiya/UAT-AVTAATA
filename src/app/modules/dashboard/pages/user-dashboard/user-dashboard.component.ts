@@ -214,6 +214,7 @@ export class UserDashboardComponent implements OnInit {
         this.isAdminescalationdata(model);
         this.isAdmincustomerdata(model);
 
+        // this.isProceess = false;
     }
 
 
@@ -233,6 +234,7 @@ export class UserDashboardComponent implements OnInit {
             this.isAdminconversationsdata(model);
             this.isAdminescalationdata(model);
             this.isAdmincustomerdata(model);
+            // this.isProceess = false;
 
         }
     }
@@ -406,6 +408,7 @@ export class UserDashboardComponent implements OnInit {
         this.subscription = this.apiService.getAll(this.masterName).pipe(take(1))
             .subscribe(data => {
                 this.customerdata = data.data;
+                this.isProceess = false;
                 this.cd.detectChanges();
             }, error => {
                 this.isProceess = false;
@@ -420,7 +423,7 @@ export class UserDashboardComponent implements OnInit {
             .subscribe(data => {
                 this.conversationsdata = data.data;
 
-                // this.isProceess = false;
+                this.isProceess = false;
                 this.cd.detectChanges();
             }, error => {
                 this.isProceess = false;
@@ -435,7 +438,7 @@ export class UserDashboardComponent implements OnInit {
             .subscribe(data => {
                 this.escalationdata = data.data;
 
-                // this.isProceess = false;
+                this.isProceess = false;
                 this.cd.detectChanges();
             }, error => {
                 this.isProceess = false;
