@@ -507,7 +507,9 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
             componentInstance.issuesMaster = e;
             modalRef.result
                 .then((data: any) => {
-                    this.message = data;
+                    // this.message = data;
+                    this.sendMessage(data, 'template');
+
                 })
                 .catch(() => { });
         } else {
