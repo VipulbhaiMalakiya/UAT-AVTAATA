@@ -135,7 +135,7 @@ export class ChatComponent
     // @ViewChild('chatContainer') chatContainer!: ElementRef;
 
     private currentPage: number = 1;
-    private pageSize: number = 100;
+    private pageSize: number = 30;
 
 
     toggleEmojiPicker() {
@@ -487,7 +487,7 @@ export class ChatComponent
 
         this.checkTimeDifference(e.time);
 
-        this.pageSize = 100;
+        this.pageSize = 30;
         this.currentPage = 1;
         this.receivedData = [];
         this.isProceess = true;
