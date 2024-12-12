@@ -1902,4 +1902,19 @@ export class ChatComponent
     }
 
 
+    closeEmojiPickerTray() {
+        this.showEmojiPicker = false;
+        // this.isCartPopupOpen = false;
+    }
+
+    @HostListener('document:click', ['$event'])
+    onDocumentClick(event: MouseEvent): void {
+        const attachTray = document.getElementById('chat-emoji-ico');
+        if (attachTray && !attachTray.contains(event.target as Node)) {
+            this.closeEmojiPickerTray();
+        }
+
+
+    }
+
 }

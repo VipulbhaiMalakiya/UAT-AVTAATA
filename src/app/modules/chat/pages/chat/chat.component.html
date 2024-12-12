@@ -2282,8 +2282,8 @@
                             </ul>
 
                             <div class="chatwrite-emojisico">
-                                <div class="chat-emoji-ico" [ngClass]="{'disabled': hideReplyAndNotes}"
-                                    (click)="toggleEmojiPicker()">
+                                <div class="chat-emoji-ico" id="chat-emoji-ico"
+                                    [ngClass]="{'disabled': hideReplyAndNotes}" (click)="toggleEmojiPicker()">
                                     <i class="las la-smile"></i>
                                 </div>
                                 <div class="chat-attach-ico" [ngClass]="{'disabled': hideReplyAndNotes}"
