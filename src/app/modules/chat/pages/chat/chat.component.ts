@@ -1907,11 +1907,30 @@ export class ChatComponent
         // this.isCartPopupOpen = false;
     }
 
+    closeAttachTray() {
+        this.showupload = false;
+    }
+
+    closeCartTray() {
+        this.showupload1 = false;
+    }
+
+
     @HostListener('document:click', ['$event'])
     onDocumentClick(event: MouseEvent): void {
         const attachTray = document.getElementById('chat-emoji-ico');
         if (attachTray && !attachTray.contains(event.target as Node)) {
             this.closeEmojiPickerTray();
+        }
+
+        const attachTray1 = document.getElementById('chat-attach-ico');
+        if (attachTray1 && !attachTray1.contains(event.target as Node)) {
+            this.closeAttachTray();
+        }
+
+        const attachTray2 = document.getElementById('chat-cart-ico');
+        if (attachTray2 && !attachTray2.contains(event.target as Node)) {
+            this.closeCartTray();
         }
 
 
