@@ -792,12 +792,13 @@ export class ChatComponent
         }
     }
 
-    ngAfterViewInit() {
-        this.scrollToBottom();
-    }
+
 
     ngAfterViewChecked() {
         // this.scrollToBottom();
+    }
+    ngAfterViewInit() {
+        this.scrollToBottom();
     }
     private scrollToBottom(): void {
         setTimeout(() => { // Use setTimeout to ensure the DOM is fully rendered
@@ -815,6 +816,9 @@ export class ChatComponent
         }, 0);
     }
 
+    onImageLoad() {
+        this.scrollToBottom(); // Scroll to bottom whenever an image is loaded
+    }
 
 
     scrollToMiddle(messageId: string): void {

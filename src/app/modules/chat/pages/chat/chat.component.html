@@ -15,114 +15,12 @@
                             </button>
                         </form>
                     </div>
-                    <!-- <div class="topchat-filter-icon"><i class="las la-filter"></i></div> -->
-                    <!-- <div class="topchat-checklist-icon"><i class="las la-list-alt"></i></div> -->
                 </div>
-                <div class="filters-popup">
-                    <div class="chakra-popover">
-                        <h2 class="chakra-heading">Filter</h2>
-                        <button type="button" class="chakra-button">
-                            Reset
-                        </button>
-                    </div>
 
-                    <div class="filters-rdbtns">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"
-                                checked />
-                            <label class="form-check-label" for="flexRadioDefault1">
-                                Open Chats
-                            </label>
-                        </div>
-
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                id="flexRadioDefault2" />
-                            <label class="form-check-label" for="flexRadioDefault2">
-                                Resolved Chats
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="filters-ckbtns">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                            <label class="form-check-label" for="flexCheckDefault">
-                                Unread Chats
-                            </label>
-                        </div>
-                    </div>
-                    <div class="filters-tags">
-                        <p class="chakra-text">
-                            <i class="las la-tag"></i> Tags
-                        </p>
-                        <select id="select-tags" class="form-select">
-                            <option value="">All</option>
-                            <option value="tgnoo">No Label Attached</option>
-                            <option value="tg501">501</option>
-                            <option value="chkin">Checked in</option>
-                            <option value="chkout">Checked out</option>
-                            <option value="tgnew">New</option>
-                        </select>
-                    </div>
-                    <div class="filters-tags">
-                        <p class="chakra-text">
-                            <i class="las la-user-friends"></i> Assignee
-                        </p>
-                        <div class="dropdown">
-                            <button class="form-control dropdown-toggle" type="button" id="dropdownMenuButton1"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                All
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <ng-container *ngFor="let i of aciveUser; let ind = index">
-                                    <li *ngIf="i.userId === userData.userId">
-                                        <a class="dropdown-item cursur">
-                                            <span class="sc-bxgxFH"><i class="las la-user-tie"></i></span>
-                                            <span>Yourself</span></a>
-                                    </li>
-                                    <li *ngIf="i.userId !== userData.userId">
-                                        <a class="dropdown-item cursur">
-                                            <span class="sc-bxgxFH" [ngClass]="getColorClass(ind)">{{
-                                                getShortName(i.firstName) }}
-                                            </span>
-                                            <span>{{ i.firstName }}
-                                                {{ i.lastName }}</span></a>
-                                    </li>
-                                </ng-container>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="filters-tags">
-                        <p class="chakra-text">
-                            <i class="las la-sort"></i> Sort
-                        </p>
-                        <select class="form-select">
-                            <option selected>Newest</option>
-                            <option value="1">Oldest</option>
-                        </select>
-                    </div>
-                    <button type="button" class="common-btn mt-3">
-                        Submit
-                    </button>
-                </div>
-                <!--filters-popup-->
             </div>
             <div class="leftusers-list">
                 <ul class="nav nav-pills" id="pills-tab" role="tablist">
-                    <!-- <div class="inbox-alldp">
-            <div class="select-dropdown">
-              <button role="button" data-value="" class="select-dropdown__button dropdown-toggle"><span>All
-                </span></button>
-              <ul class="select-dropdown__list">
-                <li data-value="1" class="select-dropdown__list-item">All <span class="dcheck-icon"><i
-                      class="las la-check"></i></span></li>
-                <li data-value="2" class="select-dropdown__list-item">You</li>
-                <li data-value="3" class="select-dropdown__list-item">Unassigned</li>
-                <li data-value="4" class="select-dropdown__list-item">Spam</li>
-              </ul>
-            </div>
-          </div> -->
+
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" [class.active]="isstatus == 'open'" id="pills-home-tab"
                             data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab"
@@ -602,10 +500,8 @@
                             <div [id]="'message-' + data.messageId" class="message">
                                 <!-- <div class="ondtcss-chx"> <span class="dtcss-fm"> {{data.time}} </span></div> -->
                                 <!-- Notifaction -->
-                                <li class="msg-replayer" *ngIf="
-                                                                data.type === 'notification' &&
-                                                                data.messagetype === 'escalationmatrix'
-                                                            ">
+                                <li class="msg-replayer"
+                                    *ngIf="data.type === 'notification' && data.messagetype === 'escalationmatrix'">
                                     <ng-container>
                                         <div class="avata">
                                             <span *ngIf="data.userFullName === null">Y</span>
@@ -620,7 +516,7 @@
                                             </div>
                                             <div class="suserchat-info">
                                                 <span class="suserchat-name" *ngIf="
-                                                                                data.userFullName == null
+                                                                     data.userFullName == null
                                                                             ">You</span>
                                                 <span class="suserchat-name" *ngIf="
                                                                                 data.userFullName !== null
@@ -755,22 +651,17 @@
 
                                     <div class="chat-info">
                                         <div class="last-msg p-2 pb-1 rounded">
-                                            <!-- <object type="application/pdf" style="height:150px; display:flex; margin:auto;"
-                                                                        (error)="handleError()">
-                                                                        <img src="../assets/images/pdf-image.jpg"
-                                                                            style="max-height:100px; margin:auto;" alt="File Not Found">
-                                                                    </object> -->
-
                                             <img src="../assets/images/pdf-image.jpg" style="
                                                                             max-height: 100px;
                                                                             margin: auto;
-                                                                        " alt="File Not Found" />
+                                                                        " alt="File Not Found"
+                                                (load)="onImageLoad()" />
 
                                             <!-- <ngx-extended-pdf-viewer [src]="data.fileUrl"></ngx-extended-pdf-viewer> -->
 
                                             <div class="pdf-nameic cursur" (click)="downloadFile(data)">
                                                 <span class="pdf-icon"><img src="../assets/images/document-icon.png"
-                                                        alt="File Not Found" />
+                                                        alt="File Not Found" (load)="onImageLoad()" />
                                                     {{
                                                     data.filename.slice(24)
                                                     | shortenFileName : 20
@@ -830,25 +721,17 @@
                                     </div>
                                     <div class="chat-info">
                                         <div class="last-msg p-2 pb-1 mb-2 rounded">
-                                            <!-- <object data="../assets/images/example.pdf" type="application/pdf" width="100%"
-                                                                        height="200px">
-                                                                    </object> -->
 
-                                            <!-- <object *ngIf="data && data.fileUrl" [data]=sanitizeUrl(data.fileUrl)
-                                                                        type="application/pdf" style="height:150px; display:flex; margin:auto;"
-                                                                        (error)="handleError()">
-                                                                        <img src="../assets/images/pdf-image.jpg"
-                                                                            style="max-height:100px; margin:auto;" alt="File Not Found">
-                                                                    </object> -->
 
                                             <img src="../assets/images/pdf-image.jpg" style="
                                                                             max-height: 100px;
                                                                             margin: auto;
-                                                                        " alt="File Not Found" />
+                                                                        " alt="File Not Found"
+                                                (load)="onImageLoad()" />
 
                                             <div class="pdf-nameic cursur" (click)="downloadFile(data)">
                                                 <span class="pdf-icon"><img src="../assets/images/document-icon.png"
-                                                        alt="File Not Found" />
+                                                        alt="File Not Found" (load)="onImageLoad()" />
                                                     {{
                                                     data.filename.slice(24)
                                                     | shortenFileName : 20
@@ -857,10 +740,7 @@
                                                         class="las la-arrow-circle-down"></i></span>
                                             </div>
                                         </div>
-                                        <!-- <span class="suserchat-name" *ngIf="data.name !== null">{{
-                                                                        contactinfo.fullName || "Reception"
-                                                                        }}</span>
-                                                                    <span class="suserchat-name" *ngIf="data.name == null">Reception</span> -->
+
                                         {{ data.time | dateAgo }}
                                     </div>
                                 </li>
@@ -910,17 +790,6 @@
                                                 </span>
 
                                             </ng-container>
-
-                                            <!-- <ng-container *ngIf="data.messageId">
-                                                                        <span class="last-msg-checkic text-success"
-                                                                            *ngIf="messagestates == 'read'"><i
-                                                                                class="las la-check-double"></i></span>
-                                                                        <span class="last-msg-checkic" *ngIf="messagestates == 'sent'"><i
-                                                                                class="las la-check"></i></span>
-                                                                        <span class="last-msg-checkic" *ngIf="
-                                                                                messagestates == 'delivered'
-                                                                            "><i class="las la-check-double"></i></span>
-                                                                    </ng-container> -->
                                         </div>
                                     </div>
                                 </li>
@@ -972,9 +841,7 @@
                                             </video>
                                         </div>
                                         <div class="suserchat-info pt-2">
-                                            <!-- <span class="suserchat-name" *ngIf="data.userFullName == null">You</span>
-                                                                        <span class="suserchat-name" *ngIf="data.userFullName !== null">{{
-                                                                            data.userFullName || "" }}</span> -->
+
                                             {{ data.time | dateAgo }}
                                             <ng-container *ngIf="data.messageId">
                                                 <span class="last-msg-checkic text-success" *ngIf="
@@ -995,17 +862,7 @@
                                                 </span>
 
                                             </ng-container>
-                                            <!--
-                                                                    <ng-container *ngIf="data.messageId">
-                                                                        <span class="last-msg-checkic text-success"
-                                                                            *ngIf="messagestates == 'read'"><i
-                                                                                class="las la-check-double"></i></span>
-                                                                        <span class="last-msg-checkic" *ngIf="messagestates == 'sent'"><i
-                                                                                class="las la-check"></i></span>
-                                                                        <span class="last-msg-checkic" *ngIf="
-                                                                                messagestates == 'delivered'
-                                                                            "><i class="las la-check-double"></i></span>
-                                                                    </ng-container> -->
+
                                         </div>
                                     </div>
                                 </li>
@@ -1054,7 +911,7 @@
                                         </div>
 
                                         <div class="last-msg p-2 rounded bg-light">
-                                            <img [src]="data.fileUrl" alt="File Not Found" />
+                                            <img [src]="data.fileUrl" alt="File Not Found" (load)="onImageLoad()" />
                                         </div>
                                         <div class="suserchat-info pt-2">
                                             <span class="suserchat-name" *ngIf="data.userFullName == null">You</span>
@@ -1110,7 +967,7 @@
                                             <i class="las la-arrow-circle-down"></i>
                                         </div>
                                         <div class="last-msg p-2 rounded bg-light">
-                                            <img [src]="data.fileUrl" alt="File Not Found" />
+                                            <img [src]="data.fileUrl" alt="File Not Found" (load)="onImageLoad()" />
                                         </div>
                                         <!-- <span class="suserchat-name" *ngIf="data.name !== null">{{
                                                                         contactinfo.fullName || "Reception"
