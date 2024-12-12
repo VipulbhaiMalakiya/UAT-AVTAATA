@@ -2155,8 +2155,7 @@
                                     <img src="../assets/images/quick-reply-icon.png" alt="File Not Found" />
                                 </div>
 
-                                <div class="chat-template-ico" [ngClass]="{'disabled': hideReplyAndNotes}"
-                                    title="Templates" (click)="getTemplates(chatname)">
+                                <div class="chat-template-ico" title="Templates" (click)="getTemplates(chatname)">
                                     <svg fill="#000000" viewBox="0 0 32 32" id="icon"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -2189,13 +2188,19 @@
                                     <i class="las la-shopping-cart"></i>
                                 </div>
 
-                                <div *ngIf="hideReplyAndNotes" class="chat-template-ico ms-auto">
+                                <!-- <div *ngIf="hideReplyAndNotes" class="chat-template-ico ms-auto">
                                     <span class="text-danger ">
-                                        You cannot message this customer
+                                        <small>The customer has not responded within 24 hours. Direct messaging is
+                                            disabled
+                                            until they reply. You may send a template
+                                            instead.</small>
+
+
                                     </span>
-                                </div>
+                                </div> -->
 
                             </div>
+
                             <div class="attach-opentray attach-opentray1" *ngIf="showupload1">
                                 <div class="inner-attachicons">
                                     <div class="row">
@@ -2297,11 +2302,14 @@
                         </div>
 
 
+
                         <div class="tab-content">
                             <div class="tab-pane active" id="reply">
                                 <form class="writechat-boder" #loginForm="ngForm" (ngSubmit)="submitForm(loginForm)">
                                     <textarea class="form-control h-auto" id="chat" [(ngModel)]="message" required
-                                        name="chat" placeholder="Type a message...." rows="1" (keydown.enter)="
+                                        name="chat"
+                                        placeholder="{{ hideReplyAndNotes ? 'The customer has not responded within 24 hours. Direct messaging is disabled until they reply. You may send a template instead.' : 'Type a message....' }}"
+                                        rows="1" (keydown.enter)="
                                                 submitForm(loginForm);
                                                 $event.preventDefault()
                                             " appWhitespaceValidator [disabled]="hideReplyAndNotes"
@@ -2322,7 +2330,9 @@
                                 <form class="writechat-boder" #ngNotesForm="ngForm"
                                     (ngSubmit)="submitNoteForm(ngNotesForm)">
                                     <textarea class="form-control h-auto" id="note" [(ngModel)]="message" required
-                                        name="note" placeholder="Type a note...." rows="1" (keydown.enter)="
+                                        name="note"
+                                        placeholder="{{ hideReplyAndNotes ? 'The customer has not responded within 24 hours. Direct messaging is disabled until they reply. You may send a template instead.' : 'Type a message....' }}"
+                                        rows="1" (keydown.enter)="
                                             submitNoteForm(ngNotesForm);
                                             $event.preventDefault()
                                         " appWhitespaceValidator></textarea>
