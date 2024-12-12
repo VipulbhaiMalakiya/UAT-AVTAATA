@@ -43,6 +43,12 @@ import { HttpClient } from '@angular/common/http';
 import { CatalogComponent } from '../../components/catalog/catalog.component';
 
 
+
+interface MessageGroup {
+    date: string;
+    messages: MessageData[];
+}
+
 @Component({
     selector: 'app-chat',
     templateUrl: './chat.component.html',
@@ -80,6 +86,8 @@ export class ChatComponent
     messageList: string[] = [];
     private socket$!: WebSocketSubject<any>;
     public receivedData: MessageData[] = [];
+    groupedMessages: MessageGroup[] = []; // Declare groupedMessages property
+
     item: any = [];
     checkinstatus: any;
     open: any = [];
@@ -119,6 +127,7 @@ export class ChatComponent
     slecteduser: any = {};
     private notificationSound?: HTMLAudioElement;
 
+    today!: string;
 
 
 
@@ -279,6 +288,7 @@ export class ChatComponent
 
         // this.handleMessageStatus(sessionStorage.getItem('currentContact') ?? '', false);
 
+        this.today = new Date().toDateString();
 
 
 
@@ -543,10 +553,14 @@ export class ChatComponent
 
                         if (isInitialLoad) {
                             this.receivedData = response; // Replace data on initial load
+                            this.groupMessagesByDate();   // Group messages by date
+
                             this.scrollToBottom(); // Scroll to bottom on first load
                         } else {
                             // Prepend new data to the receivedData array
                             this.receivedData = [...response, ...this.receivedData];
+                            this.groupMessagesByDate();   // Regroup messages after merging data
+
                             // Get the messageId of the last new message (the last item in the response array)
                             const lastNewMessageId = response[response.length - 1]?.messageId;
 
@@ -581,6 +595,26 @@ export class ChatComponent
                     console.log('Chat history loaded successfully');
                 }
             });
+    }
+
+    groupMessagesByDate(): void {
+        const grouped: MessageGroup[] = this.receivedData.reduce((acc: MessageGroup[], message: any) => {
+            const messageDate = new Date(message.time).toDateString();
+
+            // Check if the date group already exists
+            let group = acc.find((group) => group.date === messageDate);
+
+            if (!group) {
+                // Create a new group if it doesn't exist
+                group = { date: messageDate, messages: [] };
+                acc.push(group);
+            }
+
+            group.messages.push(message);
+            return acc;
+        }, []);
+
+        this.groupedMessages = grouped; // Store grouped data for the template
     }
 
 
