@@ -1391,7 +1391,8 @@
                                                     <span class="pdf-icon" (click)="
                                                                                     downloadFile1(data)
                                                                                 "><img
-                                                            src="../assets/images/pdf-icon.png" alt="File Not Found" />
+                                                            src="../assets/images/pdf-icon.png" (load)="onImageLoad()"
+                                                            alt="File Not Found" />
                                                         {{
                                                         data.templateName
                                                         }}</span>
@@ -1471,7 +1472,8 @@
                                                     <span class="pdf-icon" (click)="
                                                                                     downloadFile1(data)
                                                                                 "><img
-                                                            src="../assets/images/pdf-icon.png" alt="File Not Found" />
+                                                            src="../assets/images/pdf-icon.png" (load)="onImageLoad()"
+                                                            alt="File Not Found" />
                                                         {{
                                                         data.templateName
                                                         }}</span>
@@ -1565,7 +1567,8 @@
                                                     <span class="pdf-icon" (click)="
                                                                                     downloadFile1(data)
                                                                                 "><img
-                                                            src="../assets/images/pdf-icon.png" alt="File Not Found" />
+                                                            src="../assets/images/pdf-icon.png" (load)="onImageLoad()"
+                                                            alt="File Not Found" />
                                                         {{
                                                         data.templateName
                                                         }}</span>
@@ -2266,13 +2269,13 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-sm-4" (click)="onLocationAdd()">
+                                        <!-- <div class="col-sm-4" (click)="onLocationAdd()">
                                             <div class="atthico cursur">
                                                 <a><img src="../assets/images/atticon-5.jpg" alt="File Not Found" />
                                                     <p>Location</p>
                                                 </a>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
