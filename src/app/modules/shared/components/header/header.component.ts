@@ -95,7 +95,14 @@ export class HeaderComponent implements OnInit {
     }
 
     navigateToProfile() {
-        this.router.navigate(['/admin/profile']);
+        if (this.isAdmin) {
+            this.router.navigate(['/admin/profile']);
+
+        }
+        else {
+            this.router.navigate(['/profile']);
+
+        }
     }
 
     get isAdmin() {
