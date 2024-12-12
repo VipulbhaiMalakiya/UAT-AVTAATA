@@ -51,11 +51,11 @@ export class LocationDetailsComponent implements OnInit {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
-                    // this.latitude = position.coords.latitude;
-                    // this.longitude = position.coords.longitude;
+                    this.latitude = position.coords.latitude;
+                    this.longitude = position.coords.longitude;
 
-                    this.latitude = 15.5930928;
-                    this.longitude = 73.7471647;
+                    // this.latitude = 15.5930928;
+                    // this.longitude = 73.7471647;
                     this.center = {
                         lat: this.latitude,
                         lng: this.longitude,
