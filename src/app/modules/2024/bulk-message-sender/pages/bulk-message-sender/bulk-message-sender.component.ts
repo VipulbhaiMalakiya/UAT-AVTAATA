@@ -421,13 +421,24 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
     closeUploadTray() {
         this.showupload = false;
+        // this.isCartPopupOpen = false;
+    }
+    closeUploadTray1() {
+        // this.showupload = false;
+        this.isCartPopupOpen = false;
     }
     @HostListener('document:click', ['$event'])
-    onDocumentClick(event: MouseEvent) {
+    onDocumentClick(event: MouseEvent): void {
         const attachTray = document.getElementById('attach-tray');
         if (attachTray && !attachTray.contains(event.target as Node)) {
             this.closeUploadTray();
         }
+
+        const attachTray1 = document.getElementById('attach-tray1');
+        if (attachTray1 && !attachTray1.contains(event.target as Node)) {
+            this.closeUploadTray1();
+        }
+
     }
     sendingCatalog(e: any) {
         this.showupload = false;
