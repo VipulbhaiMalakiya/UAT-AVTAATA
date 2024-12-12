@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -419,6 +419,16 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
         this.showupload = !this.showupload;
     }
 
+    closeUploadTray() {
+        this.showupload = false;
+    }
+    @HostListener('document:click', ['$event'])
+    onDocumentClick(event: MouseEvent) {
+        const attachTray = document.getElementById('attach-tray');
+        if (attachTray && !attachTray.contains(event.target as Node)) {
+            this.closeUploadTray();
+        }
+    }
     sendingCatalog(e: any) {
         this.showupload = false;
         this.isCartPopupOpen = false;
