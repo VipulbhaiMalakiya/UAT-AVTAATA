@@ -6,7 +6,9 @@
         </li>
         <li *ngIf="isUser || isResolver" routerLinkActive="active" (click)="reloadCurrentPage1()">
             <a routerLink="/inbox" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
-                class="menu-list-title"><img src="../assets/images/menu-icon-2.png" alt="" /> inbox</a>
+                class="menu-list-title"><img src="../assets/images/menu-icon-2.png" alt="" /> inbox
+                <span class="badge bg-danger ms-2" *ngIf="unreadMessages > 0">{{ unreadMessages }}</span>
+            </a>
         </li>
         <li *ngIf="isUser || isResolver" routerLinkActive="active">
             <a routerLink="/ticket" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
