@@ -651,17 +651,17 @@
 
                                     <div class="chat-info">
                                         <div class="last-msg p-2 pb-1 rounded">
-                                            <img src="../assets/images/pdf-image.jpg" style="
+                                            <img src="../assets/images/pdf-image.jpg" [attr.data-id]="data.messageId"
+                                                style="
                                                                             max-height: 100px;
                                                                             margin: auto;
-                                                                        " alt="File Not Found"
-                                                (load)="onImageLoad()" />
+                                                                        " alt="File Not Found" />
 
                                             <!-- <ngx-extended-pdf-viewer [src]="data.fileUrl"></ngx-extended-pdf-viewer> -->
 
                                             <div class="pdf-nameic cursur" (click)="downloadFile(data)">
                                                 <span class="pdf-icon"><img src="../assets/images/document-icon.png"
-                                                        alt="File Not Found" (load)="onImageLoad()" />
+                                                        alt="File Not Found" [attr.data-id]="data.messageId" />
                                                     {{
                                                     data.filename.slice(24)
                                                     | shortenFileName : 20
@@ -723,15 +723,15 @@
                                         <div class="last-msg p-2 pb-1 mb-2 rounded">
 
 
-                                            <img src="../assets/images/pdf-image.jpg" style="
+                                            <img src="../assets/images/pdf-image.jpg" [attr.data-id]="data.messageId"
+                                                style="
                                                                             max-height: 100px;
                                                                             margin: auto;
-                                                                        " alt="File Not Found"
-                                                (load)="onImageLoad()" />
+                                                                        " alt="File Not Found" />
 
                                             <div class="pdf-nameic cursur" (click)="downloadFile(data)">
                                                 <span class="pdf-icon"><img src="../assets/images/document-icon.png"
-                                                        alt="File Not Found" (load)="onImageLoad()" />
+                                                        alt="File Not Found" [attr.data-id]="data.messageId" />
                                                     {{
                                                     data.filename.slice(24)
                                                     | shortenFileName : 20
@@ -911,7 +911,8 @@
                                         </div>
 
                                         <div class="last-msg p-2 rounded bg-light">
-                                            <img [src]="data.fileUrl" alt="File Not Found" (load)="onImageLoad()" />
+                                            <img [src]="data.fileUrl" alt="File Not Found"
+                                                [attr.data-id]="data.messageId" />
                                         </div>
                                         <div class="suserchat-info pt-2">
                                             <span class="suserchat-name" *ngIf="data.userFullName == null">You</span>
@@ -967,7 +968,8 @@
                                             <i class="las la-arrow-circle-down"></i>
                                         </div>
                                         <div class="last-msg p-2 rounded bg-light">
-                                            <img [src]="data.fileUrl" alt="File Not Found" (load)="onImageLoad()" />
+                                            <img [src]="data.fileUrl" alt="File Not Found"
+                                                [attr.data-id]="data.messageId" />
                                         </div>
                                         <!-- <span class="suserchat-name" *ngIf="data.name !== null">{{
                                                                         contactinfo.fullName || "Reception"
@@ -1391,8 +1393,7 @@
                                                     <span class="pdf-icon" (click)="
                                                                                     downloadFile1(data)
                                                                                 "><img
-                                                            src="../assets/images/pdf-icon.png" (load)="onImageLoad()"
-                                                            alt="File Not Found" />
+                                                            src="../assets/images/pdf-icon.png" alt="File Not Found" />
                                                         {{
                                                         data.templateName
                                                         }}</span>
@@ -1472,8 +1473,7 @@
                                                     <span class="pdf-icon" (click)="
                                                                                     downloadFile1(data)
                                                                                 "><img
-                                                            src="../assets/images/pdf-icon.png" (load)="onImageLoad()"
-                                                            alt="File Not Found" />
+                                                            src="../assets/images/pdf-icon.png" alt="File Not Found" />
                                                         {{
                                                         data.templateName
                                                         }}</span>
@@ -1567,8 +1567,7 @@
                                                     <span class="pdf-icon" (click)="
                                                                                     downloadFile1(data)
                                                                                 "><img
-                                                            src="../assets/images/pdf-icon.png" (load)="onImageLoad()"
-                                                            alt="File Not Found" />
+                                                            src="../assets/images/pdf-icon.png" alt="File Not Found" />
                                                         {{
                                                         data.templateName
                                                         }}</span>

@@ -554,7 +554,7 @@ export class ChatComponent
                         if (isInitialLoad) {
                             this.receivedData = response; // Replace data on initial load
                             // this.groupMessagesByDate();   // Group messages by date
-
+                            this.handleImageScrolling(); // Scroll considering images
                             this.scrollToBottom(); // Scroll to bottom on first load
                         } else {
                             // Prepend new data to the receivedData array
@@ -796,9 +796,13 @@ export class ChatComponent
 
     ngAfterViewChecked() {
         // this.scrollToBottom();
+        this.handleImageScrolling();
+
     }
     ngAfterViewInit() {
         this.scrollToBottom();
+        // this.handleImageScrolling();
+
     }
     private scrollToBottom(): void {
         setTimeout(() => { // Use setTimeout to ensure the DOM is fully rendered
@@ -816,8 +820,24 @@ export class ChatComponent
         }, 0);
     }
 
-    onImageLoad() {
-        this.scrollToBottom(); // Scroll to bottom whenever an image is loaded
+    private handleImageScrolling(): void {
+        const lastMessage = this.receivedData[this.receivedData.length - 1];
+
+
+
+        if (lastMessage?.messagetype === 'image' || lastMessage?.messagetype === 'document') {
+            // Wait for the image to load before scrolling
+            const imgElement = document.querySelector(`img[data-id="${lastMessage.messageId}"]`) as HTMLImageElement;
+
+            if (imgElement) {
+                imgElement.onload = () => {
+                    this.scrollToBottom();
+                };
+            } else {
+                console.warn('Image element not found for messageId:', lastMessage.messageId);
+                this.scrollToBottom(); // Fallback
+            }
+        }
     }
 
 
