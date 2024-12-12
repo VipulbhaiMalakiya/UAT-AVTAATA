@@ -556,6 +556,9 @@ export class ChatComponent
                             } else {
                                 console.log('No messageId found in the new messages');
                             } // Maintain scroll position
+
+                            // <div class="ondtcss-chx" > <span class="dtcss-fm" > Today < /span></div >
+
                         }
                         const lstRe = this.receivedData.slice(-1)[0];
                         this.lastItem = lstRe.time;
