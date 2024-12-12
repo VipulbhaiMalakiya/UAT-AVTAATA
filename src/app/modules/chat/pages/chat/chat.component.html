@@ -1158,10 +1158,11 @@
                                                                                 | parseFloat)
                                                                         }" height="230px" width="250px"></google-map>
                                         </div>
-                                        <span class="suserchat-name" *ngIf="data.name !== null">{{
-                                            contactinfo.fullName || "Reception"
+                                        <span class="suserchat-name text-end" *ngIf="data.userFullName !== null">{{
+                                            contactinfo.userFullName || "You"
                                             }}</span>
-                                        <span class="suserchat-name" *ngIf="data.name == null">Reception</span>
+                                        <span class="suserchat-name text-end"
+                                            *ngIf="data.userFullName == null">You</span>
                                         {{ data.time | dateAgo }}
 
                                         <ng-container *ngIf="data.messageId">
