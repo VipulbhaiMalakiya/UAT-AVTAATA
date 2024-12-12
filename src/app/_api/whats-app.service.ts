@@ -121,11 +121,29 @@ export class WhatsAppService {
         );
     }
 
+    getContactListForUser(data: any) {
+        let headers = this.header.getJWTHeaders();
+        const httpOptions = { headers: headers };
+
+        return this.http.get<any[]>(`${this.baseUrl}/message-history/latest-messages/assignedto/${data}`, httpOptions).pipe(
+            map((response: any[]) => {
+                // Process the response if necessary before returning it
+                this.updateContactList(response); // Update the shared contact list
+                return response;
+            }),
+            catchError(error => {
+                console.error('Error fetching contact list for user:', error);
+                throw error; // Handle errors gracefully
+            })
+        );
+    }
+
+
     activeContactList() {
         let headers = this.header.getJWTHeaders(); // Get JWT headers for authorization
         const httpOptions = { headers: headers };  // Define the request options
 
-        return this.http.get<any[]>(`${this.baseUrl}/chatlist/latest-messages`, httpOptions); // Make the GET request
+        return this.http.get<any[]>(`${this.baseUrl}/chatlist/latest-messages`, httpOptions)// Make the GET request
     }
 
 
@@ -141,11 +159,6 @@ export class WhatsAppService {
     //     // return this.http.get(this.baseUrl + `/message-history/latest-messages`, httpOptions);
     // }
 
-    getContactListForUser(data: any) {
-        let headers = this.header.getJWTHeaders();
-        const httpOptions = { headers: headers };
-        return this.http.get(this.baseUrl + `/message-history/latest-messages/assignedto/${data}`, httpOptions);
-    }
 
     close() {
         this.socket$.complete();

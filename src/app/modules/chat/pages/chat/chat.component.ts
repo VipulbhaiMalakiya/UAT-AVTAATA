@@ -1094,7 +1094,6 @@ export class ChatComponent
         // Subscribe to contact list updates from the shared service
         this.subscription = this.whatsappService.contactList$.subscribe(response => {
             this.contactList = response;
-
             // Ensure 'this.contactList[0]?.open' is defined or fallback to empty array
             this.open = this.contactList[0]?.open ?? [];
 
