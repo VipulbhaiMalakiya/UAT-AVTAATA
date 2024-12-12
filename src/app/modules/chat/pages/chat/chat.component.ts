@@ -553,13 +553,13 @@ export class ChatComponent
 
                         if (isInitialLoad) {
                             this.receivedData = response; // Replace data on initial load
-                            this.groupMessagesByDate();   // Group messages by date
+                            // this.groupMessagesByDate();   // Group messages by date
 
                             this.scrollToBottom(); // Scroll to bottom on first load
                         } else {
                             // Prepend new data to the receivedData array
                             this.receivedData = [...response, ...this.receivedData];
-                            this.groupMessagesByDate();   // Regroup messages after merging data
+                            // this.groupMessagesByDate();   // Regroup messages after merging data
 
                             // Get the messageId of the last new message (the last item in the response array)
                             const lastNewMessageId = response[response.length - 1]?.messageId;
