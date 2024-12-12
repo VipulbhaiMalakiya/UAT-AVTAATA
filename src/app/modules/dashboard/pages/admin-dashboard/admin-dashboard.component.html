@@ -23,7 +23,7 @@
                 </div>
             </div>
 
-            <div class="ficdrop1">
+            <div class="ficdrop1" *ngIf="selectedValue === 'custom data'">
                 <div class="form-group">
                     <label>From</label>
                     <input class="form-control" type="date" id="startDate" name="startDate" [(ngModel)]="startDate"
@@ -32,7 +32,7 @@
                 </div>
             </div>
 
-            <div class="ficdrop1">
+            <div class="ficdrop1" *ngIf="selectedValue === 'custom data'">
                 <div class="form-group">
                     <label>To</label>
                     <input class="form-control" type="date" id="endDate" name="endDate" [(ngModel)]="endDate"
@@ -43,7 +43,7 @@
                 </div>
             </div>
 
-            <div class="ficdrop1">
+            <div class="ficdrop1" *ngIf="selectedValue === 'custom data'">
                 <div class="form-group">
                     <label class="d-none d-sm-block">&nbsp;</label>
                     <button class="btn common-btn" *ngIf="selectedValue === 'custom data'" (click)="submitDateRange()">
