@@ -1575,7 +1575,7 @@ button.search-ico {
 }
 
 .msg-history {
-    height: 68vh;
+    height: 60vh;
     overflow-y: scroll;
     padding-right: 1rem !important;
     padding: 10px 0px 10px 15px;
