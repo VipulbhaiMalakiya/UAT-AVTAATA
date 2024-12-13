@@ -586,8 +586,6 @@ export class ChatComponent
                             .slice() // Ensure you work with a copy of the array
                             .reverse()  // Reverse to get the last record first
                             .find(record => record.type === 'Receiver');
-
-
                         // this.lastItem = lastReceived.time;
 
                         this.checkTimeDifference(lastReceived?.time);
