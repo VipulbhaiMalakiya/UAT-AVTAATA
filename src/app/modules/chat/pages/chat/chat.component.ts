@@ -420,17 +420,19 @@ export class ChatComponent
                         const message: string = `You got a message from ${this.getOnlyName(
                             data.name
                         )}`;
-                        const mobileNoExists = this.open.some((item: any) =>
-                            item.phoneNo === data.mobileNo || data.assignedto == this.userData.userId
-                        );
+                        // const mobileNoExists = this.open.some((item: any) =>
+                        //     item.phoneNo === data.mobileNo || data.assignedto == this.userData.userId
+                        // );
 
-                        if (this.userData.role.roleName == 'Admin') {
 
-                            this.speakNotification(message);
-                        }
-                        else if (data.assignedto == this.userData.userId || mobileNoExists) {
-                            this.speakNotification(message)
-                        }
+                        this.speakNotification(message);
+                        // if (this.userData.role.roleName == 'Admin') {
+
+                        //     this.speakNotification(message);
+                        // }
+                        // else if (data.assignedto == this.userData.userId || mobileNoExists) {
+                        //     this.speakNotification(message)
+                        // }
 
                     } else {
                         const audio = new Audio();
