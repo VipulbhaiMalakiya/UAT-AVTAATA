@@ -693,10 +693,9 @@ export class ChatComponent
 
     checkTimeDifference(lastMessageTime: any) {
 
+
         const currentTime = new Date();
         const lastTime = new Date(lastMessageTime);
-
-
         // Ensure that both the currentTime and lastTime are valid Date objects
         if (isNaN(lastTime.getTime())) {
             console.error('Invalid last message time');
@@ -863,6 +862,7 @@ export class ChatComponent
     }
 
 
+    isOpen: boolean = false;
     loadUserActivity(phoneNo: string) {
         this.masterName = `/chat-activity/${phoneNo}`;
         this.subscription = this.apiService
@@ -871,6 +871,8 @@ export class ChatComponent
             .subscribe(
                 (data) => {
                     this.Userinfo = data;
+                    this.isOpen = this.Userinfo.isopen;
+
                     this.nrSelect = this.Userinfo?.assignedto;
                     if (this.nrSelect === this.Userinfo?.assignedto) {
                         const foundItem = this.aciveUser.find(

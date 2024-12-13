@@ -2143,15 +2143,17 @@
 
                             <div class="chatwrite-emojisico">
                                 <div class="chat-emoji-ico" id="chat-emoji-ico"
-                                    [ngClass]="{'disabled': hideReplyAndNotes}" (click)="toggleEmojiPicker()">
+                                    [ngClass]="{'disabled': hideReplyAndNotes}" [ngClass]="{'disabled': !isOpen}"
+                                    (click)="toggleEmojiPicker()">
                                     <i class="las la-smile"></i>
                                 </div>
                                 <div class="chat-attach-ico" id="chat-attach-ico"
-                                    [ngClass]="{'disabled': hideReplyAndNotes}" (click)="toggleupload()">
+                                    [ngClass]="{'disabled': hideReplyAndNotes}" [ngClass]="{'disabled': !isOpen}"
+                                    (click)="toggleupload()">
                                     <i class="las la-paperclip"></i>
                                 </div>
                                 <div class="chat-quickrply-ico" [ngClass]="{'disabled': hideReplyAndNotes}"
-                                    title="Quick Reply" (click)="quickReply()">
+                                    [ngClass]="{'disabled': !isOpen}" title="Quick Reply" (click)="quickReply()">
                                     <img src="../assets/images/quick-reply-icon.png" alt="File Not Found" />
                                 </div>
 
@@ -2184,7 +2186,8 @@
                                     </svg>
                                 </div>
                                 <div class="chat-cart-ico" id="chat-cart-ico"
-                                    [ngClass]="{'disabled': hideReplyAndNotes}" (click)="togglecart()">
+                                    [ngClass]="{'disabled': hideReplyAndNotes}" [ngClass]="{'disabled': !isOpen}"
+                                    (click)="togglecart()">
                                     <i class="las la-shopping-cart"></i>
                                 </div>
 
@@ -2309,11 +2312,13 @@
                                     <textarea class="form-control h-auto" id="chat" [(ngModel)]="message" required
                                         name="chat"
                                         placeholder="{{ hideReplyAndNotes ? 'The customer has not responded within 24 hours. Direct messaging is disabled until they reply. You may send a template instead.' : 'Type a message....' }}"
+                                        placeholder="{{ !isOpen ? 'The customer has not responded within 24 hours. Direct messaging is disabled until they reply. You may send a template instead.' : 'Type a message....' }}"
                                         rows="1" (keydown.enter)="
                                                 submitForm(loginForm);
                                                 $event.preventDefault()
                                             " appWhitespaceValidator [disabled]="hideReplyAndNotes"
-                                        [class.disabled]="hideReplyAndNotes"></textarea>
+                                        [class.disabled]="hideReplyAndNotes" [disabled]="!isOpen"
+                                        [class.disabled]="!isOpen"></textarea>
                                     <ng-container>
                                         <button class="chatsubmit-btn invalid" type="submit" *ngIf="loginForm.invalid"
                                             [disabled]="loginForm.invalid">
@@ -2332,10 +2337,12 @@
                                     <textarea class="form-control h-auto" id="note" [(ngModel)]="message" required
                                         name="note"
                                         placeholder="{{ hideReplyAndNotes ? 'The customer has not responded within 24 hours. Direct messaging is disabled until they reply. You may send a template instead.' : 'Type a message....' }}"
+                                        placeholder="{{ !isOpen ? 'The customer has not responded within 24 hours. Direct messaging is disabled until they reply. You may send a template instead.' : 'Type a message....' }}"
                                         rows="1" (keydown.enter)="
                                             submitNoteForm(ngNotesForm);
                                             $event.preventDefault()
-                                        " appWhitespaceValidator></textarea>
+                                        " appWhitespaceValidator [disabled]="!isOpen"
+                                        [class.disabled]="!isOpen"></textarea>
                                     <ng-container>
                                         <button class="chatsubmit-btn invalid" type="submit" *ngIf="ngNotesForm.invalid"
                                             [disabled]="ngNotesForm.invalid">
