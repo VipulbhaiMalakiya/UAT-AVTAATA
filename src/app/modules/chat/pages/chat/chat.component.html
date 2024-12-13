@@ -136,7 +136,7 @@
                                             "><i class="las la-check-double"></i></span>
 
                                         <span class="last-msg-checkic text-danger"
-                                            *ngIf="data.messageStatus == 'failed'">
+                                            *ngIf="i.messageStatus == 'failed' && i.type == 'Sender'">
                                             <i class="las la-times-circle"></i> <!-- Failed icon -->
                                         </span>
 
@@ -250,8 +250,9 @@
                                         <span class="last-msg-checkic" *ngIf="
                                                 i.messageStatus == 'delivered' && i.type == 'Sender'
                                             "><i class="las la-check-double"></i></span>
+
                                         <span class="last-msg-checkic text-danger"
-                                            *ngIf="data.messageStatus == 'failed'">
+                                            *ngIf="i.messageStatus == 'failed' && i.type == 'Sender'">
                                             <i class="las la-times-circle"></i> <!-- Failed icon -->
                                         </span>
 
@@ -367,7 +368,7 @@
                                                 i.messageStatus == 'delivered' && i.type == 'Sender'
                                             "><i class="las la-check-double"></i></span>
                                         <span class="last-msg-checkic text-danger"
-                                            *ngIf="data.messageStatus == 'failed'">
+                                            *ngIf="i.messageStatus == 'failed' && i.type == 'Sender'">
                                             <i class="las la-times-circle"></i> <!-- Failed icon -->
                                         </span>
                                         <span *ngIf="i.count == 0">{{
