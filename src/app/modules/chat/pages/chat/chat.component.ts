@@ -1489,44 +1489,30 @@ export class ChatComponent
                     if (res.status == 'Success') {
                         this.toastr.success(res.message);
                         this.isProceess = false;
-                        this.subscription = this.whatsappService
-                            .chatHistory(data.mobileNo)
+                        this.masterName = `/chat-activity/${data.mobileNo}`;
+                        this.subscription = this.apiService
+                            .getAll(this.masterName)
                             .pipe(take(1))
                             .subscribe(
-                                (response) => {
-                                    this.item = response;
-                                    this.receivedData = this.item;
-                                    this.isProceess = false;
-                                    this.masterName = `/chat-activity/${data.mobileNo}`;
-                                    this.subscription = this.apiService
-                                        .getAll(this.masterName)
-                                        .pipe(take(1))
-                                        .subscribe(
-                                            (data) => {
-                                                this.Userinfo = data;
-                                                this.nrSelect = this.Userinfo.assignedto;
-                                                if (this.nrSelect === this.Userinfo?.assignedto) {
-                                                    const foundItem = this.aciveUser.find(
-                                                        (item) => item.userId === this.Userinfo?.assignedto
-                                                    );
-                                                    if (foundItem) {
-                                                        this.DefoluteSelect =
-                                                            foundItem.firstName + ' ' + foundItem.lastName;
-                                                    } else {
-                                                        this.DefoluteSelect =
-                                                            this.Userinfo?.firstName +
-                                                            ' ' +
-                                                            this.Userinfo?.lastName;
-                                                    }
-                                                }
-                                                this.isProceess = false;
-                                                this.cd.detectChanges();
-                                                this.getContactList();
-                                            },
-                                            (error) => {
-                                                this.isProceess = false;
-                                            }
+                                (data) => {
+                                    this.Userinfo = data;
+                                    this.nrSelect = this.Userinfo.assignedto;
+                                    if (this.nrSelect === this.Userinfo?.assignedto) {
+                                        const foundItem = this.aciveUser.find(
+                                            (item) => item.userId === this.Userinfo?.assignedto
                                         );
+                                        if (foundItem) {
+                                            this.DefoluteSelect =
+                                                foundItem.firstName + ' ' + foundItem.lastName;
+                                        } else {
+                                            this.DefoluteSelect =
+                                                this.Userinfo?.firstName +
+                                                ' ' +
+                                                this.Userinfo?.lastName;
+                                        }
+                                    }
+                                    this.isProceess = false;
+                                    this.cd.detectChanges();
                                 },
                                 (error) => {
                                     this.isProceess = false;
