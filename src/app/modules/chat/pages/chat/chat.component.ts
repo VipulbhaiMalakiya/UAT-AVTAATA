@@ -832,10 +832,10 @@ export class ChatComponent
                     this.scrollToBottom();
                 };
             }
-            // else {
-            //     console.warn('Image element not found for messageId:', lastMessage.messageId);
-            //     this.scrollToBottom(); // Fallback
-            // }
+            else {
+                console.warn('Image element not found for messageId:', lastMessage.messageId);
+                this.scrollToBottom(); // Fallback
+            }
         } else {
             this.scrollToBottom();
         }
