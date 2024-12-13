@@ -814,15 +814,17 @@ export class ChatComponent
             try {
                 if (this.chatContainer && this.chatContainer.nativeElement) {
                     const container = this.chatContainer.nativeElement;
+                    // console.log(container);
                     const atBottom = container.scrollHeight - container.scrollTop <= container.clientHeight;
                     if (!atBottom) {
                         container.scrollTop = container.scrollHeight;
                     }
+                    // container.scroll({ top: container.scrollHeight });
                 }
             } catch (err) {
                 console.error(err);
             }
-        }, 0);
+        }, 500);
     }
 
     private handleImageScrolling(): void {

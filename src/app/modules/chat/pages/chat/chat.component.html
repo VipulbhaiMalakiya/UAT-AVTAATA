@@ -1,4 +1,4 @@
-<app-loading-spin *ngIf="isProceess"></app-loading-spin>
+<!-- <app-loading-spin *ngIf="isProceess"></app-loading-spin> -->
 <div class="inboxouter100">
     <div class="inbox30">
         <div class="chats-leftbox">
@@ -488,7 +488,7 @@
                 </div>
             </div>
 
-            <div class="text-center" *ngIf="isLoading && !isProceess">
+            <div class="text-center" *ngIf="isLoading || isProceess">
                 <div class="spinner-border" role="status">
                     <span class="sr-only">Loading...</span>
                 </div>
