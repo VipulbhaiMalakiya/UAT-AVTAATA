@@ -487,7 +487,7 @@ export class ChatComponent
             this.handleMessageStatus(e.phoneNo, true); // Mark as seen
         }
 
-        this.checkTimeDifference(e.time);
+        // this.checkTimeDifference(e.time);
 
         this.pageSize = 30;
         this.currentPage = 1;
@@ -580,8 +580,17 @@ export class ChatComponent
                             }
                         }
                         // Update the lastItem and increment the page
-                        const lastReceived = this.receivedData.slice(-1)[0];
-                        this.lastItem = lastReceived.time;
+                        // const lastReceived = this.receivedData.slice(-1)[0];
+
+                        const lastReceived = this.receivedData
+                            .slice() // Ensure you work with a copy of the array
+                            .reverse()  // Reverse to get the last record first
+                            .find(record => record.type === 'Receiver');
+
+
+                        // this.lastItem = lastReceived.time;
+
+                        this.checkTimeDifference(lastReceived?.time);
                         this.currentPage++;
                     } else {
                         console.log("No data received.");
