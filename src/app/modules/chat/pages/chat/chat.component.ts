@@ -562,8 +562,9 @@ export class ChatComponent
                     if (response.length > 0) {
                         if (isInitialLoad) {
                             this.receivedData = response; // Replace data on initial load
-                            this.handleImageScrolling(); // Scroll considering images
                             this.scrollToBottom(); // Scroll to bottom on first load
+                            this.handleImageScrolling(); // Scroll considering images
+
                         } else {
                             // Prepend new data to the receivedData array
                             this.receivedData = [...response, ...this.receivedData];
@@ -792,11 +793,12 @@ export class ChatComponent
 
     ngAfterViewChecked() {
         // this.scrollToBottom();
-        this.handleImageScrolling();
+        // this.handleImageScrolling();
 
     }
     ngAfterViewInit() {
         this.scrollToBottom();
+        this.handleImageScrolling();
         // this.handleImageScrolling();
 
     }
@@ -829,10 +831,13 @@ export class ChatComponent
                 imgElement.onload = () => {
                     this.scrollToBottom();
                 };
-            } else {
-                console.warn('Image element not found for messageId:', lastMessage.messageId);
-                this.scrollToBottom(); // Fallback
             }
+            // else {
+            //     console.warn('Image element not found for messageId:', lastMessage.messageId);
+            //     this.scrollToBottom(); // Fallback
+            // }
+        } else {
+            this.scrollToBottom();
         }
     }
 
