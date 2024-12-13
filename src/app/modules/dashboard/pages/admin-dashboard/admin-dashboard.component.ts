@@ -155,9 +155,9 @@ export class AdminDashboardComponent implements OnInit {
             endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
         };
         // this.ISAdminFirstAgentResponsedata(model);
-        this.Statuswiseticketscount();
-        this.Ticketassigntousers();
-        this.TicketOvertheSLAtousers();
+        // this.Statuswiseticketscount();
+        // this.Ticketassigntousers();
+        // this.TicketOvertheSLAtousers();
         this.isAdminconversationsdata(model);
         this.isAdminescalationdata(model);
         this.isAdmincustomerdata(model);
@@ -421,12 +421,12 @@ export class AdminDashboardComponent implements OnInit {
     isAdminconversationsdata(model: any) {
         this.masterName = `/dashboard/conversations-data?startDate=${model.startDate}&endDate=${model.endDate}`;
 
-        this.isProceess = true;
+        // this.isProceess = true;
         this.subscription = this.apiService.getAll(this.masterName).pipe(take(1))
             .subscribe(data => {
                 this.conversationsdata = data.data;
 
-                this.isProceess = false;
+                // this.isProceess = false;
                 this.cd.detectChanges();
             }, error => {
                 this.isProceess = false;
@@ -436,12 +436,12 @@ export class AdminDashboardComponent implements OnInit {
 
     isAdminescalationdata(model: any) {
         this.masterName = `/dashboard/escalation-data?startDate=${model.startDate}&endDate=${model.endDate}`;
-        this.isProceess = true;
+        // this.isProceess = true;
         this.subscription = this.apiService.getAll(this.masterName).pipe(take(1))
             .subscribe(data => {
                 this.escalationdata = data.data;
 
-                this.isProceess = false;
+                // this.isProceess = false;
                 this.cd.detectChanges();
             }, error => {
                 this.isProceess = false;
@@ -676,7 +676,7 @@ export class AdminDashboardComponent implements OnInit {
     Statuswiseticketscount() {
         this.masterName = "/ticket/status-count";
 
-        this.isProceess = true;
+        // this.isProceess = true;
         this.subscription = this.apiService.getAll(this.masterName).pipe(take(1))
             .subscribe(result => {
                 this.statuswiseticketscount = result;
@@ -687,7 +687,7 @@ export class AdminDashboardComponent implements OnInit {
                         result[row].total,
                     ]);
                 }
-                this.isProceess = false;
+                // this.isProceess = false;
                 this.cd.detectChanges();
             }, error => {
                 this.isProceess = false;
