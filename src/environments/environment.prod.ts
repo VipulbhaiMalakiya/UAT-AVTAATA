@@ -3,13 +3,13 @@ export const environment = {
     ReqUrl: 'http://',
     EncryptKey: '1203199320052021',
     appUrl: 'localhost:4200/#/login',
-    // _APImainDomain: 'tcplconnecto.com/v2.0',
-    _APImainDomain: 'customerdigitalconnect.com',
+    _APImainDomain: 'tcplconnecto.com/v2.0',
+    // _APImainDomain: 'customerdigitalconnect.com',
 
     subDomain: localStorage.getItem('loginUrl') || '',
     apiUrl: '',
-    // SOCKET_ENDPOINT: 'wss://tcplconnecto.com/v2.0/chat',
-    SOCKET_ENDPOINT: 'wss://customerdigitalconnect.com/chat',
+    SOCKET_ENDPOINT: 'wss://tcplconnecto.com/v2.0/chat',
+    // SOCKET_ENDPOINT: 'wss://customerdigitalconnect.com/chat',
 
     googleMapsApiKey: 'YOUR_API_KEY',
 
