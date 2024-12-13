@@ -707,12 +707,10 @@ export class ChatComponent
         const timeDifferenceInMs = currentTime.getTime() - lastTime.getTime();
         const timeDifferenceInHours = timeDifferenceInMs / (1000 * 3600);
 
-        // If 24 hours or more have passed, hide the Reply and Notes
         if (timeDifferenceInHours >= 24) {
             this.hideReplyAndNotes = true;
-            console.log('Hiding Reply and Notes:', this.hideReplyAndNotes);
         } else {
-            this.hideReplyAndNotes = false; // Ensure it's visible if under 24 hours
+            this.hideReplyAndNotes = false;
         }
     }
 
@@ -1489,35 +1487,8 @@ export class ChatComponent
                     if (res.status == 'Success') {
                         this.toastr.success(res.message);
                         this.isProceess = false;
-                        this.masterName = `/chat-activity/${data.mobileNo}`;
-                        this.subscription = this.apiService
-                            .getAll(this.masterName)
-                            .pipe(take(1))
-                            .subscribe(
-                                (data) => {
-                                    this.Userinfo = data;
-                                    this.nrSelect = this.Userinfo.assignedto;
-                                    if (this.nrSelect === this.Userinfo?.assignedto) {
-                                        const foundItem = this.aciveUser.find(
-                                            (item) => item.userId === this.Userinfo?.assignedto
-                                        );
-                                        if (foundItem) {
-                                            this.DefoluteSelect =
-                                                foundItem.firstName + ' ' + foundItem.lastName;
-                                        } else {
-                                            this.DefoluteSelect =
-                                                this.Userinfo?.firstName +
-                                                ' ' +
-                                                this.Userinfo?.lastName;
-                                        }
-                                    }
-                                    this.isProceess = false;
-                                    this.cd.detectChanges();
-                                },
-                                (error) => {
-                                    this.isProceess = false;
-                                }
-                            );
+                        this.loadUserActivity(data.mobileNo)
+
                     }
                     if (res.status == 'failed') {
                         this.toastr.error(res.message);
