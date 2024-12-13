@@ -542,54 +542,57 @@ export class ChatComponent
         this.loadChatHistory(true);
     }
 
+    onScroll(event: Event): void {
+        const target = event.target as HTMLElement;
+
+        // Trigger only if scrolled close to the top and not already processing
+        if (target.scrollTop <= 50 && !this.isProceess && !this.isLoading) {
+            this.isProceess = true; // Block further calls until current process completes
+            this.loadChatHistory();
+        }
+    }
 
     isLoading: boolean = false;
-    loadChatHistory(isInitialLoad: boolean = false) {
-        this.isLoading = true;
+    loadChatHistory(isInitialLoad: boolean = false): void {
+        this.isLoading = true; // Set loading state
         this.subscription = this.whatsappService.chatHistorynew(this.contact, this.currentPage, this.pageSize)
             .pipe(take(1), distinctUntilChanged())
             .subscribe({
                 next: (response: any) => {
-
                     if (response.length > 0) {
-
                         if (isInitialLoad) {
                             this.receivedData = response; // Replace data on initial load
-                            // this.groupMessagesByDate();   // Group messages by date
                             this.handleImageScrolling(); // Scroll considering images
                             this.scrollToBottom(); // Scroll to bottom on first load
                         } else {
                             // Prepend new data to the receivedData array
                             this.receivedData = [...response, ...this.receivedData];
-                            // this.groupMessagesByDate();   // Regroup messages after merging data
 
                             // Get the messageId of the last new message (the last item in the response array)
                             const lastNewMessageId = response[response.length - 1]?.messageId;
 
-                            // Check if the last new messageId exists and scroll to it
+                            // Scroll to the specific message if it exists
                             if (lastNewMessageId) {
-                                this.scrollToMiddle(lastNewMessageId); // Use the last new messageId for scrolling
+                                this.scrollToMiddle(lastNewMessageId);
                             } else {
                                 console.log('No messageId found in the new messages');
-                            } // Maintain scroll position
-
-                            // <div class="ondtcss-chx" > <span class="dtcss-fm" > Today < /span></div >
-
+                            }
                         }
-                        const lstRe = this.receivedData.slice(-1)[0];
-                        this.lastItem = lstRe.time;
-
+                        // Update the lastItem and increment the page
+                        const lastReceived = this.receivedData.slice(-1)[0];
+                        this.lastItem = lastReceived.time;
                         this.currentPage++;
                     } else {
                         console.log("No data received.");
                     }
 
-                    this.isProceess = false;
-                    this.isLoading = false
+                    this.isProceess = false; // Reset processing flag
+                    this.isLoading = false; // Reset loading state
                 },
 
                 error: (error) => {
-                    this.isProceess = false;
+                    this.isProceess = false; // Reset processing flag in case of error
+                    this.isLoading = false; // Reset loading state
                     this.handleErrors(error);
                 },
 
@@ -599,25 +602,26 @@ export class ChatComponent
             });
     }
 
-    groupMessagesByDate(): void {
-        const grouped: MessageGroup[] = this.receivedData.reduce((acc: MessageGroup[], message: any) => {
-            const messageDate = new Date(message.time).toDateString();
+    scrollToMiddle(messageId: string): void {
+        if (!messageId) return;
 
-            // Check if the date group already exists
-            let group = acc.find((group) => group.date === messageDate);
-
-            if (!group) {
-                // Create a new group if it doesn't exist
-                group = { date: messageDate, messages: [] };
-                acc.push(group);
+        // Sanitize the ID to make it a valid CSS selector
+        const sanitizedId = this.sanitizeSelector(messageId);
+        setTimeout(() => {
+            const container = this.chatContainer.nativeElement;
+            const targetElement = container.querySelector(`#message-${sanitizedId}`);
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    // behavior: 'smooth',
+                    // block: 'center'
+                });
+            } else {
+                console.warn(`Message with ID ${messageId} not found.`);
             }
-
-            group.messages.push(message);
-            return acc;
-        }, []);
-
-        this.groupedMessages = grouped; // Store grouped data for the template
+        });
     }
+
+
 
 
     private handleErrors(error: any) {
@@ -782,14 +786,7 @@ export class ChatComponent
     @ViewChild('msgHistory', { static: true }) msgHistory!: ElementRef;
 
 
-    onScroll(event: Event): void {
-        const target = event.target as HTMLElement;
 
-        // Check if the user has scrolled up 50px from the top and there are no ongoing requests
-        if (target.scrollTop <= 50 && !this.isProceess) {
-            this.loadChatHistory(); // Load previous messages when scrolled within 50px from the top
-        }
-    }
 
 
 
@@ -840,21 +837,7 @@ export class ChatComponent
     }
 
 
-    scrollToMiddle(messageId: string): void {
-        if (!messageId) return;
 
-        // Sanitize the ID to make it a valid CSS selector
-        const sanitizedId = this.sanitizeSelector(messageId);
-        setTimeout(() => {
-            const container = this.chatContainer.nativeElement;
-            const targetElement = container.querySelector(`#message-${sanitizedId}`);
-            if (targetElement) {
-                targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            } else {
-                console.warn(`Message with ID ${messageId} not found.`);
-            }
-        });
-    }
 
     // Sanitize the messageId to escape invalid characters for a CSS selector
     sanitizeSelector(messageId: string): string {
