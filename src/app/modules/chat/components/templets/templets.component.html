@@ -49,9 +49,13 @@
                                         </div>
                                         <div class="templ-col">
                                             <p><strong>Body :</strong></p>
-                                            <p>{{getFormattedText(templet.templatePreview, username)}}</p>
+                                            <p *ngIf="templet?.body?.bodyattribute?.[0] === 'Name'">
+                                                {{getFormattedText(templet.templatePreview, username)}}</p>
+                                            <p *ngIf="templet?.body?.bodyattribute?.[0] !== 'Name'">
+                                                {{getFormattedText(templet.templatePreview,
+                                                templet?.body?.bodyattribute?.[0])}}</p>
 
-                                            <!-- <p>{{templet.templatePreview}}</p> -->
+
                                         </div>
                                         <div class="templ-col"
                                             *ngIf="templet?.button1 !== null || templet?.button3 !== null || templet?.button3 !== null">
@@ -71,16 +75,7 @@
                                     </div>
                                     <div class="template-card2" *ngIf="templet?.body?.body !== null">
 
-                                        <div class="sub3" *ngIf="templet?.body?.bodyattribute?.[0] === 'Name' ">
-                                            <!-- {{templet?.body?.body}} -->
-                                            <p>{{getFormattedText(templet?.body?.body, username )}}</p>
-                                        </div>
 
-                                        <div class="sub3" *ngIf="templet?.body?.bodyattribute?.[0] !== 'Name' ">
-                                            <!-- {{templet?.body?.body}} -->
-                                            <p>{{getFormattedText(templet?.body?.body,
-                                                templet?.body?.bodyattribute?.[0])}}</p>
-                                        </div>
 
                                         <div class="inner-templateform-card2">
                                             <div class="tempgrid1">
