@@ -88,8 +88,7 @@
 
 
 
-                                            <div class="tempgrid2"
-                                                *ngIf="templet.templateName != 'checking_in_welcome_details_wifidetails'">
+                                            <div class="tempgrid2">
                                                 <p>Value</p>
                                                 <input type="text" *ngIf="templet?.body?.bodyattribute[0]"
                                                     class="form-control" name="select0" id="select0" ngModel
@@ -108,26 +107,26 @@
 
                                             <div class="tempgrid3">
                                                 <p>Fallback/Constant Value</p>
-                                                <input *ngIf="templet?.body?.bodyattribute[0]" type="text"
+                                                <input *ngIf="templet?.body?.bodyattribute?.[0]" type="text"
                                                     class="form-control" placeholder="Variable 1" name="input1"
-                                                    [(ngModel)]="username" #input1="ngModel"
-                                                    [ngClass]="{ 'is-invalid': f.submitted && input1.invalid }"
-                                                    required>
-                                                <input *ngIf="templet?.body?.bodyattribute[1]" type="text"
-                                                    class="form-control" placeholder="Variable 2" name="input2" ngModel
-                                                    #input2="ngModel"
-                                                    [ngClass]="{ 'is-invalid': f.submitted && input2.invalid }"
-                                                    required>
-                                                <input *ngIf="templet?.body?.bodyattribute[2]" type="text"
-                                                    placeholder="Variable 3" name="input3" ngModel #input3="ngModel"
-                                                    class="form-control"
-                                                    [ngClass]="{ 'is-invalid': f.submitted && input3.invalid }"
+                                                    [(ngModel)]="templet?.body?.bodyattribute[0]" #input1="ngModel"
+                                                    [ngClass]="{ 'is-invalid': f.submitted && input1?.invalid }"
                                                     required>
 
+                                                <input *ngIf="templet?.body?.bodyattribute?.[1]" type="text"
+                                                    class="form-control" placeholder="Variable 2" name="input2"
+                                                    [(ngModel)]="templet?.body?.bodyattribute[1]" #input2="ngModel"
+                                                    [ngClass]="{ 'is-invalid': f.submitted && input2?.invalid }"
+                                                    required>
+
+                                                <input *ngIf="templet?.body?.bodyattribute?.[2]" type="text"
+                                                    placeholder="Variable 3" name="input3"
+                                                    [(ngModel)]="templet?.body?.bodyattribute[2]" #input3="ngModel"
+                                                    class="form-control"
+                                                    [ngClass]="{ 'is-invalid': f.submitted && input3?.invalid }"
+                                                    required>
 
                                             </div>
-
-
                                         </div>
                                     </div>
                                 </div>
