@@ -68,53 +68,41 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
     getContactList() {
         this.isProceess = true;
 
-        // Call the function to get the observable and then subscribe to it
         this.whatsappService.activeContactList()
-            .pipe(takeUntil(this.destroy$)).subscribe({
+            .pipe(
+                takeUntil(this.destroy$)
+            )
+            .subscribe({
                 next: (response: any[]) => {
                     const contactLists = response;
 
-                    // Safely access 'open' property of the first contact or fallback to an empty array
-                    this.open = contactLists[0]?.open ?? [];
+                    // Safely access and sort all categories and combine them into a single array
+                    const allContacts = [
+                        ...contactLists[0]?.open?.sort((a: any, b: any) =>
+                            a.fullName.localeCompare(b.fullName, undefined, { sensitivity: 'base' })
+                        ) ?? [],
+                        ...contactLists[0]?.closed?.sort((a: any, b: any) =>
+                            a.fullName.localeCompare(b.fullName, undefined, { sensitivity: 'base' })
+                        ) ?? [],
+                        ...contactLists[0]?.missed?.sort((a: any, b: any) =>
+                            a.fullName.localeCompare(b.fullName, undefined, { sensitivity: 'base' })
+                        ) ?? []
+                    ];
 
-                    // Get the current time and calculate the threshold (24 hours ago)
-                    const now = new Date();
-                    const threshold = now.getTime() - (24 * 60 * 60 * 1000); // 24 hours ago in milliseconds
-
-                    // Filter the open array to include only entries before 24 hours
-                    // this.contactList = this.open.filter((contact: any) => {
-                    //     const contactTime = new Date(contact.time).getTime();
-                    //     return contactTime >= threshold;
-                    // });
-
-                    this.contactList = this.open
-                        .filter((contact: any) => {
-                            const contactTime = new Date(contact.time).getTime();
-                            return contactTime >= threshold;
-                        })
-                        .sort((a: any, b: any) => {
-                            // Assuming the contact has a 'name' property to sort alphabetically
-                            const nameA = a.fullName.toLowerCase(); // Convert to lower case for case-insensitive comparison
-                            const nameB = b.fullName.toLowerCase();
-                            if (nameA < nameB) {
-                                return -1;
-                            }
-                            if (nameA > nameB) {
-                                return 1;
-                            }
-                            return 0; // If names are equal, return 0
-                        });
-
-                    this.isProceess = false;  // End processing flag
+                    // Assign to the main array
+                    this.contactList = allContacts;
                 },
                 error: (err) => {
                     console.error('Error fetching contact list:', err);
                     this.isProceess = false;
                 },
                 complete: () => {
-                    console.log('Contact list fetch completed.');
+                    console.log('Contact list fetching completed.');
+                    this.isProceess = false;
                 }
             });
+
+
     }
 
 

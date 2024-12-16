@@ -166,8 +166,6 @@ export class ChatComponent
 
         const { templatePreview, templateBodyAttributes } = data;
 
-        console.log("Template Preview before replacement:", JSON.stringify(templatePreview));
-        console.log("Template Body Attributes:", templateBodyAttributes);
 
         // Replace placeholders dynamically
         let updatedString = templatePreview;
@@ -178,7 +176,6 @@ export class ChatComponent
             updatedString = updatedString.replace(regex, `${value}`);
         });
 
-        console.log("Updated Template Preview:", updatedString);
 
         return updatedString;
     }
@@ -1178,9 +1175,20 @@ export class ChatComponent
             this.open = this.contactList[0]?.open ?? [];
 
             // Ensure 'this.contactList[0]?.missed' is defined or fallback to empty array
-            this.missed = Array.isArray(this.contactList[0]?.missed)
-                ? this.contactList[0].missed.filter((contact: any) => contact.missedBy === this.userData?.userId)
-                : [];
+            if (this.userData?.role?.roleName == 'Admin') {
+                // If the user is admin, display all missed contacts
+                this.missed = Array.isArray(this.contactList[0]?.missed)
+                    ? this.contactList[0].missed.sort((a: any, b: any) =>
+                        a.fullName.localeCompare(b.fullName, undefined, { sensitivity: 'base' }))
+                    : [];
+            } else {
+                // If not admin, filter missed contacts based on user ID
+                this.missed = Array.isArray(this.contactList[0]?.missed)
+                    ? this.contactList[0].missed.filter((contact: any) =>
+                        contact.missedBy === this.userData?.userId)
+                    : [];
+            }
+
 
             this.missedCount = this.missed.length ?? 0;
 
