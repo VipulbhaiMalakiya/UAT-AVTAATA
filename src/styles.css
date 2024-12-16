@@ -1575,7 +1575,7 @@ button.search-ico {
 }
 
 .msg-history {
-    height: 60vh;
+    height: calc(100vh - 213px);
     overflow-y: scroll;
     padding-right: 1rem !important;
     padding: 10px 0px 10px 15px;
@@ -1872,7 +1872,7 @@ button.search-ico {
     position: absolute;
     width: 97%;
     z-index: 0;
-    bottom: -10px !important;
+    bottom: -20px !important;
     left: 10px;
     border-radius: 10px;
 }
