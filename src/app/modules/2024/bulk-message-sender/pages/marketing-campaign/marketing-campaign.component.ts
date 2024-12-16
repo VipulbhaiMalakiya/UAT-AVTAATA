@@ -89,8 +89,13 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
                         ) ?? []
                     ];
 
+
+                    // Remove duplicates based on phoneNo
+                    const uniqueContacts = Array.from(new Set(allContacts.map(c => c.phoneNo)))
+                        .map(phoneNo => allContacts.find(contact => contact.phoneNo === phoneNo));
+
                     // Assign to the main array
-                    this.contactList = allContacts;
+                    this.contactList = uniqueContacts;
                 },
                 error: (err) => {
                     console.error('Error fetching contact list:', err);
