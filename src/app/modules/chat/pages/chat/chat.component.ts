@@ -359,10 +359,6 @@ export class ChatComponent
         this.socket$ = webSocket(environment.SOCKET_ENDPOINT);
         this.socket$.subscribe(
             (data: any) => {
-
-
-
-
                 if (data.mobileNo === this.contact || data.mobileNumber === this.contact) {
                     // Check if the message already exists based on the messageId
                     const existingMessageIndex = this.receivedData.findIndex(msg => msg.messageId === data.messageId);
