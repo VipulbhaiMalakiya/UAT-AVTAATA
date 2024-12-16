@@ -63,6 +63,35 @@ export class TempletsComponent implements OnInit {
     onView(i: any) {
         this.templet = i;
     }
+
+    // getFormattedText(template: string,): string {
+    //     return template
+    //         .replace('{{1}}', variable1)
+    //         .replace('{{2}}', variable2)
+    //         .replace('{{3}}', variable3);
+    // }
+    getVariableValues(template: string) {
+        const variable1 = this.templet?.body?.bodyattribute?.[0] !== 'Name'
+            ? this.templet?.body?.bodyattribute?.[0]
+            : this.username;  // For Variable 1
+
+        const variable2 = this.templet?.body?.bodyattribute?.[1] || '';
+        const variable3 = this.templet?.body?.bodyattribute?.[2] || '';
+
+        // return {
+        //     variable1,
+        //     variable2,
+        //     variable3
+
+
+        // };
+
+        return template
+            .replace('{{1}}', variable1)
+            .replace('{{2}}', variable2)
+            .replace('{{3}}', variable3);
+    }
+
     onFileChange(event: any) {
         const file = event.target.files[0];
         // this.customersMasterForm.get('image').setValue(file);
@@ -88,9 +117,7 @@ export class TempletsComponent implements OnInit {
         this.activeModal.dismiss();
     }
 
-    getFormattedText(template: string, name: string): string {
-        return template.replace('{{1}}', name);
-    }
+
 
     onSubmit(f: NgForm) {
         if (f.invalid) {

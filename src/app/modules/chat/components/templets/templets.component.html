@@ -49,11 +49,8 @@
                                         </div>
                                         <div class="templ-col">
                                             <p><strong>Body :</strong></p>
-                                            <p *ngIf="templet?.body?.bodyattribute?.[0] === 'Name'">
-                                                {{getFormattedText(templet.templatePreview, username)}}</p>
-                                            <p *ngIf="templet?.body?.bodyattribute?.[0] !== 'Name'">
-                                                {{getFormattedText(templet.templatePreview,
-                                                templet?.body?.bodyattribute?.[0])}}</p>
+                                            <p> {{getVariableValues(templet.templatePreview)}}</p>
+
 
 
                                         </div>
@@ -80,64 +77,69 @@
                                         <div class="inner-templateform-card2">
                                             <div class="tempgrid1">
                                                 <p>Variable</p>
-                                                <input *ngIf="templet?.body?.bodyattribute[0]" type="text"
+                                                <!-- <input *ngIf="templet?.body?.bodyattribute[0]" type="text"
                                                     class="form-control" name="name" id="" value="{{1}}" disabled>
                                                 <input *ngIf="templet?.body?.bodyattribute[1]" type="text"
                                                     class="form-control" name="name" id="" value="{{2}}" disabled>
                                                 <input *ngIf="templet?.body?.bodyattribute[2]" type="text"
-                                                    class="form-control" name="name" id="" value="{{3}}" disabled>
-                                                <input *ngIf="templet?.body?.bodyattribute[3]" type="text"
-                                                    class="form-control" name="name" id="" value="{{3}}" disabled>
-                                                <input *ngIf="templet?.body?.bodyattribute[4]" type="text"
-                                                    class="form-control" name="name" id="" value="{{3}}" disabled>
+                                                    class="form-control" name="name" id="" value="{{3}}" disabled> -->
+
+                                                <ng-container
+                                                    *ngFor="let attribute of templet?.body?.bodyattribute; let i = index">
+                                                    <input *ngIf="attribute" type="text" class="form-control"
+                                                        name="name" id="" value="{{ i + 1 }}" disabled>
+                                                </ng-container>
+
                                             </div>
 
 
 
                                             <div class="tempgrid2">
                                                 <p>Value</p>
-                                                <input type="text" *ngIf="templet?.body?.bodyattribute[0]"
-                                                    class="form-control" name="select0" id="select0" ngModel
-                                                    placeholder="Variable 1" disabled>
-                                                <input type="text" *ngIf="templet?.body?.bodyattribute[1]"
-                                                    class="form-control" name="select1" id="select1" ngModel
-                                                    placeholder="Variable 2" disabled>
-                                                <input type="text" *ngIf="templet?.body?.bodyattribute[2]"
-                                                    class="form-control" name="select2" id="select2" ngMode
-                                                    placeholder="Variable 3" disabled>
-                                                <input type="text" *ngIf="templet?.body?.bodyattribute[3]"
-                                                    class="form-control" name="select3" id="select3" ngMode
-                                                    placeholder="Variable 4" disabled>
+                                                <ng-container
+                                                    *ngFor="let attribute of templet?.body?.bodyattribute; let i = index">
+                                                    <input *ngIf="attribute" type="text" class="form-control"
+                                                        [name]="'select' + i" [id]="'select' + i" ngModel
+                                                        [placeholder]="'Variable ' + (i + 1)" disabled>
+                                                </ng-container>
                                             </div>
 
 
                                             <div class="tempgrid3">
                                                 <p>Fallback/Constant Value</p>
-                                                <input *ngIf="templet?.body?.bodyattribute?.[0] !== 'Name' " type="text"
-                                                    class="form-control" placeholder="Variable 1" name="input1"
-                                                    [(ngModel)]="templet?.body?.bodyattribute[0]" #input1="ngModel"
-                                                    [ngClass]="{ 'is-invalid': f.submitted && input1?.invalid }"
-                                                    required>
+
+                                                <ng-container
+                                                    *ngFor="let attribute of templet?.body?.bodyattribute; let i = index">
+                                                    <input
+                                                        *ngIf="templet?.body?.bodyattribute?.[0] === 'Name'  && i === 0 "
+                                                        type="text" class="form-control" placeholder="Variable 1"
+                                                        name="input1" [(ngModel)]="username" #input1="ngModel"
+                                                        [ngClass]="{ 'is-invalid': f.submitted && input1?.invalid }"
+                                                        required>
+
+                                                    <input
+                                                        *ngIf="templet?.body?.bodyattribute?.[0] !== 'Name'  && i === 0 "
+                                                        type="text" class="form-control" placeholder="Variable 1"
+                                                        name="input1" [(ngModel)]="templet?.body?.bodyattribute[0]"
+                                                        #input1="ngModel"
+                                                        [ngClass]="{ 'is-invalid': f.submitted && input1?.invalid }"
+                                                        required>
+
+                                                    <input *ngIf="i === 1" type="text" class="form-control"
+                                                        placeholder="Variable 2" name="input2"
+                                                        [(ngModel)]="templet?.body?.bodyattribute[1]" #input2="ngModel"
+                                                        [ngClass]="{ 'is-invalid': f.submitted && input2?.invalid }"
+                                                        required>
+
+                                                    <input *ngIf="i === 2" type="text" placeholder="Variable 3"
+                                                        name="input3" [(ngModel)]="templet?.body?.bodyattribute[2]"
+                                                        #input3="ngModel" class="form-control"
+                                                        [ngClass]="{ 'is-invalid': f.submitted && input3?.invalid }"
+                                                        required>
+
+                                                </ng-container>
 
 
-                                                <input *ngIf="templet?.body?.bodyattribute?.[0] === 'Name' " type="text"
-                                                    class="form-control" placeholder="Variable 1" name="input1"
-                                                    [(ngModel)]="username" #input1="ngModel"
-                                                    [ngClass]="{ 'is-invalid': f.submitted && input1?.invalid }"
-                                                    required>
-
-                                                <input *ngIf="templet?.body?.bodyattribute?.[1]" type="text"
-                                                    class="form-control" placeholder="Variable 2" name="input2"
-                                                    [(ngModel)]="templet?.body?.bodyattribute[1]" #input2="ngModel"
-                                                    [ngClass]="{ 'is-invalid': f.submitted && input2?.invalid }"
-                                                    required>
-
-                                                <input *ngIf="templet?.body?.bodyattribute?.[2]" type="text"
-                                                    placeholder="Variable 3" name="input3"
-                                                    [(ngModel)]="templet?.body?.bodyattribute[2]" #input3="ngModel"
-                                                    class="form-control"
-                                                    [ngClass]="{ 'is-invalid': f.submitted && input3?.invalid }"
-                                                    required>
 
                                             </div>
                                         </div>
