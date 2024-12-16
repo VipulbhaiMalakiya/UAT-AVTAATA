@@ -108,36 +108,31 @@
                                             <div class="tempgrid3">
                                                 <p>Fallback/Constant Value</p>
 
-                                                <ng-container
-                                                    *ngFor="let attribute of templet?.body?.bodyattribute; let i = index">
-                                                    <input
-                                                        *ngIf="templet?.body?.bodyattribute?.[0] === 'Name'  && i === 0 "
-                                                        type="text" class="form-control" placeholder="Variable 1"
-                                                        name="input1" [(ngModel)]="username" #input1="ngModel"
-                                                        [ngClass]="{ 'is-invalid': f.submitted && input1?.invalid }"
-                                                        required>
+                                                <input *ngIf="templet?.body?.bodyattribute?.[0] === 'Name' || ''"
+                                                    type="text" class="form-control" placeholder="Variable 1"
+                                                    name="input1" [(ngModel)]="username" #input1="ngModel"
+                                                    [ngClass]="{ 'is-invalid': f.submitted && input1?.invalid }"
+                                                    required>
 
-                                                    <input
-                                                        *ngIf="templet?.body?.bodyattribute?.[0] !== 'Name'  && i === 0 "
-                                                        type="text" class="form-control" placeholder="Variable 1"
-                                                        name="input1" [(ngModel)]="templet?.body?.bodyattribute[0]"
-                                                        #input1="ngModel"
-                                                        [ngClass]="{ 'is-invalid': f.submitted && input1?.invalid }"
-                                                        required>
+                                                <input *ngIf="templet?.body?.bodyattribute?.[0] !== 'Name' || ''"
+                                                    type="text" class="form-control" placeholder="Variable 1"
+                                                    name="input1" [(ngModel)]="templet?.body?.bodyattribute[0]"
+                                                    #input1="ngModel"
+                                                    [ngClass]="{ 'is-invalid': f.submitted && input1?.invalid }"
+                                                    required>
 
-                                                    <input *ngIf="i === 1" type="text" class="form-control"
-                                                        placeholder="Variable 2" name="input2"
-                                                        [(ngModel)]="templet?.body?.bodyattribute[1]" #input2="ngModel"
-                                                        [ngClass]="{ 'is-invalid': f.submitted && input2?.invalid }"
-                                                        required>
+                                                <input *ngIf="attributeLength > 1" type="text" class="form-control"
+                                                    placeholder="Variable 2" name="input2"
+                                                    [(ngModel)]="templet?.body?.bodyattribute[1]" #input2="ngModel"
+                                                    [ngClass]="{ 'is-invalid': f.submitted && input2?.invalid }"
+                                                    required>
 
-                                                    <input *ngIf="i === 2" type="text" placeholder="Variable 3"
-                                                        name="input3" [(ngModel)]="templet?.body?.bodyattribute[2]"
-                                                        #input3="ngModel" class="form-control"
-                                                        [ngClass]="{ 'is-invalid': f.submitted && input3?.invalid }"
-                                                        required>
+                                                <input *ngIf="attributeLength > 2" type="text" placeholder="Variable 3"
+                                                    name="input3" [(ngModel)]="templet?.body?.bodyattribute[2]"
+                                                    #input3="ngModel" class="form-control"
+                                                    [ngClass]="{ 'is-invalid': f.submitted && input3?.invalid }"
+                                                    required>
 
-                                                </ng-container>
 
 
 

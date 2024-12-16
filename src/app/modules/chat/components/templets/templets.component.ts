@@ -60,16 +60,19 @@ export class TempletsComponent implements OnInit {
             );
     }
 
+    attributeLength: any;
     onView(i: any) {
         this.templet = i;
+
+        // Check if attributeLength is defined
+        if (this.templet?.body?.bodyattribute?.length !== undefined) {
+
+            this.attributeLength = this.templet?.body?.bodyattribute?.length;
+        } else {
+        }
+
     }
 
-    // getFormattedText(template: string,): string {
-    //     return template
-    //         .replace('{{1}}', variable1)
-    //         .replace('{{2}}', variable2)
-    //         .replace('{{3}}', variable3);
-    // }
     getVariableValues(template: string) {
         const variable1 = this.templet?.body?.bodyattribute?.[0] !== 'Name'
             ? this.templet?.body?.bodyattribute?.[0]
@@ -78,13 +81,7 @@ export class TempletsComponent implements OnInit {
         const variable2 = this.templet?.body?.bodyattribute?.[1] || '';
         const variable3 = this.templet?.body?.bodyattribute?.[2] || '';
 
-        // return {
-        //     variable1,
-        //     variable2,
-        //     variable3
 
-
-        // };
 
         return template
             .replace('{{1}}', variable1)
