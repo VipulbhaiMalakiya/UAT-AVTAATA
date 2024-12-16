@@ -1,8 +1,8 @@
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, Subscription, take, takeUntil } from 'rxjs';
 import { WhatsAppService } from 'src/app/_api/whats-app.service';
 import { AudioComponent } from 'src/app/modules/chat/components/audio/audio.component';
 import { DocumentComponent } from 'src/app/modules/chat/components/document/document.component';
