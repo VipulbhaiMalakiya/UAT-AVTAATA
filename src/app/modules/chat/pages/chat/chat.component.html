@@ -2336,7 +2336,6 @@
                                     (ngSubmit)="submitNoteForm(ngNotesForm)">
                                     <textarea class="form-control h-auto" id="note" [(ngModel)]="message" required
                                         name="note"
-                                        placeholder="{{ hideReplyAndNotes ? 'The customer has not responded within 24 hours. Direct messaging is disabled until they reply. You may send a template instead.' : 'Type a message....' }}"
                                         placeholder="{{ !isOpen ? 'The customer has not responded within 24 hours. Direct messaging is disabled until they reply. You may send a template instead.' : 'Type a message....' }}"
                                         rows="1" (keydown.enter)="
                                             submitNoteForm(ngNotesForm);
