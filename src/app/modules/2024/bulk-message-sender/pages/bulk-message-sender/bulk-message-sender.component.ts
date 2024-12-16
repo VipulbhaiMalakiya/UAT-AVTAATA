@@ -294,7 +294,46 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
             // Push the request into the allRequests array
             allRequests.push(request);
+            // let formData = new FormData();
+            // formData.append('messageEntry', JSON.stringify(request));
 
+            // form.file && formData.append('file', form.file);
+
+            // // Make the API call for each selected contact
+            // this.whatsappService.sendWhatsAppMessage(formData)
+            //     .pipe(takeUntil(this.destroy$))
+            //     .subscribe({
+            //         next: (response) => {
+            //             let data: any = response;
+            //             successCount++; // Increment success count
+            //             this.toastr.success(data.message); // Show success notification
+            //             const audio = new Audio('../../../../../assets/sound/Whatsapp Message - Sent - Sound.mp3');
+            //             audio.play();
+            //         },
+            //         error: (error) => {
+            //             errorCount++; // Increment error count
+            //             this.isProceess = false;
+            //             this.handleErrors(error);// Show error notification
+            //         },
+            //         complete: () => {
+            //             processedCount++; // Increment processed count
+            //             if (processedCount === selectedContacts.length) {
+            //                 // If all API calls are processed
+            //                 this.isProceess = false; // Mark process as complete
+
+            //                 if (successCount === selectedContacts.length) {
+            //                     // If all requests were successful
+            //                     this.router.navigate(['/admin/inbox']); // Navigate to inbox
+            //                     this.message = ''; // Clear the message field
+            //                     this.contactList.forEach(contact => contact.selected = false); // Unselect all contacts
+            //                 } else {
+            //                     this.toastr.warning(
+            //                         `${successCount} ${type} messages sent successfully. ${errorCount} failed.`
+            //                     );
+            //                 }
+            //             }
+            //         },
+            //     });
         });
 
         // console.log('All Requests:', allRequests);
@@ -309,6 +348,8 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
                 .subscribe({
                     next: (response) => {
                         this.toastr.success('Message sent successfully!');
+                        this.router.navigate(['/admin/inbox']); // Navigate to inbox
+
                     },
                     error: (error) => {
                         this.handleErrors(error);
