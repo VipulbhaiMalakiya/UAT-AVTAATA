@@ -14,6 +14,7 @@ import { PrivacyPolicyComponent } from './modules/privacy-policy/privacy-policy.
 import { ContactUsComponent } from './_layouts/contact-us/contact-us.component';
 import { SendCatalogueComponent } from './modules/send-catalogue/send-catalogue.component';
 import { DefaultLoginComponent } from './modules/2024/default-login/default-login.component';
+import { MarketingCampaignComponent } from './modules/2024/bulk-message-sender/pages/marketing-campaign/marketing-campaign.component';
 
 const routes: Routes = [
     { path: 'privacy-policy', component: PrivacyPolicyComponent },
@@ -263,7 +264,9 @@ const routes: Routes = [
                     import('./modules/chat/chat.module').then((m) => m.ChatModule),
             },
             { path: 'bulk-message-sender', loadChildren: () => import('./modules/2024/bulk-message-sender/bulk-message-sender.module').then(m => m.BulkMessageSenderModule) },
-
+            {
+                path: 'marketing-campaign', component: MarketingCampaignComponent
+            },
 
             {
                 path: 'inbox/:status',

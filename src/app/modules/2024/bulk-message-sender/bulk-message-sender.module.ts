@@ -7,10 +7,12 @@ import { SharedModule } from '../../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 
 import { NgbModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { MarketingCampaignComponent } from './pages/marketing-campaign/marketing-campaign.component';
 
 @NgModule({
     declarations: [
         BulkMessageSenderComponent,
+        MarketingCampaignComponent,
     ],
     imports: [
         CommonModule,
