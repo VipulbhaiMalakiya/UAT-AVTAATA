@@ -78,6 +78,10 @@
                                                     class="form-control" name="name" id="" value="{{2}}" disabled>
                                                 <input *ngIf="templet?.body?.bodyattribute[2]" type="text"
                                                     class="form-control" name="name" id="" value="{{3}}" disabled>
+                                                <input *ngIf="templet?.body?.bodyattribute[3]" type="text"
+                                                    class="form-control" name="name" id="" value="{{3}}" disabled>
+                                                <input *ngIf="templet?.body?.bodyattribute[4]" type="text"
+                                                    class="form-control" name="name" id="" value="{{3}}" disabled>
                                             </div>
 
 
@@ -94,6 +98,9 @@
                                                 <input type="text" *ngIf="templet?.body?.bodyattribute[2]"
                                                     class="form-control" name="select2" id="select2" ngMode
                                                     placeholder="Variable 3" disabled>
+                                                <input type="text" *ngIf="templet?.body?.bodyattribute[3]"
+                                                    class="form-control" name="select3" id="select3" ngMode
+                                                    placeholder="Variable 4" disabled>
                                             </div>
 
 
@@ -106,6 +113,19 @@
                                                 <input type="text" *ngIf="templet?.body?.bodyattribute[1]"
                                                     class="form-control" name="select1" id="select1" ngModel
                                                     placeholder="Variable 2" disabled>
+
+                                                <input type="text" *ngIf="templet?.body?.bodyattribute[2]"
+                                                    class="form-control" name="select2" id="select2" ngModel
+                                                    placeholder="Variable 2" disabled>
+                                                <input type="text" *ngIf="templet?.body?.bodyattribute[3]"
+                                                    class="form-control" name="select3" id="select3" ngModel
+                                                    placeholder="Variable 3" disabled>
+                                                <input type="text" *ngIf="templet?.body?.bodyattribute[4]"
+                                                    class="form-control" name="select4" id="select4" ngModel
+                                                    placeholder="Variable 4" disabled>
+                                                <input type="text" *ngIf="templet?.body?.bodyattribute[5]"
+                                                    class="form-control" name="select5" id="select5" ngModel
+                                                    placeholder="Variable 5" disabled>
 
                                             </div>
                                             <div class="tempgrid3"
@@ -126,6 +146,8 @@
                                                     class="form-control"
                                                     [ngClass]="{ 'is-invalid': f.submitted && input3.invalid }"
                                                     required>
+
+
                                             </div>
 
                                             <div class="tempgrid3"
@@ -141,6 +163,8 @@
                                                     #input2="ngModel"
                                                     [ngClass]="{ 'is-invalid': f.submitted && input2.invalid }"
                                                     required>
+
+
 
                                             </div>
                                         </div>
