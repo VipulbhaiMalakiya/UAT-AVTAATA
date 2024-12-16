@@ -546,69 +546,133 @@ export class ChatComponent
         const target = event.target as HTMLElement;
 
         // Trigger only if scrolled close to the top and not already processing
-        if (target.scrollTop <= 50 && !this.isProceess && !this.isLoading) {
-            this.isProceess = true; // Block further calls until current process completes
+        if (target.scrollTop <= 50 && !this.isInitialLoading && !this.isPaginationLoading) {
+            // this.isProceess = true; // Block further calls until current process completes
             this.loadChatHistory();
         }
     }
 
-    isLoading: boolean = false;
+    isInitialLoading: boolean = false; // Loader for the initial load
+    isPaginationLoading: boolean = false; // Loader for pagination
+
+
     loadChatHistory(isInitialLoad: boolean = false): void {
-        this.isLoading = true; // Set loading state
-        this.subscription = this.whatsappService.chatHistorynew(this.contact, this.currentPage, this.pageSize)
+        if (isInitialLoad) {
+            this.isInitialLoading = true; // Set the loader for initial load
+            this.isProceess = false;
+        } else {
+            this.isProceess = false;
+            this.isPaginationLoading = true; // Set the loader for pagination
+        }
+
+        this.whatsappService.chatHistorynew(this.contact, this.currentPage, this.pageSize)
             .pipe(take(1), distinctUntilChanged())
             .subscribe({
                 next: (response: any) => {
                     if (response.length > 0) {
                         if (isInitialLoad) {
+                            // Handle initial load
                             this.receivedData = response; // Replace data on initial load
-                            this.scrollToBottom(); // Scroll to bottom on first load
-                            this.handleImageScrolling(); // Scroll considering images
-
+                            this.scrollToBottom(); // Scroll to the bottom
+                            this.handleImageScrolling(); // Handle image scrolling
                         } else {
-                            // Prepend new data to the receivedData array
-                            this.receivedData = [...response, ...this.receivedData];
+                            // Handle pagination
+                            this.receivedData = [...response, ...this.receivedData]; // Prepend new data
 
-                            // Get the messageId of the last new message (the last item in the response array)
                             const lastNewMessageId = response[response.length - 1]?.messageId;
 
-                            // Scroll to the specific message if it exists
                             if (lastNewMessageId) {
-                                this.scrollToMiddle(lastNewMessageId);
+                                this.scrollToMiddle(lastNewMessageId); // Scroll to the specific message
                             } else {
                                 console.log('No messageId found in the new messages');
                             }
                         }
-                        // Update the lastItem and increment the page
-                        // const lastReceived = this.receivedData.slice(-1)[0];
 
+                        // Update the last item received for time comparison
                         const lastReceived = this.receivedData
-                            .slice() // Ensure you work with a copy of the array
-                            .reverse()  // Reverse to get the last record first
+                            .slice()
+                            .reverse()
                             .find(record => record.type === 'Receiver');
-                        // this.lastItem = lastReceived.time;
 
                         this.checkTimeDifference(lastReceived?.time);
-                        this.currentPage++;
+                        this.currentPage++; // Increment the page
                     } else {
-                        console.log("No data received.");
+                        console.log('No data received.');
                     }
-
-                    this.isProceess = false; // Reset processing flag
-                    this.isLoading = false; // Reset loading state
                 },
-
                 error: (error) => {
-                    this.isProceess = false; // Reset processing flag in case of error
-                    this.isLoading = false; // Reset loading state
-                    this.handleErrors(error);
+                    this.handleErrors(error); // Handle the error
                 },
-
                 complete: () => {
                     console.log('Chat history loaded successfully');
                 }
+            })
+            .add(() => {
+                // Reset loaders after response
+                if (isInitialLoad) {
+                    this.isInitialLoading = false;
+                } else {
+                    this.isPaginationLoading = false;
+                }
             });
     }
+
+    // loadChatHistory(isInitialLoad: boolean = false): void {
+    //     this.isLoading = true; // Set loading state
+    //     this.subscription = this.whatsappService.chatHistorynew(this.contact, this.currentPage, this.pageSize)
+    //         .pipe(take(1), distinctUntilChanged())
+    //         .subscribe({
+    //             next: (response: any) => {
+    //                 if (response.length > 0) {
+    //                     if (isInitialLoad) {
+    //                         this.receivedData = response; // Replace data on initial load
+    //                         this.scrollToBottom(); // Scroll to bottom on first load
+    //                         this.handleImageScrolling(); // Scroll considering images
+
+    //                     } else {
+    //                         // Prepend new data to the receivedData array
+    //                         this.receivedData = [...response, ...this.receivedData];
+
+    //                         // Get the messageId of the last new message (the last item in the response array)
+    //                         const lastNewMessageId = response[response.length - 1]?.messageId;
+
+    //                         // Scroll to the specific message if it exists
+    //                         if (lastNewMessageId) {
+    //                             this.scrollToMiddle(lastNewMessageId);
+    //                         } else {
+    //                             console.log('No messageId found in the new messages');
+    //                         }
+    //                     }
+    //                     // Update the lastItem and increment the page
+    //                     // const lastReceived = this.receivedData.slice(-1)[0];
+
+    //                     const lastReceived = this.receivedData
+    //                         .slice() // Ensure you work with a copy of the array
+    //                         .reverse()  // Reverse to get the last record first
+    //                         .find(record => record.type === 'Receiver');
+    //                     // this.lastItem = lastReceived.time;
+
+    //                     this.checkTimeDifference(lastReceived?.time);
+    //                     this.currentPage++;
+    //                 } else {
+    //                     console.log("No data received.");
+    //                 }
+
+    //                 this.isProceess = false; // Reset processing flag
+    //                 this.isLoading = false; // Reset loading state
+    //             },
+
+    //             error: (error) => {
+    //                 this.isProceess = false; // Reset processing flag in case of error
+    //                 this.isLoading = false; // Reset loading state
+    //                 this.handleErrors(error);
+    //             },
+
+    //             complete: () => {
+    //                 console.log('Chat history loaded successfully');
+    //             }
+    //         });
+    // }
 
     scrollToMiddle(messageId: string): void {
         if (!messageId) return;
