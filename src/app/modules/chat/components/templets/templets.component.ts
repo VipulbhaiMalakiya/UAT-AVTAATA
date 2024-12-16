@@ -62,36 +62,6 @@ export class TempletsComponent implements OnInit {
 
     onView(i: any) {
         this.templet = i;
-
-
-        console.log(this.templet)
-
-
-        if (
-            this.templet &&
-            this.templet.body &&
-            Array.isArray(this.templet.body.bodyattribute) &&
-            this.templet.body.bodyattribute.length > 0 &&
-            this.templet.body.bodyattribute[0] === 'eg:saurabh'
-        ) {
-            this.username = this.username
-        }
-
-        else if (['Saurabh', '10', '20th Dec'].includes(this.templet?.body?.bodyattribute?.[0])) {
-            this.username = this.username
-        }
-        else if (['10', '20th Dec'].includes(this.templet?.body?.bodyattribute?.[0])) {
-            this.username = this.username
-        }
-
-        else {
-            console.warn('templet.body.bodyattribute is null, undefined, or does not contain the expected value.');
-        }
-
-
-
-
-
     }
     onFileChange(event: any) {
         const file = event.target.files[0];

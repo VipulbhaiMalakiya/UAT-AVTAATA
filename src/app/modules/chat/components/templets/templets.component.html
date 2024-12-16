@@ -107,9 +107,16 @@
 
                                             <div class="tempgrid3">
                                                 <p>Fallback/Constant Value</p>
-                                                <input *ngIf="templet?.body?.bodyattribute?.[0]" type="text"
+                                                <input *ngIf="templet?.body?.bodyattribute?.[0] !== 'Name' " type="text"
                                                     class="form-control" placeholder="Variable 1" name="input1"
                                                     [(ngModel)]="templet?.body?.bodyattribute[0]" #input1="ngModel"
+                                                    [ngClass]="{ 'is-invalid': f.submitted && input1?.invalid }"
+                                                    required>
+
+
+                                                <input *ngIf="templet?.body?.bodyattribute?.[0] === 'Name' " type="text"
+                                                    class="form-control" placeholder="Variable 1" name="input1"
+                                                    [(ngModel)]="username" #input1="ngModel"
                                                     [ngClass]="{ 'is-invalid': f.submitted && input1?.invalid }"
                                                     required>
 
