@@ -88,6 +88,10 @@ export class TempletsComponent implements OnInit {
         this.activeModal.dismiss();
     }
 
+    getFormattedText(template: string, name: string): string {
+        return template.replace('{{1}}', name);
+    }
+
     onSubmit(f: NgForm) {
         if (f.invalid) {
             return;
