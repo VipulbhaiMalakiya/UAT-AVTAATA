@@ -5,9 +5,41 @@
     <h1>Bulk Message</h1>
 </div>
 <div class="inner-middle-content">
-    <div class="container">
+
+    <div class="dasboard-table">
+
+        <div class="table-responsive">
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th><input class="form-check-input" type="checkbox" [(ngModel)]="isAllSelected"
+                                (change)="toggleSelectAll()" /></th>
+                        <th>#</th>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Phone No</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr *ngFor="let contact of contactList; let i = index">
+                        <td><input class="form-check-input" type="checkbox" [(ngModel)]="contact.selected" /> </td>
+                        <td>{{i + 1}}</td>
+                        <td>{{contact.id}}</td>
+                        <td>{{contact.fullName}}</td>
+                        <td>{{contact.phoneNo}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+
+
+    </div>
+    <!-- <div class="container">
         <div class="row">
-            <!-- "Check All" checkbox -->
             <div class="col-12 mb-4">
                 <label>
                     <input class="form-check-input" type="checkbox" [(ngModel)]="isAllSelected"
@@ -15,7 +47,6 @@
                 </label>
             </div>
 
-            <!-- Contact cards with checkboxes -->
             <div *ngFor="let contact of contactList; let i = index" class="col-12 col-md-4 mb-4">
                 <div class="contact-card">
                     <div class="contact-info">
@@ -28,7 +59,7 @@
             </div>
 
         </div>
-    </div>
+    </div> -->
 
     <div class="chat-write-box">
 
