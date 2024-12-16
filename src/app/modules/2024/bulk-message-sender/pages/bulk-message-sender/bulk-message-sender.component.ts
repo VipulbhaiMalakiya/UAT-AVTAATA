@@ -150,11 +150,16 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
         let successCount = 0;
         let errorCount = 0;
         let processedCount = 0; // Track the total number of processed API calls
+        const allRequests: any[] = []; // Array to store all requests
 
+
+        // let request: any;
         selectedContacts.forEach(contact => {
+            let request: any;
+
             // Create a request for each selected contact
 
-            let request: any;
+
             if (type == 'text') {
                 request = {
                     messaging_product: 'whatsapp',
@@ -287,45 +292,30 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
             }
 
 
-            let formData = new FormData();
-            formData.append('messageEntry', JSON.stringify(request));
+            // Push the request into the allRequests array
+            allRequests.push(request);
 
+        });
+
+        // console.log('All Requests:', allRequests);
+
+        allRequests.forEach(request => {
+            const formData = new FormData();
+            formData.append('messageEntry', JSON.stringify(request));
             form.file && formData.append('file', form.file);
 
-            // Make the API call for each selected contact
             this.whatsappService.sendWhatsAppMessage(formData)
                 .pipe(takeUntil(this.destroy$))
                 .subscribe({
                     next: (response) => {
-                        let data: any = response;
-                        successCount++; // Increment success count
-                        this.toastr.success(data.message); // Show success notification
-                        const audio = new Audio('../../../../../assets/sound/Whatsapp Message - Sent - Sound.mp3');
-                        audio.play();
+                        this.toastr.success('Message sent successfully!');
                     },
                     error: (error) => {
-                        errorCount++; // Increment error count
-                        this.isProceess = false;
-                        this.handleErrors(error);// Show error notification
+                        this.handleErrors(error);
                     },
                     complete: () => {
-                        processedCount++; // Increment processed count
-                        if (processedCount === selectedContacts.length) {
-                            // If all API calls are processed
-                            this.isProceess = false; // Mark process as complete
-
-                            if (successCount === selectedContacts.length) {
-                                // If all requests were successful
-                                this.router.navigate(['/admin/inbox']); // Navigate to inbox
-                                this.message = ''; // Clear the message field
-                                this.contactList.forEach(contact => contact.selected = false); // Unselect all contacts
-                            } else {
-                                this.toastr.warning(
-                                    `${successCount} ${type} messages sent successfully. ${errorCount} failed.`
-                                );
-                            }
-                        }
-                    },
+                        this.isProceess = false;
+                    }
                 });
         });
     }
