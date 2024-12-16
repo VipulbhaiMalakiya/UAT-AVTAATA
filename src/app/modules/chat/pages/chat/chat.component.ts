@@ -190,6 +190,7 @@ export class ChatComponent
 
 
     replaceAndBoldPlaceholder50(data?: any) {
+
         try {
 
             const name = data.templateBodyAttributes[0];
@@ -216,6 +217,8 @@ export class ChatComponent
         }
     }
     replaceAndBoldPlaceholder1(data?: any): any {
+
+
         try {
             if (
                 !data ||

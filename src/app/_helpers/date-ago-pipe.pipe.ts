@@ -27,7 +27,7 @@ export class DateAgoPipePipe implements PipeTransform {
             return `${date.format('D/M/YY h:mm A')}`; // Day, Date, and Time in 12-hour format
         } else {
             // Older than a week
-            return date.format('D/M/YY'); // Correct usage of moment.format
+            return date.format('D/M/YY h:mm A'); // Correct usage of moment.format
         }
     }
 
