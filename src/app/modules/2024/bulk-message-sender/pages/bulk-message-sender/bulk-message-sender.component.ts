@@ -49,6 +49,16 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
         this.getContactList();
     }
 
+    // Getter for total customers
+    get totalCustomers(): number {
+        return this.contactList.length;
+    }
+
+    // Getter for selected customers count
+    get selectedCustomersCount(): number {
+        return this.contactList.filter(contact => contact.selected).length;
+    }
+
     ngOnDestroy(): void {
         this.destroy$.next(); // Emit a value to complete all subscriptions
         this.destroy$.complete(); // Complete the subject
