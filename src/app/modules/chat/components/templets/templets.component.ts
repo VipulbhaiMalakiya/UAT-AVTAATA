@@ -64,6 +64,7 @@ export class TempletsComponent implements OnInit {
         this.templet = i;
 
 
+        console.log(this.templet)
 
         if (this.templet.templateName == "checking_in_welcome_details_wifidetails") {
             this.username = this.templet.body.bodyattribute[0]
