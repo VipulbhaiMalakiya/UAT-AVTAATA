@@ -86,8 +86,8 @@
 
                                                 <ng-container
                                                     *ngFor="let attribute of templet?.body?.bodyattribute; let i = index">
-                                                    <input *ngIf="attribute" type="text" class="form-control"
-                                                        name="name" id="" value="{{ i + 1 }}" disabled>
+                                                    <input type="text" class="form-control" name="name" id=""
+                                                        value="{{ i + 1 }}" disabled>
                                                 </ng-container>
 
                                             </div>
@@ -98,8 +98,8 @@
                                                 <p>Value</p>
                                                 <ng-container
                                                     *ngFor="let attribute of templet?.body?.bodyattribute; let i = index">
-                                                    <input *ngIf="attribute" type="text" class="form-control"
-                                                        [name]="'select' + i" [id]="'select' + i" ngModel
+                                                    <input type="text" class="form-control" [name]="'select' + i"
+                                                        [id]="'select' + i" ngModel
                                                         [placeholder]="'Variable ' + (i + 1)" disabled>
                                                 </ng-container>
                                             </div>
