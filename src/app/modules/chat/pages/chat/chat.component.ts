@@ -158,35 +158,33 @@ export class ChatComponent
     onFocus() {
         this.showEmojiPicker = false;
     }
-
-    replaceAndBoldPlaceholder(data?: any): any {
-        // Check if data is defined
-        if (!data) {
-            return 'Data is undefined or null.';
+    replaceAndBoldPlaceholder(data?: any): string {
+        // Validate input data
+        if (!data || !data.templatePreview || !data.templateBodyAttributes) {
+            return 'Invalid input: templatePreview or templateBodyAttributes are missing.';
         }
 
-        // Check if data has the necessary properties
-        if (
-            !data.templateBodyAttributes ||
-            data.templateBodyAttributes.length === 0
-        ) {
-            return 'templateBodyAttributes is missing or empty.';
-        }
+        const { templatePreview, templateBodyAttributes } = data;
 
-        const name = data.templateBodyAttributes[0];
-        // console.log(data);
-        // debugger;
+        console.log("Template Preview before replacement:", JSON.stringify(templatePreview));
+        console.log("Template Body Attributes:", templateBodyAttributes);
 
-        // Check if the originalString exists and contains the placeholder
-        if (!data.templatePreview || !data.templatePreview.includes('{{1}}')) {
-            return 'originalString is missing or does not contain {{1}} placeholder.';
-        }
+        // Replace placeholders dynamically
+        let updatedString = templatePreview;
 
-        const originalString = data.templatePreview;
-        const replacedString = originalString.replace('{{1}}', name);
+        templateBodyAttributes.forEach((value: string, index: number) => {
+            const placeholder = `{{${index + 1}}}`;
+            const regex = new RegExp(`\\{\\{\\s*${index + 1}\\s*\\}\\}`, 'g');
+            updatedString = updatedString.replace(regex, `${value}`);
+        });
 
-        return replacedString;
+        console.log("Updated Template Preview:", updatedString);
+
+        return updatedString;
     }
+
+
+
 
 
     replaceAndBoldPlaceholder50(data?: any) {
