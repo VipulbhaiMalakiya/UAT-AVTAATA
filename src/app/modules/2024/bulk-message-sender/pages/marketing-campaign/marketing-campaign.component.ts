@@ -94,15 +94,27 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
                     const contactLists = response;
 
                     // Safely access and sort all categories and combine them into a single array
+                    // const allContacts = [
+                    //     ...contactLists[0]?.open?.sort((a: any, b: any) =>
+                    //         a.fullName.localeCompare(b.fullName, undefined, { sensitivity: 'base' })
+                    //     ) ?? [],
+                    //     ...contactLists[0]?.closed?.sort((a: any, b: any) =>
+                    //         a.fullName.localeCompare(b.fullName, undefined, { sensitivity: 'base' })
+                    //     ) ?? [],
+                    //     ...contactLists[0]?.missed?.sort((a: any, b: any) =>
+                    //         a.fullName.localeCompare(b.fullName, undefined, { sensitivity: 'base' })
+                    //     ) ?? []
+                    // ];
+
                     const allContacts = [
                         ...contactLists[0]?.open?.sort((a: any, b: any) =>
-                            a.fullName.localeCompare(b.fullName, undefined, { sensitivity: 'base' })
+                            new Date(b.time).getTime() - new Date(a.time).getTime()
                         ) ?? [],
                         ...contactLists[0]?.closed?.sort((a: any, b: any) =>
-                            a.fullName.localeCompare(b.fullName, undefined, { sensitivity: 'base' })
+                            new Date(b.time).getTime() - new Date(a.time).getTime()
                         ) ?? [],
                         ...contactLists[0]?.missed?.sort((a: any, b: any) =>
-                            a.fullName.localeCompare(b.fullName, undefined, { sensitivity: 'base' })
+                            new Date(b.time).getTime() - new Date(a.time).getTime()
                         ) ?? []
                     ];
 
