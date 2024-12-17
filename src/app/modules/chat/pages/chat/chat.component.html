@@ -1775,8 +1775,7 @@
                                                 submitForm(loginForm);
                                                 $event.preventDefault()
                                             " appWhitespaceValidator [disabled]="hideReplyAndNotes"
-                                        [class.disabled]="hideReplyAndNotes" [disabled]="!isOpen"
-                                        [class.disabled]="!isOpen"></textarea>
+                                        [class.disabled]="hideReplyAndNotes"></textarea>
                                     <ng-container>
                                         <button class="chatsubmit-btn invalid" type="submit" *ngIf="loginForm.invalid"
                                             [disabled]="loginForm.invalid">

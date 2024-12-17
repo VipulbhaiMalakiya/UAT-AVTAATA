@@ -720,7 +720,7 @@ export class ChatComponent
         const timeDifferenceInMs = currentTime.getTime() - lastTime.getTime();
         const timeDifferenceInHours = timeDifferenceInMs / (1000 * 3600);
 
-        if (timeDifferenceInHours >= 24) {
+        if (timeDifferenceInHours >= 24 || !this.isOpen) {
             this.hideReplyAndNotes = true;
         } else {
             this.hideReplyAndNotes = false;
