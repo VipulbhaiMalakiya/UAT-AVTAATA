@@ -40,7 +40,7 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
     endDate?: any;
     dateRangeError: boolean = false;
 
-    maxSelection = 200;
+    maxSelection = 100;
 
 
     constructor(public whatsappService: WhatsAppService, private toastr: ToastrService, private router: Router,

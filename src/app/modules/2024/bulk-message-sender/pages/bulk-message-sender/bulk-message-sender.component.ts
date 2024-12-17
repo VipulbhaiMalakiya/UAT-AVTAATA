@@ -32,7 +32,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
     logInUserName: any;
     isCartPopupOpen: boolean = false;
     searchTerm: string = ''; // Variable to hold the search term
-    maxSelection = 200;
+    maxSelection = 100;
 
 
     private destroy$ = new Subject<void>();
