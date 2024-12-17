@@ -158,7 +158,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
 
     sendMessage(form: any, type: 'text' | 'notes' | 'interactive' | 'template' | 'audio' | 'video' | 'image' | 'document' | 'location') {
-        // this.isProceess = true; // Indicate the process has started.
+        this.isProceess = true; // Indicate the process has started.
 
         const selectedContacts = this.contactList.filter(contact => contact.selected);
         const allRequests: any[] = []; // Array to store all requests
@@ -176,6 +176,8 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
             allRequests.push(contactList);
 
         });
+
+
 
         let request: any;
         if (type == 'text') {
@@ -196,7 +198,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
             request = {
                 messaging_product: 'whatsapp',
                 recipient_type: 'individual',
-                type: 'text',
+                type: 'notes',
                 fromId: this.userData?.userId,
                 logInUserName: this.logInUserName,
                 assignedto: this.userData?.userId,
@@ -291,31 +293,28 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
             };
         }
 
-        console.log('All Requests:', allRequests);
-        console.log(' Requests:', request);
+
+        const formData = new FormData();
+        formData.append('messageEntry', JSON.stringify(request));
+        formData.append('contactList', JSON.stringify(allRequests));
+        form.file && formData.append('file', form.file);
 
 
-        // allRequests.forEach(request => {
-        //     const formData = new FormData();
-        //     formData.append('messageEntry', JSON.stringify(request));
-        //     form.file && formData.append('file', form.file);
+        this.whatsappService.sendBroadcastMessage(formData)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe({
+                next: (response) => {
+                    this.toastr.success('Message sent successfully!');
+                    this.router.navigate(['/admin/inbox']); // Navigate to inbox
 
-        //     this.whatsappService.sendWhatsAppMessage(formData)
-        //         .pipe(takeUntil(this.destroy$))
-        //         .subscribe({
-        //             next: (response) => {
-        //                 this.toastr.success('Message sent successfully!');
-        //                 this.router.navigate(['/admin/inbox']); // Navigate to inbox
-
-        //             },
-        //             error: (error) => {
-        //                 this.handleErrors(error);
-        //             },
-        //             complete: () => {
-        //                 this.isProceess = false;
-        //             }
-        //         });
-        // });
+                },
+                error: (error) => {
+                    this.handleErrors(error);
+                },
+                complete: () => {
+                    this.isProceess = false;
+                }
+            });
     }
 
     private handleErrors(error: any) {

@@ -148,6 +148,7 @@ export class WhatsAppService {
 
 
 
+
     last24hours() {
         let headers = this.header.getJWTHeaders(); // Get JWT headers for authorization
         const httpOptions = { headers: headers };  // Define the request options
@@ -178,6 +179,15 @@ export class WhatsAppService {
         return this.http.post(this.baseUrl + '/outgoing/send-message', formData, httpOptions);
         // return this.http.post(this.baseUrl + '/outgoing-message', request, httpOptions);
     }
+
+
+    sendBroadcastMessage(formData: FormData) {
+        let headers = this.header.getJWTHeaders();
+        const httpOptions = { headers: headers };
+        return this.http.post(this.baseUrl + '/campaign/send-bulk/broadcast', formData, httpOptions);
+        // return this.http.post(this.baseUrl + '/outgoing-message', request, httpOptions);
+    }
+
 
     sendnotesMessage(request: any) {
         let headers = this.header.getJWTHeaders();
