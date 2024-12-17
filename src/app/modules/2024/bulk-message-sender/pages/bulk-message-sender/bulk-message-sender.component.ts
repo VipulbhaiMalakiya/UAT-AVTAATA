@@ -31,6 +31,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
     logInUserName: any;
     isCartPopupOpen: boolean = false;
     searchTerm: string = ''; // Variable to hold the search term
+    maxSelection = 200;
 
 
     private destroy$ = new Subject<void>();
@@ -127,10 +128,31 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
 
     // Method to toggle "Check All" checkbox
-    toggleSelectAll() {
-        this.contactList.forEach(contact => {
-            contact.selected = this.isAllSelected;
-        });
+    toggleSelectAll(): void {
+        if (this.isAllSelected) {
+            const canSelectCount = this.maxSelection - this.selectedCustomersCount;
+            let count = 0;
+            this.filteredContactList.forEach(contact => {
+                if (!contact.selected && count < canSelectCount) {
+                    contact.selected = true;
+                    count++;
+                } else if (count >= canSelectCount) {
+                    this.isAllSelected = false;
+                }
+            });
+        } else {
+            this.filteredContactList.forEach(contact => (contact.selected = false));
+        }
+    }
+
+    onCheckboxChange(contact: any): void {
+        const selectedCount = this.selectedCustomersCount;
+        if (contact.selected && selectedCount > this.maxSelection) {
+            contact.selected = false;
+            alert('You can select a maximum of 5 customers.');
+        }
+        this.isAllSelected =
+            this.filteredContactList.every(contact => contact.selected) && selectedCount <= this.maxSelection;
     }
 
 
