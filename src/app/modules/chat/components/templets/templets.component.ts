@@ -80,7 +80,7 @@ export class TempletsComponent implements OnInit {
 
     getVariableValues(template: string) {
         const variable1 = this.templet?.body?.bodyattribute?.[0] !== 'Name'
-            ? this.templet?.body?.bodyattribute?.[0] || '' // Default to empty if null or undefined
+            ? this.templet?.body?.bodyattribute?.[0] || '{{1}}' // Default to empty if null or undefined
             : this.username || '{{1}}'; // Default to empty if null or undefined
 
         const variable2 = this.variable2 !== null && this.variable2 !== undefined
