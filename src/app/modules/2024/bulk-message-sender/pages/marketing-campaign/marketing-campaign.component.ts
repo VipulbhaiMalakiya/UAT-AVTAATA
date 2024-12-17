@@ -21,6 +21,7 @@ import { VideoComponent } from 'src/app/modules/chat/components/video/video.comp
 export class MarketingCampaignComponent implements OnInit, OnDestroy {
     term: any;
     contactList: any[] = [];
+    allContacts: any[] = [];
     open: any = [];
     message: string = '';
     showupload = false;
@@ -112,6 +113,11 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
 
                     // Assign to the main array
                     this.contactList = uniqueContacts;
+
+                    // Store all contacts for future filtering
+                    this.allContacts = this.contactList;
+
+
                 },
                 error: (err) => {
                     console.error('Error fetching contact list:', err);
@@ -123,6 +129,12 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
                 }
             });
 
+        // Filter the contacts based on selected date range
+        var model: any = {
+            startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
+            endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
+        };
+        this.filterContacts(model);
 
     }
 
@@ -132,6 +144,88 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
             contact.fullName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
             contact.phoneNo.includes(this.searchTerm)
         );
+    }
+
+    filterContacts(model: any) {
+
+        this.contactList = this.allContacts.filter(contact => {
+            const contactDate = contact.time
+                ? this.datePipe.transform(contact.time, 'yyyy-MM-dd')
+                : null;
+
+            return contactDate && contactDate >= model.startDate && contactDate <= model.endDate;
+        });
+    }
+
+
+
+
+
+    onValueChange(event: Event) {
+        const target = event.target as HTMLSelectElement;
+        this.selectedValue = target.value;
+        const oneWeekFromNow = new Date();
+        if (this.selectedValue === 'Today') {
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        } else if (this.selectedValue === 'Yesterday') {
+            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 1);
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        } else if (this.selectedValue === '7') {
+            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 7);
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        } else if (this.selectedValue === '30') {
+            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 30);
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        }
+        else if (this.selectedValue === 'custom data') {
+            this.startDate = '';
+            this.endDate = '';
+            return;
+        }
+
+
+        // Filter the contacts based on selected date range
+        var model: any = {
+            startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
+            endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
+        };
+        this.filterContacts(model);
+    }
+
+
+    submitDateRange() {
+        if (!this.startDate || !this.endDate) {
+            this.dateRangeError = true; // Show error if dates are not entered
+            return;
+        }
+
+        const start = new Date(this.startDate);
+        const end = new Date(this.endDate);
+
+        if (start > end) {
+            this.dateRangeError = true; // Date range validation
+            console.error('End date must be greater than or equal to start date.');
+        } else {
+            this.dateRangeError = false; // Clear error if valid
+            // Proceed with filtering contacts based on the custom date range
+            var model: any = {
+                startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
+                endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
+            };
+            this.filterContacts(model);
+        }
     }
 
 
@@ -442,58 +536,6 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
     }
 
 
-    onValueChange(event: Event) {
-        const target = event.target as HTMLSelectElement;
-        this.selectedValue = target.value;
-        const oneWeekFromNow = new Date();
-        if (this.selectedValue === 'Today') {
-            this.startDate = this.datePipe.transform(
-                oneWeekFromNow.toISOString().split('T')[0],
-                'yyyy-MM-dd'
-            );
-        } else if (this.selectedValue === 'Yesterday') {
-            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 1);
-            this.startDate = this.datePipe.transform(
-                oneWeekFromNow.toISOString().split('T')[0],
-                'yyyy-MM-dd'
-            );
-        } else if (this.selectedValue === '7') {
-            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 7);
-            this.startDate = this.datePipe.transform(
-                oneWeekFromNow.toISOString().split('T')[0],
-                'yyyy-MM-dd'
-            );
-        } else if (this.selectedValue === '30') {
-            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 30);
-            this.startDate = this.datePipe.transform(
-                oneWeekFromNow.toISOString().split('T')[0],
-                'yyyy-MM-dd'
-            );
-        }
-        else if (this.selectedValue === 'custom data') {
-            return;
-        }
 
-        var model: any = {
-            startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
-            endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
-        };
 
-    }
-
-    submitDateRange() {
-        const start = new Date(this.startDate);
-        const end = new Date(this.endDate);
-        if (start > end) {
-            this.dateRangeError = true;
-        } else {
-            this.dateRangeError = false;
-            var model: any = {
-                startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
-                endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
-            };
-
-        }
-
-    }
 }
