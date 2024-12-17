@@ -507,9 +507,9 @@ export class ChatComponent
         }
         this.label = e.customerLabel;
         this.isProceess = true;
-
-        this.loadInitialData();
         this.loadUserActivity(this.contact)
+        this.loadInitialData();
+
 
 
     }
@@ -723,8 +723,11 @@ export class ChatComponent
         if (this.isOpen) {
             if (timeDifferenceInHours >= 24) {
                 this.hideReplyAndNotes = true;
+                this.cd.detectChanges();
             } else {
                 this.hideReplyAndNotes = false;
+                this.cd.detectChanges();
+
             }
         }
 
