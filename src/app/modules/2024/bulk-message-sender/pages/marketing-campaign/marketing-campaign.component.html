@@ -13,7 +13,7 @@
     </div>
 
     <div class="analytics-dropcols">
-        <div class="analdrop1 analdrop2">
+        <!-- <div class="analdrop1 analdrop2">
             <label>Select Date</label>
             <select id="select-tags4" class="form-select" [(ngModel)]="selectedValue" (change)="onValueChange($event)">
                 <option value="Today">Today</option>
@@ -23,16 +23,16 @@
                 <option value="custom data">Custom date</option>
 
             </select>
-        </div>
+        </div> -->
 
-        <div class="analdrop1">
+        <!-- <div class="analdrop1">
             <div class="form-group">
                 <label for="startDate">From</label>
                 <input class="form-control" type="date" id="startDate" name="startDate" [(ngModel)]="startDate"
                     [max]="endDate" [disabled]="selectedValue !== 'custom data'">
             </div>
-        </div>
-        <div class="analdrop1">
+        </div> -->
+        <!-- <div class="analdrop1">
             <div class="form-group">
                 <label for="endDate">To</label>
                 <input class="form-control" type="date" id="endDate" name="endDate" [(ngModel)]="endDate"
@@ -41,32 +41,25 @@
                     To Date must be after From Date
                 </div>
             </div>
-        </div>
-        <div class="analdrop1">
+        </div> -->
+        <!-- <div class="analdrop1">
             <div class="form-group">
                 <label>&nbsp;</label>
 
-                <!-- Enabled button when selectedValue is 'custom data' -->
                 <button class="btn common-btn" *ngIf="selectedValue === 'custom data'" (click)="submitDateRange()">
                     Submit
                 </button>
 
-                <!-- Disabled button when selectedValue is not 'custom data' -->
                 <button class="btn common-btn" *ngIf="selectedValue !== 'custom data'" disabled>
                     Submit
                 </button>
             </div>
 
-        </div>
+        </div> -->
 
     </div>
 
-    <!-- <div class="btn-group" *ngIf="selectedContacts().length > 0">
-        <a href="javascript:void(0)" class="common-btn" [class.disabled]="selectedContacts().length === 0"
-            (click)="selectedContacts().length > 0 && getTemplates('Sir/Madam')">
-            Send New
-        </a>
-    </div> -->
+
     <div class="analytics-dropcols">
 
         <div class="analdrop1">
@@ -97,11 +90,15 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th><input class="form-check-input" type="checkbox" [(ngModel)]="isAllSelected"
-                                (change)="toggleSelectAll()" /></th>
+                        <th>
+                            <!-- <input class="form-check-input" type="checkbox" [(ngModel)]="isAllSelected"
+                                (change)="toggleSelectAll()" /> -->
+                            #
+                        </th>
                         <th>Sr.No.</th>
                         <th>Name</th>
                         <th>Phone No</th>
+                        <th>Time</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -111,6 +108,7 @@
                         <td>{{i + 1}}</td>
                         <td>{{contact.fullName}}</td>
                         <td>{{contact.phoneNo}}</td>
+                        <td>{{contact.time | date:'medium' }}</td>
                     </tr>
                 </tbody>
                 <tfoot>

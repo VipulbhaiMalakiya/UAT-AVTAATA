@@ -89,9 +89,9 @@ export class TempletsComponent implements OnInit {
 
 
         return template
-            .replace('{{1}}', variable1)
-            .replace('{{2}}', variable2)
-            .replace('{{3}}', variable3);
+        // .replace('{{1}}', variable1)
+        // .replace('{{2}}', variable2)
+        // .replace('{{3}}', variable3);
     }
 
     onFileChange(event: any) {

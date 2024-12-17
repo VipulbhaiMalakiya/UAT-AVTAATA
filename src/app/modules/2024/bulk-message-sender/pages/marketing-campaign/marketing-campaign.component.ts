@@ -117,12 +117,6 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
                     // Store all contacts for future filtering
                     this.allContacts = this.contactList;
 
-                    var model: any = {
-                        startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
-                        endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
-                    };
-                    this.filterContacts(model);
-
 
                 },
                 error: (err) => {
@@ -147,102 +141,102 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
         );
     }
 
-    filterContacts(model: any) {
-        console.log(model);
+    // filterContacts(model: any) {
+    //     console.log(model);
 
-        // Check if startDate or endDate is empty
-        if (!model.startDate || !model.endDate) {
-            // Clear or reset contact list if date range is incomplete
-            this.contactList = this.allContacts; // or an empty array if you want to reset to an empty array
-            return;
-        }
-
-
-        debugger;
-        // Filter contacts based on the date range
-
-        console.log('contactList', this.contactList);
-        console.log('allContacts', this.allContacts);
-        this.contactList = this.allContacts.filter(contact => {
-            const contactDate = contact.time
-                ? this.datePipe.transform(contact.time, 'yyyy-MM-dd')
-                : null;
-
-            return contactDate && contactDate >= model.startDate && contactDate <= model.endDate;
-        });
-    }
+    //     // Check if startDate or endDate is empty
+    //     if (!model.startDate || !model.endDate) {
+    //         // Clear or reset contact list if date range is incomplete
+    //         this.contactList = this.allContacts; // or an empty array if you want to reset to an empty array
+    //         return;
+    //     }
 
 
+    //     debugger;
+    //     // Filter contacts based on the date range
+
+    //     console.log('contactList', this.contactList);
+    //     console.log('allContacts', this.allContacts);
+    //     this.contactList = this.allContacts.filter(contact => {
+    //         const contactDate = contact.time
+    //             ? this.datePipe.transform(contact.time, 'yyyy-MM-dd')
+    //             : null;
+
+    //         return contactDate && contactDate >= model.startDate && contactDate <= model.endDate;
+    //     });
+    // }
 
 
 
 
-    onValueChange(event: Event) {
-        const target = event.target as HTMLSelectElement;
-        this.selectedValue = target.value;
-        const oneWeekFromNow = new Date();
-        if (this.selectedValue === 'Today') {
-            this.startDate = this.datePipe.transform(
-                oneWeekFromNow.toISOString().split('T')[0],
-                'yyyy-MM-dd'
-            );
-        } else if (this.selectedValue === 'Yesterday') {
-            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 1);
-            this.startDate = this.datePipe.transform(
-                oneWeekFromNow.toISOString().split('T')[0],
-                'yyyy-MM-dd'
-            );
-        } else if (this.selectedValue === '7') {
-            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 7);
-            this.startDate = this.datePipe.transform(
-                oneWeekFromNow.toISOString().split('T')[0],
-                'yyyy-MM-dd'
-            );
-        } else if (this.selectedValue === '30') {
-            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 30);
-            this.startDate = this.datePipe.transform(
-                oneWeekFromNow.toISOString().split('T')[0],
-                'yyyy-MM-dd'
-            );
-        }
-        else if (this.selectedValue === 'custom data') {
-            this.startDate = '';
-            this.endDate = '';
-        }
 
 
-        // Filter the contacts based on selected date range
-        var model: any = {
-            startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
-            endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
-        };
-        this.filterContacts(model);
-    }
+    // onValueChange(event: Event) {
+    //     const target = event.target as HTMLSelectElement;
+    //     this.selectedValue = target.value;
+    //     const oneWeekFromNow = new Date();
+    //     if (this.selectedValue === 'Today') {
+    //         this.startDate = this.datePipe.transform(
+    //             oneWeekFromNow.toISOString().split('T')[0],
+    //             'yyyy-MM-dd'
+    //         );
+    //     } else if (this.selectedValue === 'Yesterday') {
+    //         oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 1);
+    //         this.startDate = this.datePipe.transform(
+    //             oneWeekFromNow.toISOString().split('T')[0],
+    //             'yyyy-MM-dd'
+    //         );
+    //     } else if (this.selectedValue === '7') {
+    //         oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 7);
+    //         this.startDate = this.datePipe.transform(
+    //             oneWeekFromNow.toISOString().split('T')[0],
+    //             'yyyy-MM-dd'
+    //         );
+    //     } else if (this.selectedValue === '30') {
+    //         oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 30);
+    //         this.startDate = this.datePipe.transform(
+    //             oneWeekFromNow.toISOString().split('T')[0],
+    //             'yyyy-MM-dd'
+    //         );
+    //     }
+    //     else if (this.selectedValue === 'custom data') {
+    //         this.startDate = '';
+    //         this.endDate = '';
+    //     }
 
 
-    submitDateRange() {
-        if (!this.startDate || !this.endDate) {
-            this.dateRangeError = true; // Show error if dates are not entered
-            return;
-        }
+    //     // Filter the contacts based on selected date range
+    //     var model: any = {
+    //         startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
+    //         endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
+    //     };
+    //     this.filterContacts(model);
+    // }
 
-        const start = new Date(this.startDate);
-        const end = new Date(this.endDate);
 
-        if (start > end) {
-            this.dateRangeError = true; // Date range validation
-            console.error('End date must be greater than or equal to start date.');
-        } else {
-            this.dateRangeError = false; // Clear error if valid
-            // Proceed with filtering contacts based on the custom date range
-            var model: any = {
-                startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
-                endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
-            };
+    // submitDateRange() {
+    //     if (!this.startDate || !this.endDate) {
+    //         this.dateRangeError = true; // Show error if dates are not entered
+    //         return;
+    //     }
 
-            this.filterContacts(model);
-        }
-    }
+    //     const start = new Date(this.startDate);
+    //     const end = new Date(this.endDate);
+
+    //     if (start > end) {
+    //         this.dateRangeError = true; // Date range validation
+    //         console.error('End date must be greater than or equal to start date.');
+    //     } else {
+    //         this.dateRangeError = false; // Clear error if valid
+    //         // Proceed with filtering contacts based on the custom date range
+    //         var model: any = {
+    //             startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
+    //             endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
+    //         };
+
+    //         this.filterContacts(model);
+    //     }
+    // }
 
 
 
