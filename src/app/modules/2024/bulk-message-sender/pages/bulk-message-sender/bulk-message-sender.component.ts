@@ -73,43 +73,16 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
         this.isProceess = true;
 
         // Call the function to get the observable and then subscribe to it
-        this.whatsappService.activeContactList()
+        this.whatsappService.last24hours()
             .pipe(takeUntil(this.destroy$)).subscribe({
-                next: (response: any[]) => {
-                    const contactLists = response;
+                next: (response: any) => {
+                    const contactLists = response.data;
+                    // Sort the contact list by lastMessageTime in descending order
+                    this.contactList = contactLists.sort((a: any, b: any) =>
+                        new Date(b.lastMessageTime).getTime() - new Date(a.lastMessageTime).getTime()
+                    );
 
-                    // Safely access 'open' property of the first contact or fallback to an empty array
-                    this.open = contactLists[0]?.open ?? [];
-
-                    // Get the current time and calculate the threshold (24 hours ago)
-                    const now = new Date();
-                    const threshold = now.getTime() - (24 * 60 * 60 * 1000); // 24 hours ago in milliseconds
-
-                    // Filter the open array to include only entries before 24 hours
-                    // this.contactList = this.open.filter((contact: any) => {
-                    //     const contactTime = new Date(contact.time).getTime();
-                    //     return contactTime >= threshold;
-                    // });
-
-                    this.contactList = this.open
-                        .filter((contact: any) => {
-                            const contactTime = new Date(contact.time).getTime();
-                            return contactTime >= threshold;
-                        })
-                        .sort((a: any, b: any) => {
-                            // Assuming the contact has a 'name' property to sort alphabetically
-                            const nameA = a.fullName.toLowerCase(); // Convert to lower case for case-insensitive comparison
-                            const nameB = b.fullName.toLowerCase();
-                            if (nameA < nameB) {
-                                return -1;
-                            }
-                            if (nameA > nameB) {
-                                return 1;
-                            }
-                            return 0; // If names are equal, return 0
-                        });
-
-                    this.isProceess = false;  // End processing flag
+                    this.isProceess = false; this.isProceess = false;
                 },
                 error: (err) => {
                     console.error('Error fetching contact list:', err);
@@ -123,9 +96,24 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
     // Getter to filter contacts based on the search term
     get filteredContactList() {
         return this.contactList.filter(contact =>
-            contact.fullName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-            contact.phoneNo.includes(this.searchTerm)
+            contact.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+            contact.mobile.includes(this.searchTerm)
         );
+    }
+
+    formatDate(contactTime: string): string {
+        const now = new Date();
+        const date = new Date(contactTime);
+
+        const differenceInHours = Math.abs(now.getTime() - date.getTime()) / 36e5; // difference in hours
+
+        if (differenceInHours < 24) {
+            return `${Math.floor(differenceInHours)} hours ago`;
+        } else if (differenceInHours < 48) {
+            return 'Yesterday';
+        } else {
+            return date.toLocaleString('en-US', { timeZone: 'Asia/Kolkata', hour12: true });
+        }
     }
 
     // Method to toggle "Check All" checkbox

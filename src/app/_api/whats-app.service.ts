@@ -147,6 +147,15 @@ export class WhatsAppService {
     }
 
 
+
+    last24hours() {
+        let headers = this.header.getJWTHeaders(); // Get JWT headers for authorization
+        const httpOptions = { headers: headers };  // Define the request options
+
+        return this.http.get<any[]>(`${this.baseUrl}/campaign/customers-Details/last24hours`, httpOptions)// Make the GET request
+    }
+
+
     // getContactList() {
     //     let headers = this.header.getJWTHeaders();
     //     const httpOptions = { headers: headers };
