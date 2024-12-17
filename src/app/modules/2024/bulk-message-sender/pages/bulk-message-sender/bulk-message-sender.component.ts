@@ -11,6 +11,7 @@ import { LocationDetailsComponent } from 'src/app/modules/chat/components/locati
 import { QuickReplyComponent } from 'src/app/modules/chat/components/quick-reply/quick-reply.component';
 import { TempletsComponent } from 'src/app/modules/chat/components/templets/templets.component';
 import { VideoComponent } from 'src/app/modules/chat/components/video/video.component';
+import { ConfirmationDialogModalComponent } from 'src/app/modules/shared/components/confirmation-dialog-modal/confirmation-dialog-modal.component';
 
 @Component({
     selector: 'app-bulk-message-sender',
@@ -425,7 +426,28 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
     }
 
     submitForm(form: any) {
-        this.sendMessage(form, 'text');
+
+
+
+        const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
+        if (modalRef) {
+            this.isProceess = false;
+        }
+        else {
+            this.isProceess = false;
+        }
+        const selectedContacts = this.contactList.filter(contact => contact.selected);
+
+        let selectedCustomerNames = selectedContacts.map(contact => contact.name).join(', '); // Join names for display
+
+        var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
+        componentInstance.message = `Selected customers: ${selectedCustomerNames}`;
+
+        modalRef.result.then((canDelete: boolean) => {
+            if (canDelete) {
+                this.sendMessage(form, 'text');
+            }
+        }).catch(() => { });
     }
 
     submitNoteForm(form: any) {
