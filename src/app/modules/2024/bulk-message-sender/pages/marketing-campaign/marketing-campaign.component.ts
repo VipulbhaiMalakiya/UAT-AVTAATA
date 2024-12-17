@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -33,15 +34,30 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
     private destroy$ = new Subject<void>();
 
 
+    selectedValue?: any = 7;
+    startDate?: any;
+    endDate?: any;
+    dateRangeError: boolean = false;
 
 
     constructor(public whatsappService: WhatsAppService, private toastr: ToastrService, private router: Router,
-        private modalService: NgbModal,
+        private modalService: NgbModal, private datePipe: DatePipe,
 
     ) {
         const d: any = localStorage.getItem('userData');
         this.userData = JSON.parse(d);
         this.logInUserName = this.userData.firstName + ' ' + this.userData.lastName;
+
+        const oneWeekFromNow = new Date();
+        this.endDate = this.datePipe.transform(
+            oneWeekFromNow.toISOString().split('T')[0],
+            'yyyy-MM-dd'
+        );
+        oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 7);
+        this.startDate = this.datePipe.transform(
+            oneWeekFromNow.toISOString().split('T')[0],
+            'yyyy-MM-dd'
+        );
     }
 
     ngOnInit(): void {
@@ -425,5 +441,59 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
 
     }
 
-}
 
+    onValueChange(event: Event) {
+        const target = event.target as HTMLSelectElement;
+        this.selectedValue = target.value;
+        const oneWeekFromNow = new Date();
+        if (this.selectedValue === 'Today') {
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        } else if (this.selectedValue === 'Yesterday') {
+            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 1);
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        } else if (this.selectedValue === '7') {
+            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 7);
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        } else if (this.selectedValue === '30') {
+            oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 30);
+            this.startDate = this.datePipe.transform(
+                oneWeekFromNow.toISOString().split('T')[0],
+                'yyyy-MM-dd'
+            );
+        }
+        else if (this.selectedValue === 'custom data') {
+            return;
+        }
+
+        var model: any = {
+            startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
+            endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
+        };
+
+    }
+
+    submitDateRange() {
+        const start = new Date(this.startDate);
+        const end = new Date(this.endDate);
+        if (start > end) {
+            this.dateRangeError = true;
+        } else {
+            this.dateRangeError = false;
+            var model: any = {
+                startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
+                endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
+            };
+
+        }
+
+    }
+}
