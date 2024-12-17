@@ -24,6 +24,11 @@ export class TempletsComponent implements OnInit {
     username: any;
     password: any;
 
+    variable1: any;
+    variable2: any;
+    variable3: any;
+
+
     set issuesMaster(value: any) {
         this.username = value;
     }
