@@ -4,7 +4,9 @@ import { environment } from 'src/environments/environment';
 import { HeadersService } from '../_services/headers.service';
 import { WebSocketSubject } from 'rxjs/webSocket';
 import { catchError, map, shareReplay, tap } from 'rxjs/operators';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { AuthenticationService } from '../_services';
 
 @Injectable({
     providedIn: 'root'
@@ -16,18 +18,24 @@ export class WhatsAppService {
 
     private chatCache = new Map<string, Observable<any>>();
     private ongoingRequests = new Map<string, boolean>();
+    private serverErrorToast: any = null;
 
     private contactListSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
     contactList$: Observable<any[]> = this.contactListSubject.asObservable();
 
     constructor(private http: HttpClient,
-        private header: HeadersService) {
+        private header: HeadersService, private toastr: ToastrService, private auth: AuthenticationService,) {
+
+
+        window.addEventListener('online', () => {
+            this.handleOnline();
+        });
     }
 
     chatHistory(request: any) {
         let headers = this.header.getJWTHeaders();
         const httpOptions = { headers: headers };
-        return this.http.get(this.baseUrl + `/chatlist/history/number/${request}`, httpOptions);
+        return this.http.get(this.baseUrl + `/chatlist/history/number/${request}`, httpOptions).pipe(catchError(this.errorHandler.bind(this)));
     }
 
     // chatHistorynew(contact: string, currentPage: number, pageSize: number) {
@@ -40,7 +48,7 @@ export class WhatsAppService {
         let headers = this.header.getJWTHeaders();
         const httpOptions = { headers: headers };
         const url = `${this.baseUrl}/chatlist/historypagination/number/${contact}?page=${currentPage}&pageSize=${pageSize}`;
-        return this.http.get(url, httpOptions);
+        return this.http.get(url, httpOptions).pipe(catchError(this.errorHandler.bind(this)));
     }
 
     // chatHistorynew(contact: string, page: number, pageSize: number): Observable<any> {
@@ -98,7 +106,7 @@ export class WhatsAppService {
             'Content-Type': 'application/json'
         });
 
-        return this.http.put(url, null, { headers });
+        return this.http.put(url, null, { headers }).pipe(catchError(this.errorHandler.bind(this)));
     }
 
 
@@ -113,6 +121,7 @@ export class WhatsAppService {
         const httpOptions = { headers: headers };
 
         return this.http.get<any[]>(`${this.baseUrl}/chatlist/latest-messages`, httpOptions).pipe(
+            catchError(this.errorHandler.bind(this)),
             map(response => {
                 // Process the response if necessary before returning it
                 this.updateContactList(response); // Update the shared contact list
@@ -126,6 +135,7 @@ export class WhatsAppService {
         const httpOptions = { headers: headers };
 
         return this.http.get<any[]>(`${this.baseUrl}/message-history/latest-messages/assignedto/${data}`, httpOptions).pipe(
+            catchError(this.errorHandler.bind(this)),
             map((response: any[]) => {
                 // Process the response if necessary before returning it
                 this.updateContactList(response); // Update the shared contact list
@@ -143,7 +153,7 @@ export class WhatsAppService {
         let headers = this.header.getJWTHeaders(); // Get JWT headers for authorization
         const httpOptions = { headers: headers };  // Define the request options
 
-        return this.http.get<any[]>(`${this.baseUrl}/chatlist/latest-messages`, httpOptions)// Make the GET request
+        return this.http.get<any[]>(`${this.baseUrl}/chatlist/latest-messages`, httpOptions).pipe(catchError(this.errorHandler.bind(this)));// Make the GET request
     }
 
 
@@ -153,7 +163,7 @@ export class WhatsAppService {
         let headers = this.header.getJWTHeaders(); // Get JWT headers for authorization
         const httpOptions = { headers: headers };  // Define the request options
 
-        return this.http.get<any[]>(`${this.baseUrl}/campaign/customers-Details/last24hours`, httpOptions)// Make the GET request
+        return this.http.get<any[]>(`${this.baseUrl}/campaign/customers-Details/last24hours`, httpOptions).pipe(catchError(this.errorHandler.bind(this)));// Make the GET request
     }
 
 
@@ -176,7 +186,7 @@ export class WhatsAppService {
     sendWhatsAppMessage(formData: FormData) {
         let headers = this.header.getJWTHeaders();
         const httpOptions = { headers: headers };
-        return this.http.post(this.baseUrl + '/outgoing/send-message', formData, httpOptions);
+        return this.http.post(this.baseUrl + '/outgoing/send-message', formData, httpOptions).pipe(catchError(this.errorHandler.bind(this)));;
         // return this.http.post(this.baseUrl + '/outgoing-message', request, httpOptions);
     }
 
@@ -184,7 +194,7 @@ export class WhatsAppService {
     sendBroadcastMessage(formData: FormData) {
         let headers = this.header.getJWTHeaders();
         const httpOptions = { headers: headers };
-        return this.http.post(this.baseUrl + '/campaign/send-bulk/broadcast', formData, httpOptions);
+        return this.http.post(this.baseUrl + '/campaign/send-bulk/broadcast', formData, httpOptions).pipe(catchError(this.errorHandler.bind(this)));;
         // return this.http.post(this.baseUrl + '/outgoing-message', request, httpOptions);
     }
 
@@ -192,6 +202,62 @@ export class WhatsAppService {
     sendnotesMessage(request: any) {
         let headers = this.header.getJWTHeaders();
         const httpOptions = { headers: headers };
-        return this.http.post(this.baseUrl + '/outgoing-message', request, httpOptions);
+        return this.http.post(this.baseUrl + '/outgoing-message', request, httpOptions).pipe(catchError(this.errorHandler.bind(this)));;
     }
+
+
+    public errorHandler(responce: any) {
+        const error = responce.error;
+        const keys = Object.keys(error);
+        const key = keys[0];
+        let message = error[key];
+
+        if (responce.status === 401) {
+            this.auth.logout();
+        }
+        if (error[key] instanceof Array) {
+            message = error[key][0];
+        }
+        if (key === 'isTrusted') {
+            this.showServerError();
+        }
+
+
+
+        else {
+            message = key + ' : ' + message;
+        }
+        return throwError({ messages: message, error: error })
+    }
+
+
+    // Show the server error toast
+    public showServerError(): void {
+        // If server error toast already exists, don't show a new one
+        if (this.serverErrorToast) {
+            return;
+        }
+
+        // Show the server error toast
+        this.serverErrorToast = this.toastr.error(
+            "The server is currently unavailable. Please try again later.",
+            "Server Error",
+            {
+                timeOut: 0,          // Ensures the toast does not automatically close
+                closeButton: true,   // Adds a close button for manual dismissal
+                progressBar: true,   // Displays the progress bar
+                tapToDismiss: false  // Disables dismissal when the toast is clicked
+            }
+        );
+    }
+
+    // Handle online event and close server error toast
+    private handleOnline(): void {
+        // Close the server error toast if it exists
+        if (this.serverErrorToast) {
+            this.toastr.clear(this.serverErrorToast.toastId); // Clear the server error toast using its ID
+            this.serverErrorToast = null; // Reset the reference
+        }
+    }
+
 }
