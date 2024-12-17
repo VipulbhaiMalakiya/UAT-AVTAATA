@@ -447,6 +447,47 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
     }
 
 
+    formatDate(date: string | Date): string {
+        const now = new Date();
+        const givenDate = new Date(date);
+
+        const diffTime = now.getTime() - givenDate.getTime(); // Difference in milliseconds
+        const diffMinutes = Math.floor(diffTime / (1000 * 60)); // Difference in minutes
+        const diffHours = Math.floor(diffMinutes / 60); // Difference in hours
+        const diffDays = Math.floor(diffTime / (1000 * 3600 * 24)); // Difference in days
+
+        if (diffDays === 0) {
+            if (diffHours > 0) {
+                return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+            } else if (diffMinutes > 0) {
+                return `${diffMinutes} minute${diffMinutes > 1 ? 's' : ''} ago`;
+            } else {
+                return 'Just now';
+            }
+        } else if (diffDays === 1) {
+            // Add time for "Yesterday"
+            const time = givenDate.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            });
+            return `Yesterday at ${time}`;
+        } else {
+            // For dates older than yesterday, include both date and time
+            const dateString = givenDate.toLocaleDateString('en-US', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric'
+            });
+            const timeString = givenDate.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            });
+            return `${dateString} at ${timeString}`;
+        }
+    }
+
 
 
 }

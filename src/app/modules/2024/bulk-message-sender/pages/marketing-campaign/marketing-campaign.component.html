@@ -108,7 +108,7 @@
                         <td>{{i + 1}}</td>
                         <td>{{contact.fullName}}</td>
                         <td>{{contact.phoneNo}}</td>
-                        <td>{{contact.time | date:'medium' }}</td>
+                        <td>{{formatDate(contact.time)}}</td>
                     </tr>
                 </tbody>
                 <tfoot>
