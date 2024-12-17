@@ -9,7 +9,7 @@ import { WhatsAppService } from './_api/whats-app.service';
 })
 export class AppComponent implements OnInit {
     title = 'avataara';
-    private offlineToast: any; // Reference to the offline toast
+    private offlineToast: any = null;
 
     constructor(private authenticationService: AuthenticationService,
         private router: Router, private toastr: ToastrService, public whatsappService: WhatsAppService,) {
@@ -52,11 +52,13 @@ export class AppComponent implements OnInit {
             'You have lost your internet connection. Some features may be restricted.',
             'Connection Lost',
             {
-                // timeOut: 0,          // Ensures the toast does not automatically close
+                timeOut: 0,          // Ensures the toast does not automatically close
                 closeButton: true,   // Adds a close button for manual dismissal
-                progressBar: false   // Disables the progress bar
+                progressBar: true,   // Displays the progress bar
+                tapToDismiss: false  // Disables dismissal when the toast is clicked
             }
         );
+
     }
 
     // Handle online event and close offline toast
@@ -64,12 +66,11 @@ export class AppComponent implements OnInit {
         // Show the "Connection Restored" toast
         this.toastr.success('You are back online. All features are now accessible.', 'Connection Restored', {
             closeButton: true,
-            progressBar: false
+            progressBar: true
         });
-
         // Close the offline toast if it exists
         if (this.offlineToast) {
-            this.toastr.clear(this.offlineToast); // Clear the offline toast
+            this.toastr.clear(this.offlineToast.toastId); // Clear the offline toast using its ID
             this.offlineToast = null; // Reset the reference
         }
     }
