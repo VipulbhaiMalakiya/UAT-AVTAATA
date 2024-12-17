@@ -105,16 +105,26 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
         const now = new Date();
         const date = new Date(contactTime);
 
-        const differenceInHours = Math.abs(now.getTime() - date.getTime()) / 36e5; // difference in hours
+        const differenceInMilliseconds = now.getTime() - date.getTime();
+        const differenceInMinutes = Math.floor(differenceInMilliseconds / 60000); // difference in minutes
+        const differenceInHours = Math.floor(differenceInMinutes / 60); // difference in hours
+        const differenceInDays = Math.floor(differenceInHours / 24); // difference in days
 
-        if (differenceInHours < 24) {
-            return `${Math.floor(differenceInHours)} hours ago`;
+        if (differenceInHours === 0) {
+            if (differenceInMinutes < 1) {
+                return `${differenceInMilliseconds / 1000} seconds ago`; // Show seconds if < 1 minute
+            } else {
+                return `${differenceInMinutes} minutes ago`; // Show minutes if < 1 hour
+            }
+        } else if (differenceInHours < 24) {
+            return `${differenceInHours} hours ago`;
         } else if (differenceInHours < 48) {
             return 'Yesterday';
         } else {
             return date.toLocaleString('en-US', { timeZone: 'Asia/Kolkata', hour12: true });
         }
     }
+
 
     // Method to toggle "Check All" checkbox
     toggleSelectAll() {
