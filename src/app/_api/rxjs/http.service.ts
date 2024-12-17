@@ -10,9 +10,16 @@ import { catchError } from 'rxjs/operators';
 })
 export class HttpService {
     private baseUrl = environment.apiUrl;
+    private serverErrorToast: any = null;
+
     constructor(private http: HttpClient,
         private auth: AuthenticationService,
-        private toastr: ToastrService) { }
+        private toastr: ToastrService) {
+
+        window.addEventListener('online', () => {
+            this.handleOnline();
+        });
+    }
 
     get(url: string, params?: any): Observable<any> {
         const data = { params, headers: this.getAuthHeader() };
@@ -53,15 +60,45 @@ export class HttpService {
             message = error[key][0];
         }
         if (key === 'isTrusted') {
-            this.toastr.error(
-                "The server is currently unavailable. Please try again later.",
-                "Server Error",
-            );
+            this.showServerError();
         }
+
+
+
         else {
             message = key + ' : ' + message;
         }
         return throwError({ messages: message, error: error })
+    }
+
+
+    // Show the server error toast
+    public showServerError(): void {
+        // If server error toast already exists, don't show a new one
+        if (this.serverErrorToast) {
+            return;
+        }
+
+        // Show the server error toast
+        this.serverErrorToast = this.toastr.error(
+            "The server is currently unavailable. Please try again later.",
+            "Server Error",
+            {
+                timeOut: 0,          // Ensures the toast does not automatically close
+                closeButton: true,   // Adds a close button for manual dismissal
+                progressBar: true,   // Displays the progress bar
+                tapToDismiss: false  // Disables dismissal when the toast is clicked
+            }
+        );
+    }
+
+    // Handle online event and close server error toast
+    private handleOnline(): void {
+        // Close the server error toast if it exists
+        if (this.serverErrorToast) {
+            this.toastr.clear(this.serverErrorToast.toastId); // Clear the server error toast using its ID
+            this.serverErrorToast = null; // Reset the reference
+        }
     }
 
     private getAuthHeader(): { [Header: string]: string | string[]; } {
