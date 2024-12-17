@@ -146,11 +146,6 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
         this.isProceess = true; // Indicate the process has started.
 
         const selectedContacts = this.contactList.filter(contact => contact.selected);
-
-        // Track the number of API calls
-        let successCount = 0;
-        let errorCount = 0;
-        let processedCount = 0; // Track the total number of processed API calls
         const allRequests: any[] = []; // Array to store all requests
 
 
@@ -295,46 +290,7 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
 
             // Push the request into the allRequests array
             allRequests.push(request);
-            // let formData = new FormData();
-            // formData.append('messageEntry', JSON.stringify(request));
 
-            // form.file && formData.append('file', form.file);
-
-            // // Make the API call for each selected contact
-            // this.whatsappService.sendWhatsAppMessage(formData)
-            //     .pipe(takeUntil(this.destroy$))
-            //     .subscribe({
-            //         next: (response) => {
-            //             let data: any = response;
-            //             successCount++; // Increment success count
-            //             this.toastr.success(data.message); // Show success notification
-            //             const audio = new Audio('../../../../../assets/sound/Whatsapp Message - Sent - Sound.mp3');
-            //             audio.play();
-            //         },
-            //         error: (error) => {
-            //             errorCount++; // Increment error count
-            //             this.isProceess = false;
-            //             this.handleErrors(error);// Show error notification
-            //         },
-            //         complete: () => {
-            //             processedCount++; // Increment processed count
-            //             if (processedCount === selectedContacts.length) {
-            //                 // If all API calls are processed
-            //                 this.isProceess = false; // Mark process as complete
-
-            //                 if (successCount === selectedContacts.length) {
-            //                     // If all requests were successful
-            //                     this.router.navigate(['/admin/inbox']); // Navigate to inbox
-            //                     this.message = ''; // Clear the message field
-            //                     this.contactList.forEach(contact => contact.selected = false); // Unselect all contacts
-            //                 } else {
-            //                     this.toastr.warning(
-            //                         `${successCount} ${type} messages sent successfully. ${errorCount} failed.`
-            //                     );
-            //                 }
-            //             }
-            //         },
-            //     });
         });
 
         // console.log('All Requests:', allRequests);
@@ -430,118 +386,6 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
         }
     }
 
-    submitForm(form: any) {
-        this.sendMessage(form, 'text');
-    }
-
-    submitNoteForm(form: any) {
-        this.sendMessage(form, 'notes');
-    }
-
-
-
-    // This method will be triggered to open/close the popup
-    toggleCartPopup() {
-        this.isCartPopupOpen = !this.isCartPopupOpen;
-    }
-
-
-    toggleupload() {
-        this.isCartPopupOpen = false;
-        this.showupload = !this.showupload;
-    }
-
-    closeUploadTray() {
-        this.showupload = false;
-        // this.isCartPopupOpen = false;
-    }
-    closeUploadTray1() {
-        // this.showupload = false;
-        this.isCartPopupOpen = false;
-    }
-    @HostListener('document:click', ['$event'])
-    onDocumentClick(event: MouseEvent): void {
-        const attachTray = document.getElementById('attach-tray');
-        if (attachTray && !attachTray.contains(event.target as Node)) {
-            this.closeUploadTray();
-        }
-
-        const attachTray1 = document.getElementById('attach-tray1');
-        if (attachTray1 && !attachTray1.contains(event.target as Node)) {
-            this.closeUploadTray1();
-        }
-
-    }
-    sendingCatalog(e: any) {
-        this.showupload = false;
-        this.isCartPopupOpen = false;
-        this.sendMessage(e, 'interactive');
-    }
-
-
-
-    documentAdd() {
-        this.showupload = false;
-        const modalRef = this.modalService.open(DocumentComponent, {
-            size: 'lg',
-            centered: true,
-            backdrop: 'static',
-        });
-        if (modalRef) {
-            this.isProceess = false;
-        } else {
-            this.isProceess = false;
-        }
-        modalRef.result
-            .then((data: any) => {
-                if (data) {
-                    this.sendMessage(data, 'document');
-                }
-            })
-            .catch(() => { });
-    }
-
-    onLocationAdd() {
-        this.showupload = false;
-        const modalRef = this.modalService.open(LocationDetailsComponent, {
-            size: 'lg',
-            centered: true,
-            backdrop: 'static',
-        });
-        if (modalRef) {
-            this.isProceess = false;
-        } else {
-            this.isProceess = false;
-        }
-        modalRef.result
-            .then((data: any) => {
-                if (data) {
-                    this.sendMessage(data, 'location');
-                }
-            })
-            .catch(() => { });
-    }
-
-    onimageAdd() {
-        this.showupload = false;
-        const modalRef = this.modalService.open(ImageUplodComponent, {
-            size: 'lg',
-            centered: true,
-            backdrop: 'static',
-        });
-        if (modalRef) {
-            this.isProceess = false;
-        } else {
-            this.isProceess = false;
-        }
-        modalRef.result
-            .then((data: any) => {
-                if (data) {
-                    this.sendMessage(data, 'image');
-                }
-            })
-            .catch(() => { });
-    }
 
 
 
@@ -572,45 +416,5 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
 
     }
 
-    onaudioAdd() {
-        this.showupload = false;
-        const modalRef = this.modalService.open(AudioComponent, {
-            size: 'md',
-            centered: true,
-            backdrop: 'static',
-        });
-        if (modalRef) {
-            this.isProceess = false;
-        } else {
-            this.isProceess = false;
-        }
-        modalRef.result
-            .then((data: any) => {
-                if (data) {
-                    this.sendMessage(data, 'audio');
-                }
-            })
-            .catch(() => { });
-    }
-
-    onvideoAdd() {
-        this.showupload = false;
-
-        const modalRef = this.modalService.open(VideoComponent, {
-            size: 'md',
-        });
-        if (modalRef) {
-            this.isProceess = false;
-        } else {
-            this.isProceess = false;
-        }
-        modalRef.result
-            .then((data: any) => {
-                if (data) {
-                    this.sendMessage(data, 'video');
-                }
-            })
-            .catch(() => { });
-    }
 }
 
