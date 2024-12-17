@@ -40,6 +40,8 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
     endDate?: any;
     dateRangeError: boolean = false;
 
+    maxSelection = 200;
+
 
     constructor(public whatsappService: WhatsAppService, private toastr: ToastrService, private router: Router,
         private modalService: NgbModal, private datePipe: DatePipe,
@@ -92,20 +94,6 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
             .subscribe({
                 next: (response: any[]) => {
                     const contactLists = response;
-
-                    // Safely access and sort all categories and combine them into a single array
-                    // const allContacts = [
-                    //     ...contactLists[0]?.open?.sort((a: any, b: any) =>
-                    //         a.fullName.localeCompare(b.fullName, undefined, { sensitivity: 'base' })
-                    //     ) ?? [],
-                    //     ...contactLists[0]?.closed?.sort((a: any, b: any) =>
-                    //         a.fullName.localeCompare(b.fullName, undefined, { sensitivity: 'base' })
-                    //     ) ?? [],
-                    //     ...contactLists[0]?.missed?.sort((a: any, b: any) =>
-                    //         a.fullName.localeCompare(b.fullName, undefined, { sensitivity: 'base' })
-                    //     ) ?? []
-                    // ];
-
                     const allContacts = [
                         ...contactLists[0]?.open?.sort((a: any, b: any) =>
                             new Date(b.time).getTime() - new Date(a.time).getTime()
@@ -153,112 +141,38 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
         );
     }
 
-    // filterContacts(model: any) {
-    //     console.log(model);
-
-    //     // Check if startDate or endDate is empty
-    //     if (!model.startDate || !model.endDate) {
-    //         // Clear or reset contact list if date range is incomplete
-    //         this.contactList = this.allContacts; // or an empty array if you want to reset to an empty array
-    //         return;
-    //     }
-
-
-    //     debugger;
-    //     // Filter contacts based on the date range
-
-    //     console.log('contactList', this.contactList);
-    //     console.log('allContacts', this.allContacts);
-    //     this.contactList = this.allContacts.filter(contact => {
-    //         const contactDate = contact.time
-    //             ? this.datePipe.transform(contact.time, 'yyyy-MM-dd')
-    //             : null;
-
-    //         return contactDate && contactDate >= model.startDate && contactDate <= model.endDate;
-    //     });
-    // }
 
 
 
 
 
 
-    // onValueChange(event: Event) {
-    //     const target = event.target as HTMLSelectElement;
-    //     this.selectedValue = target.value;
-    //     const oneWeekFromNow = new Date();
-    //     if (this.selectedValue === 'Today') {
-    //         this.startDate = this.datePipe.transform(
-    //             oneWeekFromNow.toISOString().split('T')[0],
-    //             'yyyy-MM-dd'
-    //         );
-    //     } else if (this.selectedValue === 'Yesterday') {
-    //         oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 1);
-    //         this.startDate = this.datePipe.transform(
-    //             oneWeekFromNow.toISOString().split('T')[0],
-    //             'yyyy-MM-dd'
-    //         );
-    //     } else if (this.selectedValue === '7') {
-    //         oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 7);
-    //         this.startDate = this.datePipe.transform(
-    //             oneWeekFromNow.toISOString().split('T')[0],
-    //             'yyyy-MM-dd'
-    //         );
-    //     } else if (this.selectedValue === '30') {
-    //         oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 30);
-    //         this.startDate = this.datePipe.transform(
-    //             oneWeekFromNow.toISOString().split('T')[0],
-    //             'yyyy-MM-dd'
-    //         );
-    //     }
-    //     else if (this.selectedValue === 'custom data') {
-    //         this.startDate = '';
-    //         this.endDate = '';
-    //     }
-
-
-    //     // Filter the contacts based on selected date range
-    //     var model: any = {
-    //         startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
-    //         endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
-    //     };
-    //     this.filterContacts(model);
-    // }
-
-
-    // submitDateRange() {
-    //     if (!this.startDate || !this.endDate) {
-    //         this.dateRangeError = true; // Show error if dates are not entered
-    //         return;
-    //     }
-
-    //     const start = new Date(this.startDate);
-    //     const end = new Date(this.endDate);
-
-    //     if (start > end) {
-    //         this.dateRangeError = true; // Date range validation
-    //         console.error('End date must be greater than or equal to start date.');
-    //     } else {
-    //         this.dateRangeError = false; // Clear error if valid
-    //         // Proceed with filtering contacts based on the custom date range
-    //         var model: any = {
-    //             startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
-    //             endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
-    //         };
-
-    //         this.filterContacts(model);
-    //     }
-    // }
-
-
-
-    // Method to toggle "Check All" checkbox
-    toggleSelectAll() {
-        this.contactList.forEach(contact => {
-            contact.selected = this.isAllSelected;
-        });
+    toggleSelectAll(): void {
+        if (this.isAllSelected) {
+            const canSelectCount = this.maxSelection - this.selectedCustomersCount;
+            let count = 0;
+            this.filteredContactList.forEach(contact => {
+                if (!contact.selected && count < canSelectCount) {
+                    contact.selected = true;
+                    count++;
+                } else if (count >= canSelectCount) {
+                    this.isAllSelected = false;
+                }
+            });
+        } else {
+            this.filteredContactList.forEach(contact => (contact.selected = false));
+        }
     }
 
+    onCheckboxChange(contact: any): void {
+        const selectedCount = this.selectedCustomersCount;
+        if (contact.selected && selectedCount > this.maxSelection) {
+            contact.selected = false;
+            alert('You can select a maximum of 5 customers.');
+        }
+        this.isAllSelected =
+            this.filteredContactList.every(contact => contact.selected) && selectedCount <= this.maxSelection;
+    }
 
     quickReply() {
         this.showupload = false;
