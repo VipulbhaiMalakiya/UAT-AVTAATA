@@ -283,6 +283,7 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
 
 
 
+
     sendMessage(form: any, type: 'text' | 'notes' | 'interactive' | 'template' | 'audio' | 'video' | 'image' | 'document' | 'location') {
         this.isProceess = true; // Indicate the process has started.
 
@@ -292,171 +293,58 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
 
         // let request: any;
         selectedContacts.forEach(contact => {
-            let request: any;
-
+            let contactList: any;
             // Create a request for each selected contact
-
-
-            if (type == 'text') {
-                request = {
-                    messaging_product: 'whatsapp',
-                    recipient_type: 'individual',
-                    to: contact.phoneNo,
-                    type: 'text',
-                    fromId: this.userData?.userId,
-                    logInUserName: this.logInUserName,
-                    assignedto: this.userData?.userId,
-                    names: contact.fullName || null,
-                    text: {
-                        preview_url: false,
-                        body: form.value.chat
-                    },
-                };
+            contactList = {
+                name: contact.name,
+                number: contact.mobile
             }
-            else if (type == 'notes') {
-                request = {
-                    messaging_product: 'whatsapp',
-                    recipient_type: 'individual',
-                    to: contact.phoneNo,
-                    type: 'text',
-                    fromId: this.userData?.userId,
-                    logInUserName: this.logInUserName,
-                    assignedto: this.userData?.userId,
-                    names: contact.fullName || null,
-                    text: {
-                        preview_url: false,
-                        body: form.value.note,
-                    },
-                };
-            }
-
-            else if (type == 'interactive') {
-                request = {
-                    messaging_product: 'whatsapp',
-                    recipient_type: 'individual',
-                    to: contact.phoneNo,  // Sending to the contact's phone number
-                    type: 'interactive',
-                    fromId: this.userData?.userId,
-                    logInUserName: this.logInUserName,
-                    assignedto: this.userData?.userId,
-                    fullname: contact.fullName || null,
-                    interactiveName: form,  // Sending catalog name
-                };
-            }
-
-            else if (type == 'template') {
-                request = {
-                    messaging_product: 'whatsapp',
-                    recipient_type: 'individual',
-                    to: contact.phoneNo,  // Sending to the contact's phone number
-                    type: 'template',
-                    fromId: this.userData?.userId,
-                    assignedto: this.userData?.userId,
-                    fullname: contact.fullName || null,
-                    templateName: form.templateName,
-                    templateBody: form.templateBody,
-                    templateHeader: form.templateHeader,
-                    logInUserName: form.logInUserName,
-                };
-            }
-
-            else if (type == 'audio') {
-                request = {
-                    messaging_product: 'whatsapp',
-                    recipient_type: 'individual',
-                    to: contact.phoneNo,  // Sending to the contact's phone number
-                    type: 'audio',
-                    fromId: this.userData?.userId,
-                    assignedto: this.userData?.userId,
-                    names: contact.fullName || null,
-                    logInUserName: form.logInUserName,
-                };
-            }
-            else if (type == 'video') {
-                request = {
-                    messaging_product: 'whatsapp',
-                    recipient_type: 'individual',
-                    to: contact.phoneNo,
-                    type: 'video',
-                    caption: form.caption,
-                    fromId: this.userData?.userId,
-                    assignedto: this.userData?.userId,
-                    names: contact.fullName || null,
-                    logInUserName: this.logInUserName,
-                };
-            }
-
-            else if (type == 'image') {
-                request = {
-                    messaging_product: 'whatsapp',
-                    recipient_type: 'individual',
-                    to: contact.phoneNo,
-                    type: 'image',
-                    fromId: this.userData?.userId,
-                    assignedto: this.userData?.userId,
-                    names: contact.fullName || null,
-                    logInUserName: this.logInUserName,
-                };
-            }
-            else if (type == 'document') {
-                request = {
-                    messaging_product: 'whatsapp',
-                    recipient_type: 'individual',
-                    to: contact.phoneNo,
-                    type: 'document',
-                    caption: form.caption,
-                    fromId: this.userData?.userId,
-                    assignedto: this.userData?.userId,
-                    names: contact.fullName || null,
-                    logInUserName: this.logInUserName,
-                };
-            }
-            else if (type == 'location') {
-                request = {
-                    messaging_product: 'whatsapp',
-                    recipient_type: 'individual',
-                    to: contact.phoneNo,
-                    type: 'location',
-                    fromId: this.userData?.userId,
-                    assignedto: this.userData?.userId,
-                    names: contact.fullName || null,
-                    latitude: form.latitude,
-                    longitude: form.longitude,
-                    locationAddress: form.address,
-                    locationName: form.locationName,
-                    logInUserName: this.logInUserName,
-                };
-            }
-
-
             // Push the request into the allRequests array
-            allRequests.push(request);
+            allRequests.push(contactList);
 
         });
 
-        // console.log('All Requests:', allRequests);
 
-        allRequests.forEach(request => {
-            const formData = new FormData();
-            formData.append('messageEntry', JSON.stringify(request));
-            form.file && formData.append('file', form.file);
 
-            this.whatsappService.sendWhatsAppMessage(formData)
-                .pipe(takeUntil(this.destroy$))
-                .subscribe({
-                    next: (response) => {
-                        this.toastr.success('Message sent successfully!');
-                        this.router.navigate(['/admin/inbox']); // Navigate to inbox
+        let request: any;
 
-                    },
-                    error: (error) => {
-                        this.handleErrors(error);
-                    },
-                    complete: () => {
-                        this.isProceess = false;
-                    }
-                });
-        });
+
+        if (type == 'template') {
+            request = {
+                messaging_product: 'whatsapp',
+                recipient_type: 'individual',
+                type: 'template',
+                fromId: this.userData?.userId,
+                assignedto: this.userData?.userId,
+                templateName: form.templateName,
+                templateBody: form.templateBody,
+                templateHeader: form.templateHeader,
+                logInUserName: form.logInUserName,
+            };
+        }
+
+
+        const formData = new FormData();
+        formData.append('messageEntry', JSON.stringify(request));
+        formData.append('contactList', JSON.stringify(allRequests));
+        form.file && formData.append('file', form.file);
+
+
+        this.whatsappService.sendBroadcastMessage(formData)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe({
+                next: (response) => {
+                    this.toastr.success('Message sent successfully!');
+                    this.router.navigate(['/admin/inbox']); // Navigate to inbox
+
+                },
+                error: (error) => {
+                    this.handleErrors(error);
+                },
+                complete: () => {
+                    this.isProceess = false;
+                }
+            });
     }
 
     private handleErrors(error: any) {
