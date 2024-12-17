@@ -102,27 +102,44 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
         );
     }
 
-    formatDate(contactTime: string): string {
+    formatDate(date: string | Date): string {
         const now = new Date();
-        const date = new Date(contactTime);
+        const givenDate = new Date(date);
 
-        const differenceInMilliseconds = now.getTime() - date.getTime();
-        const differenceInMinutes = Math.floor(differenceInMilliseconds / 60000); // difference in minutes
-        const differenceInHours = Math.floor(differenceInMinutes / 60); // difference in hours
-        const differenceInDays = Math.floor(differenceInHours / 24); // difference in days
+        const diffTime = now.getTime() - givenDate.getTime(); // Difference in milliseconds
+        const diffMinutes = Math.floor(diffTime / (1000 * 60)); // Difference in minutes
+        const diffHours = Math.floor(diffMinutes / 60); // Difference in hours
+        const diffDays = Math.floor(diffTime / (1000 * 3600 * 24)); // Difference in days
 
-        if (differenceInHours === 0) {
-            if (differenceInMinutes < 1) {
-                return `${differenceInMilliseconds / 1000} seconds ago`; // Show seconds if < 1 minute
+        if (diffDays === 0) {
+            if (diffHours > 0) {
+                return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+            } else if (diffMinutes > 0) {
+                return `${diffMinutes} minute${diffMinutes > 1 ? 's' : ''} ago`;
             } else {
-                return `${differenceInMinutes} minutes ago`; // Show minutes if < 1 hour
+                return 'Just now';
             }
-        } else if (differenceInHours < 24) {
-            return `${differenceInHours} hours ago`;
-        } else if (differenceInHours < 48) {
-            return 'Yesterday';
+        } else if (diffDays === 1) {
+            // Add time for "Yesterday"
+            const time = givenDate.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            });
+            return `Yesterday at ${time}`;
         } else {
-            return date.toLocaleString('en-US', { timeZone: 'Asia/Kolkata', hour12: true });
+            // For dates older than yesterday, include both date and time
+            const dateString = givenDate.toLocaleDateString('en-US', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric'
+            });
+            const timeString = givenDate.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            });
+            return `${dateString} at ${timeString}`;
         }
     }
 
