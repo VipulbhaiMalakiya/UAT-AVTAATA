@@ -29,7 +29,7 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
     isAllSelected = false;
     logInUserName: any;
     isCartPopupOpen: boolean = false;
-
+    searchTerm: string = '';
     private destroy$ = new Subject<void>();
 
 
@@ -109,6 +109,15 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
 
 
     }
+
+    // Getter to filter contacts based on the search term
+    get filteredContactList() {
+        return this.contactList.filter(contact =>
+            contact.fullName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+            contact.phoneNo.includes(this.searchTerm)
+        );
+    }
+
 
 
     // Method to toggle "Check All" checkbox

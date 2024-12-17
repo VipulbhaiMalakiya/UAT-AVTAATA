@@ -9,7 +9,7 @@
     <div class="dt-buttons">
 
         <div class="table-search"><input type="text" class="form-control" name="name" id="name"
-                placeholder="Search here" required=""></div>
+                placeholder="Search here" required="" [(ngModel)]="searchTerm"></div>
     </div>
 
     <div class="btn-group" *ngIf="selectedContacts().length > 0"><a href="javascript:void(0)" class="common-btn"
@@ -35,7 +35,7 @@
                 </thead>
                 <tbody>
 
-                    <tr *ngFor="let contact of contactList; let i = index">
+                    <tr *ngFor="let contact of filteredContactList; let i = index">
                         <td><input class="form-check-input" type="checkbox" [(ngModel)]="contact.selected" /> </td>
                         <td>{{i + 1}}</td>
                         <td>{{contact.fullName}}</td>
