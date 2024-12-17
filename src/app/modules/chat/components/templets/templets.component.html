@@ -100,7 +100,8 @@
                                                     *ngFor="let attribute of templet?.body?.bodyattribute; let i = index">
                                                     <input type="text" class="form-control" [name]="'select' + i"
                                                         [id]="'select' + i" ngModel
-                                                        [placeholder]="'Variable ' + (i + 1)" disabled>
+                                                        [placeholder]="templet?.body?.bodyattribute?.[i] ?? 'Variable ' + (i + 1)"
+                                                        disabled>
                                                 </ng-container>
                                             </div>
 

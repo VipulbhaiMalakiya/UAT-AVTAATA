@@ -117,6 +117,12 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
                     // Store all contacts for future filtering
                     this.allContacts = this.contactList;
 
+                    var model: any = {
+                        startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
+                        endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
+                    };
+                    this.filterContacts(model);
+
 
                 },
                 error: (err) => {
@@ -129,12 +135,7 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
                 }
             });
 
-        // Filter the contacts based on selected date range
-        var model: any = {
-            startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
-            endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
-        };
-        this.filterContacts(model);
+
 
     }
 
@@ -147,7 +148,21 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
     }
 
     filterContacts(model: any) {
+        console.log(model);
 
+        // Check if startDate or endDate is empty
+        if (!model.startDate || !model.endDate) {
+            // Clear or reset contact list if date range is incomplete
+            this.contactList = this.allContacts; // or an empty array if you want to reset to an empty array
+            return;
+        }
+
+
+        debugger;
+        // Filter contacts based on the date range
+
+        console.log('contactList', this.contactList);
+        console.log('allContacts', this.allContacts);
         this.contactList = this.allContacts.filter(contact => {
             const contactDate = contact.time
                 ? this.datePipe.transform(contact.time, 'yyyy-MM-dd')
@@ -156,6 +171,7 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
             return contactDate && contactDate >= model.startDate && contactDate <= model.endDate;
         });
     }
+
 
 
 
@@ -192,7 +208,6 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
         else if (this.selectedValue === 'custom data') {
             this.startDate = '';
             this.endDate = '';
-            return;
         }
 
 
@@ -224,6 +239,7 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
                 startDate: this.datePipe.transform(this.startDate, 'yyyy-MM-dd'),
                 endDate: this.datePipe.transform(this.endDate, 'yyyy-MM-dd'),
             };
+
             this.filterContacts(model);
         }
     }
