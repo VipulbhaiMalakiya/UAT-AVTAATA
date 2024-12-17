@@ -720,15 +720,16 @@ export class ChatComponent
         const timeDifferenceInMs = currentTime.getTime() - lastTime.getTime();
         const timeDifferenceInHours = timeDifferenceInMs / (1000 * 3600);
 
-        if (this.isOpen) {
-            if (timeDifferenceInHours >= 24) {
-                this.hideReplyAndNotes = true;
-                this.cd.detectChanges();
-            } else {
-                this.hideReplyAndNotes = false;
-                this.cd.detectChanges();
+        // if (this.isOpen) {
 
-            }
+        // }
+        if (timeDifferenceInHours >= 24) {
+            this.hideReplyAndNotes = true;
+            this.cd.detectChanges();
+        } else {
+            this.hideReplyAndNotes = false;
+            this.cd.detectChanges();
+
         }
 
     }
@@ -876,7 +877,7 @@ export class ChatComponent
             .subscribe(
                 (data) => {
                     this.Userinfo = data;
-                    this.isOpen = this.Userinfo.isopen;
+                    // this.isOpen = this.Userinfo.isopen;
 
                     this.nrSelect = this.Userinfo?.assignedto;
                     if (this.nrSelect === this.Userinfo?.assignedto) {
