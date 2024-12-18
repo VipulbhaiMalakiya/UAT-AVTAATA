@@ -112,11 +112,9 @@
                         </td>
                         <td>{{i + 1}}</td>
                         <td>{{contact.fullName}}</td>
-                        <td>{{contact.phoneNo}}</td>
-                        <td>{{formatDate(contact.time)}}
-                            <!-- <span class="ctm-icone"> <i class="lab la-whatsapp"
-                                    (click)="sendMessages(contact)"></i></span> -->
-                        </td>
+                        <td>{{contact.phoneNo}} <span class="ctm-icone"> <i class="lab la-whatsapp"
+                                    (click)="sendMessages(contact)"></i></span></td>
+                        <td>{{formatDate(contact.time)}}</td>
                     </tr>
                 </tbody>
                 <tfoot>

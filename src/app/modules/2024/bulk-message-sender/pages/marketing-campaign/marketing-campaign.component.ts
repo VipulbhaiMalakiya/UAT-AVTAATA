@@ -1,9 +1,10 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Subject, Subscription, take, takeUntil } from 'rxjs';
+import { ApiService } from 'src/app/_api/rxjs/api.service';
 import { WhatsAppService } from 'src/app/_api/whats-app.service';
 import { AudioComponent } from 'src/app/modules/chat/components/audio/audio.component';
 import { DocumentComponent } from 'src/app/modules/chat/components/document/document.component';
@@ -43,9 +44,16 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
 
     maxSelection = 100;
 
+    masterName?: any;
+    customerData: any[] = [];
+
+
+
 
     constructor(public whatsappService: WhatsAppService, private toastr: ToastrService, private router: Router,
         private modalService: NgbModal, private datePipe: DatePipe,
+        private apiService: ApiService, private cd: ChangeDetectorRef,
+
 
     ) {
         const d: any = localStorage.getItem('userData');
@@ -74,8 +82,23 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
     sendMessages(dataItem: any) {
 
 
+        this.masterName = "/customer";
+        this.apiService.getAll(this.masterName).pipe(take(1)).subscribe(data => {
+            if (data) {
+                this.customerData = data;
+                // Filter customers by a specific contact
+                const filteredCustomers = this.customerData.filter(customer => customer.contact === dataItem.phoneNo);
 
-        this.router.navigate([`/admin/inbox/${dataItem.id}`]);
+                // Log the filtered customers
+                const customerId = [filteredCustomers[0].customerId];
+                this.router.navigate([`/admin/inbox/${customerId}`]);
+                this.cd.detectChanges();
+            }
+        }, error => {
+            this.isProceess = false;
+        })
+
+
     }
     // Getter for total customers
     get totalCustomers(): number {
