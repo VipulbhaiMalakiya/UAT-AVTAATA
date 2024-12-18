@@ -47,6 +47,11 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
     masterName?: any;
     customerData: any[] = [];
 
+    page: number = 1;
+    count: number = 0;
+    tableSize: number = 10;
+    tableSizes: any = [3, 6, 9, 12];
+
 
 
 
@@ -120,6 +125,8 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
 
                     // Store all contacts for future filtering
                     this.allContacts = this.contactList;
+                    this.count = this.allContacts.length;
+
 
 
                 },
@@ -135,6 +142,19 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
 
 
 
+    }
+
+    calculateIndex(page: number, index: number): number {
+        return (page - 1) * this.tableSize + index + 1;
+    }
+
+
+    onTableDataChange(event: any) {
+        this.page = event;
+    }
+    onTableSizeChange(event: any): void {
+        this.tableSize = event.target.value;
+        this.page = 1;
     }
 
     // Getter to filter contacts based on the search term

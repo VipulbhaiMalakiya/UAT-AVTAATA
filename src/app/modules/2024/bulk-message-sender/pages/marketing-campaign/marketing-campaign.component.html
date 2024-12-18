@@ -54,13 +54,20 @@
                             No data found.
                         </td>
                     </tr>
-                    <tr *ngFor="let contact of filteredContactList; let i = index">
+                    <tr *ngFor="let contact of filteredContactList | paginate
+          : {
+              itemsPerPage: tableSize,
+              currentPage: page,
+              totalItems: count
+            }; let i = index">
                         <td>
                             <input class="form-check-input" type="checkbox" [(ngModel)]="contact.selected"
                                 (change)="onCheckboxChange(contact)"
                                 [disabled]="!contact.selected && (selectedCustomersCount >= maxSelection || isWithinLast24Hours(contact.time))" />
                         </td>
-                        <td>{{i + 1}}</td>
+                        <!-- <td>{{i + 1}}</td> -->
+                        <td>{{calculateIndex(page, i)}}</td>
+
                         <td>{{contact.fullName}}</td>
                         <td>{{contact.phoneNo}}
 
@@ -77,6 +84,12 @@
                     </tr>
                 </tfoot>
             </table>
+        </div>
+        <div class="clearfix" *ngIf="!isProceess && filteredContactList.length > 0">
+            <ul class="pagination">
+                <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+                </pagination-controls>
+            </ul>
         </div>
     </div>
 </div>
