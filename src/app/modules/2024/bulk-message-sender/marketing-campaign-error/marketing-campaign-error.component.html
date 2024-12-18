@@ -6,6 +6,29 @@
     </div>
     <div class="modal-body mb-0">
         <app-loading-spin-popup *ngIf="isProceess"></app-loading-spin-popup>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Phone No</th>
+                        <th>Status</th>
+                        <th>Reason</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let customer of data">
+                        <td>{{ customer.id }}</td>
+                        <td>{{customer.full_name}}</td>
+                        <td>{{ customer.phone_no }}</td>
+                        <td>{{ customer.status }}</td>
+                        <td>{{ customer.reason }}</td>
+                    </tr>
+                </tbody>
+            </table>
 
+
+        </div>
     </div>
 </div>

@@ -9,6 +9,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class MarketingCampaignErrorComponent implements OnInit {
     private _customersMaster: any | undefined;
     isProceess: boolean = false;
+    data: any;
 
 
     set customersMaster(value: any) {
@@ -23,7 +24,7 @@ export class MarketingCampaignErrorComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log(this._customersMaster)
+        this.data = this._customersMaster;
     }
 
     onCancel() {
