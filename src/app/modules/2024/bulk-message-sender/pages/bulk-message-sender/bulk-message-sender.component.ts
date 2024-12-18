@@ -41,6 +41,11 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
     private destroy$ = new Subject<void>();
 
+    page: number = 1;
+    count: number = 0;
+    tableSize: number = 10;
+    tableSizes: any = [3, 6, 9, 12];
+
 
 
 
@@ -55,6 +60,20 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.getContactList();
+    }
+
+
+    calculateIndex(page: number, index: number): number {
+        return (page - 1) * this.tableSize + index + 1;
+    }
+
+
+    onTableDataChange(event: any) {
+        this.page = event;
+    }
+    onTableSizeChange(event: any): void {
+        this.tableSize = event.target.value;
+        this.page = 1;
     }
 
     sendMessages(dataItem: any) {
