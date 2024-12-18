@@ -1,1 +1,34 @@
-<p>bulk-message-error works!</p>
+<div class="common-modal green-modal">
+    <div class="modal-header">
+        <h1 class="modal-title fs-5">List of Failed Bulk Messages</h1>
+        <button type="button" class="btn-close" (click)="onCancel()" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+    </div>
+    <div class="modal-body mb-0">
+        <app-loading-spin-popup *ngIf="isProceess"></app-loading-spin-popup>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Phone No</th>
+                        <th>Status</th>
+                        <th>Reason</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let customer of data">
+                        <td>{{ customer.id }}</td>
+                        <td>{{customer.full_name}}</td>
+                        <td>{{ customer.phone_no }}</td>
+                        <td>{{ customer.status }}</td>
+                        <td>{{ customer.reason }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+</div>
