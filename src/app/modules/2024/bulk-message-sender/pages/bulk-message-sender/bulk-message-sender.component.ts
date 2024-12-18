@@ -65,7 +65,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
             if (data) {
                 this.customerData = data;
                 // Filter customers by a specific contact
-                const filteredCustomers = this.customerData.filter(customer => customer.contact === dataItem.phoneNo);
+                const filteredCustomers = this.customerData.filter(customer => customer.contact === dataItem.mobile);
 
                 // Log the filtered customers
                 const customerId = [filteredCustomers[0].customerId];
