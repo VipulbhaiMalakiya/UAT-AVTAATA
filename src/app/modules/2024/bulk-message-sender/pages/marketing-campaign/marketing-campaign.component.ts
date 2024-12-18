@@ -53,6 +53,64 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
     tableSizes: any = [3, 6, 9, 12];
 
 
+    errors =
+
+        [
+            { "id": 1, "phone_no": "123-456-7890", "status": "failed", "reason": "No issues reported" },
+            { "id": 2, "phone_no": "234-567-8901", "status": "failed", "reason": "User deactivated" },
+            { "id": 3, "phone_no": "345-678-9012", "status": "failed", "reason": "Pending verification" },
+            { "id": 4, "phone_no": "456-789-0123", "status": "failed", "reason": "No issues reported" },
+            { "id": 5, "phone_no": "567-890-1234", "status": "failed", "reason": "User requested deactivation" },
+            { "id": 6, "phone_no": "678-901-2345", "status": "failed", "reason": "No issues reported" },
+            { "id": 7, "phone_no": "789-012-3456", "status": "failed", "reason": "No issues reported" },
+            { "id": 8, "phone_no": "890-123-4567", "status": "failed", "reason": "User deactivated" },
+            { "id": 9, "phone_no": "901-234-5678", "status": "failed", "reason": "Pending verification" },
+            { "id": 10, "phone_no": "012-345-6789", "status": "failed", "reason": "No issues reported" },
+            { "id": 11, "phone_no": "123-456-7891", "status": "failed", "reason": "User deactivated" },
+            { "id": 12, "phone_no": "234-567-8902", "status": "failed", "reason": "Pending verification" },
+            { "id": 13, "phone_no": "345-678-9013", "status": "failed", "reason": "No issues reported" },
+            { "id": 14, "phone_no": "456-789-0124", "status": "failed", "reason": "User requested deactivation" },
+            { "id": 15, "phone_no": "567-890-1235", "status": "failed", "reason": "No issues reported" },
+            { "id": 16, "phone_no": "678-901-2346", "status": "failed", "reason": "No issues reported" },
+            { "id": 17, "phone_no": "789-012-3457", "status": "failed", "reason": "User deactivated" },
+            { "id": 18, "phone_no": "890-123-4568", "status": "failed", "reason": "Pending verification" },
+            { "id": 19, "phone_no": "901-234-5679", "status": "failed", "reason": "No issues reported" },
+            { "id": 20, "phone_no": "012-345-6790", "status": "failed", "reason": "User requested deactivation" },
+            { "id": 21, "phone_no": "123-456-7892", "status": "failed", "reason": "No issues reported" },
+            { "id": 22, "phone_no": "234-567-8903", "status": "failed", "reason": "User deactivated" },
+            { "id": 23, "phone_no": "345-678-9014", "status": "failed", "reason": "Pending verification" },
+            { "id": 24, "phone_no": "456-789-0125", "status": "failed", "reason": "No issues reported" },
+            { "id": 25, "phone_no": "567-890-1236", "status": "failed", "reason": "User requested deactivation" },
+            { "id": 26, "phone_no": "678-901-2347", "status": "failed", "reason": "No issues reported" },
+            { "id": 27, "phone_no": "789-012-3458", "status": "failed", "reason": "No issues reported" },
+            { "id": 28, "phone_no": "890-123-4569", "status": "failed", "reason": "User deactivated" },
+            { "id": 29, "phone_no": "901-234-5680", "status": "failed", "reason": "Pending verification" },
+            { "id": 30, "phone_no": "012-345-6791", "status": "failed", "reason": "No issues reported" },
+            { "id": 31, "phone_no": "123-456-7893", "status": "failed", "reason": "User deactivated" },
+            { "id": 32, "phone_no": "234-567-8904", "status": "failed", "reason": "Pending verification" },
+            { "id": 33, "phone_no": "345-678-9015", "status": "failed", "reason": "No issues reported" },
+            { "id": 34, "phone_no": "456-789-0126", "status": "failed", "reason": "User requested deactivation" },
+            { "id": 35, "phone_no": "567-890-1237", "status": "failed", "reason": "No issues reported" },
+            { "id": 36, "phone_no": "678-901-2348", "status": "failed", "reason": "No issues reported" },
+            { "id": 37, "phone_no": "789-012-3459", "status": "failed", "reason": "User deactivated" },
+            { "id": 38, "phone_no": "890-123-4570", "status": "failed", "reason": "Pending verification" },
+            { "id": 39, "phone_no": "901-234-5681", "status": "failed", "reason": "No issues reported" },
+            { "id": 40, "phone_no": "012-345-6792", "status": "failed", "reason": "User requested deactivation" },
+            { "id": 41, "phone_no": "123-456-7894", "status": "failed", "reason": "No issues reported" },
+            { "id": 42, "phone_no": "234-567-8905", "status": "failed", "reason": "User deactivated" },
+            { "id": 43, "phone_no": "345-678-9016", "status": "failed", "reason": "Pending verification" },
+            { "id": 44, "phone_no": "456-789-0127", "status": "failed", "reason": "No issues reported" },
+            { "id": 45, "phone_no": "567-890-1238", "status": "failed", "reason": "User requested deactivation" },
+            { "id": 46, "phone_no": "678-901-2349", "status": "failed", "reason": "No issues reported" },
+            { "id": 47, "phone_no": "789-012-3460", "status": "failed", "reason": "No issues reported" },
+            { "id": 48, "phone_no": "890-123-4571", "status": "failed", "reason": "User deactivated" },
+            { "id": 49, "phone_no": "901-234-5682", "status": "failed", "reason": "Pending verification" },
+            { "id": 50, "phone_no": "012-345-6793", "status": "failed", "reason": "No issues reported" }
+        ]
+
+
+
+
 
 
     constructor(public whatsappService: WhatsAppService, private toastr: ToastrService, private router: Router,
@@ -266,7 +324,9 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
             .subscribe({
                 next: (response) => {
                     this.toastr.success('Message sent successfully!');
-                    this.router.navigate(['/admin/inbox']); // Navigate to inbox
+
+
+                    // this.router.navigate(['/admin/inbox']); // Navigate to inbox
 
                 },
                 error: (error) => {

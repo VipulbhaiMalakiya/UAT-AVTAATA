@@ -9,11 +9,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { MarketingCampaignComponent } from './pages/marketing-campaign/marketing-campaign.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { MarketingCampaignErrorComponent } from './marketing-campaign-error/marketing-campaign-error.component';
+import { BulkMessageErrorComponent } from './bulk-message-error/bulk-message-error.component';
 
 @NgModule({
     declarations: [
         BulkMessageSenderComponent,
         MarketingCampaignComponent,
+        MarketingCampaignErrorComponent,
+        BulkMessageErrorComponent,
     ],
     imports: [
         CommonModule,
