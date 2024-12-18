@@ -68,6 +68,15 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
         this.getContactList();
     }
 
+
+
+
+    sendMessages(dataItem: any) {
+
+
+
+        this.router.navigate([`/admin/inbox/${dataItem.id}`]);
+    }
     // Getter for total customers
     get totalCustomers(): number {
         return this.contactList.length;
