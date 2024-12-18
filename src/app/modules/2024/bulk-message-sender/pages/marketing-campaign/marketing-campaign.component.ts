@@ -256,7 +256,7 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
         form.file && formData.append('file', form.file);
 
 
-        this.whatsappService.sendBroadcastMessage(formData)
+        this.whatsappService.sendMarketingCampaign(formData)
             .pipe(takeUntil(this.destroy$))
             .subscribe({
                 next: (response) => {

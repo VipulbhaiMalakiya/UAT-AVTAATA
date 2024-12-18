@@ -198,6 +198,12 @@ export class WhatsAppService {
         // return this.http.post(this.baseUrl + '/outgoing-message', request, httpOptions);
     }
 
+    sendMarketingCampaign(formData: FormData) {
+        let headers = this.header.getJWTHeaders();
+        const httpOptions = { headers: headers };
+        return this.http.post(this.baseUrl + '/campaign/send-bulk/broadcast', formData, httpOptions).pipe(catchError(this.errorHandler.bind(this)));;
+        // return this.http.post(this.baseUrl + '/outgoing-message', request, httpOptions);
+    }
 
     sendnotesMessage(request: any) {
         let headers = this.header.getJWTHeaders();
