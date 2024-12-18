@@ -100,13 +100,13 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
                     const contactLists = response;
                     const allContacts = [
                         ...contactLists[0]?.open?.sort((a: any, b: any) =>
-                            new Date(b.time).getTime() - new Date(a.time).getTime()
+                            new Date(a.time).getTime() - new Date(b.time).getTime()
                         ) ?? [],
                         ...contactLists[0]?.closed?.sort((a: any, b: any) =>
-                            new Date(b.time).getTime() - new Date(a.time).getTime()
+                            new Date(a.time).getTime() - new Date(b.time).getTime()
                         ) ?? [],
                         ...contactLists[0]?.missed?.sort((a: any, b: any) =>
-                            new Date(b.time).getTime() - new Date(a.time).getTime()
+                            new Date(a.time).getTime() - new Date(b.time).getTime()
                         ) ?? []
                     ];
 
