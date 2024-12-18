@@ -201,7 +201,7 @@ export class WhatsAppService {
     sendMarketingCampaign(formData: FormData) {
         let headers = this.header.getJWTHeaders();
         const httpOptions = { headers: headers };
-        return this.http.post(this.baseUrl + '/campaign/send-bulk/broadcast', formData, httpOptions).pipe(catchError(this.errorHandler.bind(this)));;
+        return this.http.post(this.baseUrl + '/campaign/send-bulk/marketing', formData, httpOptions).pipe(catchError(this.errorHandler.bind(this)));;
         // return this.http.post(this.baseUrl + '/outgoing-message', request, httpOptions);
     }
 
