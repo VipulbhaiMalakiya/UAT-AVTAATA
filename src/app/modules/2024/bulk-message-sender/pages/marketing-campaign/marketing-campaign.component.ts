@@ -60,16 +60,7 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
         this.userData = JSON.parse(d);
         this.logInUserName = this.userData.firstName + ' ' + this.userData.lastName;
 
-        const oneWeekFromNow = new Date();
-        this.endDate = this.datePipe.transform(
-            oneWeekFromNow.toISOString().split('T')[0],
-            'yyyy-MM-dd'
-        );
-        oneWeekFromNow.setDate(oneWeekFromNow.getDate() - 7);
-        this.startDate = this.datePipe.transform(
-            oneWeekFromNow.toISOString().split('T')[0],
-            'yyyy-MM-dd'
-        );
+
     }
 
     ngOnInit(): void {
@@ -79,27 +70,7 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
 
 
 
-    sendMessages(dataItem: any) {
 
-
-        this.masterName = "/customer";
-        this.apiService.getAll(this.masterName).pipe(take(1)).subscribe(data => {
-            if (data) {
-                this.customerData = data;
-                // Filter customers by a specific contact
-                const filteredCustomers = this.customerData.filter(customer => customer.contact === dataItem.phoneNo);
-
-                // Log the filtered customers
-                const customerId = [filteredCustomers[0].customerId];
-                this.router.navigate([`/admin/inbox/${customerId}`]);
-                this.cd.detectChanges();
-            }
-        }, error => {
-            this.isProceess = false;
-        })
-
-
-    }
     // Getter for total customers
     get totalCustomers(): number {
         return this.contactList.length;
@@ -177,25 +148,50 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
 
 
 
-
-
-
     toggleSelectAll(): void {
         if (this.isAllSelected) {
             const canSelectCount = this.maxSelection - this.selectedCustomersCount;
             let count = 0;
+
             this.filteredContactList.forEach(contact => {
-                if (!contact.selected && count < canSelectCount) {
+                if (!contact.selected && count < canSelectCount && !this.isWithinLast24Hours(contact.time)) {
                     contact.selected = true;
                     count++;
-                } else if (count >= canSelectCount) {
-                    this.isAllSelected = false;
                 }
             });
+
+            // If we couldn't select all due to restrictions, reset the "Select All" checkbox
+            this.isAllSelected = this.filteredContactList.every(
+                contact => contact.selected || this.isWithinLast24Hours(contact.time)
+            );
         } else {
-            this.filteredContactList.forEach(contact => (contact.selected = false));
+            // Deselect all contacts except those within the last 24 hours
+            this.filteredContactList.forEach(contact => {
+                if (!this.isWithinLast24Hours(contact.time)) {
+                    contact.selected = false;
+                }
+            });
         }
     }
+
+
+
+    // toggleSelectAll(): void {
+    //     if (this.isAllSelected) {
+    //         const canSelectCount = this.maxSelection - this.selectedCustomersCount;
+    //         let count = 0;
+    //         this.filteredContactList.forEach(contact => {
+    //             if (!contact.selected && count < canSelectCount) {
+    //                 contact.selected = true;
+    //                 count++;
+    //             } else if (count >= canSelectCount) {
+    //                 this.isAllSelected = false;
+    //             }
+    //         });
+    //     } else {
+    //         this.filteredContactList.forEach(contact => (contact.selected = false));
+    //     }
+    // }
 
     onCheckboxChange(contact: any): void {
         const selectedCount = this.selectedCustomersCount;
@@ -208,7 +204,12 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
     }
 
 
-
+    isWithinLast24Hours(time: string): boolean {
+        const contactTime = new Date(time).getTime();
+        const currentTime = Date.now();
+        const hoursDifference = (currentTime - contactTime) / (1000 * 60 * 60); // Convert milliseconds to hours
+        return hoursDifference <= 24;
+    }
 
     sendMessage(form: any, type: 'text' | 'notes' | 'interactive' | 'template' | 'audio' | 'video' | 'image' | 'document' | 'location') {
         this.isProceess = true; // Indicate the process has started.
@@ -340,10 +341,6 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
             this.toastr.error('An unknown error occurred. Please try again later.', 'Unknown Error');
         }
     }
-
-
-
-
 
 
     getTemplates(e: any) {
