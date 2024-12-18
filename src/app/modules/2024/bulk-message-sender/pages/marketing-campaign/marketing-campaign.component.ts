@@ -14,6 +14,7 @@ import { QuickReplyComponent } from 'src/app/modules/chat/components/quick-reply
 import { TempletsComponent } from 'src/app/modules/chat/components/templets/templets.component';
 import { VideoComponent } from 'src/app/modules/chat/components/video/video.component';
 import { ConfirmationDialogModalComponent } from 'src/app/modules/shared/components/confirmation-dialog-modal/confirmation-dialog-modal.component';
+import { MarketingCampaignErrorComponent } from '../../marketing-campaign-error/marketing-campaign-error.component';
 
 @Component({
     selector: 'app-marketing-campaign',
@@ -53,7 +54,7 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
     tableSizes: any = [3, 6, 9, 12];
 
 
-    errors =
+    errors: any =
 
         [
             { "id": 1, "phone_no": "123-456-7890", "status": "failed", "reason": "No issues reported" },
@@ -325,6 +326,24 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
                 next: (response) => {
                     this.toastr.success('Message sent successfully!');
 
+
+                    this.isProceess = true;
+                    const modalRef = this.modalService.open(MarketingCampaignErrorComponent, { size: "xl" });
+                    if (modalRef) {
+                        this.isProceess = false;
+                    }
+                    else {
+                        this.isProceess = false;
+                    }
+
+                    var componentInstance = modalRef.componentInstance as MarketingCampaignErrorComponent;
+                    componentInstance.customersMaster = this.errors;
+
+                    modalRef.result.then((data: any) => {
+                        if (data) {
+
+                        }
+                    }).catch(() => { });
 
                     // this.router.navigate(['/admin/inbox']); // Navigate to inbox
 

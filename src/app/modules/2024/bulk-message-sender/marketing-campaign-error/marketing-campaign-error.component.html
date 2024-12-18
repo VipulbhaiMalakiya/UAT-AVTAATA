@@ -1,1 +1,11 @@
-<p>marketing-campaign-error works!</p>
+<div class="common-modal green-modal">
+    <div class="modal-header">
+        <h1 class="modal-title fs-5">Failed Marketing Campaigns List</h1>
+        <button type="button" class="btn-close" (click)="onCancel()" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+    </div>
+    <div class="modal-body mb-0">
+        <app-loading-spin-popup *ngIf="isProceess"></app-loading-spin-popup>
+
+    </div>
+</div>
