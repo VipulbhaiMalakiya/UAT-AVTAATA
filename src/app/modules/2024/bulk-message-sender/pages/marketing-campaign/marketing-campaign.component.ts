@@ -12,6 +12,7 @@ import { LocationDetailsComponent } from 'src/app/modules/chat/components/locati
 import { QuickReplyComponent } from 'src/app/modules/chat/components/quick-reply/quick-reply.component';
 import { TempletsComponent } from 'src/app/modules/chat/components/templets/templets.component';
 import { VideoComponent } from 'src/app/modules/chat/components/video/video.component';
+import { ConfirmationDialogModalComponent } from 'src/app/modules/shared/components/confirmation-dialog-modal/confirmation-dialog-modal.component';
 
 @Component({
     selector: 'app-marketing-campaign',
@@ -174,27 +175,6 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
             this.filteredContactList.every(contact => contact.selected) && selectedCount <= this.maxSelection;
     }
 
-    quickReply() {
-        this.showupload = false;
-        this.isCartPopupOpen = false;
-        const modalRef = this.modalService.open(QuickReplyComponent, {
-            size: 'md',
-            centered: true,
-            backdrop: 'static',
-        });
-        if (modalRef) {
-            this.isProceess = false;
-        } else {
-            this.isProceess = false;
-        }
-        modalRef.result
-            .then((data: any) => {
-                this.message = data;
-            })
-            .catch(() => { });
-
-    }
-
 
 
 
@@ -349,7 +329,27 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
             modalRef.result
                 .then((data: any) => {
                     // this.message = data;
-                    this.sendMessage(data, 'template');
+                    // this.sendMessage(data, 'template');
+
+                    const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
+                    if (modalRef) {
+                        this.isProceess = false;
+                    }
+                    else {
+                        this.isProceess = false;
+                    }
+                    const selectedContacts = this.contactList.filter(contact => contact.selected);
+                    const selectedCustomerCount = selectedContacts.length;
+
+
+                    var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
+                    componentInstance.message = `Are you sure to send marketing Campaign for ${selectedCustomerCount} customer(s)?`;
+
+                    modalRef.result.then((canDelete: boolean) => {
+                        if (canDelete) {
+                            this.sendMessage(data, 'template');
+                        }
+                    }).catch(() => { });
 
                 })
                 .catch(() => { });

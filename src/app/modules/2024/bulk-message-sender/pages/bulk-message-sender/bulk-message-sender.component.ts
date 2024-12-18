@@ -697,7 +697,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
 
                     var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
-                    componentInstance.message = `Are you sure to send  template for ${selectedCustomerCount} customer(s)?`;
+                    componentInstance.message = `Are you sure to send template for ${selectedCustomerCount} customer(s)?`;
 
                     modalRef.result.then((canDelete: boolean) => {
                         if (canDelete) {
@@ -743,7 +743,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
 
                     var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
-                    componentInstance.message = `Are you sure to send audio for ${selectedCustomerCount} customer(s)?`;
+                    componentInstance.message = `Are you sure to send audio message for ${selectedCustomerCount} customer(s)?`;
 
                     modalRef.result.then((canDelete: boolean) => {
                         if (canDelete) {
@@ -784,7 +784,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
 
                     var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
-                    componentInstance.message = `Are you sure to send audio for ${selectedCustomerCount} customer(s)?`;
+                    componentInstance.message = `Are you sure to send video message for ${selectedCustomerCount} customer(s)?`;
 
                     modalRef.result.then((canDelete: boolean) => {
                         if (canDelete) {
