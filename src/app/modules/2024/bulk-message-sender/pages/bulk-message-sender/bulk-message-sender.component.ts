@@ -14,6 +14,7 @@ import { TempletsComponent } from 'src/app/modules/chat/components/templets/temp
 import { VideoComponent } from 'src/app/modules/chat/components/video/video.component';
 import { ConfirmationDialogModalComponent } from 'src/app/modules/shared/components/confirmation-dialog-modal/confirmation-dialog-modal.component';
 import { BulkMessageErrorComponent } from '../../bulk-message-error/bulk-message-error.component';
+import { AppService } from 'src/app/_services/app.service';
 
 @Component({
     selector: 'app-bulk-message-sender',
@@ -105,6 +106,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
     constructor(public whatsappService: WhatsAppService, private toastr: ToastrService, private router: Router,
         private modalService: NgbModal, private apiService: ApiService, private cd: ChangeDetectorRef,
+        private appService: AppService,
 
     ) {
         const d: any = localStorage.getItem('userData');
@@ -424,6 +426,9 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
             .subscribe({
                 next: (response) => {
                     this.toastr.success('Message sent successfully!');
+
+
+
 
 
                     this.isProceess = true;

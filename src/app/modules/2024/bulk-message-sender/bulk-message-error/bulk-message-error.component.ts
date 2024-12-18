@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { AppService } from 'src/app/_services/app.service';
 
 @Component({
     selector: 'app-bulk-message-error',
@@ -19,7 +20,7 @@ export class BulkMessageErrorComponent implements OnInit {
     }
 
     constructor(
-        private activeModal: NgbActiveModal,
+        private activeModal: NgbActiveModal, private appService: AppService,
     ) {
 
     }
@@ -32,4 +33,22 @@ export class BulkMessageErrorComponent implements OnInit {
         this.isProceess = false;
         this.activeModal.dismiss();
     }
+
+    onDownload() {
+        const exportData = this.data.map((x: any) => {
+
+            return {
+                "Id": x.id || '',
+                "Full Name": x.full_name || '',
+                "Phone No": x.phone_no || '',
+                "Reason": x.reason || '',
+                "Status": x.status || '',
+
+            }
+        });
+
+        const headers = ["Id", "Full Name", "Phone No", "Reason", 'Status'];
+        this.appService.exportAsExcelFile(exportData, "Failed-Bulk-Messages", headers);
+    }
+
 }

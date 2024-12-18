@@ -1,9 +1,15 @@
 <div class="common-modal green-modal">
     <div class="modal-header">
         <h1 class="modal-title fs-5">List of Failed Bulk Messages</h1>
-        <button type="button" class="btn-close" (click)="onCancel()" data-bs-dismiss="modal"
-            aria-label="Close"></button>
+        <div class="d-flex align-items-center ms-auto">
+            <button class="gray-btns me-2" (click)="onDownload()" type="button">
+                <i class="las la-file-excel"></i> Export
+            </button>
+            <button type="button" class="btn-close" (click)="onCancel()" data-bs-dismiss="modal"
+                aria-label="Close"></button>
+        </div>
     </div>
+
     <div class="modal-body mb-0">
         <app-loading-spin-popup *ngIf="isProceess"></app-loading-spin-popup>
         <div class="table-responsive">
