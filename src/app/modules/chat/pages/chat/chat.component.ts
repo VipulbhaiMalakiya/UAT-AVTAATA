@@ -277,8 +277,8 @@ export class ChatComponent
     ngOnInit(): void {
         setTimeout(() => {
             this.connect();
-            this.ActiveUser();
             this.getContactList();
+            this.ActiveUser();
             this.ActiveLabels();
             this.GetUser();
 
