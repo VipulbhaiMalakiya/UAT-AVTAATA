@@ -438,10 +438,12 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
         }
         const selectedContacts = this.contactList.filter(contact => contact.selected);
 
-        let selectedCustomerNames = selectedContacts.map(contact => contact.name).join(', '); // Join names for display
+        let selectedCustomerNames = selectedContacts.map(contact => contact.name).join(', ');
+
+        const selectedCustomerCount = selectedContacts.length;
 
         var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
-        componentInstance.message = `Selected customers: ${selectedCustomerNames}`;
+        componentInstance.message = `Are you sure to send text for ${selectedCustomerCount} customer(s)?`;
 
         modalRef.result.then((canDelete: boolean) => {
             if (canDelete) {
@@ -451,7 +453,28 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
     }
 
     submitNoteForm(form: any) {
-        this.sendMessage(form, 'notes');
+
+        const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
+        if (modalRef) {
+            this.isProceess = false;
+        }
+        else {
+            this.isProceess = false;
+        }
+        const selectedContacts = this.contactList.filter(contact => contact.selected);
+
+        let selectedCustomerNames = selectedContacts.map(contact => contact.name).join(', ');
+
+        const selectedCustomerCount = selectedContacts.length;
+
+        var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
+        componentInstance.message = `Are you sure to send notes for ${selectedCustomerCount} customer(s)?`;
+
+        modalRef.result.then((canDelete: boolean) => {
+            if (canDelete) {
+                this.sendMessage(form, 'notes');
+            }
+        }).catch(() => { });
     }
 
 
@@ -491,7 +514,28 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
     sendingCatalog(e: any) {
         this.showupload = false;
         this.isCartPopupOpen = false;
-        this.sendMessage(e, 'interactive');
+
+        const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
+        if (modalRef) {
+            this.isProceess = false;
+        }
+        else {
+            this.isProceess = false;
+        }
+        const selectedContacts = this.contactList.filter(contact => contact.selected);
+
+        let selectedCustomerNames = selectedContacts.map(contact => contact.name).join(', ');
+        const selectedCustomerCount = selectedContacts.length;
+
+        var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
+        componentInstance.message = `Are you sure to send interactive for ${selectedCustomerCount} customer(s)?`;
+
+        modalRef.result.then((canDelete: boolean) => {
+            if (canDelete) {
+                this.sendMessage(e, 'interactive');
+            }
+        }).catch(() => { });
+
     }
 
 
@@ -511,7 +555,29 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
         modalRef.result
             .then((data: any) => {
                 if (data) {
-                    this.sendMessage(data, 'document');
+
+                    this.showupload = false;
+                    this.isCartPopupOpen = false;
+
+                    const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
+                    if (modalRef) {
+                        this.isProceess = false;
+                    }
+                    else {
+                        this.isProceess = false;
+                    }
+                    const selectedContacts = this.contactList.filter(contact => contact.selected);
+                    const selectedCustomerCount = selectedContacts.length;
+
+
+                    var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
+                    componentInstance.message = `Are you sure to send document for ${selectedCustomerCount} customer(s)?`;
+
+                    modalRef.result.then((canDelete: boolean) => {
+                        if (canDelete) {
+                            this.sendMessage(data, 'document');
+                        }
+                    }).catch(() => { });
                 }
             })
             .catch(() => { });
@@ -532,7 +598,27 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
         modalRef.result
             .then((data: any) => {
                 if (data) {
-                    this.sendMessage(data, 'location');
+                    // this.sendMessage(data, 'location');
+
+                    const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
+                    if (modalRef) {
+                        this.isProceess = false;
+                    }
+                    else {
+                        this.isProceess = false;
+                    }
+                    const selectedContacts = this.contactList.filter(contact => contact.selected);
+                    const selectedCustomerCount = selectedContacts.length;
+
+
+                    var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
+                    componentInstance.message = `Are you sure to send location for ${selectedCustomerCount} customer(s)?`;
+
+                    modalRef.result.then((canDelete: boolean) => {
+                        if (canDelete) {
+                            this.sendMessage(data, 'location');
+                        }
+                    }).catch(() => { });
                 }
             })
             .catch(() => { });
@@ -553,7 +639,27 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
         modalRef.result
             .then((data: any) => {
                 if (data) {
-                    this.sendMessage(data, 'image');
+                    // this.sendMessage(data, 'image');
+
+                    const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
+                    if (modalRef) {
+                        this.isProceess = false;
+                    }
+                    else {
+                        this.isProceess = false;
+                    }
+                    const selectedContacts = this.contactList.filter(contact => contact.selected);
+                    const selectedCustomerCount = selectedContacts.length;
+
+
+                    var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
+                    componentInstance.message = `Are you sure to send image for ${selectedCustomerCount} customer(s)?`;
+
+                    modalRef.result.then((canDelete: boolean) => {
+                        if (canDelete) {
+                            this.sendMessage(data, 'image');
+                        }
+                    }).catch(() => { });
                 }
             })
             .catch(() => { });
@@ -577,7 +683,27 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
             modalRef.result
                 .then((data: any) => {
                     // this.message = data;
-                    this.sendMessage(data, 'template');
+                    // this.sendMessage(data, 'template');
+
+                    const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
+                    if (modalRef) {
+                        this.isProceess = false;
+                    }
+                    else {
+                        this.isProceess = false;
+                    }
+                    const selectedContacts = this.contactList.filter(contact => contact.selected);
+                    const selectedCustomerCount = selectedContacts.length;
+
+
+                    var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
+                    componentInstance.message = `Are you sure to send  template for ${selectedCustomerCount} customer(s)?`;
+
+                    modalRef.result.then((canDelete: boolean) => {
+                        if (canDelete) {
+                            this.sendMessage(data, 'template');
+                        }
+                    }).catch(() => { });
 
                 })
                 .catch(() => { });
@@ -603,7 +729,27 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
         modalRef.result
             .then((data: any) => {
                 if (data) {
-                    this.sendMessage(data, 'audio');
+                    // this.sendMessage(data, 'audio');
+
+                    const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
+                    if (modalRef) {
+                        this.isProceess = false;
+                    }
+                    else {
+                        this.isProceess = false;
+                    }
+                    const selectedContacts = this.contactList.filter(contact => contact.selected);
+                    const selectedCustomerCount = selectedContacts.length;
+
+
+                    var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
+                    componentInstance.message = `Are you sure to send audio for ${selectedCustomerCount} customer(s)?`;
+
+                    modalRef.result.then((canDelete: boolean) => {
+                        if (canDelete) {
+                            this.sendMessage(data, 'audio');
+                        }
+                    }).catch(() => { });
                 }
             })
             .catch(() => { });
@@ -623,7 +769,28 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
         modalRef.result
             .then((data: any) => {
                 if (data) {
-                    this.sendMessage(data, 'video');
+                    // this.sendMessage(data, 'video');
+
+
+                    const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
+                    if (modalRef) {
+                        this.isProceess = false;
+                    }
+                    else {
+                        this.isProceess = false;
+                    }
+                    const selectedContacts = this.contactList.filter(contact => contact.selected);
+                    const selectedCustomerCount = selectedContacts.length;
+
+
+                    var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
+                    componentInstance.message = `Are you sure to send audio for ${selectedCustomerCount} customer(s)?`;
+
+                    modalRef.result.then((canDelete: boolean) => {
+                        if (canDelete) {
+                            this.sendMessage(data, 'video');
+                        }
+                    }).catch(() => { });
                 }
             })
             .catch(() => { });
