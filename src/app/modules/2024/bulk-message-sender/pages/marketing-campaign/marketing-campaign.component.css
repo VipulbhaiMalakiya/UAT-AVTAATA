@@ -140,3 +140,13 @@ button[disabled] {
 .custom-width-btn {
     max-width: 10rem;
 }
+
+
+
+.within-24-hours td {
+    background-color: #FFF1F1 !important; /* Or any color for within 24 hours */
+}
+
+.beyond-24-hours td {
+    background-color: #EFFBEF !important; /* Or any color for beyond 24 hours */
+}
