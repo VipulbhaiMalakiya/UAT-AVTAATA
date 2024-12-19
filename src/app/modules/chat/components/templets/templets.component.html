@@ -48,7 +48,10 @@
                                                 {{templet?.header?.file}}
                                             </p>
                                             <p *ngIf="templet?.header?.headerFileType === 'IMAGE'">
-                                                {{templet?.header?.file}}
+                                                <!-- {{templet?.header?.file}} -->
+                                                <img *ngIf="templet?.header?.file" [src]="templet.header.file"
+                                                    alt="Image not found" width="150" height="auto" />
+
                                             </p>
                                         </div>
                                         <div class="templ-col">
