@@ -1813,7 +1813,7 @@ export class ChatComponent
         this.showupload1 = false;
         this.showEmojiPicker = false;
         const modalRef = this.modalService.open(TempletsComponent, {
-            size: 'lg',
+            size: 'xl',
             centered: true,
             backdrop: 'static',
         });

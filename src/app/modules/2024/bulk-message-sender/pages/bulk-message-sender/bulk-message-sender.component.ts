@@ -778,7 +778,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
     getTemplates(e: any) {
         this.isCartPopupOpen = false;
         const modalRef = this.modalService.open(TempletsComponent, {
-            size: 'lg',
+            size: 'xl',
             centered: true,
             backdrop: 'static',
         });
