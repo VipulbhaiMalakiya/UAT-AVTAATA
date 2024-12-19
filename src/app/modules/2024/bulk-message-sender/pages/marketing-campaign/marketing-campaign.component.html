@@ -55,7 +55,7 @@
                         </td>
                     </tr>
                     <tr *ngFor="let contact of filteredContactList | paginate : { itemsPerPage: tableSize,  currentPage: page,  totalItems: filteredContactList.length}; let i = index"
-                        [ngClass]="{ 'within-24-hours': isWithinLast24Hours(contact.time), 'beyond-24-hours': !isWithinLast24Hours(contact.time) }">
+                        [ngClass]="{ 'within-24-hours': isWithinLast24Hours(contact.lastTemplateSentTime), 'beyond-24-hours': !isWithinLast24Hours(contact.time) }">
                         <td>
                             <input class="form-check-input" type="checkbox" [(ngModel)]="contact.selected"
                                 (change)="onCheckboxChange(contact)"
@@ -64,11 +64,11 @@
                         <!-- <td>{{i + 1}}</td> -->
                         <td>{{calculateIndex(page, i)}}</td>
 
-                        <td>{{contact.fullName}}</td>
-                        <td>{{contact.phoneNo}}
+                        <td>{{contact.firstName}}</td>
+                        <td>{{contact.contact}}
 
                         </td>
-                        <td>{{formatDate(contact.time)}}</td>
+                        <td>{{formatDate(contact.lastTemplateSentTime)}}</td>
                     </tr>
                 </tbody>
                 <tfoot>

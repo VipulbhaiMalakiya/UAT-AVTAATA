@@ -95,45 +95,58 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
     getContactList() {
         this.isProceess = true;
 
-        this.whatsappService.activeContactList()
-            .pipe(
-                takeUntil(this.destroy$)
-            )
-            .subscribe({
-                next: (response: any[]) => {
-                    const contactLists = response;
-                    const allContacts = [
-                        ...contactLists[0]?.open ?? [],
-                        ...contactLists[0]?.closed ?? [],
-                        ...contactLists[0]?.missed ?? []
-                    ];
+
+        this.isProceess = true;
+        this.masterName = "/customer";
+        this.apiService.getAll(this.masterName).pipe(take(1)).subscribe(data => {
+            if (data) {
+                this.contactList = data;
+                this.count = this.contactList.length;
+                this.isProceess = false;
+                this.cd.detectChanges();
+            }
+        }, error => {
+            this.isProceess = false;
+        })
+        // this.whatsappService.activeContactList()
+        //     .pipe(
+        //         takeUntil(this.destroy$)
+        //     )
+        //     .subscribe({
+        //         next: (response: any[]) => {
+        //             const contactLists = response;
+        //             const allContacts = [
+        //                 ...contactLists[0]?.open ?? [],
+        //                 ...contactLists[0]?.closed ?? [],
+        //                 ...contactLists[0]?.missed ?? []
+        //             ];
 
 
 
-                    const uniqueContacts = Array.from(new Set(allContacts.map(c => c.phoneNo)))
-                        .map(phoneNo => allContacts.find(contact => contact.phoneNo === phoneNo))
-                        .sort((a: any, b: any) => new Date(a.time).getTime() - new Date(b.time).getTime());
+        //             const uniqueContacts = Array.from(new Set(allContacts.map(c => c.phoneNo)))
+        //                 .map(phoneNo => allContacts.find(contact => contact.phoneNo === phoneNo))
+        //                 .sort((a: any, b: any) => new Date(a.time).getTime() - new Date(b.time).getTime());
 
 
-                    // Assign to the main array
-                    this.contactList = uniqueContacts;
+        //             // Assign to the main array
+        //             this.contactList = uniqueContacts;
 
-                    // Store all contacts for future filtering
-                    this.allContacts = this.contactList;
-                    this.count = this.allContacts.length;
+        //             // Store all contacts for future filtering
+        //             this.allContacts = this.contactList;
+        //             this.count = this.allContacts.length;
 
 
 
-                },
-                error: (err) => {
-                    console.error('Error fetching contact list:', err);
-                    this.isProceess = false;
-                },
-                complete: () => {
-                    console.log('Contact list fetching completed.');
-                    this.isProceess = false;
-                }
-            });
+        //         },
+        //         error: (err) => {
+        //             console.error('Error fetching contact list:', err);
+        //             this.isProceess = false;
+        //         },
+        //         complete: () => {
+        //             console.log('Contact list fetching completed.');
+        //             this.isProceess = false;
+        //         }
+        //     });
 
 
 
@@ -155,8 +168,8 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
     // Getter to filter contacts based on the search term
     get filteredContactList() {
         return this.contactList.filter(contact =>
-            contact.fullName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-            contact.phoneNo.includes(this.searchTerm)
+            contact.firstName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+            contact.contact.includes(this.searchTerm)
         );
     }
 
@@ -223,8 +236,8 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
             // Create a request for each selected contact
             contactList = {
 
-                name: contact.fullName,
-                number: contact.phoneNo
+                name: contact.firstName,
+                number: contact.contact
             }
             // Push the request into the allRequests array
             allRequests.push(contactList);

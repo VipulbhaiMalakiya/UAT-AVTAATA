@@ -944,29 +944,48 @@ export class ChatComponent
     }
     // Download code start
 
-    downloadFile(e: any) {
-        // window.open(e.fileUrl, '_blank');
-        this.http.get(e.fileUrl, { responseType: 'blob' }).subscribe(blob => {
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            const modifiedFilename = e.filename.slice(24); // Slice the first 24 characters
+    // downloadFile(e: any) {
+    //     // window.open(e.fileUrl, '_blank');
+    //     this.http.get(e.fileUrl, { responseType: 'blob' }).subscribe(blob => {
+    //         const url = window.URL.createObjectURL(blob);
+    //         const a = document.createElement('a');
+    //         a.href = url;
+    //         const modifiedFilename = e.filename.slice(24); // Slice the first 24 characters
 
-            a.download = modifiedFilename
-            document.body.appendChild(a);
+    //         a.download = modifiedFilename
+    //         document.body.appendChild(a);
+    //         a.click();
+    //         document.body.removeChild(a);
+    //         window.URL.revokeObjectURL(url);
+    //     });
+    // }
+    downloadFile(data: any): void {
+        if (data.templateHeaderfileLink) {
+            // Open in a new tab
+            // window.open(data.templateHeaderfileLink, '_blank');
+
+            // Create an anchor element to trigger the download
+            const a = document.createElement('a');
+            a.href = data.templateHeaderfileLink;
+            a.download = data.templateName; // Set the download file name
             a.click();
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
-        });
+            // URL.revokeObjectURL(a.href); // Clean up the URL after download
+        }
     }
 
-    downloadFile1(e: any) {
-        const link = document.createElement('a');
-        link.setAttribute('href', e.templateHeaderfileLink);
-        link.setAttribute('download', e.templateName);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+    formatTemplateName(templateName: string): string {
+        // Replace underscores with spaces
+        let formattedName = templateName.replace(/_/g, ' ');
+
+        // Convert to title case
+        formattedName = formattedName.replace(/\b\w/g, (char) => char.toUpperCase());
+
+        // Limit to 400 characters
+        if (formattedName.length > 400) {
+            formattedName = formattedName.substring(0, 400);
+        }
+
+        return formattedName;
     }
 
     ActiveLabels() {
