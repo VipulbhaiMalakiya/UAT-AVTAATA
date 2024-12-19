@@ -49,61 +49,6 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
     tableSizes: any = [3, 6, 9, 12];
 
 
-    errors: any =
-        [
-            { "id": 1, "phone_no": "123-456-7890", "status": "failed", "reason": "No issues reported", "full_name": "Amit Kumar" },
-            { "id": 2, "phone_no": "234-567-8901", "status": "failed", "reason": "User deactivated", "full_name": "Rakesh Sharma" },
-            { "id": 3, "phone_no": "345-678-9012", "status": "failed", "reason": "Pending verification", "full_name": "Sunil Gupta" },
-            { "id": 4, "phone_no": "456-789-0123", "status": "failed", "reason": "No issues reported", "full_name": "Amit Kumar" },
-            { "id": 5, "phone_no": "567-890-1234", "status": "failed", "reason": "User requested deactivation", "full_name": "Ramesh Verma" },
-            { "id": 6, "phone_no": "678-901-2345", "status": "failed", "reason": "No issues reported", "full_name": "Amit Kumar" },
-            { "id": 7, "phone_no": "789-012-3456", "status": "failed", "reason": "No issues reported", "full_name": "Sunil Gupta" },
-            { "id": 8, "phone_no": "890-123-4567", "status": "failed", "reason": "User deactivated", "full_name": "Rakesh Sharma" },
-            { "id": 9, "phone_no": "901-234-5678", "status": "failed", "reason": "Pending verification", "full_name": "Sunita Roy" },
-            { "id": 10, "phone_no": "012-345-6789", "status": "failed", "reason": "No issues reported", "full_name": "Amit Kumar" },
-            { "id": 11, "phone_no": "123-456-7891", "status": "failed", "reason": "User deactivated", "full_name": "Rakesh Sharma" },
-            { "id": 12, "phone_no": "234-567-8902", "status": "failed", "reason": "Pending verification", "full_name": "Sunil Gupta" },
-            { "id": 13, "phone_no": "345-678-9013", "status": "failed", "reason": "No issues reported", "full_name": "Amit Kumar" },
-            { "id": 14, "phone_no": "456-789-0124", "status": "failed", "reason": "User requested deactivation", "full_name": "Ramesh Verma" },
-            { "id": 15, "phone_no": "567-890-1235", "status": "failed", "reason": "No issues reported", "full_name": "Amit Kumar" },
-            { "id": 16, "phone_no": "678-901-2346", "status": "failed", "reason": "No issues reported", "full_name": "Sunil Gupta" },
-            { "id": 17, "phone_no": "789-012-3457", "status": "failed", "reason": "User deactivated", "full_name": "Rakesh Sharma" },
-            { "id": 18, "phone_no": "890-123-4568", "status": "failed", "reason": "Pending verification", "full_name": "Sunita Roy" },
-            { "id": 19, "phone_no": "901-234-5679", "status": "failed", "reason": "No issues reported", "full_name": "Amit Kumar" },
-            { "id": 20, "phone_no": "012-345-6790", "status": "failed", "reason": "User requested deactivation", "full_name": "Ramesh Verma" },
-            { "id": 21, "phone_no": "123-456-7892", "status": "failed", "reason": "No issues reported", "full_name": "Amit Kumar" },
-            { "id": 22, "phone_no": "234-567-8903", "status": "failed", "reason": "User deactivated", "full_name": "Rakesh Sharma" },
-            { "id": 23, "phone_no": "345-678-9014", "status": "failed", "reason": "Pending verification", "full_name": "Sunil Gupta" },
-            { "id": 24, "phone_no": "456-789-0125", "status": "failed", "reason": "No issues reported", "full_name": "Amit Kumar" },
-            { "id": 25, "phone_no": "567-890-1236", "status": "failed", "reason": "User requested deactivation", "full_name": "Ramesh Verma" },
-            { "id": 26, "phone_no": "678-901-2347", "status": "failed", "reason": "No issues reported", "full_name": "Amit Kumar" },
-            { "id": 27, "phone_no": "789-012-3458", "status": "failed", "reason": "No issues reported", "full_name": "Sunil Gupta" },
-            { "id": 28, "phone_no": "890-123-4569", "status": "failed", "reason": "User deactivated", "full_name": "Rakesh Sharma" },
-            { "id": 29, "phone_no": "901-234-5680", "status": "failed", "reason": "Pending verification", "full_name": "Sunita Roy" },
-            { "id": 30, "phone_no": "012-345-6791", "status": "failed", "reason": "No issues reported", "full_name": "Amit Kumar" },
-            { "id": 31, "phone_no": "123-456-7893", "status": "failed", "reason": "User deactivated", "full_name": "Rakesh Sharma" },
-            { "id": 32, "phone_no": "234-567-8904", "status": "failed", "reason": "Pending verification", "full_name": "Sunil Gupta" },
-            { "id": 33, "phone_no": "345-678-9015", "status": "failed", "reason": "No issues reported", "full_name": "Amit Kumar" },
-            { "id": 34, "phone_no": "456-789-0126", "status": "failed", "reason": "User requested deactivation", "full_name": "Ramesh Verma" },
-            { "id": 35, "phone_no": "567-890-1237", "status": "failed", "reason": "No issues reported", "full_name": "Amit Kumar" },
-            { "id": 36, "phone_no": "678-901-2348", "status": "failed", "reason": "No issues reported", "full_name": "Sunil Gupta" },
-            { "id": 37, "phone_no": "789-012-3459", "status": "failed", "reason": "User deactivated", "full_name": "Rakesh Sharma" },
-            { "id": 38, "phone_no": "890-123-4570", "status": "failed", "reason": "Pending verification", "full_name": "Sunita Roy" },
-            { "id": 39, "phone_no": "901-234-5681", "status": "failed", "reason": "No issues reported", "full_name": "Amit Kumar" },
-            { "id": 40, "phone_no": "012-345-6792", "status": "failed", "reason": "User requested deactivation", "full_name": "Ramesh Verma" },
-            { "id": 41, "phone_no": "123-456-7894", "status": "failed", "reason": "No issues reported", "full_name": "Amit Kumar" },
-            { "id": 42, "phone_no": "234-567-8905", "status": "failed", "reason": "User deactivated", "full_name": "Rakesh Sharma" },
-            { "id": 43, "phone_no": "345-678-9016", "status": "failed", "reason": "Pending verification", "full_name": "Sunil Gupta" },
-            { "id": 44, "phone_no": "456-789-0127", "status": "failed", "reason": "No issues reported", "full_name": "Amit Kumar" },
-            { "id": 45, "phone_no": "567-890-1238", "status": "failed", "reason": "User requested deactivation", "full_name": "Ramesh Verma" },
-            { "id": 46, "phone_no": "678-901-2349", "status": "failed", "reason": "No issues reported", "full_name": "Amit Kumar" },
-            { "id": 47, "phone_no": "789-012-3460", "status": "failed", "reason": "No issues reported", "full_name": "Sunil Gupta" },
-            { "id": 48, "phone_no": "890-123-4571", "status": "failed", "reason": "User deactivated", "full_name": "Rakesh Sharma" },
-            { "id": 49, "phone_no": "901-234-5682", "status": "failed", "reason": "Pending verification", "full_name": "Sunita Roy" },
-            { "id": 50, "phone_no": "012-345-6793", "status": "failed", "reason": "No issues reported", "full_name": "Amit Kumar" }
-        ]
-
-
     constructor(public whatsappService: WhatsAppService, private toastr: ToastrService, private router: Router,
         private modalService: NgbModal, private apiService: ApiService, private cd: ChangeDetectorRef,
         private appService: AppService,
@@ -428,26 +373,30 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
                     if (response) {
                         this.toastr.success(response.message);
-                        this.isProceess = true;
-                        const modalRef = this.modalService.open(BulkMessageErrorComponent, { size: "xl" });
-                        if (modalRef) {
-                            this.isProceess = false;
-                        }
-                        else {
-                            this.isProceess = false;
-                        }
-
-                        var componentInstance = modalRef.componentInstance as BulkMessageErrorComponent;
-                        componentInstance.customersMaster = this.errors;
-
-                        modalRef.result.then((data: any) => {
-                            if (data) {
-
+                        if (response.sentDetails.length >= 0) {
+                            this.isProceess = true;
+                            const modalRef = this.modalService.open(BulkMessageErrorComponent, { size: "xl" });
+                            if (modalRef) {
+                                this.isProceess = false;
                             }
-                        }).catch(() => {
-                            this.router.navigate(['/admin/inbox']); // Navigate to inbox
+                            else {
+                                this.isProceess = false;
+                            }
 
-                        });
+                            var componentInstance = modalRef.componentInstance as BulkMessageErrorComponent;
+                            componentInstance.customersMaster = response.sentDetails;
+
+                            modalRef.result.then((data: any) => {
+                                if (data) {
+
+                                }
+                            }).catch(() => {
+                                this.router.navigate(['/admin/inbox']); // Navigate to inbox
+
+                            });
+                        }
+
+
                     }
 
 

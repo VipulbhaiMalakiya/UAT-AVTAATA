@@ -38,11 +38,10 @@ export class BulkMessageErrorComponent implements OnInit {
         const exportData = this.data.map((x: any) => {
 
             return {
-                "Id": x.id || '',
-                "Full Name": x.full_name || '',
-                "Phone No": x.phone_no || '',
-                "Reason": x.reason || '',
-                "Status": x.status || '',
+                "Full Name": x.name || '',
+                "Phone No": x.number || '',
+                "Reason": x.status || '',
+                "Status": x.sentDetail || '',
 
             }
         });

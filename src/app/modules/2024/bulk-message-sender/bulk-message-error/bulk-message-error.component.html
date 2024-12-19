@@ -1,6 +1,6 @@
 <div class="common-modal green-modal">
     <div class="modal-header">
-        <h1 class="modal-title fs-5">List of Failed Bulk Messages</h1>
+        <h1 class="modal-title fs-5">Bulk Messages Send Status</h1>
         <div class="d-flex align-items-center ms-auto">
             <button class="gray-btns me-2" (click)="onDownload()" type="button">
                 <i class="las la-file-excel"></i> Export
@@ -16,7 +16,6 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Name</th>
                         <th>Phone No</th>
                         <th>Status</th>
@@ -25,11 +24,10 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let customer of data">
-                        <td>{{ customer.id }}</td>
-                        <td>{{customer.full_name}}</td>
-                        <td>{{ customer.phone_no }}</td>
+                        <td>{{customer.name}}</td>
+                        <td>{{ customer.number }}</td>
                         <td>{{ customer.status }}</td>
-                        <td>{{ customer.reason }}</td>
+                        <td>{{ customer.sentDetail }}</td>
                     </tr>
                 </tbody>
             </table>
