@@ -42,10 +42,12 @@
                             <div class="tab-content">
                                 <div class="tab-pane fade show active">
                                     <div class="template-card">
-                                        <div class="templ-col"
-                                            *ngIf="templet?.header?.header !== null || templet?.header?.headerFileType !== null || templet?.header?.file !== null ">
+                                        <div class="templ-col" *ngIf="templet?.header?.header !== null  ">
                                             <p><strong>Header :</strong></p>
-                                            <p *ngIf="templet?.header?.headerFileType === '     '">
+                                            <p *ngIf="templet?.header?.headerFileType === 'document'">
+                                                {{templet?.header?.file}}
+                                            </p>
+                                            <p *ngIf="templet?.header?.headerFileType === 'IMAGE'">
                                                 {{templet?.header?.file}}
                                             </p>
                                         </div>
