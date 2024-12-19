@@ -162,22 +162,21 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
             .subscribe({
                 next: (response: any[]) => {
                     const contactLists = response;
+
+
+
                     const allContacts = [
-                        ...contactLists[0]?.open?.sort((a: any, b: any) =>
-                            new Date(a.time).getTime() - new Date(b.time).getTime()
-                        ) ?? [],
-                        ...contactLists[0]?.closed?.sort((a: any, b: any) =>
-                            new Date(a.time).getTime() - new Date(b.time).getTime()
-                        ) ?? [],
-                        ...contactLists[0]?.missed?.sort((a: any, b: any) =>
-                            new Date(a.time).getTime() - new Date(b.time).getTime()
-                        ) ?? []
+                        ...contactLists[0]?.open ?? [],
+                        ...contactLists[0]?.closed ?? [],
+                        ...contactLists[0]?.missed ?? []
                     ];
 
 
-                    // Remove duplicates based on phoneNo
+
                     const uniqueContacts = Array.from(new Set(allContacts.map(c => c.phoneNo)))
-                        .map(phoneNo => allContacts.find(contact => contact.phoneNo === phoneNo));
+                        .map(phoneNo => allContacts.find(contact => contact.phoneNo === phoneNo))
+                        .sort((a: any, b: any) => new Date(a.time).getTime() - new Date(b.time).getTime());
+
 
                     // Assign to the main array
                     this.contactList = uniqueContacts;
