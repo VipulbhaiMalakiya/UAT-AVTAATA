@@ -1195,9 +1195,14 @@
 
                                                 <div class="pdf-nameic cursur mb-3"
                                                     *ngIf="data.templateHeaderFileType ==='IMAGE'">
-                                                    <span class="pdf-icon" (click)=" downloadFile1(data)"><img
-                                                            src="../assets/images/document-icon.png"
-                                                            alt="File Not Found" />
+                                                    <span class="pdf-icon" (click)="downloadFile1(data)">
+                                                        <!-- <img
+                                                            src="{{}}"
+                                                            alt="File Not Found" /> -->
+
+                                                        <img [src]="data.templateHeaderfileLink"
+                                                            alt="Image not found" />
+
                                                         {{
                                                         data.templateName
                                                         }}</span>
