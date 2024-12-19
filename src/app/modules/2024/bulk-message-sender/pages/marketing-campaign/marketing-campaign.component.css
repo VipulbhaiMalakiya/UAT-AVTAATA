@@ -141,8 +141,6 @@ button[disabled] {
     max-width: 10rem;
 }
 
-
-
 .within-24-hours td {
     background-color: #FFF1F1 !important; /* Or any color for within 24 hours */
 }
