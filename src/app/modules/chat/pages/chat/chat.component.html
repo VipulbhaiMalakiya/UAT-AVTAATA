@@ -1165,18 +1165,13 @@
 
                                 <!-- !Temples Start -->
 
-                                <!--template booking_confirmation -->
 
 
 
 
                                 <li class="msg-replayer" class="msg-replayer" *ngIf="
-                                                                data.messagetype === 'template' &&
-                                                                data.templateBody == 'body' &&
-                                                                data.templateButton1 !== null &&
-                                                                data.templateHeader == null
-                                                            ">
-                                    <div class="avata">
+                                                                data.messagetype === 'template'">
+                                    <div class=" avata">
                                         <span *ngIf="data.userFullName === null">Y</span>
                                         <span *ngIf="data.userFullName !== null">
                                             {{
@@ -1187,9 +1182,13 @@
                                         <div class="last-msg p-3 rounded bg-cyan">
                                             <div class="senttemp-2">
                                                 <!-- <div class="senttemp-pic"><img src="../assets/images/ceo-template.jpeg" alt="File Not Found"></div> -->
-                                                {{
+                                                <!-- {{
                                                 replaceAndBoldPlaceholder(data)
-                                                }}
+                                                }} -->
+
+                                                <div [innerHTML]="getFormattedText(replaceAndBoldPlaceholder(data))">
+                                                </div>
+
                                                 <p class="mt-2">
                                                     <a class="temppay-btn text-left mb-2"
                                                         *ngIf="data.templateButton1">{{
