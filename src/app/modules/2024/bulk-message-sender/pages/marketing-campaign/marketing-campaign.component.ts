@@ -322,30 +322,34 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
         this.whatsappService.sendMarketingCampaign(formData)
             .pipe(takeUntil(this.destroy$))
             .subscribe({
-                next: (response) => {
-                    this.toastr.success('Message sent successfully!');
+                next: (response: any) => {
 
-
-                    this.isProceess = true;
-                    const modalRef = this.modalService.open(MarketingCampaignErrorComponent, { size: "xl" });
-                    if (modalRef) {
-                        this.isProceess = false;
-                    }
-                    else {
-                        this.isProceess = false;
-                    }
-
-                    var componentInstance = modalRef.componentInstance as MarketingCampaignErrorComponent;
-                    componentInstance.customersMaster = this.errors;
-
-                    modalRef.result.then((data: any) => {
-                        if (data) {
-
+                    if (response) {
+                        this.toastr.success(response.message);
+                        this.isProceess = true;
+                        const modalRef = this.modalService.open(MarketingCampaignErrorComponent, { size: "xl" });
+                        if (modalRef) {
+                            this.isProceess = false;
                         }
-                    }).catch(() => {
-                        this.router.navigate(['/admin/inbox']); // Navigate to inbox
+                        else {
+                            this.isProceess = false;
+                        }
 
-                    });
+                        var componentInstance = modalRef.componentInstance as MarketingCampaignErrorComponent;
+                        componentInstance.customersMaster = this.errors;
+
+                        modalRef.result.then((data: any) => {
+                            if (data) {
+
+                            }
+                        }).catch(() => {
+                            this.router.navigate(['/admin/inbox']); // Navigate to inbox
+
+                        });
+                    }
+
+
+
 
 
                 },
