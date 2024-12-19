@@ -27,10 +27,11 @@ export class TempletsComponent implements OnInit {
     variable1: any;
     variable2: any;
     variable3: any;
-
+    url: any
 
     set issuesMaster(value: any) {
-        this.username = value;
+        this.username = value.eventData;
+        this.url = value.apiData;
     }
     constructor(
         private activeModal: NgbActiveModal,
@@ -42,10 +43,19 @@ export class TempletsComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
+
+
+
+
         this.fatchData();
     }
     fatchData() {
-        this.masterName = '/meta-templates';
+        if (this.url == 'marketing') {
+            this.masterName = '/meta-templates/marketing';
+        }
+        else {
+            this.masterName = '/meta-templates';
+        }
         this.apiService
             .getAll(this.masterName)
             .pipe(take(1))

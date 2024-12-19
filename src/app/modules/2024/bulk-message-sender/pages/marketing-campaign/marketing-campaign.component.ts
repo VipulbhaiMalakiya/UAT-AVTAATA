@@ -378,7 +378,9 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
         if (modalRef) {
             this.isProceess = false;
             const componentInstance = modalRef.componentInstance as TempletsComponent;
-            componentInstance.issuesMaster = e;
+            const apiData: any = 'marketing'
+            componentInstance.issuesMaster = { eventData: e, apiData };
+
             modalRef.result
                 .then((data: any) => {
                     // this.message = data;
