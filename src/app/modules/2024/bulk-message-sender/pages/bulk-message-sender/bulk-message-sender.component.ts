@@ -290,10 +290,8 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
             let contactList: any;
             // Create a request for each selected contact
             contactList = {
-                name: '',
-                number: ''
-                //   name: contact.name,
-                // number: contact.mobile
+                name: contact.name,
+                number: contact.mobile
             }
             // Push the request into the allRequests array
             allRequests.push(contactList);
