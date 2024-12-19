@@ -567,8 +567,7 @@ export class ChatComponent
                         if (isInitialLoad) {
                             // Handle initial load
                             this.receivedData = response; // Replace data on initial load
-                            this.scrollToBottom(); // Scroll to the bottom
-                            this.handleImageScrolling(); // Handle image scrolling
+                            // this.handleImageScrolling(); // Handle image scrolling
                         } else {
                             // Handle pagination
                             this.receivedData = [...response, ...this.receivedData]; // Prepend new data
@@ -604,11 +603,34 @@ export class ChatComponent
             .add(() => {
                 // Reset loaders after response
                 if (isInitialLoad) {
-                    this.isInitialLoading = false;
+                    this.scrollToBottom(); // Scroll to the bottom
+
+
                 } else {
                     this.isPaginationLoading = false;
                 }
             });
+    }
+
+
+    private scrollToBottom(): void {
+        setTimeout(() => { // Use setTimeout to ensure the DOM is fully rendered
+            try {
+                if (this.chatContainer && this.chatContainer.nativeElement) {
+                    const container = this.chatContainer.nativeElement;
+                    // console.log(container);
+                    const atBottom = container.scrollHeight - container.scrollTop <= container.clientHeight;
+                    if (!atBottom) {
+                        container.scrollTop = container.scrollHeight;
+                        this.isInitialLoading = false;
+
+                    }
+                    // container.scroll({ top: container.scrollHeight });
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }, 500);
     }
 
 
@@ -817,23 +839,6 @@ export class ChatComponent
         this.handleImageScrolling();
         // this.handleImageScrolling();
 
-    }
-    private scrollToBottom(): void {
-        setTimeout(() => { // Use setTimeout to ensure the DOM is fully rendered
-            try {
-                if (this.chatContainer && this.chatContainer.nativeElement) {
-                    const container = this.chatContainer.nativeElement;
-                    // console.log(container);
-                    const atBottom = container.scrollHeight - container.scrollTop <= container.clientHeight;
-                    if (!atBottom) {
-                        container.scrollTop = container.scrollHeight;
-                    }
-                    // container.scroll({ top: container.scrollHeight });
-                }
-            } catch (err) {
-                console.error(err);
-            }
-        }, 500);
     }
 
     private handleImageScrolling(): void {
