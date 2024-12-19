@@ -30,17 +30,13 @@
                     </tr>
                 </tbody>
                 <tfoot>
+
                     <tr>
-                        <td colspan="2">Total Customers:</td>
-                        <td colspan="2">{{ data.length }}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">Total Sent:</td>
-                        <td colspan="2">{{ countStatus('sent') }}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">Total Failed:</td>
-                        <td colspan="2">{{ countStatus('Failed') }}</td>
+                        <td colspan="4" class="text-end">
+                            <strong>Total Customers :</strong> {{ data.length }} |
+                            <strong>Total Sent :</strong> {{ countStatus('sent') }} |
+                            <strong>Total Failed :</strong> {{ countStatus('Failed') }}
+                        </td>
                     </tr>
                 </tfoot>
             </table>
