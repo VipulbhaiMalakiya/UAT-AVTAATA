@@ -290,8 +290,10 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
             let contactList: any;
             // Create a request for each selected contact
             contactList = {
-                name: contact.name,
-                number: contact.mobile
+                name: '',
+                number: ''
+                //   name: contact.name,
+                // number: contact.mobile
             }
             // Push the request into the allRequests array
             allRequests.push(contactList);
@@ -456,6 +458,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
                 },
                 error: (error) => {
                     this.handleErrors(error);
+                    this.isProceess = false;
                 },
                 complete: () => {
                     this.isProceess = false;

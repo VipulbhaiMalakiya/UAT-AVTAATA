@@ -285,8 +285,11 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
             let contactList: any;
             // Create a request for each selected contact
             contactList = {
-                name: contact.fullName,
-                number: contact.phoneNo
+
+                name: '',
+                number: ''
+                // name: contact.fullName,
+                // number: contact.phoneNo
             }
             // Push the request into the allRequests array
             allRequests.push(contactList);
