@@ -1211,9 +1211,20 @@
                                                     </a>
                                                 </div>
 
+                                                <div class="senttemp-pic"
+                                                    *ngIf="data.templateHeaderFileType === 'IMAGE'">
+                                                    <p *ngIf="loading" style="text-align: center; color: red;">
+                                                        Loading...</p>
+                                                    <img [src]="data.templateHeaderfileLink" alt="Image not found"
+                                                        (error)="onImageError($event)"
+                                                        [attr.fallback]="'assets/images/ceo-template.jpeg'"
+                                                        (load)="onImageLoad()" (error)="loading = false" />
 
 
-                                                <div [innerHTML]="getFormattedText(replaceAndBoldPlaceholder(data))">
+                                                </div>
+
+
+                                                <div [innerHTML]=" getFormattedText(replaceAndBoldPlaceholder(data))">
                                                 </div>
 
                                                 <p class="mt-2">
