@@ -424,34 +424,34 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
         this.whatsappService.sendBroadcastMessage(formData)
             .pipe(takeUntil(this.destroy$))
             .subscribe({
-                next: (response) => {
-                    this.toastr.success('Message sent successfully!');
+                next: (response: any) => {
 
-
-
-
-
-                    this.isProceess = true;
-                    const modalRef = this.modalService.open(BulkMessageErrorComponent, { size: "xl" });
-                    if (modalRef) {
-                        this.isProceess = false;
-                    }
-                    else {
-                        this.isProceess = false;
-                    }
-
-                    var componentInstance = modalRef.componentInstance as BulkMessageErrorComponent;
-                    componentInstance.customersMaster = this.errors;
-
-                    modalRef.result.then((data: any) => {
-                        if (data) {
-
+                    if (response) {
+                        this.toastr.success(response.message);
+                        this.isProceess = true;
+                        const modalRef = this.modalService.open(BulkMessageErrorComponent, { size: "xl" });
+                        if (modalRef) {
+                            this.isProceess = false;
                         }
-                    }).catch(() => {
-                        this.router.navigate(['/admin/inbox']); // Navigate to inbox
+                        else {
+                            this.isProceess = false;
+                        }
 
-                    });
-                    // this.router.navigate(['/admin/inbox']); // Navigate to inbox
+                        var componentInstance = modalRef.componentInstance as BulkMessageErrorComponent;
+                        componentInstance.customersMaster = this.errors;
+
+                        modalRef.result.then((data: any) => {
+                            if (data) {
+
+                            }
+                        }).catch(() => {
+                            this.router.navigate(['/admin/inbox']); // Navigate to inbox
+
+                        });
+                    }
+
+
+
 
                 },
                 error: (error) => {
