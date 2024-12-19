@@ -1180,9 +1180,30 @@
                                     </div>
                                     <div class="chat-info">
                                         <div class="last-msg p-3 rounded bg-cyan">
-                                            <div class="senttemp-2">
-                                                <!-- <div class="senttemp-pic"><img src="../assets/images/ceo-template.jpeg" alt="File Not Found"></div> -->
+                                            <div class="senttemp-2 mb-3">
+                                                <div class="pdf-nameic cursur"
+                                                    *ngIf="data.templateHeaderFileType ==='document'">
+                                                    <span class="pdf-icon" (click)=" downloadFile1(data)"><img
+                                                            src="../assets/images/pdf-icon.png" alt="File Not Found" />
+                                                        {{
+                                                        data.templateName
+                                                        }}</span>
+                                                    <span class="pdf-downicon"><i
+                                                            class="las la-arrow-circle-down"></i></span>
+                                                </div>
 
+
+                                                <div class="pdf-nameic cursur mb-3"
+                                                    *ngIf="data.templateHeaderFileType ==='IMAGE'">
+                                                    <span class="pdf-icon" (click)=" downloadFile1(data)"><img
+                                                            src="../assets/images/document-icon.png"
+                                                            alt="File Not Found" />
+                                                        {{
+                                                        data.templateName
+                                                        }}</span>
+                                                    <span class="pdf-downicon"><i
+                                                            class="las la-arrow-circle-down"></i></span>
+                                                </div>
 
                                                 <div [innerHTML]="getFormattedText(replaceAndBoldPlaceholder(data))">
                                                 </div>
