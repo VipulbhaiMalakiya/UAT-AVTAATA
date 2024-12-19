@@ -15,7 +15,6 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Name</th>
                         <th>Phone No</th>
                         <th>Status</th>
@@ -24,11 +23,10 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let customer of data">
-                        <td>{{ customer.id }}</td>
-                        <td>{{customer.full_name}}</td>
-                        <td>{{ customer.phone_no }}</td>
+                        <td>{{customer.name}}</td>
+                        <td>{{ customer.number }}</td>
                         <td>{{ customer.status }}</td>
-                        <td>{{ customer.reason }}</td>
+                        <td>{{ customer.sentDetail }}</td>
                     </tr>
                 </tbody>
             </table>

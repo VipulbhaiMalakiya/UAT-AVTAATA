@@ -42,11 +42,10 @@ export class BulkMessageErrorComponent implements OnInit {
                 "Phone No": x.number || '',
                 "Reason": x.status || '',
                 "Status": x.sentDetail || '',
-
             }
         });
 
-        const headers = ["Id", "Full Name", "Phone No", "Reason", 'Status'];
+        const headers = ["Full Name", "Phone No", "Reason", 'Status'];
         this.appService.exportAsExcelFile(exportData, "Failed-Bulk-Messages", headers);
     }
 

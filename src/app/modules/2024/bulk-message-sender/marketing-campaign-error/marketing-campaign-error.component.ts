@@ -37,16 +37,14 @@ export class MarketingCampaignErrorComponent implements OnInit {
         const exportData = this.data.map((x: any) => {
 
             return {
-                "Id": x.id || '',
-                "Full Name": x.full_name || '',
-                "Phone No": x.phone_no || '',
-                "Reason": x.reason || '',
-                "Status": x.status || '',
-
+                "Full Name": x.name || '',
+                "Phone No": x.number || '',
+                "Reason": x.status || '',
+                "Status": x.sentDetail || '',
             }
         });
 
-        const headers = ["Id", "Full Name", "Phone No", "Reason", 'Status'];
+        const headers = ["Full Name", "Phone No", "Reason", 'Status'];
         this.appService.exportAsExcelFile(exportData, "Failed-Marketing-Campaigns", headers);
     }
 }
