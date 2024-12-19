@@ -20,10 +20,12 @@ export class AppComponent implements OnInit, OnDestroy {
         localStorage.clear();
     }
 
-    @HostListener('window:beforeunload', ['$event'])
-    onBeforeUnload(event: any) {
-        localStorage.clear();
-    }
+    // @HostListener('window:beforeunload', ['$event'])
+    // onBeforeUnload(event: any) {
+    //     localStorage.clear();
+    //     event.preventDefault();
+    //     return false;
+    // }
 
     ngOnInit() {
         // Initial check for online status
