@@ -46,7 +46,7 @@ export class BulkMessageErrorComponent implements OnInit {
         });
 
         const headers = ["Full Name", "Phone No", "Reason", 'Status'];
-        this.appService.exportAsExcelFile(exportData, "Failed-Bulk-Messages", headers);
+        this.appService.exportAsExcelFile(exportData, "sendMessages", headers);
     }
 
 

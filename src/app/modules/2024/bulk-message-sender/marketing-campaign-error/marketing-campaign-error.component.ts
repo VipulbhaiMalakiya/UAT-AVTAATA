@@ -45,7 +45,7 @@ export class MarketingCampaignErrorComponent implements OnInit {
         });
 
         const headers = ["Full Name", "Phone No", "Reason", 'Status'];
-        this.appService.exportAsExcelFile(exportData, "Failed-Marketing-Campaigns", headers);
+        this.appService.exportAsExcelFile(exportData, "marketingCampaigns", headers);
     }
 
     countStatus(status: string): number {
