@@ -146,14 +146,6 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
             } else {
                 return 'Just now';
             }
-        } else if (diffDays === 1) {
-            // Add time for "Yesterday"
-            const time = givenDate.toLocaleTimeString('en-US', {
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: true
-            });
-            return `Yesterday at ${time}`;
         } else {
             // For dates older than yesterday, include both date and time
             const dateString = givenDate.toLocaleDateString('en-US', {
@@ -404,7 +396,6 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
                 },
                 error: (error) => {
-                    this.handleErrors(error);
                     this.isProceess = false;
                 },
                 complete: () => {
@@ -413,73 +404,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
             });
     }
 
-    private handleErrors(error: any) {
-        // Handling HTTP status codes for server errors
-        if (error.status === 500) {
-            if (error.error?.message?.includes('SerializationException')) {
-                this.toastr.error('A server issue occurred while processing chat data. Please contact support.', 'Deserialization Error');
-            } else {
-                this.toastr.error('A server error occurred. Please try again later.', 'Server Error');
-            }
-        } else if (error.status === 0) {
-            // Handling case when no server response (Network error)
-            this.toastr.error('No connection to the server. Please check your internet connection and try again.', 'Network Error');
-        } else if (error.status === 404) {
-            // Server not found
-            this.toastr.error('The requested resource was not found. Please check the URL or contact support.', 'Resource Not Found');
-        } else if (error.status === 403) {
-            // Forbidden access
-            this.toastr.error('You do not have permission to access this data. Please contact support.', 'Access Denied');
-        } else if (error.status === 408) {
-            // Handling Timeout error (Request Timeout)
-            this.toastr.error('The server took too long to respond. Please try again later.', 'Request Timeout');
-        } else if (error.status === 400) {
-            // Bad Request error
-            this.toastr.error('The request was invalid. Please check your input and try again.', 'Bad Request');
-        } else if (error.status === 401) {
-            // Unauthorized access
-            this.toastr.error('You are not authorized to access this data. Please log in and try again.', 'Unauthorized');
-        } else if (error.status === 429) {
-            // Too Many Requests (rate limiting)
-            this.toastr.error('You are making too many requests. Please try again later.', 'Rate Limit Exceeded');
-        } else if (error.status === 502) {
-            // Bad Gateway
-            this.toastr.error('There is an issue with the server. Please try again later.', 'Bad Gateway');
-        } else if (error.status === 503) {
-            // Service Unavailable
-            this.toastr.error('The service is temporarily unavailable. Please try again later.', 'Service Unavailable');
-        } else if (error.status === 504) {
-            // Gateway Timeout
-            this.toastr.error('The server took too long to respond. Please try again later.', 'Gateway Timeout');
-        } else {
-            // General handling for unknown HTTP status errors
-            this.toastr.error('Failed to load chat history. Please try again later.', 'Unknown Error');
-        }
 
-        // Handling client-side errors or network-related issues
-        if (error.name === 'TimeoutError') {
-            this.toastr.error('The request timed out. Please try again later.', 'Request Timeout');
-        } else if (error.name === 'AbortError') {
-            this.toastr.error('The request was aborted. Please try again later.', 'Request Aborted');
-        } else if (error.message && error.message.includes('timeout')) {
-            this.toastr.error('The request took too long to process. Please try again later.', 'Timeout Error');
-        } else if (error.message && error.message.includes('NetworkError')) {
-            // Handling network error
-            this.toastr.error('A network error occurred. Please check your internet connection and try again.', 'Network Error');
-        } else if (error instanceof TypeError) {
-            // Handling JavaScript type errors (e.g., undefined or null references)
-            this.toastr.error('An unexpected error occurred. Please try again later.', 'Type Error');
-        } else if (error instanceof SyntaxError) {
-            // Handling syntax errors in the request
-            this.toastr.error('There was an issue with the request format. Please try again later.', 'Syntax Error');
-        } else if (error instanceof Error) {
-            // General handling for generic JavaScript errors
-            this.toastr.error(`An unexpected error occurred: ${error.message}. Please try again later.`, 'General Error');
-        } else {
-            // Catch-all for any other error types
-            this.toastr.error('An unknown error occurred. Please try again later.', 'Unknown Error');
-        }
-    }
 
     submitForm(form: any) {
 
