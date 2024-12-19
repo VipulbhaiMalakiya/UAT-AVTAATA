@@ -126,3 +126,38 @@ textarea:disabled {
 }
 
 
+.pdf-nameic {
+  text-align: right; /* Optional for right-aligned content */
+}
+
+.file-link {
+  display: flex; /* Enables flexbox layout */
+  align-items: center; /* Vertically centers items */
+  justify-content: space-between; /* Ensures the icon is at the far end */
+  text-decoration: none; /* Removes default underline */
+  width: 100%; /* Ensures it spans the full width */
+}
+
+.pdf-icon {
+  display: flex;
+  align-items: center;
+}
+
+.pdf-icon img {
+  max-width: 50px; /* Adjust the size of the image as needed */
+  margin-right: 10px; /* Adds space between the image and text */
+}
+
+.pdf-downicon {
+  margin-left: auto; /* Pushes the icon to the far end */
+}
+
+.pdf-downicon i {
+  font-size: 20px;
+  color: #007bff; /* Customize icon color */
+  cursor: pointer; /* Adds a pointer cursor for better UX */
+}
+
+.pdf-downicon i:hover {
+  color: #0056b3; /* Adds a hover effect */
+}

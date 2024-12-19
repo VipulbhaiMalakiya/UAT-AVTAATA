@@ -1183,7 +1183,8 @@
                                             <div class="senttemp-2 mb-3">
                                                 <div class="pdf-nameic cursur"
                                                     *ngIf="data.templateHeaderFileType ==='document'">
-                                                    <a [href]="data.templateHeaderfileLink" target="_blank">
+                                                    <a [href]="data.templateHeaderfileLink" target="_blank"
+                                                        class="file-link" aria-label="Open document">
                                                         <span class="pdf-icon"><img src="../assets/images/pdf-icon.png"
                                                                 alt="File Not Found" />
                                                             {{
@@ -1195,26 +1196,22 @@
                                                 </div>
 
 
-                                                <div class="pdf-nameic cursur mb-3"
-                                                    *ngIf="data.templateHeaderFileType ==='IMAGE'">
-
-                                                    <a [href]="data.templateHeaderfileLink" target="_blank">
+                                                <div class="pdf-nameic cursor mb-3"
+                                                    *ngIf="data.templateHeaderFileType === 'IMAGE'">
+                                                    <a [href]="data.templateHeaderfileLink" target="_blank"
+                                                        class="file-link" aria-label="Open image">
                                                         <span class="pdf-icon">
-                                                            <!-- <img
-                                                            src="{{}}"
-                                                            alt="File Not Found" /> -->
-
                                                             <img [src]="data.templateHeaderfileLink"
                                                                 alt="Image not found" />
-
-                                                            {{
-                                                            formatTemplateName(data.templateName)
-                                                            }}</span>
-                                                        <span class="pdf-downicon">
-
-                                                            <i class="las la-arrow-circle-down"></i></span>
+                                                            {{ formatTemplateName(data.templateName) }}
+                                                        </span>
+                                                        <span class="pdf-downicon" aria-label="Download image">
+                                                            <i class="las la-arrow-circle-down"></i>
+                                                        </span>
                                                     </a>
                                                 </div>
+
+
 
                                                 <div [innerHTML]="getFormattedText(replaceAndBoldPlaceholder(data))">
                                                 </div>
