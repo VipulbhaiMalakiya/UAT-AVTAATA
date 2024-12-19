@@ -426,14 +426,6 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
             } else {
                 return 'Just now';
             }
-        } else if (diffDays === 1) {
-            // Add time for "Yesterday"
-            const time = givenDate.toLocaleTimeString('en-US', {
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: true
-            });
-            return `Yesterday at ${time}`;
         } else {
             // For dates older than yesterday, include both date and time
             const dateString = givenDate.toLocaleDateString('en-US', {
