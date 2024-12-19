@@ -1823,8 +1823,8 @@ export class ChatComponent
             this.isProceess = false;
         }
         var componentInstance = modalRef.componentInstance as TempletsComponent;
-        componentInstance.issuesMaster = e;
-
+        const apiData: any = 'all'
+        componentInstance.issuesMaster = { eventData: e, apiData };
         modalRef.result
             .then((data: any) => {
                 if (data) {

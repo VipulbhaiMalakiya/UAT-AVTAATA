@@ -786,7 +786,9 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
         if (modalRef) {
             this.isProceess = false;
             const componentInstance = modalRef.componentInstance as TempletsComponent;
-            componentInstance.issuesMaster = e;
+
+            const apiData: any = 'all'
+            componentInstance.issuesMaster = { eventData: e, apiData };
             modalRef.result
                 .then((data: any) => {
                     // this.message = data;
