@@ -1182,9 +1182,7 @@
                                         <div class="last-msg p-3 rounded bg-cyan">
                                             <div class="senttemp-2">
                                                 <!-- <div class="senttemp-pic"><img src="../assets/images/ceo-template.jpeg" alt="File Not Found"></div> -->
-                                                <!-- {{
-                                                replaceAndBoldPlaceholder(data)
-                                                }} -->
+
 
                                                 <div [innerHTML]="getFormattedText(replaceAndBoldPlaceholder(data))">
                                                 </div>
@@ -1235,67 +1233,7 @@
                                     </div>
                                 </li>
 
-                                <!--template template checking_in_welcome_details -->
-                                <li class="msg-replayer" class="msg-replayer" *ngIf="
-                                                                data.messagetype === 'template' &&
-                                                                data.templateBodyAttributes ==''">
-                                    <div class="avata">
-                                        <span *ngIf="data.userFullName === null">Y</span>
-                                        <span *ngIf="data.userFullName !== null">
-                                            {{
-                                            getShortName(data.userFullName)
-                                            }}</span>
-                                    </div>
-                                    <div class="chat-info">
-                                        <div class="last-msg p-3 rounded bg-cyan">
-                                            <div class="senttemp-2">
-                                                <div class="pdf-nameic cursur" *ngIf="
-                                                                                data.templateHeaderfileLink &&
-                                                                                data.templateHeaderFileType ===
-                                                                                    'document'
-                                                                            ">
-                                                    <span class="pdf-icon" (click)="
-                                                                                    downloadFile1(data)
-                                                                                "><img
-                                                            src="../assets/images/pdf-icon.png" alt="File Not Found" />
-                                                        {{
-                                                        data.templateName
-                                                        }}</span>
-                                                    <span class="pdf-downicon"><i
-                                                            class="las la-arrow-circle-down"></i></span>
-                                                </div>
-                                                <div [innerHTML]="getFormattedText(data.templatePreview)"></div>
-                                            </div>
-                                        </div>
-                                        <div class="suserchat-info mt-2">
-                                            <span class="suserchat-name" *ngIf="data.userFullName == null">You</span>
-                                            <span class="suserchat-name" *ngIf="data.userFullName !== null">{{
-                                                data.userFullName || "" }}</span>
-                                            {{ data.time | dateAgo }}
-                                            <ng-container *ngIf="data.messageId">
-                                                <span class="last-msg-checkic text-success" *ngIf="
-                                                                                data.messageStatus == 'read'
-                                                                            "><i
-                                                        class="las la-check-double"></i></span>
-                                                <span class="last-msg-checkic" *ngIf="
-                                                                                data.messageStatus == 'sent'
-                                                                            "><i class="las la-check"></i></span>
-                                                <span class="last-msg-checkic" *ngIf="
-                                                                                data.messageStatus ==
-                                                                                'delivered'
-                                                                            "><i
-                                                        class="las la-check-double"></i></span>
-                                                <span class="last-msg-checkic text-danger"
-                                                    *ngIf="data.messageStatus == 'failed'">
-                                                    <i class="las la-times-circle"></i> <!-- Failed icon -->
-                                                </span>
 
-                                            </ng-container>
-
-
-                                        </div>
-                                    </div>
-                                </li>
 
 
 
