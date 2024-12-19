@@ -175,4 +175,20 @@ export class TempletsComponent implements OnInit {
             this.activeModal.close(data);
         }
     }
+
+    formatTemplateName(templateName: string): string {
+        // Replace underscores with spaces
+        let formattedName = templateName.replace(/_/g, ' ');
+
+        // Convert to title case
+        formattedName = formattedName.replace(/\b\w/g, (char) => char.toUpperCase());
+
+        // Limit to 400 characters
+        if (formattedName.length > 400) {
+            formattedName = formattedName.substring(0, 400);
+        }
+
+        return formattedName;
+    }
+
 }

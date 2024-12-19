@@ -26,7 +26,9 @@
                         <div class="templateleft-tbs">
                             <div class="nav flex-column nav-pills" aria-orientation="vertical"
                                 *ngFor="let i of templetsdata  | customFilter: term " (click)="onView(i)">
-                                <div class="temp-link" [ngClass]="{ 'active': i.id === templet.id }">{{i.templateName}}
+                                <div class="temp-link" [ngClass]="{ 'active': i.id === templet.id }">
+
+                                    {{ formatTemplateName(i.templateName) }}
                                     <br>
                                     ({{i.language}})
                                 </div>
