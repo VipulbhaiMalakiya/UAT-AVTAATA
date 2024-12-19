@@ -25,10 +25,24 @@
                     <tr *ngFor="let customer of data">
                         <td>{{customer.name}}</td>
                         <td>{{ customer.number }}</td>
-                        <td>{{ customer.status }}</td>
+                        <td>{{ customer.status | titlecase }}</td>
                         <td>{{ customer.sentDetail }}</td>
                     </tr>
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2">Total Customers:</td>
+                        <td colspan="2">{{ data.length }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Total Sent:</td>
+                        <td colspan="2">{{ countStatus('sent') }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Total Failed:</td>
+                        <td colspan="2">{{ countStatus('Failed') }}</td>
+                    </tr>
+                </tfoot>
             </table>
 
 

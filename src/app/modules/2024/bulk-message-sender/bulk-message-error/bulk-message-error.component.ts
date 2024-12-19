@@ -49,4 +49,8 @@ export class BulkMessageErrorComponent implements OnInit {
         this.appService.exportAsExcelFile(exportData, "Failed-Bulk-Messages", headers);
     }
 
+
+    countStatus(status: string): number {
+        return this.data.filter((customer: any) => customer.status === status).length;
+    }
 }
