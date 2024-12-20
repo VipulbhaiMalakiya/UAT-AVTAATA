@@ -515,7 +515,9 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
         const selectedCustomerCount = selectedContacts.length;
 
         var componentInstance = modalRef.componentInstance as SendMessagesDialogComponent;
-        componentInstance.message = `Are you sure to send interactive for ${selectedCustomerCount} customer(s)?`;
+
+        componentInstance.message = `This action will send the interactive to ${selectedCustomerCount} customers.Would you like to continue?`;
+
 
         modalRef.result.then((canDelete: boolean) => {
             if (canDelete) {
@@ -558,7 +560,8 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
 
                     var componentInstance = modalRef.componentInstance as SendMessagesDialogComponent;
-                    componentInstance.message = `Are you sure to send document for ${selectedCustomerCount} customer(s)?`;
+                    componentInstance.message = `This action will send the document to ${selectedCustomerCount} customers.Would you like to continue?`;
+
 
                     modalRef.result.then((canDelete: boolean) => {
                         if (canDelete) {
@@ -599,7 +602,8 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
 
                     var componentInstance = modalRef.componentInstance as SendMessagesDialogComponent;
-                    componentInstance.message = `Are you sure to send location for ${selectedCustomerCount} customer(s)?`;
+                    componentInstance.message = `This action will send the location to ${selectedCustomerCount} customers.Would you like to continue?`;
+
 
                     modalRef.result.then((canDelete: boolean) => {
                         if (canDelete) {
@@ -640,7 +644,8 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
 
                     var componentInstance = modalRef.componentInstance as SendMessagesDialogComponent;
-                    componentInstance.message = `Are you sure to send image for ${selectedCustomerCount} customer(s)?`;
+                    componentInstance.message = `This action will send the image to ${selectedCustomerCount} customers.Would you like to continue?`;
+
 
                     modalRef.result.then((canDelete: boolean) => {
                         if (canDelete) {
@@ -732,7 +737,8 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
 
                     var componentInstance = modalRef.componentInstance as SendMessagesDialogComponent;
-                    componentInstance.message = `Are you sure to send audio message for ${selectedCustomerCount} customer(s)?`;
+                    componentInstance.message = `This action will send the audio to ${selectedCustomerCount} customers.Would you like to continue?`;
+
 
                     modalRef.result.then((canDelete: boolean) => {
                         if (canDelete) {
@@ -773,7 +779,8 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
 
                     var componentInstance = modalRef.componentInstance as SendMessagesDialogComponent;
-                    componentInstance.message = `Are you sure to send video message for ${selectedCustomerCount} customer(s)?`;
+                    componentInstance.message = `This action will send the video to ${selectedCustomerCount} customers.Would you like to continue?`;
+
 
                     modalRef.result.then((canDelete: boolean) => {
                         if (canDelete) {
