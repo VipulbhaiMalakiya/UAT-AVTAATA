@@ -12,10 +12,10 @@ import { LocationDetailsComponent } from 'src/app/modules/chat/components/locati
 import { QuickReplyComponent } from 'src/app/modules/chat/components/quick-reply/quick-reply.component';
 import { TempletsComponent } from 'src/app/modules/chat/components/templets/templets.component';
 import { VideoComponent } from 'src/app/modules/chat/components/video/video.component';
-import { ConfirmationDialogModalComponent } from 'src/app/modules/shared/components/confirmation-dialog-modal/confirmation-dialog-modal.component';
 import { BulkMessageErrorComponent } from '../../bulk-message-error/bulk-message-error.component';
 import { AppService } from 'src/app/_services/app.service';
 import { error } from 'jquery';
+import { SendMessagesDialogComponent } from 'src/app/modules/shared/components/send-messages-dialog/send-messages-dialog.component';
 
 @Component({
     selector: 'app-bulk-message-sender',
@@ -414,7 +414,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
 
 
-        const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
+        const modalRef = this.modalService.open(SendMessagesDialogComponent, { size: "sm", centered: true, backdrop: "static" });
         if (modalRef) {
             this.isProceess = false;
         }
@@ -427,7 +427,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
         const selectedCustomerCount = selectedContacts.length;
 
-        var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
+        var componentInstance = modalRef.componentInstance as SendMessagesDialogComponent;
         componentInstance.message = `Are you sure to send text for ${selectedCustomerCount} customer(s)?`;
 
         modalRef.result.then((canDelete: boolean) => {
@@ -439,7 +439,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
     submitNoteForm(form: any) {
 
-        const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
+        const modalRef = this.modalService.open(SendMessagesDialogComponent, { size: "sm", centered: true, backdrop: "static" });
         if (modalRef) {
             this.isProceess = false;
         }
@@ -452,7 +452,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
         const selectedCustomerCount = selectedContacts.length;
 
-        var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
+        var componentInstance = modalRef.componentInstance as SendMessagesDialogComponent;
         componentInstance.message = `Are you sure to send notes for ${selectedCustomerCount} customer(s)?`;
 
         modalRef.result.then((canDelete: boolean) => {
@@ -500,7 +500,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
         this.showupload = false;
         this.isCartPopupOpen = false;
 
-        const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
+        const modalRef = this.modalService.open(SendMessagesDialogComponent, { size: "sm", centered: true, backdrop: "static" });
         if (modalRef) {
             this.isProceess = false;
         }
@@ -512,7 +512,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
         let selectedCustomerNames = selectedContacts.map(contact => contact.name).join(', ');
         const selectedCustomerCount = selectedContacts.length;
 
-        var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
+        var componentInstance = modalRef.componentInstance as SendMessagesDialogComponent;
         componentInstance.message = `Are you sure to send interactive for ${selectedCustomerCount} customer(s)?`;
 
         modalRef.result.then((canDelete: boolean) => {
@@ -544,7 +544,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
                     this.showupload = false;
                     this.isCartPopupOpen = false;
 
-                    const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
+                    const modalRef = this.modalService.open(SendMessagesDialogComponent, { size: "sm", centered: true, backdrop: "static" });
                     if (modalRef) {
                         this.isProceess = false;
                     }
@@ -555,7 +555,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
                     const selectedCustomerCount = selectedContacts.length;
 
 
-                    var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
+                    var componentInstance = modalRef.componentInstance as SendMessagesDialogComponent;
                     componentInstance.message = `Are you sure to send document for ${selectedCustomerCount} customer(s)?`;
 
                     modalRef.result.then((canDelete: boolean) => {
@@ -585,7 +585,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
                 if (data) {
                     // this.sendMessage(data, 'location');
 
-                    const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
+                    const modalRef = this.modalService.open(SendMessagesDialogComponent, { size: "sm", centered: true, backdrop: "static" });
                     if (modalRef) {
                         this.isProceess = false;
                     }
@@ -596,7 +596,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
                     const selectedCustomerCount = selectedContacts.length;
 
 
-                    var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
+                    var componentInstance = modalRef.componentInstance as SendMessagesDialogComponent;
                     componentInstance.message = `Are you sure to send location for ${selectedCustomerCount} customer(s)?`;
 
                     modalRef.result.then((canDelete: boolean) => {
@@ -626,7 +626,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
                 if (data) {
                     // this.sendMessage(data, 'image');
 
-                    const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
+                    const modalRef = this.modalService.open(SendMessagesDialogComponent, { size: "sm", centered: true, backdrop: "static" });
                     if (modalRef) {
                         this.isProceess = false;
                     }
@@ -637,7 +637,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
                     const selectedCustomerCount = selectedContacts.length;
 
 
-                    var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
+                    var componentInstance = modalRef.componentInstance as SendMessagesDialogComponent;
                     componentInstance.message = `Are you sure to send image for ${selectedCustomerCount} customer(s)?`;
 
                     modalRef.result.then((canDelete: boolean) => {
@@ -672,7 +672,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
                     // this.message = data;
                     // this.sendMessage(data, 'template');
 
-                    const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
+                    const modalRef = this.modalService.open(SendMessagesDialogComponent, { size: "sm", centered: true, backdrop: "static" });
                     if (modalRef) {
                         this.isProceess = false;
                     }
@@ -683,7 +683,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
                     const selectedCustomerCount = selectedContacts.length;
 
 
-                    var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
+                    var componentInstance = modalRef.componentInstance as SendMessagesDialogComponent;
                     componentInstance.message = `Are you sure to send template for ${selectedCustomerCount} customer(s)?`;
 
                     modalRef.result.then((canDelete: boolean) => {
@@ -718,7 +718,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
                 if (data) {
                     // this.sendMessage(data, 'audio');
 
-                    const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
+                    const modalRef = this.modalService.open(SendMessagesDialogComponent, { size: "sm", centered: true, backdrop: "static" });
                     if (modalRef) {
                         this.isProceess = false;
                     }
@@ -729,7 +729,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
                     const selectedCustomerCount = selectedContacts.length;
 
 
-                    var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
+                    var componentInstance = modalRef.componentInstance as SendMessagesDialogComponent;
                     componentInstance.message = `Are you sure to send audio message for ${selectedCustomerCount} customer(s)?`;
 
                     modalRef.result.then((canDelete: boolean) => {
@@ -759,7 +759,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
                     // this.sendMessage(data, 'video');
 
 
-                    const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
+                    const modalRef = this.modalService.open(SendMessagesDialogComponent, { size: "sm", centered: true, backdrop: "static" });
                     if (modalRef) {
                         this.isProceess = false;
                     }
@@ -770,7 +770,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
                     const selectedCustomerCount = selectedContacts.length;
 
 
-                    var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
+                    var componentInstance = modalRef.componentInstance as SendMessagesDialogComponent;
                     componentInstance.message = `Are you sure to send video message for ${selectedCustomerCount} customer(s)?`;
 
                     modalRef.result.then((canDelete: boolean) => {

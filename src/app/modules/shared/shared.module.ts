@@ -7,27 +7,30 @@ import { BulkUploadComponent } from './components/bulk-upload/bulk-upload.compon
 import { ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from './components/header/header.component';
 import { PaginationComponent } from './pagination/pagination.component';
+import { SendMessagesDialogComponent } from './components/send-messages-dialog/send-messages-dialog.component';
 
 @NgModule({
-  declarations: [
-    LoadingSpinComponent,
-    LoadingSpinPopupComponent,
-    ConfirmationDialogModalComponent,
-    BulkUploadComponent,
-    HeaderComponent,
-    PaginationComponent
-  ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule
-  ],
-  exports: [
-    LoadingSpinComponent,
-    LoadingSpinPopupComponent,
-    ConfirmationDialogModalComponent,
-    BulkUploadComponent,
-    HeaderComponent,
-    PaginationComponent
-  ]
+    declarations: [
+        LoadingSpinComponent,
+        LoadingSpinPopupComponent,
+        ConfirmationDialogModalComponent,
+        BulkUploadComponent,
+        HeaderComponent,
+        PaginationComponent,
+        SendMessagesDialogComponent
+    ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule
+    ],
+    exports: [
+        LoadingSpinComponent,
+        LoadingSpinPopupComponent,
+        ConfirmationDialogModalComponent,
+        SendMessagesDialogComponent,
+        BulkUploadComponent,
+        HeaderComponent,
+        PaginationComponent
+    ]
 })
 export class SharedModule { }

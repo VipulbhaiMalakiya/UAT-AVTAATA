@@ -13,8 +13,8 @@ import { LocationDetailsComponent } from 'src/app/modules/chat/components/locati
 import { QuickReplyComponent } from 'src/app/modules/chat/components/quick-reply/quick-reply.component';
 import { TempletsComponent } from 'src/app/modules/chat/components/templets/templets.component';
 import { VideoComponent } from 'src/app/modules/chat/components/video/video.component';
-import { ConfirmationDialogModalComponent } from 'src/app/modules/shared/components/confirmation-dialog-modal/confirmation-dialog-modal.component';
 import { MarketingCampaignErrorComponent } from '../../marketing-campaign-error/marketing-campaign-error.component';
+import { SendMessagesDialogComponent } from 'src/app/modules/shared/components/send-messages-dialog/send-messages-dialog.component';
 
 @Component({
     selector: 'app-marketing-campaign',
@@ -343,7 +343,7 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
                     // this.message = data;
                     // this.sendMessage(data, 'template');
 
-                    const modalRef = this.modalService.open(ConfirmationDialogModalComponent, { size: "sm", centered: true, backdrop: "static" });
+                    const modalRef = this.modalService.open(SendMessagesDialogComponent, { size: "sm", centered: true, backdrop: "static" });
                     if (modalRef) {
                         this.isProceess = false;
                     }
@@ -354,7 +354,7 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
                     const selectedCustomerCount = selectedContacts.length;
 
 
-                    var componentInstance = modalRef.componentInstance as ConfirmationDialogModalComponent;
+                    var componentInstance = modalRef.componentInstance as SendMessagesDialogComponent;
                     componentInstance.message = `Are you sure to send marketing Campaign for ${selectedCustomerCount} customer(s)?`;
 
                     modalRef.result.then((canDelete: boolean) => {
