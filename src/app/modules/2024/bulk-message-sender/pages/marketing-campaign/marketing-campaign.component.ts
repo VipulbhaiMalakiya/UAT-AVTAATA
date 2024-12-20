@@ -182,7 +182,7 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
             let count = 0;
 
             this.filteredContactList.forEach(contact => {
-                if (!contact.selected && count < canSelectCount && !this.isWithinLast24Hours(contact.time)) {
+                if (!contact.selected && count < canSelectCount && !this.isWithinLast24Hours(contact.lastTemplateSentTime)) {
                     contact.selected = true;
                     count++;
                 }
@@ -190,12 +190,12 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
 
             // If we couldn't select all due to restrictions, reset the "Select All" checkbox
             this.isAllSelected = this.filteredContactList.every(
-                contact => contact.selected || this.isWithinLast24Hours(contact.time)
+                contact => contact.selected || this.isWithinLast24Hours(contact.lastTemplateSentTime)
             );
         } else {
             // Deselect all contacts except those within the last 24 hours
             this.filteredContactList.forEach(contact => {
-                if (!this.isWithinLast24Hours(contact.time)) {
+                if (!this.isWithinLast24Hours(contact.lastTemplateSentTime)) {
                     contact.selected = false;
                 }
             });
