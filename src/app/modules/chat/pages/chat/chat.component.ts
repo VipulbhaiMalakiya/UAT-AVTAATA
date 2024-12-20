@@ -944,34 +944,22 @@ export class ChatComponent
     }
     // Download code start
 
-    // downloadFile(e: any) {
-    //     // window.open(e.fileUrl, '_blank');
-    //     this.http.get(e.fileUrl, { responseType: 'blob' }).subscribe(blob => {
-    //         const url = window.URL.createObjectURL(blob);
-    //         const a = document.createElement('a');
-    //         a.href = url;
-    //         const modifiedFilename = e.filename.slice(24); // Slice the first 24 characters
-
-    //         a.download = modifiedFilename
-    //         document.body.appendChild(a);
-    //         a.click();
-    //         document.body.removeChild(a);
-    //         window.URL.revokeObjectURL(url);
-    //     });
-    // }
-    downloadFile(data: any): void {
-        if (data.templateHeaderfileLink) {
-            // Open in a new tab
-            // window.open(data.templateHeaderfileLink, '_blank');
-
-            // Create an anchor element to trigger the download
+    downloadFile(e: any) {
+        // window.open(e.fileUrl, '_blank');
+        this.http.get(e.fileUrl, { responseType: 'blob' }).subscribe(blob => {
+            const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
-            a.href = data.templateHeaderfileLink;
-            a.download = data.templateName; // Set the download file name
+            a.href = url;
+            const modifiedFilename = e.filename.slice(24); // Slice the first 24 characters
+
+            a.download = modifiedFilename
+            document.body.appendChild(a);
             a.click();
-            // URL.revokeObjectURL(a.href); // Clean up the URL after download
-        }
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        });
     }
+
 
     formatTemplateName(templateName: string): string {
         // Replace underscores with spaces

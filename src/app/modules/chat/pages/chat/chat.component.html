@@ -696,16 +696,7 @@
 
                                             </ng-container>
 
-                                            <!-- <ng-container *ngIf="data.messageId">
-                                                                        <span class="last-msg-checkic text-success"
-                                                                            *ngIf="messagestates == 'read'"><i
-                                                                                class="las la-check-double"></i></span>
-                                                                        <span class="last-msg-checkic" *ngIf="messagestates == 'sent'"><i
-                                                                                class="las la-check"></i></span>
-                                                                        <span class="last-msg-checkic" *ngIf="
-                                                                                messagestates == 'delivered'
-                                                                            "><i class="las la-check-double"></i></span>
-                                                                    </ng-container> -->
+
                                         </div>
                                     </div>
                                 </li>
@@ -885,10 +876,7 @@
                                                 video tag.
                                             </video>
                                         </div>
-                                        <!-- <span class="suserchat-name" *ngIf="data.name !== null">{{
-                                                                        contactinfo.fullName || "Reception"
-                                                                        }}</span>
-                                                                    <span class="suserchat-name" *ngIf="data.name == null">Reception</span> -->
+
                                         {{ data.time | dateAgo }}
                                     </div>
                                 </li>
@@ -940,16 +928,6 @@
 
                                             </ng-container>
 
-                                            <!-- <ng-container *ngIf="data.messageId">
-                                                                        <span class="last-msg-checkic text-success"
-                                                                            *ngIf="messagestates == 'read'"><i
-                                                                                class="las la-check-double"></i></span>
-                                                                        <span class="last-msg-checkic" *ngIf="messagestates == 'sent'"><i
-                                                                                class="las la-check"></i></span>
-                                                                        <span class="last-msg-checkic" *ngIf="
-                                                                                messagestates == 'delivered'
-                                                                            "><i class="las la-check-double"></i></span>
-                                                                    </ng-container> -->
                                         </div>
                                     </div>
                                 </li>
@@ -972,10 +950,7 @@
                                             <img [src]="data.fileUrl" alt="File Not Found"
                                                 [attr.data-id]="data.messageId" />
                                         </div>
-                                        <!-- <span class="suserchat-name" *ngIf="data.name !== null">{{
-                                                                        contactinfo.fullName || "Reception"
-                                                                        }}</span>
-                                                                    <span class="suserchat-name" *ngIf="data.name == null">Reception</span> -->
+
                                         {{ data.time | dateAgo }}
                                     </div>
                                 </li>
@@ -1042,14 +1017,6 @@
 
                                         </ng-container>
 
-                                        <!-- <ng-container *ngIf="data.messageId">
-                                                                    <span class="last-msg-checkic text-success" *ngIf="messagestates == 'read'"><i
-                                                                            class="las la-check-double"></i></span>
-                                                                    <span class="last-msg-checkic" *ngIf="messagestates == 'sent'"><i
-                                                                            class="las la-check"></i></span>
-                                                                    <span class="last-msg-checkic" *ngIf="messagestates == 'delivered'"><i
-                                                                            class="las la-check-double"></i></span>
-                                                                </ng-container> -->
                                     </div>
                                 </li>
 
@@ -1093,10 +1060,7 @@
                                                                                 | parseFloat)
                                                                         }" height="230px" width="250px"></google-map>
                                         </div>
-                                        <!-- <span class="suserchat-name" *ngIf="data.name !== null">{{
-                                                                        contactinfo.fullName || "Reception"
-                                                                        }}</span>
-                                                                    <span class="suserchat-name" *ngIf="data.name == null">Reception</span> -->
+
                                         {{ data.time | dateAgo }}
                                     </div>
                                 </li>
@@ -1298,11 +1262,7 @@
                                             <div class="last-msg p-3 mb-1 rounded bg-light">
                                                 {{ data.message }}
                                             </div>
-                                            <!-- <span class="suserchat-name" *ngIf="data.name !== null">{{
-                                                                            contactinfo.fullName ||
-                                                                            "Reception"
-                                                                            }}</span>
-                                                                        <span class="suserchat-name" *ngIf="data.name == null">Reception</span> -->
+
                                             <span class="text-end">{{ data.time | dateAgo }}</span>
                                         </div>
                                     </div>
@@ -1398,12 +1358,7 @@
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
-                                                            <!-- <tfoot>
-                                                          <tr>
-                                                            <td colspan="2">Total Quantity: {{getTotalQuantity()}}</td>
-                                                            <td colspan="3">Total Amount: {{ data?.catalogOrderItems | totalPrice }}</td>
-                                                          </tr>
-                                                        </tfoot> -->
+
                                                         </table>
                                                     </div>
                                                 </div>
@@ -1412,48 +1367,6 @@
                                     </div>
                                 </li>
 
-                                <!-- <li class="msg-replayer"
-                                                            *ngIf="data.type === 'Sender' && data.messagetype === 'interactive' || data.messagetype === 'Interactive'">
-                                                            <ng-container>
-                                                                <div class="avata">
-                                                                    <span *ngIf="data.name === null">Y</span>
-                                                                    <span *ngIf="data.name !== null"> {{getShortName(data.name)}}</span>
-                                                                </div>
-                                                                <div class="chat-info">
-                                                                    <div class="last-msg p-3 rounded bg-cyan">{{data.message}}
-                                                                    </div>
-                                                                    <div class="suserchat-info">
-                                                                        <span class="suserchat-name" *ngIf="data.name == null">You</span>
-                                                                        <span class="suserchat-name"
-                                                                            *ngIf="data.name !== null">{{data.name || ''}}</span>
-                                                                        {{data.time |dateAgo}}
-
-                                                                        <ng-container *ngIf="!data.messageId">
-                                                                            <span class="last-msg-checkic text-success"
-                                                                                *ngIf="data.messageStatus == 'read'"><i
-                                                                                    class="las la-check-double"></i></span>
-                                                                            <span class="last-msg-checkic" *ngIf="data.messageStatus == 'sent'"><i
-                                                                                    class="las la-check"></i></span>
-                                                                            <span class="last-msg-checkic"
-                                                                                *ngIf="data.messageStatus == 'delivered'"><i
-                                                                                    class="las la-check-double"></i></span>
-                                                                        </ng-container>
-
-                                                                        <ng-container *ngIf="data.messageId">
-                                                                            <span class="last-msg-checkic text-success"
-                                                                                *ngIf="messagestates == 'read'"><i
-                                                                                    class="las la-check-double"></i></span>
-                                                                            <span class="last-msg-checkic" *ngIf="messagestates == 'sent'"><i
-                                                                                    class="las la-check"></i></span>
-                                                                            <span class="last-msg-checkic" *ngIf="messagestates== 'delivered'"><i
-                                                                                    class="las la-check-double"></i></span>
-                                                                        </ng-container>
-                                                                    </div>
-                                                                </div>
-                                                            </ng-container>
-                                                        </li> -->
-
-                                <!-- catalog chat card -->
                                 <li class="msg-replayer" *ngIf="
                                                                 (data.type === 'Sender' &&
                                                                     data.messagetype === 'interactive') ||
@@ -1544,17 +1457,7 @@
                                                     <i class="las la-times-circle"></i> <!-- Failed icon -->
                                                 </span>
                                             </ng-container>
-                                            <!--
-                                                                    <ng-container *ngIf="data.messageId">
-                                                                        <span class="last-msg-checkic text-success"
-                                                                            *ngIf="messagestates == 'read'"><i
-                                                                                class="las la-check-double"></i></span>
-                                                                        <span class="last-msg-checkic" *ngIf="messagestates == 'sent'"><i
-                                                                                class="las la-check"></i></span>
-                                                                        <span class="last-msg-checkic" *ngIf="
-                                                                                messagestates == 'delivered'
-                                                                            "><i class="las la-check-double"></i></span>
-                                                                    </ng-container> -->
+
                                         </div>
                                     </div>
                                 </li>
