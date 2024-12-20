@@ -428,7 +428,9 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
         const selectedCustomerCount = selectedContacts.length;
 
         var componentInstance = modalRef.componentInstance as SendMessagesDialogComponent;
-        componentInstance.message = `Are you sure to send text for ${selectedCustomerCount} customer(s)?`;
+
+
+        componentInstance.message = `This action will send the text to  ${selectedCustomerCount} customers.Would you like to continue ?`;
 
         modalRef.result.then((canDelete: boolean) => {
             if (canDelete) {
@@ -684,7 +686,7 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
 
                     var componentInstance = modalRef.componentInstance as SendMessagesDialogComponent;
-                    componentInstance.message = `Are you sure to send template for ${selectedCustomerCount} customer(s)?`;
+                    componentInstance.message = `This action will send the marketing campaign to ${selectedCustomerCount} customers.Would you like to continue?`;
 
                     modalRef.result.then((canDelete: boolean) => {
                         if (canDelete) {
