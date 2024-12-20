@@ -62,9 +62,6 @@
                                         <div class="templ-col">
                                             <p><strong>Body :</strong></p>
                                             <p> {{getVariableValues(templet.templatePreview)}}</p>
-
-
-
                                         </div>
                                         <div class="templ-col"
                                             *ngIf="templet?.button1 !== null || templet?.button3 !== null || templet?.button3 !== null">
@@ -89,12 +86,7 @@
                                         <div class="inner-templateform-card2">
                                             <div class="tempgrid1">
                                                 <p>Variable</p>
-                                                <!-- <input *ngIf="templet?.body?.bodyattribute[0]" type="text"
-                                                    class="form-control" name="name" id="" value="{{1}}" disabled>
-                                                <input *ngIf="templet?.body?.bodyattribute[1]" type="text"
-                                                    class="form-control" name="name" id="" value="{{2}}" disabled>
-                                                <input *ngIf="templet?.body?.bodyattribute[2]" type="text"
-                                                    class="form-control" name="name" id="" value="{{3}}" disabled> -->
+
 
                                                 <ng-container
                                                     *ngFor="let attribute of templet?.body?.bodyattribute; let i = index">
