@@ -131,7 +131,12 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
         );
     }
 
-    formatDate(date: string | Date): string {
+
+    formatDate(date: string | Date | null | undefined): string {
+        if (!date) {
+            return 'No date'; // Handle null or undefined
+        }
+
         const now = new Date();
         const givenDate = new Date(date);
 
@@ -153,16 +158,17 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
             const dateString = givenDate.toLocaleDateString('en-US', {
                 day: '2-digit',
                 month: 'short',
-                year: 'numeric'
+                year: 'numeric',
             });
             const timeString = givenDate.toLocaleTimeString('en-US', {
                 hour: '2-digit',
                 minute: '2-digit',
-                hour12: true
+                hour12: true,
             });
             return `${dateString} at ${timeString}`;
         }
     }
+
 
 
     // Method to toggle "Check All" checkbox
