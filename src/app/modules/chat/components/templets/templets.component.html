@@ -49,8 +49,17 @@
                                             </p>
                                             <p *ngIf="templet?.header?.headerFileType === 'IMAGE'">
                                                 <!-- {{templet?.header?.file}} -->
-                                                <img *ngIf="templet?.header?.file" [src]="templet.header.file"
-                                                    alt="Image not found" width="150" height="auto" />
+                                                <!-- <img *ngIf="templet?.header?.file" [src]="templet.header.file"
+                                                    alt="Image not found" width="150" height="auto" /> -->
+
+                                                <span *ngIf="loading" style="text-align: center; color: red;">
+                                                    Loading...</span>
+
+                                                <img [src]="templet.header.file" alt="Image not found"
+                                                    (error)="onImageError($event)"
+                                                    [attr.fallback]="'assets/images/ceo-template.jpeg'"
+                                                    (load)="onImageLoad()" (error)="loading = false" width="150"
+                                                    height="auto" />
 
                                             </p>
                                         </div>

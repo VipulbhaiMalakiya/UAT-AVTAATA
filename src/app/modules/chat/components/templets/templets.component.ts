@@ -191,4 +191,18 @@ export class TempletsComponent implements OnInit {
         return formattedName;
     }
 
+
+    loading = true;
+
+    onImageLoad(): void {
+        this.loading = false;
+    }
+
+
+
+    onImageError(event: Event): void {
+        this.loading = false;
+        const imgElement = event.target as HTMLImageElement;
+        imgElement.src = 'assets/images/ceo-template.jpeg'; // Fallback image
+    }
 }
