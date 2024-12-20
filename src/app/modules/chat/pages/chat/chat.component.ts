@@ -879,32 +879,33 @@ export class ChatComponent
         this.subscription = this.apiService
             .getAll(this.masterName)
             .pipe(take(1), distinctUntilChanged(),)
-            .subscribe(
-                (data) => {
+            .subscribe({
+                next: (data) => {
                     this.Userinfo = data;
-                    // this.isOpen = this.Userinfo.isopen;
-
                     this.nrSelect = this.Userinfo?.assignedto;
                     if (this.nrSelect === this.Userinfo?.assignedto) {
                         const foundItem = this.aciveUser.find(
                             (item) => item.userId === this.Userinfo?.assignedto
                         );
                         if (foundItem) {
-                            this.DefoluteSelect =
-                                foundItem.firstName + ' ' + foundItem.lastName;
+                            this.DefoluteSelect = foundItem.firstName + ' ' + foundItem.lastName;
                         } else {
-                            this.DefoluteSelect =
-                                this.Userinfo?.firstName + ' ' + this.Userinfo?.lastName;
+                            this.DefoluteSelect = this.Userinfo?.firstName + ' ' + this.Userinfo?.lastName;
                         }
                     }
-
-                    // this.isProceess = false;
-                    this.cd.detectChanges();
+                    this.cd.detectChanges(); // Ensure changes are detected
                 },
-                (error) => {
+                error: (error) => {
                     this.isProceess = false;
+                    this.toastr.error(error.error.message, 'error');
+                },
+                complete: () => {
+                    this.isProceess = false;
+
+                    // Optional: Handle completion if needed
                 }
-            );
+            });
+
     }
 
 
