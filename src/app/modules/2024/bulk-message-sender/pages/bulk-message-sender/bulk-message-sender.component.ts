@@ -15,6 +15,7 @@ import { VideoComponent } from 'src/app/modules/chat/components/video/video.comp
 import { ConfirmationDialogModalComponent } from 'src/app/modules/shared/components/confirmation-dialog-modal/confirmation-dialog-modal.component';
 import { BulkMessageErrorComponent } from '../../bulk-message-error/bulk-message-error.component';
 import { AppService } from 'src/app/_services/app.service';
+import { error } from 'jquery';
 
 @Component({
     selector: 'app-bulk-message-sender',
@@ -113,7 +114,8 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
                     this.isProceess = false; this.isProceess = false;
                 },
                 error: (err) => {
-                    console.error('Error fetching contact list:', err);
+                    // console.log(err.error.message)
+                    this.toastr.error(err.error.message, 'error');
                     this.isProceess = false;
                 },
                 complete: () => {

@@ -35,6 +35,12 @@
                 </thead>
                 <tbody>
 
+                    <tr *ngIf="filteredContactList.length === 0">
+                        <td colspan="5" class="text-center">
+                            No data found.
+                        </td>
+                    </tr>
+
                     <tr *ngFor="let contact of filteredContactList| paginate
           : {
               itemsPerPage: tableSize,
