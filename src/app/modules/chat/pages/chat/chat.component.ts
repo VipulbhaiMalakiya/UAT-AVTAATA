@@ -878,21 +878,30 @@ export class ChatComponent
         this.masterName = `/chat-activity/${phoneNo}`;
         this.subscription = this.apiService
             .getAll(this.masterName)
-            .pipe(take(1), distinctUntilChanged(),)
+            .pipe(take(1), distinctUntilChanged())
             .subscribe({
                 next: (data) => {
+                    if (!data || Object.keys(data).length === 0) {
+                        // If response is empty, close isInitialLoading
+                        this.isInitialLoading = false;
+                        return;
+                    }
+
                     this.Userinfo = data;
                     this.nrSelect = this.Userinfo?.assignedto;
+
                     if (this.nrSelect === this.Userinfo?.assignedto) {
                         const foundItem = this.aciveUser.find(
                             (item) => item.userId === this.Userinfo?.assignedto
                         );
+
                         if (foundItem) {
                             this.DefoluteSelect = foundItem.firstName + ' ' + foundItem.lastName;
                         } else {
                             this.DefoluteSelect = this.Userinfo?.firstName + ' ' + this.Userinfo?.lastName;
                         }
                     }
+
                     this.cd.detectChanges(); // Ensure changes are detected
                 },
                 error: (error) => {
@@ -901,14 +910,9 @@ export class ChatComponent
                 },
                 complete: () => {
                     this.isProceess = false;
-
-                    // Automatically close after 1 minute
-                    setTimeout(() => {
-                        this.isProceess = false;
-                    }, 60000); // 60000 ms = 1 minute
-                    // Optional: Handle completion if needed
                 }
             });
+
 
     }
 
