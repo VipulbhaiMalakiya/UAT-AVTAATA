@@ -355,7 +355,9 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
 
 
                     var componentInstance = modalRef.componentInstance as SendMessagesDialogComponent;
-                    componentInstance.message = `Are you sure to send marketing Campaign for ${selectedCustomerCount} customer(s)?`;
+
+
+                    componentInstance.message = `This action will send the marketing campaign to ${selectedCustomerCount} customers.Would you like to continue ?`;
 
                     modalRef.result.then((canDelete: boolean) => {
                         if (canDelete) {
