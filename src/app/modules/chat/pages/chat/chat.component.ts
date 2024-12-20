@@ -902,6 +902,10 @@ export class ChatComponent
                 complete: () => {
                     this.isProceess = false;
 
+                    // Automatically close after 1 minute
+                    setTimeout(() => {
+                        this.isProceess = false;
+                    }, 60000); // 60000 ms = 1 minute
                     // Optional: Handle completion if needed
                 }
             });
