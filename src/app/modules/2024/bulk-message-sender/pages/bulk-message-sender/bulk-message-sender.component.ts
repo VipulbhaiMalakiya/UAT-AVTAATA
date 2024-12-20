@@ -398,6 +398,8 @@ export class BulkMessageSenderComponent implements OnInit, OnDestroy {
 
                 },
                 error: (error) => {
+                    this.toastr.error(error.error.message, 'error');
+
                     this.isProceess = false;
                 },
                 complete: () => {
