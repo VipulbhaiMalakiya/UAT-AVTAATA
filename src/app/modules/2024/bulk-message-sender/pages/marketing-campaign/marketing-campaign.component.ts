@@ -277,30 +277,32 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
 
                     if (response) {
                         this.toastr.success(response.message);
+                        this.router.navigate(['/admin/inbox']); // Navigate to inbox
 
-                        if (response.sentDetails.length >= 0) {
 
-                            this.isProceess = true;
-                            const modalRef = this.modalService.open(MarketingCampaignErrorComponent, { size: "xl" });
-                            if (modalRef) {
-                                this.isProceess = false;
-                            }
-                            else {
-                                this.isProceess = false;
-                            }
+                        // if (response.sentDetails.length >= 0) {
 
-                            var componentInstance = modalRef.componentInstance as MarketingCampaignErrorComponent;
-                            componentInstance.customersMaster = response.sentDetails;
+                        //     this.isProceess = true;
+                        //     const modalRef = this.modalService.open(MarketingCampaignErrorComponent, { size: "xl" });
+                        //     if (modalRef) {
+                        //         this.isProceess = false;
+                        //     }
+                        //     else {
+                        //         this.isProceess = false;
+                        //     }
 
-                            modalRef.result.then((data: any) => {
-                                if (data) {
+                        //     var componentInstance = modalRef.componentInstance as MarketingCampaignErrorComponent;
+                        //     componentInstance.customersMaster = response.sentDetails;
 
-                                }
-                            }).catch(() => {
-                                this.router.navigate(['/admin/inbox']); // Navigate to inbox
+                        //     modalRef.result.then((data: any) => {
+                        //         if (data) {
 
-                            });
-                        }
+                        //         }
+                        //     }).catch(() => {
+                        //         this.router.navigate(['/admin/inbox']); // Navigate to inbox
+
+                        //     });
+                        // }
 
                     }
 
