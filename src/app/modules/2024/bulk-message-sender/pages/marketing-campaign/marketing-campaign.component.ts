@@ -100,7 +100,10 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
         this.masterName = "/customer";
         this.apiService.getAll(this.masterName).pipe(take(1)).subscribe(data => {
             if (data) {
-                this.contactList = data;
+
+                this.contactList = data.sort((a: any, b: any) => new Date(a.lastTemplateSentTime).getTime() - new Date(b.lastTemplateSentTime).getTime());
+
+                // this.contactList = data;
                 this.count = this.contactList.length;
                 this.isProceess = false;
                 this.cd.detectChanges();
