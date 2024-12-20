@@ -377,7 +377,7 @@ export class MarketingCampaignComponent implements OnInit, OnDestroy {
 
     formatDate(date: string | Date | null | undefined): string {
         if (!date) {
-            return 'No date'; // Handle null or undefined
+            return '-'; // Handle null or undefined
         }
 
         const now = new Date();

@@ -2,7 +2,7 @@
 
 <app-header></app-header>
 <div class="page-title">
-    <h1>Marketing Campaign</h1>
+    <h1>Marketing Campaigns</h1>
 </div>
 
 <div class="page-btns-col">
@@ -17,11 +17,11 @@
             <div class="form-group d-flex justify-content-end">
                 <button class="btn common-btn custom-width-btn" *ngIf="selectedContacts().length > 0"
                     (click)="selectedContacts().length > 0 && getTemplates('Sir/Madam')">
-                    Send New
+                    Send
                 </button>
 
                 <button class="btn common-btn custom-width-btn" *ngIf="selectedContacts().length == 0" disabled>
-                    Send New
+                    Send
                 </button>
             </div>
 
