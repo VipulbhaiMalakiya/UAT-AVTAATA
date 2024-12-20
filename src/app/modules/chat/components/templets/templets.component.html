@@ -9,9 +9,10 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body p-0">
+        <p class="text-center text-danger" *ngIf="templetsdata.length === 0">No data found</p>
         <form #f="ngForm" (ngSubmit)="onSubmit(f)">
             <app-loading-spin-popup *ngIf="isProceess"></app-loading-spin-popup>
-            <div class="modaltemplate-body">
+            <div class="modaltemplate-body" *ngIf="templetsdata.length > 0">
                 <div class="row">
                     <div class="col-md-3 pr-0">
                         <div class="tempsearch">
@@ -52,10 +53,8 @@
                                                     Loading...</span>
 
                                                 <img [src]="templet.header.file" alt="Image not found"
-                                                    (error)="onImageError($event)"
-                                                    [attr.fallback]="'assets/images/ceo-template.jpeg'"
-                                                    (load)="onImageLoad()" (error)="loading = false" width="150"
-                                                    height="auto" />
+                                                    (error)="onImageError($event)" (load)="onImageLoad()"
+                                                    (error)="loading = false" width="150" height="auto" />
 
                                             </p>
                                         </div>
@@ -151,7 +150,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer" *ngIf="templetsdata.length > 0">
                 <button type="submit" class="common-btn">See Preview and Send</button>
             </div>
         </form>

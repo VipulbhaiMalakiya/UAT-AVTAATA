@@ -59,20 +59,26 @@ export class TempletsComponent implements OnInit {
         this.apiService
             .getAll(this.masterName)
             .pipe(take(1))
-            .subscribe(
-                (data) => {
+            .subscribe({
+                next: (data) => {
                     if (data) {
                         this.templetsdata = data.data;
                         this.templet = this.templetsdata[0];
-
                         this.isProceess = false;
                         this.cd.detectChanges();
                     }
                 },
-                (error) => {
+                error: (error) => {
+                    this.toastr.error(error.error.message, 'error');
                     this.isProceess = false;
+                },
+                complete: () => {
+                    console.log('Data fetch complete');
                 }
-            );
+            });
+
+
+
     }
 
     attributeLength: any;
@@ -203,6 +209,6 @@ export class TempletsComponent implements OnInit {
     onImageError(event: Event): void {
         this.loading = false;
         const imgElement = event.target as HTMLImageElement;
-        imgElement.src = 'assets/images/ceo-template.jpeg'; // Fallback image
+        // imgElement.src = 'assets/images/ceo-template.jpeg'; // Fallback image
     }
 }
