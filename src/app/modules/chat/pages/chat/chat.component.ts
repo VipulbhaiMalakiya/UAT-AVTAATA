@@ -613,24 +613,47 @@ export class ChatComponent
     }
 
 
+    // private scrollToBottom(): void {
+    //     setTimeout(() => { // Use setTimeout to ensure the DOM is fully rendered
+    //         try {
+    //             if (this.chatContainer && this.chatContainer.nativeElement) {
+    //                 const container = this.chatContainer.nativeElement;
+    //                 // console.log(container);
+    //                 const atBottom = container.scrollHeight - container.scrollTop <= container.clientHeight;
+    //                 if (!atBottom) {
+    //                     container.scrollTop = container.scrollHeight;
+    //                     this.isInitialLoading = false;
+
+    //                 }
+
+    //             }
+    //         } catch (err) {
+    //             console.error(err);
+    //         }
+    //     }, 500);
+    // }
+
     private scrollToBottom(): void {
         setTimeout(() => { // Use setTimeout to ensure the DOM is fully rendered
             try {
                 if (this.chatContainer && this.chatContainer.nativeElement) {
                     const container = this.chatContainer.nativeElement;
-                    // console.log(container);
-                    const atBottom = container.scrollHeight - container.scrollTop <= container.clientHeight;
-                    if (!atBottom) {
-                        container.scrollTop = container.scrollHeight;
-                        this.isInitialLoading = false;
 
+                    // Ensure the container is scrolled to the bottom regardless of the height
+                    const atBottom = container.scrollHeight - container.scrollTop <= container.clientHeight;
+
+                    if (!atBottom || container.scrollHeight <= container.clientHeight) {
+                        // Force scroll to the bottom if content height is less than container height
+                        container.scrollTop = container.scrollHeight;
                     }
-                    // container.scroll({ top: container.scrollHeight });
+
+                    // Set the flag indicating initial loading is complete
+                    this.isInitialLoading = false;
                 }
             } catch (err) {
-                console.error(err);
+                console.error('Error during scroll to bottom:', err);
             }
-        }, 500);
+        }, 500); // Adjust timeout duration if necessary
     }
 
 
